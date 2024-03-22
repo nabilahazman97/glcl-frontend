@@ -50,6 +50,16 @@ import Logout from "../pages/Authentication/Logout";
 import Register from "../pages/Authentication/Register";
 import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
+//Login & Register //Badrul
+import Login3 from "../pages/AuthenticationInner/Login3";
+import Register3 from "../pages/AuthenticationInner/Register3";
+import SetPwd from "../pages/AuthenticationInner/SetPassword";
+import RegisterFileUpload from "../pages/AuthenticationInner/RegisterFileUpload";
+import Declarations from "../pages/AuthenticationInner/Declarations";
+import ForgetPwd3 from "../pages/AuthenticationInner/ForgetPassword3";
+import Payment from "../pages/AuthenticationInner/Payment";
+
+
 //  // Inner Authentication
 import Login1 from "../pages/AuthenticationInner/Login";
 import Login2 from "../pages/AuthenticationInner/Login2";
@@ -333,9 +343,13 @@ const authProtectedRoutes = [
 
 const publicRoutes = [
   { path: "/logout", component: <Logout /> },
-  { path: "/login", component: <Login /> },
-  { path: "/forgot-password", component: <ForgetPwd /> },
-  { path: "/register", component: <Register /> },
+  { path: "/login", component: <Login3 /> },
+  { path: "/set-password", component: <SetPwd /> },
+  { path: "/forgot-password2", component: <ForgetPwd /> },
+  { path: "/register", component: <Register3 /> },
+  { path: "/register-file-upload", component: <RegisterFileUpload /> },
+  { path: "/register-declarations", component: <Declarations /> },
+  { path: "/payment", component: <Payment /> },
 
   { path: "/pages-maintenance", component: <PagesMaintenance /> },
   { path: "/pages-comingsoon", component: <PagesComingsoon /> },
@@ -352,6 +366,7 @@ const publicRoutes = [
   { path: "/page-recoverpw-2", component: <Recoverpw2 /> },
   { path: "/pages-forgot-pwd", component: <ForgetPwd1 /> },
   { path: "/auth-recoverpw-2", component: <ForgetPwd2 /> },
+  { path: "/auth-recoverpw-3", component: <ForgetPwd3 /> },
   { path: "/auth-lock-screen", component: <LockScreen /> },
   { path: "/auth-lock-screen-2", component: <LockScreen2 /> },
   { path: "/page-confirm-mail", component: <ConfirmMail /> },
