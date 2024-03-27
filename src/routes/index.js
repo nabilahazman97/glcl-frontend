@@ -51,12 +51,12 @@ import Register from "../pages/Authentication/Register";
 import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 //Login & Register //Badrul
-import Login3 from "../pages/AuthenticationInner/Login3";
-import Register3 from "../pages/AuthenticationInner/Register3";
-import SetPwd from "../pages/AuthenticationInner/SetPassword";
-import RegisterFileUpload from "../pages/AuthenticationInner/RegisterFileUpload";
-import Declarations from "../pages/AuthenticationInner/Declarations";
-import ForgetPwd3 from "../pages/AuthenticationInner/ForgetPassword3";
+import Login_1 from "../pages/Authentication/Login2";
+import Register_1 from "../pages/Authentication/Register2";
+import RegisterFileUpload from "../pages/Authentication/RegisterFileUpload";
+import SetPwd from "../pages/Authentication/SetPassword";
+import Declarations from "../pages/Authentication/Declaration";
+import ForgetPwd3 from "../pages/Authentication/ForgetPassword2";
 import Payment from "../pages/AuthenticationInner/Payment";
 
 
@@ -79,6 +79,7 @@ import TwostepVerification from "../pages/AuthenticationInner/auth-two-step-veri
 import TwostepVerification2 from "../pages/AuthenticationInner/auth-two-step-verification-2";
 
 // Dashboard
+import Dashboard2 from "../pages/Dashboard/index2";
 import Dashboard from "../pages/Dashboard/index";
 import DashboardSaas from "../pages/Dashboard-saas/index";
 import DashboardCrypto from "../pages/Dashboard-crypto/index";
@@ -186,7 +187,7 @@ import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile";
 
 const authProtectedRoutes = [
-  { path: "/dashboard", component: <Dashboard /> },
+  { path: "/dashboard", component: <Dashboard2 /> },
   { path: "/dashboard-saas", component: <DashboardSaas /> },
   { path: "/dashboard-crypto", component: <DashboardCrypto /> },
   { path: "/blog", component: <Blog /> },
@@ -343,10 +344,10 @@ const authProtectedRoutes = [
 
 const publicRoutes = [
   { path: "/logout", component: <Logout /> },
-  { path: "/login", component: <Login3 /> },
+  { path: "/login", component: <Login_1 /> },
   { path: "/set-password", component: <SetPwd /> },
   { path: "/forgot-password2", component: <ForgetPwd /> },
-  { path: "/register", component: <Register3 /> },
+  { path: "/register", component: <Register_1 /> },
   { path: "/register-file-upload", component: <RegisterFileUpload /> },
   { path: "/register-declarations", component: <Declarations /> },
   { path: "/payment", component: <Payment /> },

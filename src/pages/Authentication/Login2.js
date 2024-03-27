@@ -1,30 +1,49 @@
+import PropTypes from "prop-types";
 import React, { useState } from "react";
+
+import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
+
+//redux
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Col, Container, Form, Row, Input, Label, FormFeedback } from "reactstrap";
+import withRouter from "components/Common/withRouter";
 
 // Formik validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
+// actions
+import { loginUser, socialLogin } from "../../store/actions";
+
 // import images
 import logodark from "../../assets/images/logo-dark.png";
 import logolight from "../../assets/images/logo-light.png";
-import CarouselPage from "./CarouselPage";
+import CarouselPage from "../AuthenticationInner/CarouselPage";
+import profile from "assets/images/profile-img.png";
+import logo from "assets/images/logo.svg";
 
-const Login2 = () => {
+//Import config
+import { facebook, google } from "../../config";
+
+const Login = props => {
+
+    document.title = "GLCL";
+
+    const dispatch = useDispatch();
+
   const [passwordShow, setPasswordShow] = useState(false);
 
   //meta title
-  document.title = "GLCL";
+
 
    // Form validation 
-   const validationType = useFormik({
+   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      email: '',
-      password: '',
+    email: "admin@themesbrand.com" || '',
+      password: "123456" || '',
     },
     validationSchema: Yup.object().shape({
       email: Yup.string().required(
@@ -37,9 +56,14 @@ const Login2 = () => {
   
     }),
     onSubmit: (values) => {
-      console.log("values", values);
-    }
+        dispatch(loginUser(values, props.router.navigate));
+      }
   });
+
+  const { error } = useSelector(state => ({
+    error: state.Login.error,
+  }));
+
   return (
     <React.Fragment>
       <div>
@@ -64,53 +88,59 @@ const Login2 = () => {
                       </div>
 
                       <div className="m-5">
-                        <Form className="form-horizontal"
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            validationType.handleSubmit();
-                            return false;
-                          }}
-                        >
+                      <Form
+                      className="form-horizontal"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        validation.handleSubmit();
+                        return false;
+                      }}
+                    >
+                      {error ? <Alert color="danger">{error}</Alert> : null}
+
                           <div className="text-center">
                             <p className="login_title mb-4">SIGN IN</p>
                           </div>
                           <div className="mb-3">
-                            
-                            <Input
-                            className="login-input"
-                              name="email"
-                              placeholder="Email"
-                              type="email"
-                              onChange={validationType.handleChange}
-                              onBlur={validationType.handleBlur}
-                              value={validationType.values.email || ""}
-                              invalid={
-                                validationType.touched.email && validationType.errors.email ? true : false
-                              }
-                            />
-                            {validationType.touched.email && validationType.errors.email ? (
-                              <FormFeedback type="invalid">{validationType.errors.email}</FormFeedback>
-                            ) : null}
 
-                          </div>
+                          <Input
+                           className="form-contro login-input"
+                          name="email"
+                          placeholder="Enter email"
+                          type="email"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.email || ""}
+                          invalid={
+                            validation.touched.email && validation.errors.email ? true : false
+                          }
+                        />
+                        {validation.touched.email && validation.errors.email ? (
+                          <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
+                        ) : null}
+                      </div>
+                            
+                           
 
                           <div className="mb-3">
 
-                            <Input
-                            className="login-input"
-                              name="password"
-                              type="password"
-                              placeholder="Password"
-                              onChange={validationType.handleChange}
-                              onBlur={validationType.handleBlur}
-                              value={validationType.values.password || ""}
-                              invalid={
-                                validationType.touched.password && validationType.errors.password ? true : false
-                              }
-                            />
-                            {validationType.touched.password && validationType.errors.password ? (
-                              <FormFeedback type="invalid">{validationType.errors.password}</FormFeedback>
-                            ) : null}
+                          <Input
+                           className="login-input"
+                          name="password"
+                          value={validation.values.password || ""}
+                          type="password"
+                          placeholder="Enter Password"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          invalid={
+                            validation.touched.password && validation.errors.password ? true : false
+                          }
+                        />
+                        {validation.touched.password && validation.errors.password ? (
+                          <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
+                        ) : null}
+
+                    
 
                           </div>
 
@@ -131,7 +161,7 @@ const Login2 = () => {
                           <div className="mt-4 d-grid">
                             <button
                               className="btn btn-primary btn-block signIn_btn"
-                              // type="submit"
+                              type="submit"
                             >
                               Log In
                             </button>
@@ -214,4 +244,8 @@ const Login2 = () => {
   );
 };
 
-export default Login2;
+export default withRouter(Login);
+
+Login.propTypes = {
+    history: PropTypes.object,
+  };

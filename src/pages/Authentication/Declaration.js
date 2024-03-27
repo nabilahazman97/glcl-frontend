@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Col, Container, Form, Card, Input, Modal, Row } from "reactstrap";
 import Dropzone from "react-dropzone";
 
-import CarouselPage from "./CarouselPage";
+import CarouselPage from "../AuthenticationInner/CarouselPage";
 
 const Declarations = () => {
 

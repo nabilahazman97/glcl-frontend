@@ -10,7 +10,7 @@ import withRouter from "components/Common/withRouter";
 
 // Formik validation
 import * as Yup from "yup";
-import { useFormik } from "formik";
+import { useFormik } from "formik"; 
 
 //Social Media Imports
 // import { GoogleLogin } from "react-google-login";
@@ -28,7 +28,7 @@ import logo from "assets/images/logo.svg";
 import { facebook, google } from "../../config";
 
 const Login = props => {
-
+ 
   //meta title
   document.title = "Login | Skote - React Admin & Dashboard Template";
 
@@ -74,7 +74,7 @@ const Login = props => {
       dispatch(socialLogin(postData, props.router.navigate, type));
     }
   };
-
+ 
   //handleGoogleLoginResponse
   const googleResponse = response => {
     signIn(response, "google");

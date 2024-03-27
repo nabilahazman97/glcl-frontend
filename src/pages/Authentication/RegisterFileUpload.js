@@ -10,7 +10,7 @@ import Dropzone from "react-dropzone";
 // import images
 import logodark from "../../assets/images/logo-dark.png";
 import logolight from "../../assets/images/logo-light.png";
-import CarouselPage from "./CarouselPage";
+import CarouselPage from "../AuthenticationInner/CarouselPage";
 
 const Register3 = () => {
 
@@ -99,7 +99,7 @@ const Register3 = () => {
                           </div>
                           <div className="mb-3">
                             <h6 className="card-title std_font">Upload Documents</h6>
-                            <h6 className="font12">File size limit is 5mb.</h6>
+                            <h6 className="font12">File size limit is 5MB.</h6>
                             <CardSubtitle className="mb-3 std_font mt-4">
                               MyKad - Front
                             </CardSubtitle>
