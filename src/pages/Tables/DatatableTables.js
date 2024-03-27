@@ -37,6 +37,12 @@ function DatatableTables() {
             "age": 28, 
             "phonenum": "01-12546546",
         },
+        {
+            "username": "Jennifer Chang",
+            "emailid": "jenn@gmail.com",
+            "age": 28, 
+            "phonenum": "01-12546546",
+        },
     
        
     ];
@@ -47,7 +53,7 @@ function DatatableTables() {
     return (
         <div className="page-content">
             <div className="container-fluid">
-                <Breadcrumbs title="Tables" breadcrumbItem="Data Tables" />
+                <Breadcrumbs title="Tables" breadcrumbItem="NEW MEMBERS VERIFICATION" />
                 {/* <Table columns={columns} data={data} /> */}
                 <TableContainer
                     columns={columns}

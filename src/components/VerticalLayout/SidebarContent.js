@@ -152,11 +152,49 @@ const SidebarContent = props => {
                 <span>{props.t("DASHBOARD")}</span>
               </Link>
             </li>
+  
+
             <li>
-              <Link to="/tables-datatable" >
+              <Link to="/#" className="has-arrow d-flex">
                 <i className="bx bx-list-ul"></i>
-                <span>{props.t("Data Tables")}</span>
+                <span >{props.t("MEMBERSHIP MANAGEMENT")}</span>
               </Link>
+              <ul className="sub-menu">
+                <li style={{ whiteSpace: "nowrap" }}>
+                  <Link to="/tables-datatable">{props.t("NEW MEMBER VERIFICATION")}</Link>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <Link to="/#" >
+                <i className="fas fa-coins"></i>
+                <span>{props.t("PAYMENT MANAGEMENT")}</span>
+              </Link>
+            </li>
+
+            <li>
+              <Link to="/#" className="has-arrow ">
+                <i className="bx bx-file"></i>
+                <span>{props.t("SCHEMES")}</span>
+              </Link>
+              <ul className="sub-menu">
+                <li style={{ whiteSpace: "nowrap" }}>
+                  <Link to="/#">{props.t("SVARNA TIRA SCHEME")}</Link>
+                </li>
+                <li >
+                  <Link to="/#">{props.t("SVARNA STOKAM NIKSEPA SCHEME")}</Link>
+                </li>
+                <li >
+                  <Link to="/#">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
+                </li>
+                <li style={{ whiteSpace: "nowrap" }}>
+                  <Link to="/#">{props.t("SVARNA AHITA SCHEME")}</Link>
+                </li>
+                <li style={{ whiteSpace: "nowrap" }}>
+                  <Link to="/#">{props.t("SVARNA RUNA SCHEME")}</Link>
+                </li>
+              </ul>
             </li>
 
           </ul>
