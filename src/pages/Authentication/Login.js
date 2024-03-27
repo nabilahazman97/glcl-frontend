@@ -74,7 +74,7 @@ const Login = props => {
       dispatch(socialLogin(postData, props.router.navigate, type));
     }
   };
-
+ 
   //handleGoogleLoginResponse
   const googleResponse = response => {
     signIn(response, "google");
