@@ -14,7 +14,7 @@ import profile from "../../assets/images/profile-img.png";
 import logo from "../../assets/images/logo.svg";
 import lightlogo from "../../assets/images/logo-light.svg";
 
-const Login = () => {
+const Login = () => { 
   const [show, setShow] = useState(false);
 
   //meta title
