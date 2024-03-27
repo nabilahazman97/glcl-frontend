@@ -28,7 +28,7 @@ import logo from "assets/images/logo.svg";
 import { facebook, google } from "../../config";
 
 const Login = props => {
-
+ 
   //meta title
   document.title = "Login | Skote - React Admin & Dashboard Template";
 
