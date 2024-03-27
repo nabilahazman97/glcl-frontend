@@ -11,7 +11,7 @@ import { useFormik } from "formik";
 // import images
 import logodark from "../../assets/images/logo-dark.png";
 import logolight from "../../assets/images/logo-light.png";
-import CarouselPage from "./CarouselPage";
+import CarouselPage from "../AuthenticationInner/CarouselPage";
 
 const Register3 = () => {
 
@@ -29,7 +29,7 @@ const Register3 = () => {
 
 
   //meta title
-  document.title = "Register 2 | Skote - React Admin & Dashboard Template";
+  document.title = "GLCL";
 
   //form validation
   const validationType = useFormik({
@@ -65,7 +65,8 @@ const Register3 = () => {
   const religion_opt = [
     { value: 'option1', label: 'Islam' },
     { value: 'option2', label: 'Hindu' },
-    { value: 'option3', label: 'Buddha' },
+    { value: 'option3', label: 'Buddhist' },
+    { value: 'option3', label: 'Christian' },
     { value: 'option4', label: 'Other' },
   ];
 
@@ -237,7 +238,7 @@ const Register3 = () => {
                                 onChange={(e) => {
                                   validationType.handleChange(e); // Call the formik handleChange
                                   handleChange(e); // Call your custom handleChange
-                              }}
+                                }}
                                 onKeyDown={handleBackspace}
                                 onBlur={validationType.handleBlur}
                                 invalid={
@@ -245,8 +246,8 @@ const Register3 = () => {
                                 }
                               />
                               {validationType.touched.icNum && validationType.errors.icNum ? (
-                              <FormFeedback type="invalid">{validationType.errors.icNum}</FormFeedback>
-                            ) : null}
+                                <FormFeedback type="invalid">{validationType.errors.icNum}</FormFeedback>
+                              ) : null}
                             </Col>
                             <Col xl={5}>
                               <Input
@@ -263,45 +264,45 @@ const Register3 = () => {
                           </div>
 
                           <div className="mb-3">
-                          <Input
-                      type="textarea"
-                      name="homeAddress"
-                      id="textarea"
-                      className="login-textarea"
-                      // onChange={e => {
-                      //   textareachange(e);
-                      // }}
-                      maxLength="50"
-                      rows="4"
-                      placeholder="Home Address"
-                      onChange={validationType.handleChange}
-                      onBlur={validationType.handleBlur}
-                      value={validationType.values.homeAddress || ""}
-                      invalid={
-                        validationType.touched.homeAddress && validationType.errors.homeAddress ? true : false
-                      }
-                    />
-                    {validationType.touched.homeAddress && validationType.errors.homeAddress ? (
-                      <FormFeedback type="invalid">{validationType.errors.homeAddress}</FormFeedback>
-                    ) : null}
-                         
-                         
+                            <Input
+                              type="textarea"
+                              name="homeAddress"
+                              id="textarea"
+                              className="login-textarea"
+                              // onChange={e => {
+                              //   textareachange(e);
+                              // }}
+                              maxLength="50"
+                              rows="4"
+                              placeholder="Home Address"
+                              onChange={validationType.handleChange}
+                              onBlur={validationType.handleBlur}
+                              value={validationType.values.homeAddress || ""}
+                              invalid={
+                                validationType.touched.homeAddress && validationType.errors.homeAddress ? true : false
+                              }
+                            />
+                            {validationType.touched.homeAddress && validationType.errors.homeAddress ? (
+                              <FormFeedback type="invalid">{validationType.errors.homeAddress}</FormFeedback>
+                            ) : null}
+
+
                           </div>
                           <div class="d-flex mb-3 justify-content-between">
                             <Col xl={5}>
-                            <Input
-        className="form-control login-input text_1"
-        name="mob_phone1"
-        type="text"
-        placeholder="Mobile Phone 1"
-        onChange={handleChangePhone}
-        onBlur={validationType.handleBlur}
-        value={validationType.values.mob_phone1 || ""}
-        invalid={validationType.touched.mob_phone1 && validationType.errors.mob_phone1}
-      />
-      {validationType.touched.mob_phone1 && validationType.errors.mob_phone1 ? (
-        <FormFeedback type="invalid">{validationType.errors.mob_phone1}</FormFeedback>
-      ) : null}
+                              <Input
+                                className="form-control login-input text_1"
+                                name="mob_phone1"
+                                type="text"
+                                placeholder="Mobile Phone 1"
+                                onChange={handleChangePhone}
+                                onBlur={validationType.handleBlur}
+                                value={validationType.values.mob_phone1 || ""}
+                                invalid={validationType.touched.mob_phone1 && validationType.errors.mob_phone1}
+                              />
+                              {validationType.touched.mob_phone1 && validationType.errors.mob_phone1 ? (
+                                <FormFeedback type="invalid">{validationType.errors.mob_phone1}</FormFeedback>
+                              ) : null}
                             </Col>
                             <Col xl={5}>
                               <Input
@@ -327,7 +328,7 @@ const Register3 = () => {
                               onChange={(e) => {
                                 validationType.handleChange(e); // Call the formik handleChange
                                 handleChange(e); // Call your custom handleChange
-                            }}
+                              }}
                               onKeyDown={handleBackspace}
                               onBlur={validationType.handleBlur}
                               invalid={
@@ -335,18 +336,19 @@ const Register3 = () => {
                               }
                             />
                             {validationType.touched.email && validationType.errors.email ? (
-                            <FormFeedback type="invalid">{validationType.errors.email}</FormFeedback>
-                          ) : null}
+                              <FormFeedback type="invalid">{validationType.errors.email}</FormFeedback>
+                            ) : null}
 
                           </div>
 
                           <div className="d-flex justify-content-between mb-3">
-                            <Col xl={5} className="d-flex justify-content-between">
-                              <Col xl={2} className="p-2">
+                            <Col xl={6} className="d-flex justify-content-between">
+                              {/* <Col xl={2} className="p-2">
                                 <Label className="form-label text_1">Ethnic:</Label>
-                              </Col>
-                              <Col xl={8}>
+                              </Col> */}
+                              <Col xl={11}>
                                 <Select
+                                placeholder={"Ethnicity"}
                                   options={ethnic_opt}
                                   value={selectedEthnicOption}
                                   styles={customStyles}
@@ -367,22 +369,22 @@ const Register3 = () => {
                                         }}
                                       >
 
-                                        Enter Your Ethnicity
+                                        State your ethnicity here
                                       </Tooltip>
                                       <i
                                         id="TooltipEthnic"
                                         className="bx bxs-info-circle"
-                                        style={{ fontSize: '20px' }}
+                                        style={{ fontSize: '20px', color: 'blue' }}
                                       ></i>
 
                                     </Col>
                                     <Col xl={10}>
                                       <Input
-                                        id="email"
-                                        name="email"
+                                        id="name"
+                                        name="name"
                                         className="form-control login-input text_1"
                                         placeholder="Other ethnicity"
-                                        type="email"
+                                        type="text"
 
                                       />
 
@@ -394,12 +396,12 @@ const Register3 = () => {
                               </Col>
                             </Col>
                             <Col xl={6} className="d-flex justify-content-between">
-                              <Col xl={2} className="p-2">
-                                <Label className="form-label text_1">Religion:</Label>
-
+                              <Col xl={1} className="p-2">
+                                {/* <Label className="form-label text_1">Religion:</Label> */}
                               </Col>
-                              <Col xl={8}>
+                              <Col xl={11}>
                                 <Select
+                                placeholder={"Religion"}
                                   options={religion_opt}
                                   styles={customStyles}
                                   value={selectedReligionOption}
@@ -420,12 +422,12 @@ const Register3 = () => {
                                         }}
                                       >
 
-                                        Enter Your Religion
+                                        State your religion here
                                       </Tooltip>
                                       <i
                                         id="TooltipReligion"
                                         className="bx bxs-info-circle"
-                                        style={{ fontSize: '20px' }}
+                                        style={{ fontSize: '20px', color: 'blue' }}
                                       ></i>
 
                                     </Col>
@@ -449,18 +451,15 @@ const Register3 = () => {
                             </Col>
                           </div>
 
-
-
-
-
                           <div className="d-flex justify-content-between mb-3 mt-3">
-                            <Col xl={5} className="d-flex justify-content-between">
-                              <Col xl={2} className="p-2">
+                            <Col xl={6} className="d-flex justify-content-between">
+                              {/* <Col xl={2} className="p-2">
                                 <Label className="form-label text_1">Sex:</Label>
 
-                              </Col>
-                              <Col xl={8}>
+                              </Col> */}
+                              <Col xl={11}>
                                 <Select
+                                  placeholder={"Sex"}
                                   options={sex_opt}
                                   styles={customStyles}
                                   className="select2-selection text_1"
@@ -469,12 +468,13 @@ const Register3 = () => {
 
                             </Col>
                             <Col xl={6} className="d-flex justify-content-between">
-                              <Col xl={2} className="p-2">
-                                <Label className="form-label text_1">Marital Status:</Label>
+                              <Col xl={1} className="p-2">
+                                {/* <Label className="form-label text_1">Marital Status:</Label> */}
 
                               </Col>
-                              <Col xl={8}>
+                              <Col xl={11}>
                                 <Select
+                                placeholder={"Marital Status"}
                                   options={marital_status_opt}
                                   styles={customStyles}
                                   className="select2-selection text_1"
