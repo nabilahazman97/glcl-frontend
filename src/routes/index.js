@@ -79,7 +79,7 @@ import TwostepVerification from "../pages/AuthenticationInner/auth-two-step-veri
 import TwostepVerification2 from "../pages/AuthenticationInner/auth-two-step-verification-2";
 
 // Dashboard
-import Dashboard2 from "../pages/Dashboard/index2";
+import DashboardAdmin from "../pages/Dashboard/index2";
 import Dashboard from "../pages/Dashboard/index";
 import DashboardSaas from "../pages/Dashboard-saas/index";
 import DashboardCrypto from "../pages/Dashboard-crypto/index";
@@ -187,7 +187,7 @@ import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile";
 
 const authProtectedRoutes = [
-  { path: "/dashboard", component: <Dashboard2 /> },
+  { path: "/dashboard", component: <DashboardAdmin /> },
   { path: "/dashboard-saas", component: <DashboardSaas /> },
   { path: "/dashboard-crypto", component: <DashboardCrypto /> },
   { path: "/blog", component: <Blog /> },

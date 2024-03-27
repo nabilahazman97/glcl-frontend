@@ -55,9 +55,9 @@ const Dashboard = props => {
   const reports = [
     { title: "SVARNA TIRA SCHEME", iconClass: "bx-copy-alt", description: "150" },
     { title: "SVARNA STOKAM NIKSEPA SCHEME", iconClass: "bx-copy-alt", description: "100" },
-    { title: "SVANA ROKA AGRIMA SCHEME", iconClass: "bx-copy-alt", description: "124" },
+    { title: "SVARNA ROKA AGRIMA SCHEME", iconClass: "bx-copy-alt", description: "124" },
     { title: "SVARNA AHITA SCHEME", iconClass: "bx-copy-alt", description: "120" },
-    { title: "SVANA RUNA SCHEME", iconClass: "bx-copy-alt", description: "200" },
+    { title: "SVARNA RUNA SCHEME", iconClass: "bx-copy-alt", description: "200" },
     {
       title: "MEMBER REGISTER LIST",
       iconClass: "bx-purchase-tag-alt",
@@ -107,7 +107,7 @@ const Dashboard = props => {
                 {/* Reports Render */}
                 {reports.map((report, key) => (
                   <Col md="4" key={"_col_" + key}>
-                    <Card className="mini-stats-wid">
+                    <Card className="mini-stats-wid" style={{ boxShadow: '5px 5px 10px rgba(0, 0, 0, 0.1)' }}>
                       <CardBody>
                       <div className="d-flex">
                           <div className="flex-grow-1">
