@@ -48,12 +48,12 @@ function DatatableTables() {
     ];
 
     //meta title
-    document.title = "Data Tables | Skote - React Admin & Dashboard Template";
+    document.title = "GLCL";
 
     return (
         <div className="page-content">
             <div className="container-fluid">
-                <Breadcrumbs title="Tables" breadcrumbItem="NEW MEMBERS VERIFICATION" />
+                <Breadcrumbs title="Tables" breadcrumbItem="MEMBER REGISTRATION LIST" />
                 {/* <Table columns={columns} data={data} /> */}
                 <TableContainer
                     columns={columns}

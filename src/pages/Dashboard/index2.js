@@ -59,7 +59,7 @@ const Dashboard = props => {
     { title: "SVARNA AHITA SCHEME", iconClass: "bx-copy-alt", description: "120" },
     { title: "SVARNA RUNA SCHEME", iconClass: "bx-copy-alt", description: "200" },
     {
-      title: "MEMBER REGISTER LIST",
+      title: "MEMBER REGISTRATION LIST",
       iconClass: "bx-purchase-tag-alt",
       description: "580",
     },
@@ -89,7 +89,7 @@ const Dashboard = props => {
   }, [dispatch]);
 
   //meta title
-  document.title = "Dashboard | Skote - React Admin & Dashboard Template";
+  document.title = "GLCL";
 
   return (
     <React.Fragment>

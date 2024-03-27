@@ -22,7 +22,7 @@ const Register3 = () => {
 
 
   //meta title
-  document.title = "Register 2 | Skote - React Admin & Dashboard Template";
+  document.title = "GLCL";
 
   //form validation
   const validation = useFormik({

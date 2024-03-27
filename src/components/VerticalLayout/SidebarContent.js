@@ -161,7 +161,7 @@ const SidebarContent = props => {
               </Link>
               <ul className="sub-menu">
                 <li style={{ whiteSpace: "nowrap" }}>
-                  <Link to="/tables-datatable">{props.t("NEW MEMBER VERIFICATION")}</Link>
+                  <Link to="/tables-datatable">{props.t("MEMBER REGISTRATION LIST")}</Link>
                 </li>
               </ul>
             </li>
