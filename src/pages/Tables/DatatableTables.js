@@ -23,14 +23,6 @@ function DatatableTables() {
                 accessor: 'age'
             },
             {
-                Header: 'Start date',
-                accessor: 'startDate'
-            },
-            {
-                Header: 'Salary',
-                accessor: 'salary'
-            },
-            {
                 Header: 'Phone Number',
                 accessor: 'phonenum'
             },
@@ -41,28 +33,11 @@ function DatatableTables() {
     const data = [
         {
             "username": "Jennifer Chang",
-            "emailid": "Regional Director",
-            "age": 28,
-            "office": "Singapore",
-            "startDate": "2010/11/14",
-            "salary": "$357,650"
+            "emailid": "jenn@gmail.com",
+            "age": 28, 
+            "phonenum": "01-12546546",
         },
-        {
-            "name": "Gavin Joyce",
-            "position": "Developer",
-            "age": 42,
-            "office": "Edinburgh",
-            "startDate": "2010/12/22",
-            "salary": "$92,575"
-        },
-        {
-            "name": "Angelica Ramos",
-            "position": "Chief Executive Officer (CEO)",
-            "age": 47,
-            "office": "London",
-            "startDate": "2009/10/09",
-            "salary": "$1,200,000"
-        },
+    
        
     ];
 
