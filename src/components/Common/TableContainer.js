@@ -201,7 +201,7 @@ const TableContainer = ({
 
       <div className="table-responsive react-table">
         <Table bordered hover {...getTableProps()} className={className}>
-          <thead className="table-light table-nowrap">
+          <thead className="table-light table-nowrap text-center">
             {headerGroups.map(headerGroup => (
               <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (

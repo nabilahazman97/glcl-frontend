@@ -13,7 +13,7 @@ import CarouselPage from "../AuthenticationInner/CarouselPage";
 const ForgetPassword3 = () => {
 
     //meta title
-    document.title = "Forget Password 2 | Skote - React Admin & Dashboard Template";
+    document.title = "GLCL";
 
     // Form validation 
     const validationType = useFormik({
