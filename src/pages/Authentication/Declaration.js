@@ -49,7 +49,7 @@ const Declarations = () => {
                                     <div className="d-flex flex-column h-100">
                                         <div className="my-auto">
                                             <div>
-                                                <div class="d-flex text-center std_font">
+                                                <div className="d-flex text-center std_font">
                                                     <p className="">Already Registered? &nbsp; </p>
                                                     <Link to="/" style={{ textDecoration: 'none' }}>
                                                         <p className='text-gold'>Sign In</p>
@@ -80,7 +80,7 @@ const Declarations = () => {
                                                             members only)</h6>
                                                     </div>
 
-                                                    <div class=" mb-3">
+                                                    <div className=" mb-3">
                                                         <Input
                                                             id="name"
                                                             name="name"
@@ -90,7 +90,7 @@ const Declarations = () => {
 
                                                         />
                                                     </div>
-                                                    <div class=" mb-3">
+                                                    <div className=" mb-3">
                                                         <Input
                                                             id="name"
                                                             name="name"
