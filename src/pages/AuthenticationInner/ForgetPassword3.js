@@ -142,7 +142,7 @@ const ForgetPassword3 = () => {
                                                                 <div className="modal-body text-center">
                                                                     <p>
                                                                     An email has been sent to the administrative email address on file.  Check the inbox of the administrator’s email account, and click the reset link provided                                                                     </p>
-                                                                    <div class="d-flex text-center">
+                                                                    <div className="d-flex text-center">
                                                                         <p className="">Reset&nbsp;</p>
                                                                         <Link to="/set-password" >
                                                                             <p style={{ textDecoration: 'underline' }} className=''>link</p>
