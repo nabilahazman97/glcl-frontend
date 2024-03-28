@@ -79,7 +79,7 @@ const Login = props => {
                     <div className="my-auto">
                       <div>
 
-                        <div class="d-flex text-center std_font">
+                        <div className="d-flex text-center std_font">
                           <p className="">New here? &nbsp; </p>
                           <Link to="/register" style={{ textDecoration: 'none' }}>
                             <p className='text-gold'>Register Now</p>
