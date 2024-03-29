@@ -1,6 +1,7 @@
 // src/components/filter.
 import React, { useMemo } from "react";
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 
 //import components
 import Breadcrumbs from '../../components/Common/Breadcrumb';
@@ -34,7 +35,7 @@ function DatatableTables() {
                 accessor: 'actions',
                 Cell: ({ row }) => (
                     <div className="d-flex flex-wrap gap-2 justify-content-center">
-                        <button
+                        {/* <button
                             type="button"
                             className="btn btn-success approveBtn"
                         >
@@ -48,7 +49,17 @@ function DatatableTables() {
                         >
                             <i className="bx bx-x-circle font-size-16 align-middle me-1"></i>{" "}
                             Reject
-                        </button>
+                        </button> */}
+                        <Link to="/member-approval" style={{ textDecoration: 'none' }}>
+                            <button
+                                type="button"
+                                className="btn btn-primary rejectBtn"
+                            >
+                                <i className="mdi mdi-eye-outline font-size-16 align-middle me-1"></i>{" "}
+                                View
+                            </button>
+                        </Link>
+
                     </div>
                 )
             },
@@ -69,6 +80,7 @@ function DatatableTables() {
             "age": 38,
             "phonenum": "012-1254646",
         },
+
 
 
     ];
