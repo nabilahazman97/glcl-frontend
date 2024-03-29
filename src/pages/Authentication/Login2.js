@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 
 import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
 
@@ -11,7 +11,7 @@ import withRouter from "components/Common/withRouter";
 // Formik validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
-
+import axios, { Axios } from "axios";
 // actions
 import { loginUser, socialLogin } from "../../store/actions";
 
@@ -24,8 +24,20 @@ import logo from "assets/images/logo.svg";
 
 //Import config
 import { facebook, google } from "../../config";
+import { Buffer } from 'buffer';
+import * as apiname from "../../helpers/url_helper";
+
 
 const Login = props => {
+useEffect(() => {
+  axios.get(apiname.base_url+apiname.USER_LIST, {
+    headers: {
+      'Authorization': 'Basic '+ apiname.encoded
+    }
+  })
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
+}, []);
 
     document.title = "GLCL";
 
@@ -42,8 +54,8 @@ const Login = props => {
     enableReinitialize: true,
 
     initialValues: {
-    email: "admin@glcl.com" || '',
-      password: "123456" || '',
+    email: "" || '',
+      password: "" || '',
     },
     validationSchema: Yup.object().shape({
       email: Yup.string().required(
@@ -56,6 +68,7 @@ const Login = props => {
   
     }),
     onSubmit: (values) => {
+      console.log(values);
         dispatch(loginUser(values, props.router.navigate));
       }
   });
