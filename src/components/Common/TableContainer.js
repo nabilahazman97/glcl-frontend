@@ -243,6 +243,7 @@ const TableContainer = ({
           <div className="d-flex gap-1">
             <Button
               color="primary"
+              style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"40px" }}
               onClick={() => gotoPage(0)}
               disabled={!canPreviousPage}
             >
@@ -250,6 +251,7 @@ const TableContainer = ({
             </Button>
             <Button
               color="primary"
+              style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"40px" }}
               onClick={previousPage}
               disabled={!canPreviousPage}
             >
@@ -276,11 +278,11 @@ const TableContainer = ({
 
         <Col className="col-md-auto">
           <div className="d-flex gap-1">
-            <Button color="primary" onClick={nextPage} disabled={!canNextPage}>
+            <Button color="primary" style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"40px" }} onClick={nextPage} disabled={!canNextPage}>
               {">"}
             </Button>
             <Button
-              color="primary"
+             style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"40px" }}
               onClick={() => gotoPage(pageCount - 1)}
               disabled={!canNextPage}
             >
