@@ -1,7 +1,9 @@
 import axios from "axios";
+import { Buffer } from 'buffer';
 import MockAdapter from "axios-mock-adapter";
 import * as url from "../url_helper";
 import accessToken from "../jwt-token-access/accessToken";
+import * as apiname from "../../helpers/url_helper";
 import {
   calenderDefaultCategories,
   cartData,
@@ -73,21 +75,48 @@ const fakeBackend = () => {
 
   mock.onPost("/post-fake-login").reply(config => {
     const user = JSON.parse(config["data"]);
-    const validUser = users.filter(
-      usr => usr.email === user.email && usr.password === user.password
-    );
-
+    
+   
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (validUser["length"] === 1) {
-          resolve([200, validUser[0]]);
-        } else {
+     
+    setTimeout(() => {
+      axios.post(apiname.base_url+apiname.LOG_IN,user,{
+      headers: {
+        'Authorization': 'Basic '+ apiname.encoded
+      }
+    })
+      .then(res => {
+        console.log(res)
+        if(res.data.status!=0){
+        resolve([200,res.data]);
+        }else{
           reject([
-            "Email and password are invalid. Please enter correct email and password",
+            "Username and password are invalid. Please enter correct username and password",
           ]);
+
         }
+      })
+      .catch(err => {
+        console.error(err);
+        reject([
+              "Username and password are invalid. Please enter correct username and password",
+            ]);
+       
       });
     });
+  });
+
+    // return new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     if (validUser["length"] === 1) {
+    //       resolve([200, validUser[0]]);
+    //     } else {
+    //       reject([
+    //         "Email and password are invalid. Please enter correct email and password",
+    //       ]);
+    //     }
+    //   });
+    // });
   });
 
   mock.onPost("/fake-forget-pwd").reply(config => {

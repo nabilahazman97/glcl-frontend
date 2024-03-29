@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row, Button, Form, Label, Input, FormFeedback, Modal, } from "reactstrap";
 // Formik Validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import * as apiname from "../../helpers/url_helper";
+import axios, { Axios } from "axios";
 
 // import images
 import logodark from "../../assets/images/logo-dark.png";
@@ -31,13 +33,35 @@ const ForgetPassword3 = () => {
 
         }),
         onSubmit: (values) => {
-            console.log("values", values);
+            sendemail(values);
+            // console.log("values", values);
+            // apiname.forgotpassword
+            
+              
+               
         }
     });
 
     const [modal_center, setmodal_center] = useState(false);
 
 
+
+    function sendemail(values){
+        axios.post(apiname.base_url+apiname.forgotpassword,values,{
+            headers: {
+              'Authorization': 'Basic '+ apiname.encoded
+            }
+          })
+            .then(res => {
+              console.log(res);
+              setmodal_center(!modal_center);
+              
+            })
+            .catch(err => {
+              console.error(err);
+            });
+
+    }
     function tog_center() {
         setmodal_center(!modal_center);
     }
@@ -93,9 +117,9 @@ const ForgetPassword3 = () => {
                                                         <button
                                                             className="btn btn-primary btn-block signIn_btn text_1"
                                                             type="submit"
-                                                            onClick={() => {
-                                                                tog_center();
-                                                            }}
+                                                            // onClick={() => {
+                                                            //     tog_center();
+                                                            // }}
                                                         >
                                                             Submit
                                                         </button>

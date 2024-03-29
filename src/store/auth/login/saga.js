@@ -37,6 +37,15 @@ function* loginUser({ payload: { user, history } }) {
       });
       localStorage.setItem("authUser", JSON.stringify(response));
       yield put(loginSuccess(response));
+    }else if(process.env.REACT_APP_DEFAULTAUTH === "login"){
+
+      console.log("saga");
+      const response = yield call(postFakeLogin, {
+        email: user.email,
+        password: user.password,
+      });
+      localStorage.setItem("authUser", JSON.stringify(response));
+      yield put(loginSuccess(response));
     }
     history('/dashboard');
   } catch (error) {

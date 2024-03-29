@@ -1,3 +1,6 @@
+import { Buffer } from 'buffer';
+
+
 //REGISTER
 export const POST_FAKE_REGISTER = "/post-fake-register";
 
@@ -116,3 +119,15 @@ export const ON_LIKNE_COMMENT = "/comments-product-action";
 export const ON_ADD_REPLY = "/comments-product-add-reply";
 
 export const ON_ADD_COMMENT = "/comments-product-add-comment";
+
+export const USER_LIST = "/api/user";
+
+export const LOG_IN="/api/user/logincheck";
+
+export const base_url = "http://localhost:8080";
+
+export const USERNAME = 'glcl';
+export const PASSWORD = 'glcl@567';
+export const encoded = Buffer.from(USERNAME + ':' + PASSWORD).toString('base64');
+
+export const forgotpassword="/api/user/forgotpassword";
