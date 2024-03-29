@@ -118,6 +118,8 @@ import IconFontawesome from "../pages/Icons/IconFontawesome";
 //Tables
 import BasicTables from "../pages/Tables/BasicTables";
 import DatatableTables from "../pages/Tables/DatatableTables";
+import MemberApproval from "../pages/Forms/MemberApproval";
+import MemberProfileList from "../pages/Tables/MemberProfileList";
 import ResponsiveTables from "../pages/Tables/ResponsiveTables";
 import DragDropTables from "../pages/Tables/DragDropTables";
 
@@ -188,6 +190,7 @@ import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile"
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <DashboardAdmin /> },
+  { path: "/member-approval", component: <MemberApproval /> },
   { path: "/dashboard-saas", component: <DashboardSaas /> },
   { path: "/dashboard-crypto", component: <DashboardCrypto /> },
   { path: "/blog", component: <Blog /> },
@@ -283,6 +286,7 @@ const authProtectedRoutes = [
   // Tables
   { path: "/tables-basic", component: <BasicTables /> },
   { path: "/tables-datatable", component: <DatatableTables /> },
+  { path: "/member-profile-list", component: <MemberProfileList /> },
   { path: "/tables-responsive", component: <ResponsiveTables /> },
   { path: "/tables-dragndrop", component: <DragDropTables /> },
 

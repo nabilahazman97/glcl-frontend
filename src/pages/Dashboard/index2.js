@@ -53,15 +53,15 @@ const Dashboard = props => {
   }));
 
   const reports = [
-    { title: "SVARNA TIRA SCHEME", iconClass: "bx-copy-alt", description: "150" },
-    { title: "SVARNA STOKAM NIKSEPA SCHEME", iconClass: "bx-copy-alt", description: "100" },
-    { title: "SVARNA ROKA AGRIMA SCHEME", iconClass: "bx-copy-alt", description: "124" },
-    { title: "SVARNA AHITA SCHEME", iconClass: "bx-copy-alt", description: "120" },
-    { title: "SVARNA RUNA SCHEME", iconClass: "bx-copy-alt", description: "200" },
+    { title: "SVARNA TIRA SCHEME", iconClass: "bx-copy-alt", total: 150 },
+    { title: "SVARNA STOKAM NIKSEPA SCHEME", iconClass: "bx-copy-alt", total: 100 },
+    { title: "SVARNA ROKA AGRIMA SCHEME", iconClass: "bx-copy-alt", total: 124 },
+    { title: "SVARNA AHITA SCHEME", iconClass: "bx-copy-alt", total: 120 },
+    { title: "SVARNA RUNA SCHEME", iconClass: "bx-copy-alt", total: 200 },
     {
       title: "MEMBER REGISTRATION LIST",
       iconClass: "bx-purchase-tag-alt",
-      description: "580",
+      total: 580,
     },
   ];
 
@@ -114,7 +114,7 @@ const Dashboard = props => {
                             <p className="text-muted fw-medium scheme_title">
                               {report.title}
                             </p>
-                            <p className="mb-0 std_font">{report.description}</p>
+                            <p className="mb-0 std_font">{report.total}</p>
                           </div>
                           <div className="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
                             <span className="avatar-title rounded-circle bg-primary">

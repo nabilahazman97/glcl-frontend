@@ -156,12 +156,15 @@ const SidebarContent = props => {
 
             <li>
               <Link to="/#" className="has-arrow d-flex">
-                <i className="bx bx-list-ul"></i>
+                <i className="bx bx-user"></i>
                 <span >{props.t("MEMBERSHIP MANAGEMENT")}</span>
               </Link>
               <ul className="sub-menu">
                 <li style={{ whiteSpace: "nowrap" }}>
                   <Link to="/tables-datatable">{props.t("MEMBER REGISTRATION LIST")}</Link>
+                </li>
+                <li style={{ whiteSpace: "nowrap" }}>
+                  <Link to="/member-profile-list">{props.t("MEMBER PROFILE")}</Link>
                 </li>
               </ul>
             </li>
@@ -196,6 +199,7 @@ const SidebarContent = props => {
                 </li>
               </ul>
             </li>
+
 
           </ul>
         </div>

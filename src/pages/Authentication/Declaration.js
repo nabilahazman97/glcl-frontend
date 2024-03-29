@@ -100,7 +100,7 @@ const Declarations = () => {
 
                                                         />
                                                     </div>
-                                                    <div class=" mb-3">
+                                                    <div className=" mb-3">
                                                         <Input
                                                             id="name"
                                                             name="name"
