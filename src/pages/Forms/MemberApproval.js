@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardBody,
@@ -9,7 +9,9 @@ import {
   CardSubtitle,
   Input,
 } from "reactstrap"
-
+import * as apiname from "../../helpers/url_helper";
+import axios from "axios";
+import { useParams } from 'react-router-dom';
 import Dropzone from "react-dropzone";
 
 //Import Breadcrumb
@@ -19,35 +21,91 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 const MemberApproval = () => {
 
-  //meta title
+  const { Uid } = useParams();
+  console.log("Uid:", Uid);
+
+  const user = {
+    'uid':Uid
+  };
+  
+  console.log("user");
+  console.log(user);
+  const [data, setdata] = useState([]);
+  useEffect(() => {
+      console.log(apiname.base_url);
+      console.log(apiname.p_userdetails);
+      console.log(user);
+      axios.post(apiname.base_url+apiname.p_userdetails,user, {
+        headers: {
+          'Authorization': 'Basic '+ apiname.encoded
+        }
+      })
+      // .then(res =>console.log(res))
+      .then(res =>setdata(res['data']['result']))
+      .catch(err => console.log(err));
+    }, []);
+    console.log("data");
+    console.log(data[0]);
+    // data.forEach(element => {
+    //   console.log("data1");
+    //   console.log(element.Username);
+      
+    // });
+  //meta 
+  
+  function handleInput(e) {
+    const user = {
+      'uid':Uid,
+      ustatus:e.target.value
+    };
+
+    // useEffect(() => {
+     
+      axios.post(apiname.base_url+apiname.userapproval,user, {
+        headers: {
+          'Authorization': 'Basic '+ apiname.encoded
+        }
+      })
+      .then(res =>console.log(res))
+      // .then(res =>setdata(res['data']['result']))
+      .catch(err => console.log(err));
+    // }, []);
+
+    
+//     console.log(e.target.value);
+ }
+
+
   document.title = "GLCL"
 
-  const [modal_center, setmodal_center] = useState(false);
-  const [selectedFiles1, setSelectedFiles1] = useState([]);
-  const [selectedFiles2, setSelectedFiles2] = useState([]);
-  const [selectedFiles3, setSelectedFiles3] = useState([]);
+  // const [modal_center, setmodal_center] = useState(false);
+  // const [selectedFiles1, setSelectedFiles1] = useState([]);
+  // const [selectedFiles2, setSelectedFiles2] = useState([]);
+  // const [selectedFiles3, setSelectedFiles3] = useState([]);
 
-  function handleAcceptedFiles(files, setSelectedFiles) {
-    const formattedFiles = files.map(file =>
-      Object.assign(file, {
-        preview: URL.createObjectURL(file),
-        formattedSize: formatBytes(file.size),
-      })
-    );
-    setSelectedFiles(formattedFiles);
-  }
-
-  function formatBytes(bytes, decimals = 2) {
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
-  }
+  // function handleAcceptedFiles(files, setSelectedFiles) {
+  //   const formattedFiles = files.map(file =>
+  //     Object.assign(file, {
+  //       preview: URL.createObjectURL(file),
+  //       formattedSize: formatBytes(file.size),
+  //     })
+  //   );
+  //   setSelectedFiles(formattedFiles);
+  // }
 
 
+  // function formatBytes(bytes, decimals = 2) {
+  //   if (bytes === 0) return "0 Bytes";
+  //   const k = 1024;
+  //   const dm = decimals < 0 ? 0 : decimals;
+  //   const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+
+  //   const i = Math.floor(Math.log(bytes) / Math.log(k));
+  //   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+  // }
+
+  
+  return data.map((datas) => {
   return (
     <React.Fragment>
       <div className="page-content">
@@ -58,14 +116,14 @@ const MemberApproval = () => {
             <Col>
               <Card>
                 <CardBody className="m-3">
-                  <CardTitle className="h4 mb-3">Registration Details</CardTitle>
+                  <CardTitle className="h4 mb-3">Registration Details  </CardTitle>
 
                   <Row className="mb-3">
                     <div className="col-md-12">
                       <input
                         className="form-control login-input"
                         type="text"
-                        defaultValue="Artisanal kale"
+                        defaultValue={datas.Username}
                       />
                     </div>
                   </Row>
@@ -74,14 +132,14 @@ const MemberApproval = () => {
                       <input
                         className="form-control login-input"
                         type="text"
-                        defaultValue="004503-01-0783"
+                        defaultValue={datas.icnumber}
                       />
                     </div>
                     <div className="col-md-6">
                       <input
                         className="form-control login-input"
                         type="text"
-                        defaultValue="24"
+                        defaultValue={datas.age}
                         disabled
                       />
                     </div>
@@ -91,7 +149,7 @@ const MemberApproval = () => {
                       <input
                         className="form-control login-input"
                         type="text"
-                        defaultValue="Petaling Jaya, Selangor"
+                        defaultValue={datas.haddress}
                       />
                     </div>
                   </Row>
@@ -100,14 +158,14 @@ const MemberApproval = () => {
                       <input
                         className="form-control login-input"
                         type="text"
-                        defaultValue="013-7672262"
+                        defaultValue={datas.phonenum}
                       />
                     </div>
                     <div className="col-md-6">
                       <input
                         className="form-control login-input"
                         type="text"
-                        defaultValue="012-3536373"
+                        defaultValue={datas.altnum}
                       />
                     </div>
                   </Row>
@@ -116,7 +174,7 @@ const MemberApproval = () => {
                       <input
                         className="form-control login_input login-input"
                         type="email"
-                        defaultValue="Artisan@gmail.com"
+                        defaultValue={datas.emailid}
                       />
                     </div>
                   </Row>
@@ -125,14 +183,14 @@ const MemberApproval = () => {
                       <input
                         className="form-control login-input"
                         type="text"
-                        defaultValue="Indian"
+                        defaultValue={datas.ethnic}
                       />
                     </div>
                     <div className="col-md-6">
                       <input
                         className="form-control login-input"
                         type="text"
-                        defaultValue="Hindu"
+                        defaultValue={datas.religion}
                       />
                     </div>
                   </Row>
@@ -141,14 +199,14 @@ const MemberApproval = () => {
                       <input
                         className="form-control login-input"
                         type="text"
-                        defaultValue="Male"
+                        defaultValue={datas.sex}
                       />
                     </div>
                     <div className="col-md-6">
                       <input
                         className="form-control login-input"
                         type="text"
-                        defaultValue="Married"
+                        defaultValue={datas.mstatus}
                       />
                     </div>
                   </Row>
@@ -157,7 +215,7 @@ const MemberApproval = () => {
                       <input
                         className="form-control login_input login-input"
                         type="text"
-                        defaultValue="Doctor"
+                        defaultValue={datas.occupation}
                       />
                     </div>
                   </Row>
@@ -166,7 +224,7 @@ const MemberApproval = () => {
                       <input
                         className="form-control login_input login-input"
                         type="text"
-                        defaultValue="Service"
+                        defaultValue={datas.service}
                       />
                     </div>
                   </Row>
@@ -175,7 +233,7 @@ const MemberApproval = () => {
                       <input
                         className="form-control login_input login-input"
                         type="text"
-                        defaultValue="Kuala Lumpur"
+                        defaultValue={datas.paddress}
                       />
                     </div>
                   </Row>
@@ -183,8 +241,9 @@ const MemberApproval = () => {
                   <CardSubtitle className="mb-3 std_font mt-4">
                     MyKad - Front
                   </CardSubtitle>
+                  <img className="w-25" src={datas.f_mykad}></img>
                   {/* First Dropzone */}
-                  <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles1)}>
+                  {/* <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles1)}>
                     {({ getRootProps, getInputProps }) => (
                       <div className="dropzone login-input">
                         <div className="dz-message needsclick mt-2" {...getRootProps()}>
@@ -197,9 +256,10 @@ const MemberApproval = () => {
                         </div>
                       </div>
                     )}
-                  </Dropzone>
+                  </Dropzone> */}
+                  
                   {/* Display selected files for the first Dropzone */}
-                  <div className="dropzone-previews mt-3" id="file-previews1">
+                  {/* <div className="dropzone-previews mt-3" id="file-previews1">
                     {selectedFiles1.map((f, i) => (
                       <Card
                         className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
@@ -224,7 +284,7 @@ const MemberApproval = () => {
                         </div>
                       </Card>
                     ))}
-                  </div>
+                  </div> */}
 
 
                   <div className="mb-3 mt-3">
@@ -232,8 +292,9 @@ const MemberApproval = () => {
                     <CardSubtitle className="mb-3 std_font">
                       MyKad - Back
                     </CardSubtitle>
+                    <img className="w-25" src={datas.b_mykad}></img>
                     {/* Second Dropzone */}
-                    <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles2)}>
+                    {/* <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles2)}>
                       {({ getRootProps, getInputProps }) => (
                         <div className="dropzone login-input">
                           <div className="dz-message needsclick mt-2" {...getRootProps()}>
@@ -246,9 +307,9 @@ const MemberApproval = () => {
                           </div>
                         </div>
                       )}
-                    </Dropzone>
+                    </Dropzone> */}
                     {/* Display selected files for the second Dropzone */}
-                    <div className="dropzone-previews mt-3" id="file-previews2">
+                    {/* <div className="dropzone-previews mt-3" id="file-previews2">
                       {selectedFiles2.map((f, i) => (
                         <Card
                           className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
@@ -273,7 +334,7 @@ const MemberApproval = () => {
                           </div>
                         </Card>
                       ))}
-                    </div>
+                    </div> */}
 
 
                     <div className="mb-5 mt-3">
@@ -281,8 +342,9 @@ const MemberApproval = () => {
                       <CardSubtitle className="mb-3 std_font">
                         Utility Bill
                       </CardSubtitle>
+                      <img className="w-25" src={datas.utilitybill}></img>
                       {/* Third Dropzone */}
-                      <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles3)}>
+                      {/* <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles3)}>
                         {({ getRootProps, getInputProps }) => (
                           <div className="dropzone login-input">
                             <div className="dz-message needsclick mt-2" {...getRootProps()}>
@@ -295,9 +357,9 @@ const MemberApproval = () => {
                             </div>
                           </div>
                         )}
-                      </Dropzone>
+                      </Dropzone> */}
                       {/* Display selected files for the second Dropzone */}
-                      <div className="dropzone-previews mt-3" id="file-previews2">
+                      {/* <div className="dropzone-previews mt-3" id="file-previews2">
                         {selectedFiles3.map((f, i) => (
                           <Card
                             className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
@@ -322,15 +384,18 @@ const MemberApproval = () => {
                             </div>
                           </Card>
                         ))}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
 
                   <Row className="mb-3">
                     <div className="col-md-12 text-center">
                       <button
+                    
                         style={{ marginRight: "5px" }}
                         type="button"
+                        value='1'
+                        onClick={e => handleInput(e, "value")}
                         className="btn btn-success approveBtn mr-1"
                       >
                         <i className="bx bx-check-circle font-size-16 align-middle me-1"></i>{" "}
@@ -338,7 +403,10 @@ const MemberApproval = () => {
                       </button>
 
                       <button
+                    
                         type="button"
+                        value='2'
+                        onClick={e => handleInput(e, "value")}
                         className="btn btn-danger rejectBtn ml-2"
                       >
                         <i className="bx bx-x-circle font-size-16 align-middle me-1"></i>{" "}
@@ -356,6 +424,7 @@ const MemberApproval = () => {
       </div>
     </React.Fragment>
   )
+  })
 }
 
 export default MemberApproval

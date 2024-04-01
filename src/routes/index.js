@@ -190,7 +190,7 @@ import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile"
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <DashboardAdmin /> },
-  { path: "/member-approval", component: <MemberApproval /> },
+  { path: "/member-approval/:Uid", component: <MemberApproval /> },
   { path: "/dashboard-saas", component: <DashboardSaas /> },
   { path: "/dashboard-crypto", component: <DashboardCrypto /> },
   { path: "/blog", component: <Blog /> },
