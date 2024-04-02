@@ -97,6 +97,10 @@ useEffect(() => {
                           <Link to="/register" style={{ textDecoration: 'none' }}>
                             <p className='text-gold'>Register Now</p>
                           </Link>
+
+                          {/* <Link to="/register" style={{ textDecoration: 'none' }}>
+                            <p className='text-gold'>Register Now</p>
+                          </Link> */}
                         </div>
                       </div>
 
