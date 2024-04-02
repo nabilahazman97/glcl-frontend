@@ -39,8 +39,13 @@ function DatatableTables() {
             },
 
             {
-                Header: 'status',
-                accessor: 'ustatus'
+                Header: 'Status',
+                accessor: 'ustatus',
+                Cell: ({ row }) => (
+                    <span>
+                        {row.original.ustatus === 1 ? 'Accepted' : row.original.ustatus === 2 ? 'Rejected' : ''}
+                    </span>
+                )
             },
             {
                 Header: 'Phone Number',

@@ -13,6 +13,9 @@ import * as apiname from "../../helpers/url_helper";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import Dropzone from "react-dropzone";
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
@@ -27,6 +30,10 @@ const MemberApproval = () => {
   const user = {
     'uid':Uid
   };
+
+  const [buttonsDisabled, setButtonsDisabled] = useState(
+    localStorage.getItem(`buttonsDisabled_${Uid}`) === "true"
+  );
   
   console.log("user");
   console.log(user);
@@ -56,7 +63,9 @@ const MemberApproval = () => {
   function handleInput(e) {
     const user = {
       'uid':Uid,
-      ustatus:e.target.value
+      ustatus:e.target.value,
+
+      
     };
 
     // useEffect(() => {
@@ -66,7 +75,17 @@ const MemberApproval = () => {
           'Authorization': 'Basic '+ apiname.encoded
         }
       })
-      .then(res =>console.log(res))
+      .then(res =>{
+        setButtonsDisabled(true);
+      localStorage.setItem(`buttonsDisabled_${Uid}`, "true");
+      if (e.target.value === '1') {
+        toast.success('User accepted successfully!');
+    } else if (e.target.value === '2') {
+        toast.success('User rejected successfully!');
+    }
+      }
+      )
+      
       // .then(res =>setdata(res['data']['result']))
       .catch(err => console.log(err));
     // }, []);
@@ -107,8 +126,10 @@ const MemberApproval = () => {
   
   return data.map((datas) => {
   return (
+  
     <React.Fragment>
       <div className="page-content">
+      <ToastContainer />
         <Container fluid={true}>
           <Breadcrumbs title="Forms" breadcrumbItem="Member Approval" />
 
@@ -397,6 +418,7 @@ const MemberApproval = () => {
                         value='1'
                         onClick={e => handleInput(e, "value")}
                         className="btn btn-success approveBtn mr-1"
+                        disabled={buttonsDisabled}
                       >
                         <i className="bx bx-check-circle font-size-16 align-middle me-1"></i>{" "}
                         Approve
@@ -408,6 +430,7 @@ const MemberApproval = () => {
                         value='2'
                         onClick={e => handleInput(e, "value")}
                         className="btn btn-danger rejectBtn ml-2"
+                        disabled={buttonsDisabled}
                       >
                         <i className="bx bx-x-circle font-size-16 align-middle me-1"></i>{" "}
                         Reject
