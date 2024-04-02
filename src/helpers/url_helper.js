@@ -131,3 +131,7 @@ export const PASSWORD = 'glcl@567';
 export const encoded = Buffer.from(USERNAME + ':' + PASSWORD).toString('base64');
 
 export const forgotpassword="/api/user/forgotpassword";
+
+export const p_userdetails="/api/user/p_userdetails"; //declare url
+
+export const userapproval="/api/user/userapproval"; //declare url
