@@ -1,7 +1,32 @@
 @import "../../assets/scss/theme.scss";
 
+@font-face {
+    font-family: inter_regular;
+    src: url("../../assets/fonts/Inter-Medium.ttf");
+  }
+@font-face {
+    font-family: inter_bold;
+    src: url("../../assets/fonts/Inter-Bold.ttf");
+  }
+
 // .apexcharts-canvas {
 //   text {
 //     fill: $text-muted !important;
 //   }
 // }
+
+//TEXT TEXT//
+.std_font{
+    font-size: 1.2em;
+    font-family: inter_regular;
+}
+
+.font12{
+    font-size: 12px;
+    font-family: inter_regular;
+}
+
+.scheme_title{
+    font-size: 1.2em;
+    font-family: inter_bold;
+}

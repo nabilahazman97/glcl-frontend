@@ -51,12 +51,12 @@ import Register from "../pages/Authentication/Register";
 import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 //Login & Register //Badrul
-import Login3 from "../pages/AuthenticationInner/Login3";
-import Register3 from "../pages/AuthenticationInner/Register3";
-import SetPwd from "../pages/AuthenticationInner/SetPassword";
-import RegisterFileUpload from "../pages/AuthenticationInner/RegisterFileUpload";
-import Declarations from "../pages/AuthenticationInner/Declarations";
-import ForgetPwd3 from "../pages/AuthenticationInner/ForgetPassword3";
+import Login_1 from "../pages/Authentication/Login2";
+import Register_1 from "../pages/Authentication/Register2";
+import RegisterFileUpload from "../pages/Authentication/RegisterFileUpload";
+import SetPwd from "../pages/Authentication/SetPassword";
+import Declarations from "../pages/Authentication/Declaration";
+import ForgetPwd3 from "../pages/Authentication/ForgetPassword2";
 import Payment from "../pages/AuthenticationInner/Payment";
 
 
@@ -79,6 +79,7 @@ import TwostepVerification from "../pages/AuthenticationInner/auth-two-step-veri
 import TwostepVerification2 from "../pages/AuthenticationInner/auth-two-step-verification-2";
 
 // Dashboard
+import DashboardAdmin from "../pages/Dashboard/index2";
 import Dashboard from "../pages/Dashboard/index";
 import DashboardSaas from "../pages/Dashboard-saas/index";
 import DashboardCrypto from "../pages/Dashboard-crypto/index";
@@ -117,6 +118,8 @@ import IconFontawesome from "../pages/Icons/IconFontawesome";
 //Tables
 import BasicTables from "../pages/Tables/BasicTables";
 import DatatableTables from "../pages/Tables/DatatableTables";
+import MemberApproval from "../pages/Forms/MemberApproval";
+import MemberProfileList from "../pages/Tables/MemberProfileList";
 import ResponsiveTables from "../pages/Tables/ResponsiveTables";
 import DragDropTables from "../pages/Tables/DragDropTables";
 
@@ -186,7 +189,8 @@ import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile";
 
 const authProtectedRoutes = [
-  { path: "/dashboard", component: <Dashboard /> },
+  { path: "/dashboard", component: <DashboardAdmin /> },
+  { path: "/member-approval", component: <MemberApproval /> },
   { path: "/dashboard-saas", component: <DashboardSaas /> },
   { path: "/dashboard-crypto", component: <DashboardCrypto /> },
   { path: "/blog", component: <Blog /> },
@@ -282,6 +286,7 @@ const authProtectedRoutes = [
   // Tables
   { path: "/tables-basic", component: <BasicTables /> },
   { path: "/tables-datatable", component: <DatatableTables /> },
+  { path: "/member-profile-list", component: <MemberProfileList /> },
   { path: "/tables-responsive", component: <ResponsiveTables /> },
   { path: "/tables-dragndrop", component: <DragDropTables /> },
 
@@ -343,10 +348,10 @@ const authProtectedRoutes = [
 
 const publicRoutes = [
   { path: "/logout", component: <Logout /> },
-  { path: "/login", component: <Login3 /> },
+  { path: "/login", component: <Login_1 /> },
   { path: "/set-password", component: <SetPwd /> },
   { path: "/forgot-password2", component: <ForgetPwd /> },
-  { path: "/register", component: <Register3 /> },
+  { path: "/register", component: <Register_1 /> },
   { path: "/register-file-upload", component: <RegisterFileUpload /> },
   { path: "/register-declarations", component: <Declarations /> },
   { path: "/payment", component: <Payment /> },

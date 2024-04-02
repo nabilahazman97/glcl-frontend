@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Col, Container, Form, Card, Input, Modal, Row } from "reactstrap";
 import Dropzone from "react-dropzone";
 
-import CarouselPage from "./CarouselPage";
+import CarouselPage from "../AuthenticationInner/CarouselPage";
 
 const Declarations = () => {
 
@@ -49,7 +49,7 @@ const Declarations = () => {
                                     <div className="d-flex flex-column h-100">
                                         <div className="my-auto">
                                             <div>
-                                                <div class="d-flex text-center std_font">
+                                                <div className="d-flex text-center std_font">
                                                     <p className="">Already Registered? &nbsp; </p>
                                                     <Link to="/" style={{ textDecoration: 'none' }}>
                                                         <p className='text-gold'>Sign In</p>
@@ -71,22 +71,16 @@ const Declarations = () => {
                                                     </div>
                                                     <div className="mb-5">
                                                         <h4 className="card-title std_font text-center mb-3">DECLARATIONS</h4>
-                                                        <h6 className="text-left font12">1. I hereby to abide by the current Bye-Laws and Rules of the Co-operative and
-                                                            also any amendments thereto formally made during the period of my
-                                                            membership. I also declare that Iam not a bankrupt nor has any criminal
-                                                            proceedings been taken against me or had my membership removed
-                                                            prematurely from any other co-operative in the last one year.
+                                                        <h6 className="text-left font12">1. I hereby agree to abide by the current By-Laws and Rules of the Co-operative, as well as any amendments formally made during the period of my membership.  I also declare that I am not a bankrupt, nor have any criminal proceedings been taken against me, nor has my membership been removed prematurely from any other cooperative in the last one year.
                                                             <br></br><br></br>
-                                                            2. I am a Malaysian citizen and have reached the age of 18 years, residing or
-                                                            working or own any
-                                                            land/property in the Co-operative are of operation.
+                                                            2. I am a Malaysian citizen and have reached the age of 18 years old, residing in, working in, or owning land/property in the Co-operative's area of operation.
                                                             <br></br><br></br>
                                                             3. I hereby name the following as my nominee to receive my shares/interest.
                                                             (for Non-Muslim
                                                             members only)</h6>
                                                     </div>
 
-                                                    <div class=" mb-3">
+                                                    <div className=" mb-3">
                                                         <Input
                                                             id="name"
                                                             name="name"
@@ -96,7 +90,7 @@ const Declarations = () => {
 
                                                         />
                                                     </div>
-                                                    <div class=" mb-3">
+                                                    <div className=" mb-3">
                                                         <Input
                                                             id="name"
                                                             name="name"
@@ -106,7 +100,7 @@ const Declarations = () => {
 
                                                         />
                                                     </div>
-                                                    <div class=" mb-3">
+                                                    <div className=" mb-3">
                                                         <Input
                                                             id="name"
                                                             name="name"
@@ -215,12 +209,12 @@ const Declarations = () => {
                                                         >
 
                                                             <div className="text-center m-3">
-                                                            <i className="bx bx-check-circle success-alert-sign" style={{ fontSize: "80px", marginLeft:"10px", color:"#34C38F" }}></i>
+                                                                <i className="bx bx-check-circle success-alert-sign" style={{ fontSize: "80px", marginLeft: "10px", color: "#34C38F" }}></i>
                                                                 <div className="d-flex justify-content-center">
-                                                                    
+
                                                                     <div className="d-flex align-items-center">
-                                                                        <h3 className="modal-title mt-0">Registered Successful !</h3>
-                                                                       
+                                                                        <h3 className="modal-title mt-0">Registration Successful !</h3>
+
                                                                     </div>
                                                                 </div>
 

@@ -25,7 +25,7 @@ const Payment = () => {
                                     <div className="d-flex flex-column h-100">
                                         <div className="my-auto">
                                             <div>
-                                                <div class="d-flex text-center std_font">
+                                                <div className="d-flex text-center std_font">
                                                     <p className="">Already Registered? &nbsp; </p>
                                                     <Link to="/" style={{ textDecoration: 'none' }}>
                                                         <p className='text-gold'>Sign In</p>
