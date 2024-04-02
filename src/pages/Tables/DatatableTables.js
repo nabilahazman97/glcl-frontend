@@ -11,6 +11,8 @@ import TableContainer from '../../components/Common/TableContainer';
 import { Button } from 'reactstrap';
 
 import './datatables.scss';
+import axios, { Axios } from "axios";
+import * as apiname from "../../helpers/url_helper";
 
 function DatatableTables() {
     const [data, setdata] = useState([]);

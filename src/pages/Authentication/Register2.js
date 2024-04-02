@@ -1,563 +1,795 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Col, Container, Form, FormFeedback, Tooltip, Input, Label, Row } from "reactstrap";
-import Select from "react-select";
+import React, { useState } from "react"
 
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  NavItem,
+  NavLink,
+  Row,
+  TabContent,
+  TabPane,
+} from "reactstrap"
+import Dropzone from "react-dropzone";
+import classnames from "classnames"
+import { Link } from "react-router-dom"
 
-// Formik Validation
-import * as Yup from "yup";
-import { useFormik } from "formik";
+//Import Breadcrumb
+import Breadcrumbs from "../../components/Common/Breadcrumb"
 
-// import images
-import logodark from "../../assets/images/logo-dark.png";
-import logolight from "../../assets/images/logo-light.png";
-import CarouselPage from "../AuthenticationInner/CarouselPage";
 
 const Register3 = () => {
+  
+  document.title="Form Wizard 2 | Skote - React Admin & Dashboard Template";
 
-  const [icNumber, setICNumber] = useState('');
-  const [age, setAge] = useState('');
-  const [phoneNumber1, setPhoneNumber1] = useState('');
-  const [phoneNumber2, setPhoneNumber2] = useState('');
-  const [showInput, setShowInput] = useState(false);
-  const [showInput2, setShowInput2] = useState(false);
-  const [selectedEthnicOption, setSelectedEthnicOption] = useState(null);
-  const [selectedReligionOption, setSelectedReligionOption] = useState(null);
-  const [tethnic, settethnic] = useState(false);
-  const [treligion, settreligion] = useState(false);
+  const [selectedFiles, setselectedFiles] = useState([]);
+
+  function handleAcceptedFiles(files) {
+    files.map(file =>
+      Object.assign(file, {
+        preview: URL.createObjectURL(file),
+        formattedSize: formatBytes(file.size),
+      })
+    )
+    setselectedFiles(files)
+  }
+
+  /**
+   * Formats the size
+   */
+  function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return "0 Bytes"
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i]
+  }
 
 
+  const [activeTab, setactiveTab] = useState(1)
+  const [activeTabVartical, setoggleTabVertical] = useState(1)
 
-  //meta title
-  document.title = "GLCL";
+  const [passedSteps, setPassedSteps] = useState([1])
+  const [passedStepsVertical, setPassedStepsVertical] = useState([1])
 
-  //form validation
-  const validationType = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
-
-    initialValues: {
-      name: '',
-      icNum: '',
-      homeAddress: '',
-      mob_phone1: '',
-      email: '',
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Name is reuired"),
-      icNum: Yup.string().required("IC number is required"),
-      homeAddress: Yup.string().required("Home address is required"),
-      mob_phone1: Yup.string().required("Mobile phone number is required"),
-      email: Yup.string().required("Email is required"),
-    }),
-    onSubmit: (values) => {
-      console.log(values);
+  function toggleTab(tab) {
+    if (activeTab !== tab) {
+      var modifiedSteps = [...passedSteps, tab]
+      if (tab >= 1 && tab <= 4) {
+        setactiveTab(tab)
+        setPassedSteps(modifiedSteps)
+      }
     }
-  });
+  }
 
-  const ethnic_opt = [
-    { value: 'option1', label: 'Malay' },
-    { value: 'option2', label: 'Indian' },
-    { value: 'option3', label: 'Chinese' },
-    { value: 'option4', label: 'Other' },
-  ];
+  function toggleTabVertical(tab) {
+    if (activeTabVartical !== tab) {
+      var modifiedSteps = [...passedStepsVertical, tab]
 
-  const religion_opt = [
-    { value: 'option1', label: 'Islam' },
-    { value: 'option2', label: 'Hindu' },
-    { value: 'option3', label: 'Buddhist' },
-    { value: 'option3', label: 'Christian' },
-    { value: 'option4', label: 'Other' },
-  ];
-
-  const sex_opt = [
-    { value: 'option1', label: 'Male' },
-    { value: 'option2', label: 'Female' },
-  ];
-
-  const marital_status_opt = [
-    { value: 'option1', label: 'Single' },
-    { value: 'option2', label: 'Married' },
-    { value: 'option3', label: 'Widow' },
-  ];
-
-  const customStyles = {
-    option: (provided) => ({
-      ...provided,
-      color: 'black',
-      backgroundColor: 'white',
-      opacity: 1,
-      '&:hover': {
-        color: 'white',
-        backgroundColor: 'hsl( 218,81.8%,56.9% )',
-      },
-    }),
-  };
-
-
-
-  const calculateAge = (year) => {
-    const currentYear = new Date().getFullYear();
-    return currentYear - year;
-  };
-
-  const handleChange = (e) => {
-    const inputValue = e.target.value;
-    // Remove any non-numeric characters
-    const numericValue = inputValue.replace(/\D/g, '');
-    // Format the IC number as "000000-00-0000" only if it's complete
-    let formattedValue = '';
-    if (numericValue.length > 6) {
-      formattedValue = numericValue.slice(0, 6) + '-' + numericValue.slice(6, 8) + '-' + numericValue.slice(8, 12);
-    } else {
-      formattedValue = numericValue;
+      if (tab >= 1 && tab <= 4) {
+        setoggleTabVertical(tab)
+        setPassedStepsVertical(modifiedSteps)
+      }
     }
-    setICNumber(formattedValue);
-
-    // Extract the year of birth
-    let year = parseInt(formattedValue.slice(0, 2), 10);
-    if (year < 30) { // Assuming the year represents a year in the 2000s for values less than 30
-      year += 2000;
-    } else {
-      year += 1900;
-    }
-
-    if (!isNaN(year)) {
-      const age = calculateAge(year);
-      setAge(`${age} years old`);
-    } else {
-      setAge('');
-    }
-  };
-
-  const handleBackspace = (e) => {
-    // Allow backspace to delete the last character or hyphen
-    if (e.keyCode === 8 && icNumber.charAt(icNumber.length - 1) === '-') {
-      setICNumber(icNumber.slice(0, -1));
-    }
-  };
-
-  const handleInputPhone = (event, setPhoneNumber) => {
-    const input = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
-    const formattedInput = input.slice(0, 11); // Limit to 11 digits
-    const formattedPhoneNumber = formattedInput.replace(/(\d{3})(\d{1,4})?(\d{1,4})?/, '$1-$2$3'); // Insert hyphen after the third digit
-
-    setPhoneNumber(formattedPhoneNumber);
-  };
-
-  const formatPhoneNumber = (input) => {
-    // Remove non-numeric characters
-    const phoneNumber = input.replace(/\D/g, '');
-    // Truncate to 11 digits if length exceeds 11
-    const truncatedPhoneNumber = phoneNumber.slice(0, 11);
-    // Insert hyphen after the third digit if length is 4 or more
-    if (truncatedPhoneNumber.length >= 4) {
-      return truncatedPhoneNumber.slice(0, 3) + '-' + truncatedPhoneNumber.slice(3);
-    }
-    return truncatedPhoneNumber;
-  };
-
-  const handleChangePhone = (event) => {
-    const formattedPhoneNumber = formatPhoneNumber(event.target.value);
-    validationType.setFieldValue('mob_phone1', formattedPhoneNumber);
-  };
-
-  const handleEthnicChange = selectedEthnicOption => {
-    setSelectedEthnicOption(selectedEthnicOption);
-    setShowInput(selectedEthnicOption && selectedEthnicOption.value === 'option4'); // Show input box if 'Other' is selected
-  };
-
-  const handleReligionChange = selectedReligionOption => {
-    setSelectedReligionOption(selectedReligionOption);
-    setShowInput2(selectedReligionOption && selectedReligionOption.value === 'option4'); // Show input box if 'Other' is selected
-  };
-
+  }
 
   return (
     <React.Fragment>
-      <div>
-        <Container fluid className="p-0">
-          <Row className="g-0">
-            <CarouselPage />
+      <div className="page-content">
+        <Container fluid={true}>
+          {/* <Breadcrumbs title="Forms" breadcrumbItem=" Member Registration Form" /> */}
 
-            <Col xl={6}>
-              <div className="auth-full-page-content p-md-5 p-4">
-                <div className="w-100">
-                  <div className="d-flex flex-column h-100">
-                    <div className="my-auto">
-                      <div>
-                        <div className="d-flex text-center std_font">
-                          <p className="">Already Registered? &nbsp; </p>
-                          <Link to="/" style={{ textDecoration: 'none' }}>
-                            <p className='text-gold'>Sign In</p>
-                          </Link>
-                        </div>
-                      </div>
-
-                      <div className="m-5">
-
-                        <Form className="form-horizontal"
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            validation.handleSubmit();
-                            return false;
-                          }}
+          <Row>
+            <Col lg="12">
+              <Card>
+                <CardBody>
+                <div className="text-center">
+                            <p className="login_title mb-4">MEMBER REGISTRATION FORM</p>
+                          </div>
+                  {/* <h4 className="card-title mb-4">Member Registration Form</h4> */}
+                  <div className="wizard clearfix">
+                    <div className="steps clearfix">
+                      <ul>
+                        <NavItem
+                          className={classnames({ current: activeTab === 1 })}
                         >
-                          <div className="text-center">
-                            <p className="login_title mb-4">MEMBERSHIP REGISTRATION</p>
-                          </div>
-                          <div className="mb-3">
-                            {/* <Label className="form-label">Email</Label> */}
-                            <Input
-                              id="name"
-                              name="name"
-                              className="form-control login-input"
-                              placeholder="Name"
-                              type="text"
-                              onChange={validationType.handleChange}
-                              onBlur={validationType.handleBlur}
-                              value={validationType.values.name || ""}
-                              invalid={
-                                validationType.touched.name && validationType.errors.name ? true : false
-                              }
-                            />
-                            {validationType.touched.name && validationType.errors.name ? (
-                              <FormFeedback type="invalid">{validationType.errors.name}</FormFeedback>
-                            ) : null}
-
-                          </div>
-
-                          <div className="d-flex mb-3 justify-content-between">
-                            <Col xl={5}>
-                              <Input
-                                className="form-control login-input"
-                                name="icNum"
-                                type="text"
-                                placeholder="IC Number (As per IC)"
-                                value={icNumber}
-                                onChange={(e) => {
-                                  validationType.handleChange(e); // Call the formik handleChange
-                                  handleChange(e); // Call your custom handleChange
-                                }}
-                                onKeyDown={handleBackspace}
-                                onBlur={validationType.handleBlur}
-                                invalid={
-                                  validationType.touched.icNum && validationType.errors.icNum ? true : false
-                                }
-                              />
-                              {validationType.touched.icNum && validationType.errors.icNum ? (
-                                <FormFeedback type="invalid">{validationType.errors.icNum}</FormFeedback>
-                              ) : null}
-                            </Col>
-                            <Col xl={5}>
-                              <Input
-                                className="form-control login-input"
-                                name="name"
-                                type="text"
-                                placeholder="Age"
-                                value={age}
-                                disabled
-                              />
-                            </Col>
-
-
-                          </div>
-
-                          <div className="mb-3">
-                            <Input
-                              type="textarea"
-                              name="homeAddress"
-                              id="textarea"
-                              className="login-textarea"
-                              // onChange={e => {
-                              //   textareachange(e);
-                              // }}
-                              maxLength="50"
-                              rows="4"
-                              placeholder="Home Address"
-                              onChange={validationType.handleChange}
-                              onBlur={validationType.handleBlur}
-                              value={validationType.values.homeAddress || ""}
-                              invalid={
-                                validationType.touched.homeAddress && validationType.errors.homeAddress ? true : false
-                              }
-                            />
-                            {validationType.touched.homeAddress && validationType.errors.homeAddress ? (
-                              <FormFeedback type="invalid">{validationType.errors.homeAddress}</FormFeedback>
-                            ) : null}
-
-
-                          </div>
-                          <div className="d-flex mb-3 justify-content-between">
-                            <Col xl={5}>
-                              <Input
-                                className="form-control login-input text_1"
-                                name="mob_phone1"
-                                type="text"
-                                placeholder="Mobile Phone 1"
-                                onChange={handleChangePhone}
-                                onBlur={validationType.handleBlur}
-                                value={validationType.values.mob_phone1 || ""}
-                                invalid={validationType.touched.mob_phone1 && validationType.errors.mob_phone1}
-                              />
-                              {validationType.touched.mob_phone1 && validationType.errors.mob_phone1 ? (
-                                <FormFeedback type="invalid">{validationType.errors.mob_phone1}</FormFeedback>
-                              ) : null}
-                            </Col>
-                            <Col xl={5}>
-                              <Input
-                                className="form-control login-input text_1"
-                                name="phone2"
-                                type="text"
-                                placeholder="Mobile Phone 2"
-                                value={phoneNumber2}
-                                onChange={(event) => handleInputPhone(event, setPhoneNumber2)}
-                              />
-                            </Col>
-
-
-                          </div>
-                          <div className="mb-3">
-                            {/* <Label className="form-label">Email</Label> */}
-                            <Input
-                              id="email"
-                              name="email"
-                              className="form-control login-input text_1"
-                              placeholder="Email"
-                              type="email"
-                              onChange={(e) => {
-                                validationType.handleChange(e); // Call the formik handleChange
-                                handleChange(e); // Call your custom handleChange
-                              }}
-                              onKeyDown={handleBackspace}
-                              onBlur={validationType.handleBlur}
-                              invalid={
-                                validationType.touched.email && validationType.errors.email ? true : false
-                              }
-                            />
-                            {validationType.touched.email && validationType.errors.email ? (
-                              <FormFeedback type="invalid">{validationType.errors.email}</FormFeedback>
-                            ) : null}
-
-                          </div>
-
-                          <div className="d-flex justify-content-between mb-3">
-                            <Col xl={6} className="d-flex justify-content-between">
-                              {/* <Col xl={2} className="p-2">
-                                <Label className="form-label text_1">Ethnic:</Label>
-                              </Col> */}
-                              <Col xl={11}>
-                                <Select
-                                placeholder={"Ethnicity"}
-                                  options={ethnic_opt}
-                                  value={selectedEthnicOption}
-                                  styles={customStyles}
-                                  onChange={handleEthnicChange}
-                                  className="select2-selection text_1"
-                                />
-
-                                {showInput && (
-
-                                  <Col xl={12} className="d-flex justify-content-between mt-3">
-                                    <Col xl={1} className="mt-3">
-                                      <Tooltip
-                                        placement="bottom"
-                                        isOpen={tethnic}
-                                        target="TooltipEthnic"
-                                        toggle={() => {
-                                          settethnic(!tethnic);
-                                        }}
-                                      >
-
-                                        State your ethnicity here
-                                      </Tooltip>
-                                      <i
-                                        id="TooltipEthnic"
-                                        className="bx bxs-info-circle"
-                                        style={{ fontSize: '20px', color: 'blue' }}
-                                      ></i>
-
-                                    </Col>
-                                    <Col xl={10}>
-                                      <Input
-                                        id="name"
-                                        name="name"
-                                        className="form-control login-input text_1"
-                                        placeholder="Other ethnicity"
-                                        type="text"
-
-                                      />
-
-                                    </Col>
-                                  </Col>
-
-                                )}
-
-                              </Col>
-                            </Col>
-                            <Col xl={6} className="d-flex justify-content-between">
-                              <Col xl={1} className="p-2">
-                                {/* <Label className="form-label text_1">Religion:</Label> */}
-                              </Col>
-                              <Col xl={11}>
-                                <Select
-                                placeholder={"Religion"}
-                                  options={religion_opt}
-                                  styles={customStyles}
-                                  value={selectedReligionOption}
-                                  onChange={handleReligionChange}
-                                  className="select2-selection text_1"
-                                />
-
-                                {showInput2 && (
-
-                                  <Col xl={12} className="d-flex justify-content-between mt-3">
-                                    <Col xl={1} className="mt-3">
-                                      <Tooltip
-                                        placement="bottom"
-                                        isOpen={treligion}
-                                        target="TooltipReligion"
-                                        toggle={() => {
-                                          settreligion(!treligion);
-                                        }}
-                                      >
-
-                                        State your religion here
-                                      </Tooltip>
-                                      <i
-                                        id="TooltipReligion"
-                                        className="bx bxs-info-circle"
-                                        style={{ fontSize: '20px', color: 'blue' }}
-                                      ></i>
-
-                                    </Col>
-                                    <Col xl={10}>
-                                      <Input
-                                        id="email"
-                                        name="email"
-                                        className="form-control login-input text_1"
-                                        placeholder="Other religion"
-                                        type="email"
-
-                                      />
-
-                                    </Col>
-                                  </Col>
-
-                                )}
-
-                              </Col>
-
-                            </Col>
-                          </div>
-
-                          <div className="d-flex justify-content-between mb-3 mt-3">
-                            <Col xl={6} className="d-flex justify-content-between">
-                              {/* <Col xl={2} className="p-2">
-                                <Label className="form-label text_1">Sex:</Label>
-
-                              </Col> */}
-                              <Col xl={11}>
-                                <Select
-                                  placeholder={"Sex"}
-                                  options={sex_opt}
-                                  styles={customStyles}
-                                  className="select2-selection text_1"
-                                />
-                              </Col>
-
-                            </Col>
-                            <Col xl={6} className="d-flex justify-content-between">
-                              <Col xl={1} className="p-2">
-                                {/* <Label className="form-label text_1">Marital Status:</Label> */}
-
-                              </Col>
-                              <Col xl={11}>
-                                <Select
-                                placeholder={"Marital Status"}
-                                  options={marital_status_opt}
-                                  styles={customStyles}
-                                  className="select2-selection text_1"
-                                />
-                              </Col>
-
-                            </Col>
-                          </div>
-
-                          <div className="mb-3">
-
-                            <Input
-                              id="email"
-                              name="email"
-                              className="form-control login-input text_1"
-                              placeholder="Occupation"
-                              type="email"
-
-                            />
-                          </div>
-
-                          <div className="mb-3">
-                            <Input
-                              id="email"
-                              name="email"
-                              className="form-control login-input text_1"
-                              placeholder="Service"
-                              type="email"
-
-                            />
-                          </div>
-
-
-
-
-                          <div className="mb-3">
-                            <textarea
-                              className="form-control login-textarea text_1"
-                              placeholder="Permanent Address"
-                              rows={4}
-                              cols={50}
-                            />
-                          </div>
-
-
-
-                          <Link to="/register-file-upload" style={{ textDecoration: 'none' }}>
-                            <div className="mt-4 d-grid">
-                              <button
-                                className="btn btn-primary btn-block signIn_btn text_1"
-                                type="submit"
-                              >
-                                Next
-                              </button>
-                            </div>
-                          </Link>
-
-
-                        </Form>
-
-
-
-                      </div>
+                          <NavLink
+                            className={classnames({ current: activeTab === 1 })}
+                            onClick={() => {
+                              setactiveTab(1)
+                            }}
+                            disabled={!(passedSteps || []).includes(1)}
+                          >
+                            <span className="number">1.</span> Basic Details
+                          </NavLink>
+                        </NavItem>
+                        <NavItem
+                          className={classnames({ current: activeTab === 2 })}
+                        >
+                          <NavLink
+                            className={classnames({ active: activeTab === 2 })}
+                            onClick={() => {
+                              setactiveTab(2)
+                            }}
+                            disabled={!(passedSteps || []).includes(2)}
+                          >
+                            <span className="number">2.</span> Upload
+                            Document
+                          </NavLink>
+                        </NavItem>
+                        <NavItem
+                          className={classnames({ current: activeTab === 3 })}
+                        >
+                          <NavLink
+                            className={classnames({ active: activeTab === 3 })}
+                            onClick={() => {
+                              setactiveTab(3)
+                            }}
+                            disabled={!(passedSteps || []).includes(3)}
+                          >
+                            <span className="number">3.</span> Nominee Details
+                          </NavLink>
+                        </NavItem>
+                        <NavItem
+                          className={classnames({ current: activeTab === 4 })}
+                        >
+                          <NavLink
+                            className={classnames({ active: activeTab === 4 })}
+                            onClick={() => {
+                              setactiveTab(4)
+                            }}
+                            disabled={!(passedSteps || []).includes(4)}
+                          >
+                            <span className="number">4.</span> Confirm Detail
+                          </NavLink>
+                        </NavItem>
+                      </ul>
                     </div>
+                    <div className="content clearfix">
+                      <TabContent activeTab={activeTab} className="body">
+                        <TabPane tabId={1}>
+                          <Form>
+                            <Row>
+                              <Col lg="6">
+                                <div className="mb-3">
+                                  <Label for="basicpill-firstname-input1">
+                                    Name
+                                  </Label>
+                                  <Input
+                                    type="text"
+                                    className="form-control"
+                                    id="basicpill-firstname-input1"
+                                    placeholder="Enter Your Name"
+                                  />
+                                </div>
+                              </Col>
+                              <Col lg="6">
+                                <div className="mb-3">
+                                  <Label for="basicpill-lastname-input2">
+                                    IC Number
+                                  </Label>
+                                  <Input
+                                    type="text"
+                                    className="form-control"
+                                    id="basicpill-lastname-input2"
+                                    placeholder="Enter Your IC Number"
+                                  />
+                                </div>
+                              </Col>
+                            </Row>
 
-                    {/* <div className="mt-4 mt-md-5 text-center">
-                      <p className="mb-0">
-                        ©{" "}
-                        {new Date().getFullYear()}
-                        Skote. Crafted with{" "}
-                        <i className="mdi mdi-heart text-danger"></i> by
-                        Themesbrand
-                      </p>
-                    </div> */}
+                            <Row>
+                              <Col lg="6">
+                                <div className="mb-3">
+                                  <Label for="basicpill-phoneno-input3">
+                                    Age
+                                  </Label>
+                                  <Input
+                                    type="text"
+                                    className="form-control"
+                                    id="basicpill-phoneno-input3"
+                                    placeholder="Enter Your Age."
+                                  />
+                                </div>
+                              </Col>
+                              <Col lg="6">
+                                <div className="mb-3">
+                                  <Label for="basicpill-email-input4">
+                                    Email
+                                  </Label>
+                                  <Input
+                                    type="email"
+                                    className="form-control"
+                                    id="basicpill-email-input4"
+                                    placeholder="Enter Your Email ID"
+                                  />
+                                </div>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col lg="6">
+                                <div className="mb-3">
+                                  <Label for="basicpill-address-input1">
+                                  Temporary Address
+                                  </Label>
+                                  <textarea
+                                    id="basicpill-address-input1"
+                                    className="form-control"
+                                    rows="2"
+                                    placeholder="Enter Your Temporary Address"
+                                  />
+                                </div>
+                              </Col>
+                              <Col lg="6">
+                                <div className="mb-3">
+                                  <Label for="basicpill-address-input1">
+                                    Permanent Address
+                                  </Label>
+                                  <textarea
+                                    id="basicpill-address-input1"
+                                    className="form-control"
+                                    rows="2"
+                                    placeholder="Enter Your Permanent Address"
+                                  />
+                                </div>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col lg="6">
+                                <div className="mb-3">
+                                  <Label for="basicpill-firstname-input1">
+                                    Mobile Number 1
+                                  </Label>
+                                  <Input
+                                    type="text"
+                                    className="form-control"
+                                    id="basicpill-firstname-input1"
+                                    placeholder="Enter Your Mobile Number 1"
+                                  />
+                                </div>
+                              </Col>
+                              <Col lg="6">
+                                <div className="mb-3">
+                                  <Label for="basicpill-lastname-input2">
+                                  Mobile Number 2
+                                  </Label>
+                                  <Input
+                                    type="text"
+                                    className="form-control"
+                                    id="basicpill-lastname-input2"
+                                    placeholder="Enter Your Mobile Number 2"
+                                  />
+                                </div>
+                              </Col>
+                            </Row>
+                            <Row>
+                                <Col lg="6">
+                                  <div className="mb-3">
+                                    <Label for="basicpill-namecard-input11">
+                                      Ethinicity
+                                    </Label>
+                                    <select className="form-select">
+                                      <option defaultValue>
+                                        Select Ethinicity
+                                      </option>
+                                      <option value="AE">
+                                        American Express
+                                      </option>
+                                      <option value="VI">Visa</option>
+                                      <option value="MC">MasterCard</option>
+                                      <option value="DI">Discover</option>
+                                    </select>
+                                  </div>
+                                </Col>
+
+                                <Col lg="6">
+                                  <div className="mb-3">
+                                    <Label>Religion</Label>
+                                    <select className="form-select">
+                                      <option defaultValue>
+                                      Select Religion
+                                      </option>
+                                      <option value="AE">
+                                        American Express
+                                      </option>
+                                      <option value="VI">Visa</option>
+                                      <option value="MC">MasterCard</option>
+                                      <option value="DI">Discover</option>
+                                    </select>
+                                  </div>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col lg="6">
+                                  <div className="mb-3">
+                                    <Label for="basicpill-namecard-input11">
+                                      Sex
+                                    </Label>
+                                    <select className="form-select">
+                                      <option defaultValue>
+                                        Select Sex
+                                      </option>
+                                      <option value="AE">
+                                        American Express
+                                      </option>
+                                      <option value="VI">Visa</option>
+                                      <option value="MC">MasterCard</option>
+                                      <option value="DI">Discover</option>
+                                    </select>
+                                  </div>
+                                </Col>
+
+                                <Col lg="6">
+                                  <div className="mb-3">
+                                    <Label> Marital Status</Label>
+                                    <select className="form-select">
+                                      <option defaultValue>
+                                      Select Marital Status
+                                      </option>
+                                      <option value="AE">
+                                        American Express
+                                      </option>
+                                      <option value="VI">Visa</option>
+                                      <option value="MC">MasterCard</option>
+                                      <option value="DI">Discover</option>
+                                    </select>
+                                  </div>
+                                </Col>
+                              </Row>
+                              <Row>
+                              <Col lg="6">
+                                <div className="mb-3">
+                                  <Label for="basicpill-firstname-input1">
+                                    Occupation
+                                  </Label>
+                                  <Input
+                                    type="text"
+                                    className="form-control"
+                                    id="basicpill-firstname-input1"
+                                    placeholder="Enter Your Occupation"
+                                  />
+                                </div>
+                              </Col>
+                              <Col lg="6">
+                                <div className="mb-3">
+                                  <Label for="basicpill-lastname-input2">
+                                    Service
+                                  </Label>
+                                  <Input
+                                    type="text"
+                                    className="form-control"
+                                    id="basicpill-lastname-input2"
+                                    placeholder="Enter Your Service"
+                                  />
+                                </div>
+                              </Col>
+                            </Row>
+                          </Form>
+                        </TabPane>
+                        <TabPane tabId={2}>
+                          <div>
+                            <Form>
+                              <Row>
+                                <Col lg="6">
+                                  <div className="mb-3">
+                                  <Label for="basicpill-pancard-input5">
+                                      Mykad-Front
+                                    </Label>
+                                  <Dropzone
+                                    onDrop={acceptedFiles => {
+                                      handleAcceptedFiles(acceptedFiles)
+                                    }}
+                                  >
+                                    {({ getRootProps, getInputProps }) => (
+                                      <div className="dropzone">
+                                        <div
+                                          className="dz-message needsclick mt-2"
+                                          {...getRootProps()}
+                                        >
+                                          <input {...getInputProps()} />
+                                          <div className="mb-3">
+                                            <i className="display-4 text-muted bx bxs-cloud-upload" />
+                                          </div>
+                                          <h4>Drop files here or click to upload.</h4>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </Dropzone>
+                                  <div className="dropzone-previews mt-3" id="file-previews">
+                                    {selectedFiles.map((f, i) => {
+                                      return (
+                                        <Card
+                                          className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+                                          key={i + "-file"}
+                                        >
+                                          <div className="p-2">
+                                            <Row className="align-items-center">
+                                              <Col className="col-auto">
+                                                <img
+                                                  data-dz-thumbnail=""
+                                                  height="80"
+                                                  className="avatar-sm rounded bg-light"
+                                                  alt={f.name}
+                                                  src={f.preview}
+                                                />
+                                              </Col>
+                                              <Col>
+                                                <Link
+                                                  to="#"
+                                                  className="text-muted font-weight-bold"
+                                                >
+                                                  {f.name}
+                                                </Link>
+                                                <p className="mb-0">
+                                                  <strong>{f.formattedSize}</strong>
+                                                </p>
+                                              </Col>
+                                            </Row>
+                                          </div>
+                                        </Card>
+                                      )
+                                    })}
+                                  </div>
+                                    {/* <Label for="basicpill-pancard-input5">
+                                      PAN Card
+                                    </Label>
+                                    <Input
+                                      type="text"
+                                      className="form-control"
+                                      id="basicpill-pancard-input5"
+                                      placeholder="Enter Your PAN No."
+                                    /> */}
+                                  </div>
+                                </Col>
+
+                                <Col lg="6">
+                                  <div className="mb-3">
+                                  <Label for="basicpill-pancard-input6">
+                                      Mykad-Back
+                                    </Label>
+                                  <Dropzone
+                                    onDrop={acceptedFiles => {
+                                      handleAcceptedFiles(acceptedFiles)
+                                    }}
+                                  >
+                                    {({ getRootProps, getInputProps }) => (
+                                      <div className="dropzone">
+                                        <div
+                                          className="dz-message needsclick mt-2"
+                                          {...getRootProps()}
+                                        >
+                                          <input {...getInputProps()} />
+                                          <div className="mb-3">
+                                            <i className="display-4 text-muted bx bxs-cloud-upload" />
+                                          </div>
+                                          <h4>Drop files here or click to upload.</h4>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </Dropzone>
+                                  <div className="dropzone-previews mt-3" id="file-previews">
+                                    {selectedFiles.map((f, i) => {
+                                      return (
+                                        <Card
+                                          className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+                                          key={i + "-file"}
+                                        >
+                                          <div className="p-2">
+                                            <Row className="align-items-center">
+                                              <Col className="col-auto">
+                                                <img
+                                                  data-dz-thumbnail=""
+                                                  height="80"
+                                                  className="avatar-sm rounded bg-light"
+                                                  alt={f.name}
+                                                  src={f.preview}
+                                                />
+                                              </Col>
+                                              <Col>
+                                                <Link
+                                                  to="#"
+                                                  className="text-muted font-weight-bold"
+                                                >
+                                                  {f.name}
+                                                </Link>
+                                                <p className="mb-0">
+                                                  <strong>{f.formattedSize}</strong>
+                                                </p>
+                                              </Col>
+                                            </Row>
+                                          </div>
+                                        </Card>
+                                      )
+                                    })}
+                                    </div>
+                                   
+                                  </div>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col lg="6">
+                                  <div className="mb-3">
+                                  <Label for="basicpill-pancard-input5">
+                                      Utility-Bill
+                                    </Label>
+                                  <Dropzone
+                                    onDrop={acceptedFiles => {
+                                      handleAcceptedFiles(acceptedFiles)
+                                    }}
+                                  >
+                                    {({ getRootProps, getInputProps }) => (
+                                      <div className="dropzone">
+                                        <div
+                                          className="dz-message needsclick mt-2"
+                                          {...getRootProps()}
+                                        >
+                                          <input {...getInputProps()} />
+                                          <div className="mb-3">
+                                            <i className="display-4 text-muted bx bxs-cloud-upload" />
+                                          </div>
+                                          <h4>Drop files here or click to upload.</h4>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </Dropzone>
+                                  <div className="dropzone-previews mt-3" id="file-previews">
+                                    {selectedFiles.map((f, i) => {
+                                      return (
+                                        <Card
+                                          className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+                                          key={i + "-file"}
+                                        >
+                                          <div className="p-2">
+                                            <Row className="align-items-center">
+                                              <Col className="col-auto">
+                                                <img
+                                                  data-dz-thumbnail=""
+                                                  height="80"
+                                                  className="avatar-sm rounded bg-light"
+                                                  alt={f.name}
+                                                  src={f.preview}
+                                                />
+                                              </Col>
+                                              <Col>
+                                                <Link
+                                                  to="#"
+                                                  className="text-muted font-weight-bold"
+                                                >
+                                                  {f.name}
+                                                </Link>
+                                                <p className="mb-0">
+                                                  <strong>{f.formattedSize}</strong>
+                                                </p>
+                                              </Col>
+                                            </Row>
+                                          </div>
+                                        </Card>
+                                      )
+                                    })}
+                                    </div>
+                                  </div>
+                                </Col>
+
+                               
+                              </Row>
+                             
+                            </Form>
+                          </div>
+                        </TabPane>
+                        <TabPane tabId={3}>
+                          <div>
+                            <Form>
+                            <Row>
+                                <Col lg="12">
+                                <h4 className="card-title std_font text-center mb-3">DECLARATIONS</h4>
+                                                        <h6 className="text-left font12">1. I hereby agree to abide by the current By-Laws and Rules of the Co-operative, as well as any amendments formally made during the period of my membership.  I also declare that I am not a bankrupt, nor have any criminal proceedings been taken against me, nor has my membership been removed prematurely from any other cooperative in the last one year.
+                                                            <br></br><br></br>
+                                                            2. I am a Malaysian citizen and have reached the age of 18 years old, residing in, working in, or owning land/property in the Co-operative's area of operation.
+                                                            <br></br><br></br>
+                                                            3. I hereby name the following as my nominee to receive my shares/interest.
+                                                            (for Non-Muslim
+                                                            members only)</h6>
+                                  </Col>
+                                  </Row>
+                              <Row>
+                                <Col lg="6">
+                                  <div className="mb-3">
+                                    <Label for="basicpill-namecard-input11">
+                                      Name as per Ic
+                                    </Label>
+                                    <Input
+                                      type="text"
+                                      className="form-control"
+                                      id="basicpill-namecard-input11"
+                                      placeholder="Enter Your Name"
+                                    />
+                                  </div>
+                                </Col>
+
+                                <Col lg="6">
+                                  <div className="mb-3">
+                                    <Label>Ic Number</Label>
+                                    <Input
+                                      type="text"
+                                      className="form-control"
+                                      id="basicpill-cardno-input12"
+                                      placeholder="Enter Ic Number"
+                                    />
+                                  </div>
+                                </Col>
+                              </Row>
+                              <Row>
+                               
+
+                                <Col lg="6">
+                                  <div className="mb-3">
+                                    <Label for="basicpill-card-verification-input0">
+                                      NRIC copy
+                                    </Label>
+                                    <Dropzone
+                                    onDrop={acceptedFiles => {
+                                      handleAcceptedFiles(acceptedFiles)
+                                    }}
+                                  >
+                                    {({ getRootProps, getInputProps }) => (
+                                      <div className="dropzone">
+                                        <div
+                                          className="dz-message needsclick mt-2"
+                                          {...getRootProps()}
+                                        >
+                                          <input {...getInputProps()} />
+                                          <div className="mb-3">
+                                            <i className="display-4 text-muted bx bxs-cloud-upload" />
+                                          </div>
+                                          <h4>Drop files here or click to upload.</h4>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </Dropzone>
+                                  <div className="dropzone-previews mt-3" id="file-previews">
+                                    {selectedFiles.map((f, i) => {
+                                      return (
+                                        <Card
+                                          className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+                                          key={i + "-file"}
+                                        >
+                                          <div className="p-2">
+                                            <Row className="align-items-center">
+                                              <Col className="col-auto">
+                                                <img
+                                                  data-dz-thumbnail=""
+                                                  height="80"
+                                                  className="avatar-sm rounded bg-light"
+                                                  alt={f.name}
+                                                  src={f.preview}
+                                                />
+                                              </Col>
+                                              <Col>
+                                                <Link
+                                                  to="#"
+                                                  className="text-muted font-weight-bold"
+                                                >
+                                                  {f.name}
+                                                </Link>
+                                                <p className="mb-0">
+                                                  <strong>{f.formattedSize}</strong>
+                                                </p>
+                                              </Col>
+                                            </Row>
+                                          </div>
+                                        </Card>
+                                      )
+                                    })}
+                                    </div>
+                                  </div>
+                                </Col>
+                                <Col lg="6">
+                                  <div className="mb-3">
+                                    <Label for="basicpill-cardno-input12">
+                                     Relationship
+                                    </Label>
+                                    <Input
+                                      type="text"
+                                      className="form-control"
+                                      id="basicpill-cardno-input12"
+                                      placeholder="Enter Relationship"
+                                    />
+                                  </div>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col lg="6">
+                                  <div className="mb-3">
+                                  <div className="form-check">
+                                  <Label for="basicpill-cardno-input12">
+                                     I have read and understood this declaration
+                                    </Label><br></br>
+                                    <Input
+                                      type="checkbox"
+                                      className="form-check-Input"
+                                      id="formrow-customCheck"
+                                    />
+                                    <Label
+                                      className="form-check-Label"
+                                      htmlFor="formrow-customCheck"
+                                    >
+                                     I agree to this Declarations
+                                    </Label>
+                                  </div>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </Form>
+                          </div>
+                        </TabPane>
+                        <TabPane tabId={4}>
+                          <div className="row justify-content-center">
+                            <Col lg="6">
+                              <div className="text-center">
+                                <div className="mb-4">
+                                  <i className="mdi mdi-check-circle-outline text-success display-4" />
+                                </div>
+                                <div>
+                                  <h5>Confirm Detail</h5>
+                                  <p className="text-muted">
+                                    If several languages coalesce, the grammar
+                                    of the resulting
+                                  </p>
+                                </div>
+                              </div>
+                            </Col>
+                          </div>
+                        </TabPane>
+                      </TabContent>
+                    </div>
+                    <div className="actions clearfix">
+                      <ul>
+                        <li
+                          className={
+                            activeTab === 1 ? "previous disabled" : "previous"
+                          }
+                        >
+                          <Link
+                            to="#"
+                            onClick={() => {
+                              toggleTab(activeTab - 1)
+                            }}
+                          >
+                            Previous
+                          </Link>
+                        </li>
+                        <li
+                          className={activeTab === 4 ? "next disabled" : "next"}
+                        >
+                          <Link
+                            to="#"
+                            onClick={() => {
+                              toggleTab(activeTab + 1)
+                            }}
+                          >
+                            Next
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </CardBody>
+              </Card>
             </Col>
+          
           </Row>
         </Container>
       </div>
     </React.Fragment>
-  );
+  )
+
 };
 
 export default Register3;
