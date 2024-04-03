@@ -105,13 +105,13 @@ const FormValidations = () => {
                                                     <h3 className="text-dark">GLCL0001</h3>
                                                 </div>
                                                 <div className="d-flex justify-content-center">
-                                                <div className="d-flex align-items-center gap-2">
-                                                    <span class="dot"></span>
-                                                    <div className="std_font">Active</div>
-                                                
+                                                    <div className="d-flex align-items-center gap-2">
+                                                        <span class="dot"></span>
+                                                        <div className="std_font">Active</div>
+
                                                     </div>
                                                 </div>
-                                               
+
                                             </div>
                                         </div>
                                     </div>
@@ -131,14 +131,45 @@ const FormValidations = () => {
                         <Col lg={6}>
                             <Card>
                                 <CardBody>
-                                    <CardTitle>Validation type</CardTitle>
-                                    <CardSubtitle className="mb-3">
-                                        Parsley is a availity reactstrap validation. It helps you
-                                        provide your users with feedback on their form submission
-                                        before sending it to your server.
-                                    </CardSubtitle>
-
-
+                                    <CardTitle>Profile Information</CardTitle>
+                                    <div>
+                                    <div className="mb-3 mt-3">
+                                        <label>Name</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="text"
+                                                disabled
+                                                defaultValue={"Sarah"}
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                        <label>IC Number</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="text"
+                                                disabled
+                                                defaultValue={"Sarah"}
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                        <label>Date of Birth</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="date"
+                                                disabled
+                                                defaultValue={"Sarah"}
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                        <label>Gender</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="text"
+                                                disabled
+                                                defaultValue={"Male"}
+                                            />
+                                        </div>
+                                    </div>
                                 </CardBody>
                             </Card>
                         </Col>

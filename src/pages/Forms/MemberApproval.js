@@ -80,7 +80,7 @@ const MemberApproval = () => {
       localStorage.setItem(`buttonsDisabled_${Uid}`, "true");
       if (e.target.value === '1') {
         toast.success('User accepted successfully!');
-    } else if (e.target.value === '2') {
+    } else {
         toast.success('User rejected successfully!');
     }
       }
