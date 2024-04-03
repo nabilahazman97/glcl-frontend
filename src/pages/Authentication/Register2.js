@@ -39,6 +39,7 @@ const Register3 = () => {
 
   const [icNumber, setICNumber] = useState('');
   const [age, setAge] = useState('');
+  const [age1, setAge1] = useState('');
   const [phoneNumber1, setPhoneNumber1] = useState('');
   const [phoneNumber2, setPhoneNumber2] = useState('');
   const [showInput, setShowInput] = useState(false);
@@ -67,8 +68,10 @@ const Register3 = () => {
     initialValues: {
       name: '' || '',
       icNum: '' || '',
+      age: '' || '',
       homeAddress: '' || '',
       mob_phone1: '' || '',
+      phone2: '' || '',
       email: '' || '',
       ethnicity: '' || '',
       religion: '' || '',
@@ -88,12 +91,15 @@ const Register3 = () => {
       nomnric: '',
       declareAgree: false,
     },
-    validationSchema: Yup.object({
-      // name: Yup.string().required("Name is reuired"),
-      // icNum: Yup.string().required("IC number is required"),
-      // homeAddress: Yup.string().required("Home address is required"),
-      // mob_phone1: Yup.string().required("Mobile phone number is required"),
+    validationSchema: Yup.object().shape({
+      name: Yup.string().required("Name is required"),
+      icNum: Yup.string().required("IC number is required"),
+      homeAddress: Yup.string().required("Home address is required"),
+      mob_phone1: Yup.string().required("Mobile phone number is required"),
       email: Yup.string().required("Email is required"),
+      // f_mykad: Yup.string().required("file1 is required"),
+      // b_mykad: Yup.string().required("file2 is required"),
+      // utilitybill: Yup.string().required("file 3 is required"),
       // occupation: Yup.string(),
     }),
     onSubmit: (values) => {
@@ -101,13 +107,38 @@ const Register3 = () => {
       console.log(values);
       console.log(selectedFiles1[0]);
       const formData = new FormData();
-     formData.append('f_mykad', selectedFiles1[0]);
-     formData.append('b_mykad', selectedFiles2[0]);
-     formData.append('utilitybill', selectedFiles3[0]);
-     formData.append('nomnric', selectedFiles4[0]);
+      formData.append('f_mykad', selectedFiles1[0]);
+      formData.append('b_mykad', selectedFiles2[0]);
+      formData.append('utilitybill', selectedFiles3[0]);
+      formData.append('nomnric', selectedFiles4[0]);
+      formData.append('email', values.email);
+      formData.append('Username', values.name);
+      formData.append('icnumber', values.icNum);
+      formData.append('age', age1);
+      formData.append('haddress', values.homeAddress);
+      formData.append('phonenum', values.mob_phone1);
+      formData.append('altnum', phoneNumber2);
+      formData.append('ethnic', values.ethnicity);
+      formData.append('religion', values.religion);
+      formData.append('sex', values.sex);
+      formData.append('mstatus', values.mstatus);
+      formData.append('occupation', values.occupation);
+      formData.append('service', values.service);
+      formData.append('paddress', values.address);
+      formData.append('declarion', values.declareName);
+      formData.append('nomicnum', values.declareIcNum);
+      formData.append('nomrelaship', values.declareRelay);
+      // formData.append('email', values.declareAgree);
+
+
+
+
+
+
       console.log(formData);
       values.f_mykad = selectedFiles1;
       // 
+
 
       //  formData.append('f_mykad', selectedFiles1);
 
@@ -140,6 +171,7 @@ const Register3 = () => {
     );
     setSelectedFiles(formattedFiles);
   }
+
 
   function formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return "0 Bytes";
@@ -210,9 +242,13 @@ const Register3 = () => {
     if (!isNaN(year)) {
       const age = calculateAge(year);
       setAge(`${age} years old`);
+      setAge1(`${age}`);
+
+      console.log(age);
     } else {
-      setAge('');
+      setAge(age);
     }
+
   };
 
   const calculateAge = (year) => {
@@ -452,11 +488,12 @@ const Register3 = () => {
                                     <Col lg="6">
                                       <Input
                                         className="form-control login-input"
-                                        name="name"
+                                        name="age"
                                         type="text"
                                         placeholder="Age"
                                         value={age}
                                         disabled
+                                        onChange={validation.handleChange}
                                       />
                                     </Col>
                                   </Row>
@@ -522,10 +559,7 @@ const Register3 = () => {
                                         className="form-control login-input text_1 mt-3 mb-3"
                                         placeholder="Email"
                                         type="email"
-                                        onChange={(e) => {
-                                          validation.handleChange(e); // Call the formik handleChange
-                                          handleChange(e); // Call your custom handleChange
-                                        }}
+                                        onChange={validation.handleChange}
                                         onKeyDown={handleBackspace}
                                         onBlur={validation.handleBlur}
                                         invalid={
@@ -724,10 +758,6 @@ const Register3 = () => {
 
 
                                   </Row>
-
-
-
-
                                 </TabPane>
                                 <TabPane tabId={2}>
                                   <div>
@@ -782,6 +812,8 @@ const Register3 = () => {
                                       </div>
 
                                     </div>
+                                    
+                                   
                                     <div className="mb-3">
 
                                       <CardSubtitle className="mb-3 std_font">
@@ -831,6 +863,8 @@ const Register3 = () => {
                                       </div>
 
                                     </div>
+                                   
+                                    
                                     <div className="mb-5">
 
                                       <CardSubtitle className="mb-3 std_font">
@@ -880,7 +914,7 @@ const Register3 = () => {
                                       </div>
 
                                     </div>
-
+                                    
 
                                   </div>
                                 </TabPane>
@@ -907,7 +941,7 @@ const Register3 = () => {
                                             className="form-control login-input text_1"
                                             placeholder="Name (As per IC)"
                                             type="text"
-
+                                            onChange={validation.handleChange}
                                           />
                                         </div>
                                         <div className=" mb-3">
@@ -917,7 +951,7 @@ const Register3 = () => {
                                             className="form-control login-input text_1"
                                             placeholder="IC Number"
                                             type="text"
-
+                                            onChange={validation.handleChange}
                                           />
                                         </div>
                                         <div className=" mb-3">
@@ -927,7 +961,7 @@ const Register3 = () => {
                                             className="form-control login-input text_1"
                                             placeholder="Relationship"
                                             type="text"
-
+                                            onChange={validation.handleChange}
                                           />
                                         </div>
 
@@ -1012,7 +1046,7 @@ const Register3 = () => {
                                         <div>
                                           <h5>Registration Successful!</h5>
                                           <p className="text-muted mt-3">
-                                          Your registration details have been submitted for review. Once your document is verified, you will receive an email notification confirming your account activation.  
+                                            Your registration details have been submitted for review. Once your document is verified, you will receive an email notification confirming your account activation.
                                           </p>
                                         </div>
                                       </div>
@@ -1039,7 +1073,7 @@ const Register3 = () => {
                                     className={` ${activeTab === 4 ? "d-none" : ""}`}
                                     to="#"
                                     onClick={() => {
-                                      toggleTab(activeTab + 1)
+                                      toggleTab(activeTab + 1);
                                     }}
                                   >
                                     Next
@@ -1051,9 +1085,20 @@ const Register3 = () => {
                                     <button
                                       className={`btn btn-primary btn-block mt-5 signIn_btn col-12 ${activeTab === 3 ? "" : "d-none"}`}
                                       type="submit"
-                                      onClick={() => {
-                                        toggleTab(activeTab + 1)
-                                      }}
+                                       onClick={() => {
+                                      // Validate the form
+                                      validation.validateForm().then(errors => {
+                                        if (Object.keys(errors).length === 0) {
+                                          // If there are no validation errors, proceed to the next step
+                                          toggleTab(activeTab + 1);
+                                        } else {
+                                          // If there are validation errors, display them
+                                          validation.setTouched({
+                                            ...Object.keys(errors).reduce((acc, key) => ({ ...acc, [key]: true }), {})
+                                          });
+                                        }
+                                      });
+                                    }}
                                     >
                                       Register
                                     </button>
