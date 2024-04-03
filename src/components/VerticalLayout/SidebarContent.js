@@ -164,7 +164,7 @@ const SidebarContent = props => {
                   <Link to="/tables-datatable">{props.t("MEMBER REGISTRATION LIST")}</Link>
                 </li>
                 <li style={{ whiteSpace: "nowrap" }}>
-                  <Link to="/member-profile-list">{props.t("MEMBER PROFILE")}</Link>
+                  <Link to="/member-profile-list">{props.t("MEMBER LIST")}</Link>
                 </li>
               </ul>
             </li>
