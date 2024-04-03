@@ -99,9 +99,12 @@ const Register3 = () => {
     onSubmit: (values) => {
       // const formData = new FormData();
       console.log(values);
-      console.log(selectedFiles1);
+      console.log(selectedFiles1[0]);
       const formData = new FormData();
-      formData.append('file', selectedFiles1);
+     formData.append('f_mykad', selectedFiles1[0]);
+     formData.append('b_mykad', selectedFiles2[0]);
+     formData.append('utilitybill', selectedFiles3[0]);
+     formData.append('nomnric', selectedFiles4[0]);
       console.log(formData);
       values.f_mykad = selectedFiles1;
       // 
