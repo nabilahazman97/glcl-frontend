@@ -175,7 +175,7 @@ useEffect(() => {
                             </label>
                           </div> */}
 
-                          <div className="mt-4 d-grid">
+                          <div className="mt-5 text-center">
                             <button
                               className="btn btn-primary btn-block signIn_btn"
                               type="submit"

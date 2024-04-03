@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -101,12 +101,12 @@ const Register3 = () => {
       console.log(values);
       console.log(selectedFiles1);
       const formData = new FormData();
-     formData.append('file', selectedFiles1);
+      formData.append('file', selectedFiles1);
       console.log(formData);
       values.f_mykad = selectedFiles1;
       // 
 
-    //  formData.append('f_mykad', selectedFiles1);
+      //  formData.append('f_mykad', selectedFiles1);
 
       values.b_mykad = selectedFiles2;
       values.utilitybill = selectedFiles3;
@@ -114,14 +114,14 @@ const Register3 = () => {
       values.declareAgree = document.getElementById("defaultCheck1").checked;
 
       // useEffect(() => {
-        // console.log("hi");
-        axios.post(apiname.base_url+apiname.register, formData, {
-          headers: {
-            'Authorization': 'Basic '+ apiname.encoded
-          }
-        })
+      // console.log("hi");
+      axios.post(apiname.base_url + apiname.register, formData, {
+        headers: {
+          'Authorization': 'Basic ' + apiname.encoded
+        }
+      })
         // .then(res =>console.log(res['data']['result']))
-        .then(res =>console.log(res['data']['result']))
+        .then(res => console.log(res['data']['result']))
         .catch(err => console.log(err));
       // }, []);
 
@@ -1007,10 +1007,9 @@ const Register3 = () => {
                                           <i className="mdi mdi-check-circle-outline text-success display-4" />
                                         </div>
                                         <div>
-                                          <h5>Confirm Detail</h5>
-                                          <p className="text-muted">
-                                            If several languages coalesce, the grammar
-                                            of the resulting
+                                          <h5>Registration Successful!</h5>
+                                          <p className="text-muted mt-3">
+                                          Your registration details have been submitted for review. Once your document is verified, you will receive an email notification confirming your account activation.  
                                           </p>
                                         </div>
                                       </div>
@@ -1021,12 +1020,9 @@ const Register3 = () => {
                             </div>
                             <div className="actions clearfix">
                               <ul>
-                                <li
-                                  className={
-                                    activeTab === 1 ? "previous disabled" : "previous"
-                                  }
-                                >
+                                <li className={activeTab === 1 ? "previous disabled" : "previous"}>
                                   <Link
+                                    className={` ${activeTab === 4 ? "d-none" : ""}`}
                                     to="#"
                                     onClick={() => {
                                       toggleTab(activeTab - 1)
@@ -1035,10 +1031,9 @@ const Register3 = () => {
                                     Previous
                                   </Link>
                                 </li>
-                                <li
-                                  className={activeTab === 4 ? "next disabled" : "next"}
-                                >
+                                <li className={activeTab === 3 ? "next d-none" : "next"}>
                                   <Link
+                                    className={` ${activeTab === 4 ? "d-none" : ""}`}
                                     to="#"
                                     onClick={() => {
                                       toggleTab(activeTab + 1)
@@ -1046,25 +1041,30 @@ const Register3 = () => {
                                   >
                                     Next
                                   </Link>
-
                                 </li>
-                               
-                              </ul>
-                            </div>
-                          </div>
+                                <div className="col-12">
+                                  <div className="text-center">
 
-                                    
-                          <li className={activeTab === 4 ? "next display" : "next"}>
-                                  {activeTab === 3 && ( // Only render the Link component if activeTab is 4
-                                      <button
-                                     
-                                      className="btn btn-primary btn-block signIn_btn col-12"
+                                    <button
+                                      className={`btn btn-primary btn-block mt-5 signIn_btn col-12 ${activeTab === 3 ? "" : "d-none"}`}
                                       type="submit"
+                                      onClick={() => {
+                                        toggleTab(activeTab + 1)
+                                      }}
                                     >
                                       Register
                                     </button>
-                                  )}
-                                </li>
+
+
+                                  </div>
+                                </div>
+                              </ul>
+                            </div>
+
+                          </div>
+
+
+
 
                         </Form>
 
