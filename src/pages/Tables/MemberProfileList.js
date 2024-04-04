@@ -1,5 +1,5 @@
 // src/components/filter.
-import React, { useMemo } from "react";
+import React, { useMemo,useState,useEffect } from "react";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 
@@ -7,35 +7,49 @@ import { Link } from "react-router-dom";
 import Breadcrumbs from '../../components/Common/Breadcrumb';
 import TableContainer from '../../components/Common/TableContainer';
 import { Button } from 'reactstrap';
+import axios from "axios";
+import * as apiname from "../../helpers/url_helper";
 
 import './datatables.scss';
 
-function DatatableTables() {
+function MemberList() {
+    const [data, setdata] = useState([]);
+    useEffect(() => {
+        // console.log("hi");
+        axios.get(apiname.base_url+apiname.USER_LIST, {
+          headers: {
+            'Authorization': 'Basic '+ apiname.encoded
+          }
+        })
+        // .then(res =>console.log(res['data']['result']))
+        .then(res => {
+            const filteredData = res.data.result.filter(item => item.ustatus === 1);
+            setdata(filteredData);
+        })
+        .catch(err => console.log(err));
+      }, []);
+
     const columns = useMemo(
         () => [
             {
                 Header: 'Name',
-                accessor: 'name',
+                accessor: 'Username',
             },
             {
-                Header: 'NRIC No.',
-                accessor: 'icNum'
+                Header: 'Email',
+                accessor: 'emailid'
             },
 
             {
-                Header: 'Membership ID',
-                accessor: 'memberid'
-            },
-            {
-                Header: 'Email Address',
-                accessor: 'email'
+                Header: 'Phone Number',
+                accessor: 'phonenum'
             },
             {
                 Header: 'Actions',
                 accessor: 'actions',
                 Cell: ({ row }) => (
                     <div className="d-flex flex-wrap gap-2 justify-content-center">
-                        <Link to="/member-profile">
+                        <Link to={`/member-profile/${row.original.Uid}`} style={{ textDecoration: 'none' }}>
                         <button
                                 type="button"
                                 className="btn btn-primary rejectBtn"
@@ -59,23 +73,23 @@ function DatatableTables() {
         []
     );
 
-    const data = [
-        {
-            "name": "Tony Lee",
-            "icNum": "873939-01-0389",
-            "memberid": "2",
-            "email": "tony@gmail.com",
-        },
-        {
-            "name": "Sarah J",
-            "icNum": "83939-01-0378",
-            "memberid": "1",
-            "email": "sarah@gmail.com",
-        },
+    // const data = [
+    //     {
+    //         "name": "Tony Lee",
+    //         "icNum": "873939-01-0389",
+    //         "memberid": "2",
+    //         "email": "tony@gmail.com",
+    //     },
+    //     {
+    //         "name": "Sarah J",
+    //         "icNum": "83939-01-0378",
+    //         "memberid": "1",
+    //         "email": "sarah@gmail.com",
+    //     },
         
 
 
-    ];
+    // ];
 
     //meta title
     document.title = "GLCL";
@@ -97,10 +111,10 @@ function DatatableTables() {
         </div>
     );
 }
-DatatableTables.propTypes = {
+MemberList.propTypes = {
     preGlobalFilteredRows: PropTypes.any,
 
 };
 
 
-export default DatatableTables;
+export default MemberList;
