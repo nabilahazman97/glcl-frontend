@@ -120,6 +120,7 @@ import BasicTables from "../pages/Tables/BasicTables";
 import DatatableTables from "../pages/Tables/DatatableTables";
 import MemberApproval from "../pages/Forms/MemberApproval";
 import MemberProfileList from "../pages/Tables/MemberProfileList";
+import MemberProfile from "../pages/Tables/MemberProfile";
 import ResponsiveTables from "../pages/Tables/ResponsiveTables";
 import DragDropTables from "../pages/Tables/DragDropTables";
 
@@ -287,6 +288,7 @@ const authProtectedRoutes = [
   { path: "/tables-basic", component: <BasicTables /> },
   { path: "/tables-datatable", component: <DatatableTables /> },
   { path: "/member-profile-list", component: <MemberProfileList /> },
+  { path: "/member-profile", component: <MemberProfile /> },
   { path: "/tables-responsive", component: <ResponsiveTables /> },
   { path: "/tables-dragndrop", component: <DragDropTables /> },
 

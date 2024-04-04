@@ -1,6 +1,7 @@
 // src/components/filter.
 import React, { useMemo } from "react";
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 
 //import components
 import Breadcrumbs from '../../components/Common/Breadcrumb';
@@ -34,6 +35,16 @@ function DatatableTables() {
                 accessor: 'actions',
                 Cell: ({ row }) => (
                     <div className="d-flex flex-wrap gap-2 justify-content-center">
+                        <Link to="/member-profile">
+                        <button
+                                type="button"
+                                className="btn btn-primary rejectBtn"
+                            >
+                                <i className="mdi mdi-eye-outline font-size-16 align-middle me-1"></i>{" "}
+                                View
+                            </button>
+                        </Link>
+                        
                         <button
                             type="button"
                             className="btn btn-danger rejectBtn"

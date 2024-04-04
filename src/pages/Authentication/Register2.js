@@ -39,6 +39,7 @@ const Register3 = () => {
 
   const [icNumber, setICNumber] = useState('');
   const [age, setAge] = useState('');
+  const [age1, setAge1] = useState('');
   const [phoneNumber1, setPhoneNumber1] = useState('');
   const [phoneNumber2, setPhoneNumber2] = useState('');
   const [showInput, setShowInput] = useState(false);
@@ -67,8 +68,10 @@ const Register3 = () => {
     initialValues: {
       name: '' || '',
       icNum: '' || '',
+      age: '' || '',
       homeAddress: '' || '',
       mob_phone1: '' || '',
+      phone2: '' || '',
       email: '' || '',
       ethnicity: '' || '',
       religion: '' || '',
@@ -88,12 +91,18 @@ const Register3 = () => {
       nomnric: '',
       declareAgree: false,
     },
-    validationSchema: Yup.object({
-      // name: Yup.string().required("Name is reuired"),
-      // icNum: Yup.string().required("IC number is required"),
-      // homeAddress: Yup.string().required("Home address is required"),
-      // mob_phone1: Yup.string().required("Mobile phone number is required"),
+    validationSchema: Yup.object().shape({
+      name: Yup.string().required("Name is required"),
+      icNum: Yup.string().required("IC number is required"),
+      homeAddress: Yup.string().required("Home address is required"),
+      mob_phone1: Yup.string().required("Mobile phone number is required"),
       email: Yup.string().required("Email is required"),
+      f_mykad: Yup.string().required("File is required"),
+      b_mykad: Yup.string().required("File is required"),
+      utilitybill: Yup.string().required("File is required"),
+      nomnric: Yup.string().required("File is required"),
+      declareAgree: Yup.boolean().oneOf([true], 'You must agree to the declaration'),
+      // utilitybill: Yup.string().required("file 3 is required"),
       // occupation: Yup.string(),
     }),
     onSubmit: (values) => {
@@ -101,13 +110,38 @@ const Register3 = () => {
       console.log(values);
       console.log(selectedFiles1[0]);
       const formData = new FormData();
-     formData.append('f_mykad', selectedFiles1[0]);
-     formData.append('b_mykad', selectedFiles2[0]);
-     formData.append('utilitybill', selectedFiles3[0]);
-     formData.append('nomnric', selectedFiles4[0]);
+      formData.append('f_mykad', selectedFiles1[0]);
+      formData.append('b_mykad', selectedFiles2[0]);
+      formData.append('utilitybill', selectedFiles3[0]);
+      formData.append('nomnric', selectedFiles4[0]);
+      formData.append('email', values.email);
+      formData.append('Username', values.name);
+      formData.append('icnumber', values.icNum);
+      formData.append('age', age1);
+      formData.append('haddress', values.homeAddress);
+      formData.append('phonenum', values.mob_phone1);
+      formData.append('altnum', phoneNumber2);
+      formData.append('ethnic', values.ethnicity);
+      formData.append('religion', values.religion);
+      formData.append('sex', values.sex);
+      formData.append('mstatus', values.mstatus);
+      formData.append('occupation', values.occupation);
+      formData.append('service', values.service);
+      formData.append('paddress', values.address);
+      formData.append('declarion', values.declareName);
+      formData.append('nomicnum', values.declareIcNum);
+      formData.append('nomrelaship', values.declareRelay);
+      // formData.append('email', values.declareAgree);
+
+
+
+
+
+
       console.log(formData);
       values.f_mykad = selectedFiles1;
       // 
+
 
       //  formData.append('f_mykad', selectedFiles1);
 
@@ -131,15 +165,29 @@ const Register3 = () => {
     }
   });
 
-  function handleAcceptedFiles(files, setSelectedFiles) {
-    const formattedFiles = files.map(file =>
+  function handleAcceptedFiles(files, field) {
+    files.forEach(file => {
       Object.assign(file, {
         preview: URL.createObjectURL(file),
         formattedSize: formatBytes(file.size),
-      })
-    );
-    setSelectedFiles(formattedFiles);
+      });
+    });
+
+    if (field === "f_mykad") {
+      setSelectedFiles1(files);
+      validation.setFieldValue("f_mykad", files[0]);
+    } else if (field === "b_mykad") {
+      setSelectedFiles2(files);
+      validation.setFieldValue("b_mykad", files[0]);
+    } else if (field === "utilitybill") {
+      setSelectedFiles3(files);
+      validation.setFieldValue("utilitybill", files[0]);
+    } else if (field === "nomnric") {
+      setSelectedFiles4(files);
+      validation.setFieldValue("nomnric", files[0]);
+    }
   }
+
 
   function formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return "0 Bytes";
@@ -210,9 +258,13 @@ const Register3 = () => {
     if (!isNaN(year)) {
       const age = calculateAge(year);
       setAge(`${age} years old`);
+      setAge1(`${age}`);
+
+      console.log(age);
     } else {
-      setAge('');
+      setAge(age);
     }
+
   };
 
   const calculateAge = (year) => {
@@ -452,11 +504,12 @@ const Register3 = () => {
                                     <Col lg="6">
                                       <Input
                                         className="form-control login-input"
-                                        name="name"
+                                        name="age"
                                         type="text"
                                         placeholder="Age"
                                         value={age}
                                         disabled
+                                        onChange={validation.handleChange}
                                       />
                                     </Col>
                                   </Row>
@@ -466,7 +519,7 @@ const Register3 = () => {
                                         type="textarea"
                                         name="homeAddress"
                                         id="textarea"
-                                        className="login-textarea mt-3 mb-3"
+                                        className="login-textarea mt-3"
                                         // onChange={e => {
                                         //   textareachange(e);
                                         // }}
@@ -486,7 +539,7 @@ const Register3 = () => {
                                     </Col>
 
                                   </Row>
-                                  <Row>
+                                  <Row className="mt-3">
                                     <Col lg="6">
                                       <Input
                                         className="form-control login-input text_1"
@@ -519,13 +572,10 @@ const Register3 = () => {
                                       <Input
                                         id="email"
                                         name="email"
-                                        className="form-control login-input text_1 mt-3 mb-3"
+                                        className="form-control login-input text_1 mt-3"
                                         placeholder="Email"
                                         type="email"
-                                        onChange={(e) => {
-                                          validation.handleChange(e); // Call the formik handleChange
-                                          handleChange(e); // Call your custom handleChange
-                                        }}
+                                        onChange={validation.handleChange}
                                         onKeyDown={handleBackspace}
                                         onBlur={validation.handleBlur}
                                         invalid={
@@ -539,7 +589,7 @@ const Register3 = () => {
 
                                   </Row>
 
-                                  <Row>
+                                  <Row className="mt-3">
                                     <Col lg="6">
                                       <Col xl={11}>
                                         <Select
@@ -724,22 +774,22 @@ const Register3 = () => {
 
 
                                   </Row>
-
-
-
-
                                 </TabPane>
                                 <TabPane tabId={2}>
                                   <div>
 
-                                    <div className="mb-3">
+                                    <div className="mt-4">
                                       <h6 className="card-title std_font">Upload Documents</h6>
                                       <h6 className="font12">File size limit is 5MB.</h6>
                                       <CardSubtitle className="mb-3 std_font mt-4">
                                         MyKad - Front
                                       </CardSubtitle>
                                       {/* First Dropzone */}
-                                      <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles1)}>
+                                      <Dropzone
+                                        onDrop={acceptedFiles => {
+                                          handleAcceptedFiles(acceptedFiles, "f_mykad");
+                                        }}
+                                      >
                                         {({ getRootProps, getInputProps }) => (
                                           <div className="dropzone login-input">
                                             <div className="dz-message needsclick mt-2" {...getRootProps()}>
@@ -758,7 +808,7 @@ const Register3 = () => {
                                         {selectedFiles1.map((f, i) => (
                                           <Card
                                             className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
-                                            key={i + "-file1"}
+                                            key={i + "-f_mykad"}
                                           >
                                             <div className="p-2">
                                               <Row className="align-items-center">
@@ -781,14 +831,24 @@ const Register3 = () => {
                                         ))}
                                       </div>
 
+                                      {validation.errors.f_mykad && (
+                                        <div className="text-danger">{validation.errors.f_mykad}</div>
+                                      )}
+
                                     </div>
-                                    <div className="mb-3">
+
+
+                                    <div className="mt-4">
 
                                       <CardSubtitle className="mb-3 std_font">
                                         MyKad - Back
                                       </CardSubtitle>
                                       {/* Second Dropzone */}
-                                      <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles2)}>
+                                      <Dropzone
+                                        onDrop={acceptedFiles => {
+                                          handleAcceptedFiles(acceptedFiles, "b_mykad");
+                                        }}
+                                      >
                                         {({ getRootProps, getInputProps }) => (
                                           <div className="dropzone login-input">
                                             <div className="dz-message needsclick mt-2" {...getRootProps()}>
@@ -807,7 +867,7 @@ const Register3 = () => {
                                         {selectedFiles2.map((f, i) => (
                                           <Card
                                             className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
-                                            key={i + "-file2"}
+                                            key={i + "-b_mykad"}
                                           >
                                             <div className="p-2">
                                               <Row className="align-items-center">
@@ -830,14 +890,24 @@ const Register3 = () => {
                                         ))}
                                       </div>
 
+                                      {validation.errors.b_mykad && (
+                                        <div className="text-danger">{validation.errors.b_mykad}</div>
+                                      )}
+
                                     </div>
-                                    <div className="mb-5">
+
+
+                                    <div className="mt-4">
 
                                       <CardSubtitle className="mb-3 std_font">
                                         Utility Bill
                                       </CardSubtitle>
                                       {/* Third Dropzone */}
-                                      <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles3)}>
+                                      <Dropzone
+                                        onDrop={acceptedFiles => {
+                                          handleAcceptedFiles(acceptedFiles, "utilitybill");
+                                        }}
+                                      >
                                         {({ getRootProps, getInputProps }) => (
                                           <div className="dropzone login-input">
                                             <div className="dz-message needsclick mt-2" {...getRootProps()}>
@@ -856,7 +926,7 @@ const Register3 = () => {
                                         {selectedFiles3.map((f, i) => (
                                           <Card
                                             className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
-                                            key={i + "-file2"}
+                                            key={i + "-utilitybill"}
                                           >
                                             <div className="p-2">
                                               <Row className="align-items-center">
@@ -878,7 +948,9 @@ const Register3 = () => {
                                           </Card>
                                         ))}
                                       </div>
-
+                                      {validation.errors.utilitybill && (
+                                        <div className="text-danger">{validation.errors.utilitybill}</div>
+                                      )}
                                     </div>
 
 
@@ -907,7 +979,7 @@ const Register3 = () => {
                                             className="form-control login-input text_1"
                                             placeholder="Name (As per IC)"
                                             type="text"
-
+                                            onChange={validation.handleChange}
                                           />
                                         </div>
                                         <div className=" mb-3">
@@ -917,7 +989,7 @@ const Register3 = () => {
                                             className="form-control login-input text_1"
                                             placeholder="IC Number"
                                             type="text"
-
+                                            onChange={validation.handleChange}
                                           />
                                         </div>
                                         <div className=" mb-3">
@@ -927,15 +999,19 @@ const Register3 = () => {
                                             className="form-control login-input text_1"
                                             placeholder="Relationship"
                                             type="text"
-
+                                            onChange={validation.handleChange}
                                           />
                                         </div>
 
-                                        <div className="mb-3 p-1 std_font">
+                                        <div className="p-1 std_font">
                                           NRIC Copy
                                         </div>
                                         {/* First Dropzone */}
-                                        <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles4)}>
+                                        <Dropzone
+                                          onDrop={acceptedFiles => {
+                                            handleAcceptedFiles(acceptedFiles, "nomnric");
+                                          }}
+                                        >
                                           {({ getRootProps, getInputProps }) => (
                                             <div className="dropzone login-input">
                                               <div className="dz-message needsclick mt-2" {...getRootProps()}>
@@ -950,11 +1026,11 @@ const Register3 = () => {
                                           )}
                                         </Dropzone>
                                         {/* Display selected files for the first Dropzone */}
-                                        <div className="dropzone-previews mt-3" id="file-previews1">
+                                        <div className="dropzone-previews mt-3 mb-4" id="file-previews1">
                                           {selectedFiles4.map((f, i) => (
                                             <Card
                                               className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
-                                              key={i + "-file1"}
+                                              key={i + "-nomnric"}
                                             >
                                               <div className="p-2 ">
                                                 <Row className="align-items-center">
@@ -975,7 +1051,13 @@ const Register3 = () => {
                                               </div>
                                             </Card>
                                           ))}
+
+                                          {validation.errors.nomnric && (
+                                            <div className="text-danger">{validation.errors.nomnric}</div>
+                                          )}
                                         </div>
+
+
 
                                         <div className="mb-3 font12">
                                           <p className="std_font">
@@ -986,7 +1068,8 @@ const Register3 = () => {
                                               name="declareAgree"
                                               className="form-check-input"
                                               type="checkbox"
-                                              value=""
+                                              value={validation.values.declareAgree}
+                                              onChange={validation.handleChange}
                                               id="defaultCheck1"
                                             />
                                             <label
@@ -995,6 +1078,9 @@ const Register3 = () => {
                                             >
                                               I agree to this declaration
                                             </label>
+                                            {validation.errors.declareAgree && (
+                                              <div className="text-danger">{validation.errors.declareAgree}</div>
+                                            )}
                                           </div>
                                         </div>
                                       </Col>
@@ -1012,7 +1098,7 @@ const Register3 = () => {
                                         <div>
                                           <h5>Registration Successful!</h5>
                                           <p className="text-muted mt-3">
-                                          Your registration details have been submitted for review. Once your document is verified, you will receive an email notification confirming your account activation.  
+                                            Your registration details have been submitted for review. Once your document is verified, you will receive an email notification confirming your account activation.
                                           </p>
                                         </div>
                                       </div>
@@ -1039,7 +1125,7 @@ const Register3 = () => {
                                     className={` ${activeTab === 4 ? "d-none" : ""}`}
                                     to="#"
                                     onClick={() => {
-                                      toggleTab(activeTab + 1)
+                                      toggleTab(activeTab + 1);
                                     }}
                                   >
                                     Next
@@ -1052,7 +1138,18 @@ const Register3 = () => {
                                       className={`btn btn-primary btn-block mt-5 signIn_btn col-12 ${activeTab === 3 ? "" : "d-none"}`}
                                       type="submit"
                                       onClick={() => {
-                                        toggleTab(activeTab + 1)
+                                        // Validate the form
+                                        validation.validateForm().then(errors => {
+                                          if (Object.keys(errors).length === 0) {
+                                            // If there are no validation errors, proceed to the next step
+                                            toggleTab(activeTab + 1);
+                                          } else {
+                                            // If there are validation errors, display them
+                                            validation.setTouched({
+                                              ...Object.keys(errors).reduce((acc, key) => ({ ...acc, [key]: true }), {})
+                                            });
+                                          }
+                                        });
                                       }}
                                     >
                                       Register

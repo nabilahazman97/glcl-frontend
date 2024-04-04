@@ -69,7 +69,7 @@ useEffect(() => {
     }),
     onSubmit: (values) => {
       console.log(values);
-        // dispatch(loginUser(values, props.router.navigate));
+        dispatch(loginUser(values, props.router.navigate));
       }
   });
 
