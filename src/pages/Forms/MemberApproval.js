@@ -70,7 +70,7 @@ const MemberApproval = () => {
 
     };
 
-    // useEffect(() => {
+    // useEffect(() => { 
 
     axios.post(apiname.base_url + apiname.userapproval, user, {
       headers: {
