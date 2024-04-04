@@ -16,7 +16,7 @@ import Dropzone from "react-dropzone";
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { createBrowserHistory } from 'history';
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
@@ -28,71 +28,81 @@ const MemberApproval = () => {
   console.log("Uid:", Uid);
 
   const user = {
-    'uid':Uid
+    'uid': Uid
   };
 
   const [buttonsDisabled, setButtonsDisabled] = useState(
     localStorage.getItem(`buttonsDisabled_${Uid}`) === "true"
   );
-  
+
+  const history = createBrowserHistory();
+
   console.log("user");
   console.log(user);
   const [data, setdata] = useState([]);
   useEffect(() => {
-      console.log(apiname.base_url);
-      console.log(apiname.p_userdetails);
-      console.log(user);
-      axios.post(apiname.base_url+apiname.p_userdetails,user, {
-        headers: {
-          'Authorization': 'Basic '+ apiname.encoded
-        }
-      })
+    console.log(apiname.base_url);
+    console.log(apiname.p_userdetails);
+    console.log(user);
+    axios.post(apiname.base_url + apiname.p_userdetails, user, {
+      headers: {
+        'Authorization': 'Basic ' + apiname.encoded
+      }
+    })
       // .then(res =>console.log(res))
-      .then(res =>setdata(res['data']['result']))
+      .then(res => setdata(res['data']['result']))
       .catch(err => console.log(err));
-    }, []);
-    console.log("data");
-    console.log(data[0]);
-    // data.forEach(element => {
-    //   console.log("data1");
-    //   console.log(element.Username);
-      
-    // });
+  }, []);
+  console.log("data");
+  console.log(data[0]);
+  // data.forEach(element => {
+  //   console.log("data1");
+  //   console.log(element.Username);
+
+  // });
   //meta 
-  
+
   function handleInput(e) {
     const user = {
-      'uid':Uid,
-      ustatus:e.target.value,
+      'uid': Uid,
+      ustatus: e.target.value,
 
-      
+
     };
 
     // useEffect(() => {
-     
-      axios.post(apiname.base_url+apiname.userapproval,user, {
-        headers: {
-          'Authorization': 'Basic '+ apiname.encoded
-        }
-      })
-      .then(res =>{
+
+    axios.post(apiname.base_url + apiname.userapproval, user, {
+      headers: {
+        'Authorization': 'Basic ' + apiname.encoded
+      }
+    })
+      .then(res => {
         setButtonsDisabled(true);
-      localStorage.setItem(`buttonsDisabled_${Uid}`, "true");
-      if (e.target.value === '1') {
-        toast.success('User accepted successfully!');
-    } else {
-        toast.success('User rejected successfully!');
-    }
+        localStorage.setItem(`buttonsDisabled_${Uid}`, "true");
+        if (e.target.value === '1') {
+          toast.success('User accepted successfully!');
+
+        } else {
+          toast.success('User rejected successfully!');
+        }
+
+        setTimeout(() => {
+          // Redirect to the dashboard page
+          window.location.href = '/tables-datatable';
+        }, 1000);
+
+
       }
       )
-      
+
       // .then(res =>setdata(res['data']['result']))
       .catch(err => console.log(err));
     // }, []);
 
-    
-//     console.log(e.target.value);
- }
+
+    //     console.log(e.target.value);
+  }
 
 
   document.title = "GLCL"
@@ -123,148 +133,148 @@ const MemberApproval = () => {
   //   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   // }
 
-  
+
   return data.map((datas) => {
-  return (
-  
-    <React.Fragment>
-      <div className="page-content">
-      <ToastContainer />
-        <Container fluid={true}>
-          <Breadcrumbs title="Forms" breadcrumbItem="Member Approval" />
+    return (
 
-          <Row>
-            <Col>
-              <Card>
-                <CardBody className="m-3">
-                  <CardTitle className="h4 mb-3">Registration Details  </CardTitle>
+      <React.Fragment>
+        <div className="page-content">
+          <ToastContainer />
+          <Container fluid={true}>
+            <Breadcrumbs title="Forms" breadcrumbItem="Member Approval" />
 
-                  <Row className="mb-3">
-                    <div className="col-md-12">
-                      <input
-                        className="form-control login-input"
-                        type="text"
-                        defaultValue={datas.Username}
-                      />
-                    </div>
-                  </Row>
-                  <Row className="mb-3">
-                    <div className="col-md-6">
-                      <input
-                        className="form-control login-input"
-                        type="text"
-                        defaultValue={datas.icnumber}
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <input
-                        className="form-control login-input"
-                        type="text"
-                        defaultValue={datas.age}
-                        disabled
-                      />
-                    </div>
-                  </Row>
-                  <Row className="mb-3">
-                    <div className="col-md-12">
-                      <input
-                        className="form-control login-input"
-                        type="text"
-                        defaultValue={datas.haddress}
-                      />
-                    </div>
-                  </Row>
-                  <Row className="mb-3">
-                    <div className="col-md-6">
-                      <input
-                        className="form-control login-input"
-                        type="text"
-                        defaultValue={datas.phonenum}
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <input
-                        className="form-control login-input"
-                        type="text"
-                        defaultValue={datas.altnum}
-                      />
-                    </div>
-                  </Row>
-                  <Row className="mb-3">
-                    <div className="col-md-12">
-                      <input
-                        className="form-control login_input login-input"
-                        type="email"
-                        defaultValue={datas.emailid}
-                      />
-                    </div>
-                  </Row>
-                  <Row className="mb-3">
-                    <div className="col-md-6">
-                      <input
-                        className="form-control login-input"
-                        type="text"
-                        defaultValue={datas.ethnic}
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <input
-                        className="form-control login-input"
-                        type="text"
-                        defaultValue={datas.religion}
-                      />
-                    </div>
-                  </Row>
-                  <Row className="mb-3">
-                    <div className="col-md-6">
-                      <input
-                        className="form-control login-input"
-                        type="text"
-                        defaultValue={datas.sex}
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <input
-                        className="form-control login-input"
-                        type="text"
-                        defaultValue={datas.mstatus}
-                      />
-                    </div>
-                  </Row>
-                  <Row className="mb-3">
-                    <div className="col-md-12">
-                      <input
-                        className="form-control login_input login-input"
-                        type="text"
-                        defaultValue={datas.occupation}
-                      />
-                    </div>
-                  </Row>
-                  <Row className="mb-3">
-                    <div className="col-md-12">
-                      <input
-                        className="form-control login_input login-input"
-                        type="text"
-                        defaultValue={datas.service}
-                      />
-                    </div>
-                  </Row>
-                  <Row className="mb-3">
-                    <div className="col-md-12">
-                      <input
-                        className="form-control login_input login-input"
-                        type="text"
-                        defaultValue={datas.paddress}
-                      />
-                    </div>
-                  </Row>
-                 
-                  <CardSubtitle className="mb-3 std_font mt-4">
-                    MyKad - Front
-                  </CardSubtitle>
-                  <img className="w-25" src={datas.f_mykad}></img>
-                  {/* First Dropzone */}
-                  {/* <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles1)}>
+            <Row>
+              <Col>
+                <Card>
+                  <CardBody className="m-3">
+                    <CardTitle className="h4 mb-3">Registration Details  </CardTitle>
+
+                    <Row className="mb-3">
+                      <div className="col-md-12">
+                        <input
+                          className="form-control login-input"
+                          type="text"
+                          defaultValue={datas.Username}
+                        />
+                      </div>
+                    </Row>
+                    <Row className="mb-3">
+                      <div className="col-md-6">
+                        <input
+                          className="form-control login-input"
+                          type="text"
+                          defaultValue={datas.icnumber}
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <input
+                          className="form-control login-input"
+                          type="text"
+                          defaultValue={datas.age}
+                          disabled
+                        />
+                      </div>
+                    </Row>
+                    <Row className="mb-3">
+                      <div className="col-md-12">
+                        <input
+                          className="form-control login-input"
+                          type="text"
+                          defaultValue={datas.haddress}
+                        />
+                      </div>
+                    </Row>
+                    <Row className="mb-3">
+                      <div className="col-md-6">
+                        <input
+                          className="form-control login-input"
+                          type="text"
+                          defaultValue={datas.phonenum}
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <input
+                          className="form-control login-input"
+                          type="text"
+                          defaultValue={datas.altnum}
+                        />
+                      </div>
+                    </Row>
+                    <Row className="mb-3">
+                      <div className="col-md-12">
+                        <input
+                          className="form-control login_input login-input"
+                          type="email"
+                          defaultValue={datas.emailid}
+                        />
+                      </div>
+                    </Row>
+                    <Row className="mb-3">
+                      <div className="col-md-6">
+                        <input
+                          className="form-control login-input"
+                          type="text"
+                          defaultValue={datas.ethnic}
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <input
+                          className="form-control login-input"
+                          type="text"
+                          defaultValue={datas.religion}
+                        />
+                      </div>
+                    </Row>
+                    <Row className="mb-3">
+                      <div className="col-md-6">
+                        <input
+                          className="form-control login-input"
+                          type="text"
+                          defaultValue={datas.sex}
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <input
+                          className="form-control login-input"
+                          type="text"
+                          defaultValue={datas.mstatus}
+                        />
+                      </div>
+                    </Row>
+                    <Row className="mb-3">
+                      <div className="col-md-12">
+                        <input
+                          className="form-control login_input login-input"
+                          type="text"
+                          defaultValue={datas.occupation}
+                        />
+                      </div>
+                    </Row>
+                    <Row className="mb-3">
+                      <div className="col-md-12">
+                        <input
+                          className="form-control login_input login-input"
+                          type="text"
+                          defaultValue={datas.service}
+                        />
+                      </div>
+                    </Row>
+                    <Row className="mb-3">
+                      <div className="col-md-12">
+                        <input
+                          className="form-control login_input login-input"
+                          type="text"
+                          defaultValue={datas.paddress}
+                        />
+                      </div>
+                    </Row>
+
+                    <CardSubtitle className="mb-3 std_font mt-5">
+                      MyKad - Front
+                    </CardSubtitle>
+                    <img className="ic-img" src={datas.f_mykad}></img>
+                    {/* First Dropzone */}
+                    {/* <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles1)}>
                     {({ getRootProps, getInputProps }) => (
                       <div className="dropzone login-input">
                         <div className="dz-message needsclick mt-2" {...getRootProps()}>
@@ -278,9 +288,9 @@ const MemberApproval = () => {
                       </div>
                     )}
                   </Dropzone> */}
-                  
-                  {/* Display selected files for the first Dropzone */}
-                  {/* <div className="dropzone-previews mt-3" id="file-previews1">
+
+                    {/* Display selected files for the first Dropzone */}
+                    {/* <div className="dropzone-previews mt-3" id="file-previews1">
                     {selectedFiles1.map((f, i) => (
                       <Card
                         className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
@@ -308,14 +318,14 @@ const MemberApproval = () => {
                   </div> */}
 
 
-                  <div className="mb-3 mt-3">
+                    <div className="mb-3 mt-5">
 
-                    <CardSubtitle className="mb-3 std_font">
-                      MyKad - Back
-                    </CardSubtitle>
-                    <img className="w-25" src={datas.b_mykad}></img>
-                    {/* Second Dropzone */}
-                    {/* <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles2)}>
+                      <CardSubtitle className="mb-3 std_font">
+                        MyKad - Back
+                      </CardSubtitle>
+                      <img className="ic-img" src={datas.b_mykad}></img>
+                      {/* Second Dropzone */}
+                      {/* <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles2)}>
                       {({ getRootProps, getInputProps }) => (
                         <div className="dropzone login-input">
                           <div className="dz-message needsclick mt-2" {...getRootProps()}>
@@ -329,8 +339,8 @@ const MemberApproval = () => {
                         </div>
                       )}
                     </Dropzone> */}
-                    {/* Display selected files for the second Dropzone */}
-                    {/* <div className="dropzone-previews mt-3" id="file-previews2">
+                      {/* Display selected files for the second Dropzone */}
+                      {/* <div className="dropzone-previews mt-3" id="file-previews2">
                       {selectedFiles2.map((f, i) => (
                         <Card
                           className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
@@ -358,14 +368,14 @@ const MemberApproval = () => {
                     </div> */}
 
 
-                    <div className="mb-5 mt-3">
+                      <div className="mb-5 mt-5">
 
-                      <CardSubtitle className="mb-3 std_font">
-                        Utility Bill
-                      </CardSubtitle>
-                      <img className="w-25" src={datas.utilitybill}></img>
-                      {/* Third Dropzone */}
-                      {/* <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles3)}>
+                        <CardSubtitle className="mb-3 std_font">
+                          Utility Bill
+                        </CardSubtitle>
+                        <img className="ic-img" src={datas.utilitybill}></img>
+                        {/* Third Dropzone */}
+                        {/* <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles3)}>
                         {({ getRootProps, getInputProps }) => (
                           <div className="dropzone login-input">
                             <div className="dz-message needsclick mt-2" {...getRootProps()}>
@@ -379,8 +389,8 @@ const MemberApproval = () => {
                           </div>
                         )}
                       </Dropzone> */}
-                      {/* Display selected files for the second Dropzone */}
-                      {/* <div className="dropzone-previews mt-3" id="file-previews2">
+                        {/* Display selected files for the second Dropzone */}
+                        {/* <div className="dropzone-previews mt-3" id="file-previews2">
                         {selectedFiles3.map((f, i) => (
                           <Card
                             className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
@@ -406,47 +416,47 @@ const MemberApproval = () => {
                           </Card>
                         ))}
                       </div> */}
+                      </div>
                     </div>
-                  </div>
 
-                  <Row className="mb-3">
-                    <div className="col-md-12 text-center">
-                      <button
-                    
-                        style={{ marginRight: "5px" }}
-                        type="button"
-                        value='1'
-                        onClick={e => handleInput(e, "value")}
-                        className="btn btn-success approveBtn mr-1"
-                        disabled={buttonsDisabled}
-                      >
-                        <i className="bx bx-check-circle font-size-16 align-middle me-1"></i>{" "}
-                        Approve
-                      </button>
+                    <Row className="mb-3">
+                      <div className="col-md-12 text-center">
+                        <button
 
-                      <button
-                    
-                        type="button"
-                        value='2'
-                        onClick={e => handleInput(e, "value")}
-                        className="btn btn-danger rejectBtn ml-2"
-                        disabled={buttonsDisabled}
-                      >
-                        <i className="bx bx-x-circle font-size-16 align-middle me-1"></i>{" "}
-                        Reject
-                      </button>
-                    </div>
-                  </Row>
+                          style={{ marginRight: "5px" }}
+                          type="button"
+                          value='1'
+                          onClick={e => handleInput(e, "value")}
+                          className="btn btn-success approveBtn mr-1"
+                          disabled={buttonsDisabled}
+                        >
+                          <i className="bx bx-check-circle font-size-16 align-middle me-1"></i>{" "}
+                          Approve
+                        </button>
+
+                        <button
+
+                          type="button"
+                          value='2'
+                          onClick={e => handleInput(e, "value")}
+                          className="btn btn-danger rejectBtn ml-2"
+                          disabled={buttonsDisabled}
+                        >
+                          <i className="bx bx-x-circle font-size-16 align-middle me-1"></i>{" "}
+                          Reject
+                        </button>
+                      </div>
+                    </Row>
 
 
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    </React.Fragment>
-  )
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      </React.Fragment>
+    )
   })
 }
 

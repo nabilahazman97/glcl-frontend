@@ -20,6 +20,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import Switch from "react-switch";
 import avatar from "../../assets/images/users/avatar-1.jpg";
+import { Link } from "react-router-dom";
 
 
 //Import Breadcrumb
@@ -29,6 +30,14 @@ const FormValidations = () => {
 
     //meta title
     document.title = "GLCL";
+
+    const selectedFiles1 = [
+        {
+          name: 'example.jpg',
+          formattedSize: '2.5 MB',
+          preview: '/assets/example.jpg' 
+        },
+      ];
 
 
     const [switch1, setswitch1] = useState(true);
@@ -76,8 +85,8 @@ const FormValidations = () => {
             <div className="page-content">
                 <Container fluid={true}>
                     <Breadcrumbs title="Forms" breadcrumbItem="MEMBER PROFILE" />
-                    <Row>
-                        <Col xl="6">
+                    <div className="d-flex gap-3">
+                        <div className="col-lg-6 p-0">
                             <Card style={{ background: 'linear-gradient(to bottom, white 40%, #d1b66a 40%)' }}>
                                 <CardBody>
                                     <div>
@@ -117,24 +126,13 @@ const FormValidations = () => {
                                     </div>
                                 </CardBody>
                             </Card>
-                        </Col>
 
-                        <Col xl="6">
-                            <Card>
-                                <CardBody>
-
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col lg={6}>
                             <Card>
                                 <CardBody>
                                     <CardTitle>Profile Information</CardTitle>
                                     <div>
-                                    <div className="mb-3 mt-3">
-                                        <label>Name</label>
+                                        <div className="mb-3 mt-3">
+                                            <label>Name</label>
                                             <Input
                                                 className="form-control login-input"
                                                 type="text"
@@ -143,25 +141,25 @@ const FormValidations = () => {
                                             />
                                         </div>
                                         <div className="mb-3">
-                                        <label>IC Number</label>
+                                            <label>IC Number</label>
                                             <Input
                                                 className="form-control login-input"
                                                 type="text"
                                                 disabled
-                                                defaultValue={"Sarah"}
+                                                defaultValue={"028484-01-8383"}
                                             />
                                         </div>
                                         <div className="mb-3">
-                                        <label>Date of Birth</label>
+                                            <label>Date of Birth</label>
                                             <Input
                                                 className="form-control login-input"
                                                 type="date"
                                                 disabled
-                                                defaultValue={"Sarah"}
+
                                             />
                                         </div>
                                         <div className="mb-3">
-                                        <label>Gender</label>
+                                            <label>Gender</label>
                                             <Input
                                                 className="form-control login-input"
                                                 type="text"
@@ -172,23 +170,166 @@ const FormValidations = () => {
                                     </div>
                                 </CardBody>
                             </Card>
-                        </Col>
-
-                        <Col lg={6}>
                             <Card>
                                 <CardBody>
-                                    <CardTitle>Range validation</CardTitle>
-                                    <CardSubtitle className="mb-3">
-                                        Parsley is a availity reactstrap validation. It helps you
-                                        provide your users with feedback on their form submission
-                                        before sending it to your server.
-                                    </CardSubtitle>
+                                    <CardTitle>Contact Information</CardTitle>
+                                    <div>
+                                        <div className="mb-3 mt-3">
+                                            <label>Email Address</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="email"
+                                                disabled
+                                                defaultValue={"sarah@11.com"}
+                                            />
+                                        </div>
+                                        <div className="mb-3 mt-3">
+                                            <label>Phone Number</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="text"
+                                                disabled
+                                                defaultValue={"012-2233456"}
+                                            />
+                                        </div>
+                                        <div className="mb-3 mt-3">
+                                            <label>Address</label>
+                                            <Input
+                                        type="textarea"
+                                        name="address"
+                                        id="textarea"
+                                        className="login-textarea mt-3"
+                                        maxLength="50"
+                                        rows="4"
+                                        placeholder="Home Address"
+                                        disabled
+                                      />
+                                        </div>
+                                    </div>
+                                </CardBody>
+                            </Card>
+                        </div>
+                        <div className="col-lg-6 p-0">
+                            <Card>
+                                <CardBody>
+                                    <CardTitle>Membership Information</CardTitle>
+                                    <div>
+                                        <div className="mb-3 mt-3">
+                                            <label>Membership Status</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="text"
+                                                disabled
+                                                defaultValue={"Sarah"}
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label>Membership Number</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="text"
+                                                disabled
+                                                defaultValue={"028484-01-8383"}
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label>Date of Joining</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="date"
+                                                disabled
 
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label>Renewal Date</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="date"
+                                                disabled
+
+                                            />
+                                        </div>
+                                    </div>
+                                </CardBody>
+                            </Card>
+                            <Card>
+                                <CardBody>
+                                    <CardTitle>KYC Documents</CardTitle>
+                                    <div className="mb-3 mt-3">
+                                        <label>NRIC Copy</label>
+                                        <div className="dropzone-previews" id="file-previews1">
+                                            {selectedFiles1.map((f, i) => (
+                                                <Card
+                                                    className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+                                                    key={i + "-f_mykad"}
+                                                >
+                                                    <div className="p-2">
+                                                        <Row className="align-items-center">
+                                                            <Col className="col-auto">
+                                                                <img
+                                                                    data-dz-thumbnail=""
+                                                                    height="80"
+                                                                    className="avatar-sm rounded bg-light"
+                                                                    alt={f.name}
+                                                                    src={f.preview}
+                                                                />
+                                                            </Col>
+                                                            <Col>
+                                                                <Link to="#" className="text-muted font-weight-bold">{f.name}</Link>
+                                                                <p className="mb-0"><strong>{f.formattedSize}</strong></p>
+                                                            </Col>
+                                                        </Row>
+                                                    </div>
+                                                </Card>
+                                            ))}
+                                        </div>
+                                    </div>
 
                                 </CardBody>
                             </Card>
-                        </Col>
-                    </Row>
+                            <Card>
+                                <CardBody>
+                                    <CardTitle>Change Password</CardTitle>
+                                    <div>
+                                        <div className="mb-3 mt-3">
+                                            <label>Old Password</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="password"
+                                                disabled
+                                                defaultValue={"12345"}
+                                            />
+                                        </div>
+                                        <div className="mb-3 mt-3">
+                                            <label>New Password</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="password"
+                                                disabled
+                                                defaultValue={"123456"}
+                                            />
+                                        </div>
+                                        <div className="mb-3 mt-3">
+                                            <label>Confirm Password</label>
+                                            <Input
+                                                className="form-control login-input"
+                                                type="password"
+                                                disabled
+                                                defaultValue={"123456"}
+                                            />
+                                        </div>
+                                    </div>
+                                </CardBody>
+                            </Card>
+                        </div>
+                    </div>
+                    <div className="d-flex justify-content-center gap-3 mb-3">
+                        <button className="btn btn-primary rejectBtn">Back</button>
+                        <button className="btn btn-primary rejectBtn">Save</button>
+                        <button className="btn btn-primary rejectBtn">Delete</button>
+                    </div>
+
                 </Container>
             </div>
         </React.Fragment>
