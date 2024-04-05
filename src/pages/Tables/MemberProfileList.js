@@ -21,9 +21,9 @@ function MemberList() {
             'Authorization': 'Basic '+ apiname.encoded
           }
         })
-        // .then(res =>console.log(res['data']['result']))
+        // .then(res =>console.log(res))
         .then(res => {
-            const filteredData = res.data.result.filter(item => item.ustatus === 1);
+            const filteredData = res.data.result.filter(item => item.ustatus == 1);
             setdata(filteredData);
         })
         .catch(err => console.log(err));
@@ -49,7 +49,7 @@ function MemberList() {
                 accessor: 'actions',
                 Cell: ({ row }) => (
                     <div className="d-flex flex-wrap gap-2 justify-content-center">
-                        <Link to={`/member-profile/${row.original.Uid}`} style={{ textDecoration: 'none' }}>
+                        <Link to={`/member-profile/${row.original.id}`} style={{ textDecoration: 'none' }}>
                         <button
                                 type="button"
                                 className="btn btn-primary rejectBtn"
@@ -59,13 +59,13 @@ function MemberList() {
                             </button>
                         </Link>
                         
-                        <button
+                        {/* <button
                             type="button"
                             className="btn btn-danger rejectBtn"
                         >
                             <i className="bx bx-trash font-size-16 align-middle me-1"></i>{" "}
                             Remove
-                        </button>
+                        </button> */}
                     </div>
                 )
             },

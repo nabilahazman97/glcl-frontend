@@ -169,7 +169,7 @@ const SidebarContent = props => {
               </ul>
             </li>
 
-            <li>
+            {/* <li>
               <Link to="/#" >
                 <i className="fas fa-coins"></i>
                 <span>{props.t("PAYMENT MANAGEMENT")}</span>
@@ -198,7 +198,7 @@ const SidebarContent = props => {
                   <Link to="/#">{props.t("SVARNA RUNA SCHEME")}</Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
 
 
           </ul>

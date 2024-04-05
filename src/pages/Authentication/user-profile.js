@@ -11,6 +11,7 @@ import {
   Input,
   FormFeedback,
   Form,
+  CardTitle,
 } from "reactstrap";
 
 // Formik Validation
@@ -45,6 +46,8 @@ const UserProfile = () => {
   }));
 
   useEffect(() => {
+    console.log("profiledetails");
+    console.log(localStorage.getItem("authUser"));
     if (localStorage.getItem("authUser")) {
       const obj = JSON.parse(localStorage.getItem("authUser"));
       if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
@@ -88,8 +91,167 @@ const UserProfile = () => {
         <Container fluid>
           {/* Render Breadcrumb */}
           <Breadcrumb title="Skote" breadcrumbItem="Profile" />
+          <div className="d-flex gap-3">
+            <div className="col-lg-6 p-0">
+              <Card style={{ background: 'linear-gradient(to bottom, white 40%, #d1b66a 40%)' }}>
+                <CardBody>
+                  <div>
+                    <div className="d-flex justify-content-center">
+                      <div className="text-center">
+                        <img
+                          src={avatar}
+                          alt=""
+                          className="avatar-md rounded-circle img-thumbnail"
+                        />
+                        <div className="mt-2">
+                          <h3 className="text-white">Admin</h3>
+                          <h3 className="text-dark">GLCL0001</h3>
+                        </div>
 
-          <Row>
+                      </div>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+
+              <Card>
+                <CardBody>
+                  <CardTitle>Profile Information</CardTitle>
+                  <div>
+                    <div className="mb-3 mt-3">
+                      <label>Name</label>
+                      <Input
+                        className="form-control normal-input"
+                        type="text"
+                         
+
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label>IC Number</label>
+                      <Input
+                        className="form-control normal-input"
+                        type="text"
+                         
+
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label>Date of Birth</label>
+                      <Input
+                        className="form-control normal-input"
+                        type="text"
+                         
+
+
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label>Gender</label>
+                      <Input
+                        className="form-control normal-input"
+                        type="text"
+                         
+
+                      />
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+           
+            </div>
+            <div className="col-lg-6 p-0">
+             
+              <Card>
+            <CardBody>
+            <CardTitle>Change Password</CardTitle>
+                <div className="mb-3">
+                  <label>Old Password</label>
+                  <Input
+                    className="form-control normal-input"
+                    type="password"
+
+
+                  />
+                </div>
+                <div className="mb-3 mt-3">
+                  <label>New Password</label>
+                  <Input
+                    className="form-control normal-input"
+                    type="password"
+
+
+                  />
+                </div>
+                <div className="mb-3 mt-3">
+                  <label>Confirm Password</label>
+                  <Input
+                    className="form-control normal-input"
+                    type="password"
+
+
+                  />
+                </div>
+
+                 <div className="text-center mt-3 mb-3">
+                  <Button type="submit" color="primary">
+                    Update Password
+                  </Button>
+
+
+                </div>
+            </CardBody>
+          </Card>
+
+          <Card>
+                <CardBody>
+                  <CardTitle>Contact Information</CardTitle>
+                  <div>
+                    <div className="mb-3 mt-3">
+                      <label>Email Address</label>
+                      <Input
+                        className="form-control normal-input"
+                        type="email"
+                         
+
+                      />
+                    </div>
+                    <div className="mb-3 mt-3">
+                      <label>Phone Number</label>
+                      <Input
+                        className="form-control normal-input"
+                        type="text"
+                         
+
+                      />
+                    </div>
+                    <div className="mb-3 mt-3">
+                      <label>Address</label>
+                      <Input
+                        type="textarea"
+                        name="address"
+                        id="textarea"
+                        className="login-textarea mt-3"
+                        maxLength="50"
+                        rows="4"
+                        placeholder="Home Address"
+                         
+
+                      />
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            </div>
+          </div>
+          <div className="text-center mt-3 mb-3">
+                  <Button type="submit" color="primary">
+                    Update data
+                  </Button>
+
+
+                </div>
+          {/* <Row>
             <Col lg="12">
               {error && error ? <Alert color="danger">{error}</Alert> : null}
               {success ? <Alert color="success">{success}</Alert> : null}
@@ -114,12 +276,10 @@ const UserProfile = () => {
                   </div>
                 </CardBody>
               </Card>
-            </Col>
-          </Row>
-
-          <h4 className="card-title mb-4">Change User Name</h4>
+           
 
           <Card>
+          <h4 className="card-title mb-3">Change User Name</h4>
             <CardBody>
               <Form
                 className="form-horizontal"
@@ -129,12 +289,12 @@ const UserProfile = () => {
                   return false;
                 }}
               >
-                <div className="form-group">
+                <div className="form-group col-md-6">
                   <Label className="form-label">User Name</Label>
                   <Input
                     name="username"
                     // value={name}
-                    className="form-control"
+                    className="form-control normal-input"
                     placeholder="Enter User Name"
                     type="text"
                     onChange={validation.handleChange}
@@ -148,15 +308,25 @@ const UserProfile = () => {
                     <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
                   ) : null}
                   <Input name="idx" value={idx} type="hidden" />
+
+
+
+
                 </div>
                 <div className="text-center mt-4">
                   <Button type="submit" color="danger">
                     Update User Name
                   </Button>
+
+
                 </div>
               </Form>
             </CardBody>
           </Card>
+            </Col>
+          </Row> */}
+
+          
         </Container>
       </div>
     </React.Fragment>
