@@ -288,7 +288,7 @@ const authProtectedRoutes = [
   { path: "/tables-basic", component: <BasicTables /> },
   { path: "/tables-datatable", component: <DatatableTables /> },
   { path: "/member-profile-list", component: <MemberProfileList /> },
-  { path: "/member-profile/:Uid", component: <MemberProfile /> },
+  { path: "/member-profile/:id", component: <MemberProfile /> },
   { path: "/tables-responsive", component: <ResponsiveTables /> },
   { path: "/tables-dragndrop", component: <DragDropTables /> },
 
