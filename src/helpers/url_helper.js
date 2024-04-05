@@ -124,7 +124,7 @@ export const USER_LIST = "/api/user";
 
 export const LOG_IN="/api/user/logincheck";
 
-export const base_url = "http://localhost:8080";
+export const base_url = "http://localhost:4200";
 
 export const USERNAME = 'glcl';
 export const PASSWORD = 'glcl@567';
