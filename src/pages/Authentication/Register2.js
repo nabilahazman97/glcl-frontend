@@ -1144,7 +1144,7 @@ const Register3 = () => {
                               <ul>
                                 <li className={activeTab === 1 ? "previous disabled" : "previous"}>
                                   <Link
-                                    className={` ${activeTab === 4 ? "d-none" : ""}`}
+                                    className={` ${activeTab === 4 || activeTab === 5   ? "d-none" : ""}`}
                                     to="#"
                                     onClick={() => {
                                       toggleTab(activeTab - 1)
@@ -1155,7 +1155,7 @@ const Register3 = () => {
                                 </li>
                                 <li className={activeTab === 3 ? "next d-none" : "next"}>
                                   <Link
-                                    className={` ${activeTab === 4 ? "d-none" : ""}`}
+                                    className={` ${activeTab === 4 || activeTab === 5 ? "d-none" : ""}`}
                                     to="#"
                                     onClick={() => {
                                       toggleTab(activeTab + 1);
