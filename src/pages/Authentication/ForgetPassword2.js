@@ -33,7 +33,12 @@ const ForgetPassword3 = () => {
 
         }),
         onSubmit: (values) => {
-            sendemail(values);
+            var newobj={
+                emailid:values.email
+            };
+            // console.log("values", values);
+            // console.log(newobj);
+           sendemail(newobj);
             // console.log("values", values);
             // apiname.forgotpassword
             
@@ -55,6 +60,7 @@ const ForgetPassword3 = () => {
             .then(res => {
               console.log(res);
               setmodal_center(!modal_center);
+             // window.location.reload();
               
             })
             .catch(err => {
@@ -163,7 +169,7 @@ const ForgetPassword3 = () => {
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
 
-                                                                <div className="modal-body text-center">
+                                                                {/* <div className="modal-body text-center">
                                                                     <p>
                                                                     An email has been sent to the administrative email address on file.  Check the inbox of the administrator’s email account, and click the reset link provided                                                                     </p>
                                                                     <div className="d-flex text-center">
@@ -179,7 +185,7 @@ const ForgetPassword3 = () => {
                                                                             Didn't receive an email?
                                                                         </p>
                                                                     </Link>
-                                                                </div>
+                                                                </div> */}
                                                             </div>
 
 

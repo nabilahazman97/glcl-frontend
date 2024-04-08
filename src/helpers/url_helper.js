@@ -136,4 +136,8 @@ export const p_userdetails="/api/user/p_userdetails"; //declare url
 
 export const userapproval="/api/user/userapproval"; //declare url
 
-export const register="/api/user/register"; //declare reg
+export const register="/api/user/register"; //
+
+export const changePwd="/api/user/changepassword"; //
+
+export const editProfile="/api/user/editprofile"; //
