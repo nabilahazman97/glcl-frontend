@@ -45,6 +45,9 @@ function* loginUser({ payload: { user, history } }) {
         password: user.password,
       });
       localStorage.setItem("authUser", JSON.stringify(response));
+
+      console.log("setitems");
+      console.log(JSON.stringify(response));
       yield put(loginSuccess(response));
     }
     history('/dashboard');

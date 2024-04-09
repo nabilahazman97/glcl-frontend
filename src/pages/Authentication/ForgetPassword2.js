@@ -16,8 +16,9 @@ const ForgetPassword3 = () => {
 
     //meta title
     document.title = "GLCL";
-
+   
     // Form validation 
+    // let {email} = this.state;
     const validationType = useFormik({
         // enableReinitialize : use this flag when initial values needs to be changed
         enableReinitialize: true,
@@ -33,24 +34,17 @@ const ForgetPassword3 = () => {
 
         }),
         onSubmit: (values) => {
+
             var newobj={
                 emailid:values.email
             };
-            // console.log("values", values);
-            // console.log(newobj);
            sendemail(newobj);
-            // console.log("values", values);
-            // apiname.forgotpassword
-            
-              
-               
+  
         }
     });
-
     const [modal_center, setmodal_center] = useState(false);
-
-
-
+    const [modal_centerfailure, setmodal_centerfailure] = useState(false);
+    
     function sendemail(values){
         axios.post(apiname.base_url+apiname.forgotpassword,values,{
             headers: {
@@ -58,10 +52,20 @@ const ForgetPassword3 = () => {
             }
           })
             .then(res => {
-              console.log(res);
-              setmodal_center(!modal_center);
-             // window.location.reload();
-              
+                if(res['data']['status'] == '1'){
+                setmodal_center(!modal_center);
+            setTimeout(() => {
+                setmodal_center(modal_center);
+                window.location.reload();
+              }, 3000);
+              }else{
+                setmodal_centerfailure(!modal_centerfailure);
+                // alert("Failed to send Mail");
+                setTimeout(() => {
+                    setmodal_centerfailure(modal_centerfailure);
+                    window.location.reload();
+                  }, 8000);
+              }
             })
             .catch(err => {
               console.error(err);
@@ -169,23 +173,43 @@ const ForgetPassword3 = () => {
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
 
-                                                                {/* <div className="modal-body text-center">
-                                                                    <p>
-                                                                    An email has been sent to the administrative email address on file.  Check the inbox of the administrator’s email account, and click the reset link provided                                                                     </p>
-                                                                    <div className="d-flex text-center">
-                                                                        <p className="">Reset&nbsp;</p>
-                                                                        <Link to="/set-password" >
-                                                                            <p style={{ textDecoration: 'underline' }} className=''>link</p>
-                                                                        </Link>
-                                                                        <p className="">&nbsp;will become invalid in 58:00.</p>
-                                                                    </div>
+                                                               
+                                                            </div>
 
-                                                                    <Link >
-                                                                        <p style={{ textDecoration: 'underline' }}>
-                                                                            Didn't receive an email?
-                                                                        </p>
-                                                                    </Link>
-                                                                </div> */}
+
+                                                        </Modal>
+                                                        <Modal
+                                                            isOpen={modal_centerfailure}
+                                                            toggle={() => {
+                                                                tog_center();
+                                                            }}
+                                                            centered
+                                                        >
+
+                                                            <div className="text-center m-3">
+                                                                <i className="bx bx-check-circle" style={{ fontSize: "80px", marginLeft: "10px", color: "#FF5733" }}></i>
+                                                                <div className="d-flex justify-content-center">
+
+                                                                    <div className="d-flex align-items-center">
+                                                                        <h3 className="modal-title mt-0">Failed to send reset link to your mailid</h3>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        setmodal_center(false);
+                                                                    }}
+                                                                    className="close"
+                                                                    data-dismiss="modal"
+                                                                    aria-label="Close"
+                                                                >
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+
+                                                               
                                                             </div>
 
 

@@ -26,6 +26,8 @@ const ProfileMenu = props => {
   useEffect(() => {
     console.log("header name")
     var authUserData = localStorage.getItem("authUser");
+
+    console.log(authUserData);
     var authUserObject = JSON.parse(authUserData);
     var username = setname(authUserObject.result[0].Username);
 
