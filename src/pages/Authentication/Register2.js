@@ -106,6 +106,8 @@ const Register3 = () => {
       // occupation: Yup.string(),
     }),
     onSubmit: (values) => {
+
+      console.log(values);
       // const formData = new FormData();
       
       const formData = new FormData();
@@ -131,6 +133,10 @@ const Register3 = () => {
       formData.append('nomicnum', values.declareIcNum);
       formData.append('nomrelaship', values.declareRelay);
       formData.append('declarion', values.declareAgree);
+      formData.append('oethnic', values.otherEthnicity);
+      formData.append('oreligion', values.otherReligion);
+      
+      
       // formData.append('email', values.declareAgree);
 
 
@@ -1109,13 +1115,13 @@ const Register3 = () => {
                                     <Col lg="6">
                                       <div className="text-center">
                                         <div className="mb-4">
-                                          <i className="mdi mdi-check-circle-outline text-success display-4" />
+                                          <i className="mdi mdi-close-circle failuremsgicon display-4" />
                                         </div>
                                         <div>
                                           <h5>Registration Failed!</h5>
-                                          <p className="text-muted mt-3">
+                                          {/* <p className="text-muted mt-3">
                                             Your registration details have been submitted for review. Once your document is verified, you will receive an email notification confirming your account activation.
-                                          </p>
+                                          </p> */}
                                         </div>
                                       </div>
                                     </Col>
