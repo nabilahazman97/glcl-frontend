@@ -43,7 +43,7 @@ function SvarnaTiraIndex() {
     const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
-        const goldV = 8;
+        const goldV = 10;
         setGoldValue(goldV);
     }, []);
 
