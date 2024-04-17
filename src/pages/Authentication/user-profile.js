@@ -40,7 +40,7 @@ const UserProfile = () => {
   document.title = "GLCL";
 
   const dispatch = useDispatch();
-
+ 
   const [idx, setidx] = useState(1);
   const [name, setname] = useState("");
   const [icNum, seticNum] = useState("");
