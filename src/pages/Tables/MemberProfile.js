@@ -183,7 +183,7 @@ const FormValidations = () => {
                                     <CardBody>
                                         <div>
                                             <div className="d-flex justify-content-end align-items-start">
-                                                <Switch
+                                                {/* <Switch
                                                     uncheckedIcon={<Offsymbol />}
                                                     checkedIcon={<OnSymbol />}
                                                     className="me-1 mb-sm-8 mb-2"
@@ -192,7 +192,7 @@ const FormValidations = () => {
                                                         setswitch1(!switch1);
                                                     }}
                                                     checked={switch1}
-                                                />
+                                                /> */}
                                             </div>
                                             <div className="d-flex justify-content-center">
                                                 <div className="text-center">
@@ -203,12 +203,12 @@ const FormValidations = () => {
                                                     />
                                                     <div className="mt-2">
                                                         <h3 className="text-white">{datas.Username}</h3>
-                                                        <h3 className="text-dark">GLCL0001</h3>
+                                                        {/* <h3 className="text-dark">GLCL0001</h3> */}
                                                     </div>
                                                     <div className="d-flex justify-content-center">
                                                         <div className="d-flex align-items-center gap-2">
-                                                            <span class="dot"></span>
-                                                            <div className="std_font">Active</div>
+                                                            {/* <span class="dot"></span> */}
+                                                            {/* <div className="std_font">Active</div> */}
 
                                                         </div>
                                                     </div>
