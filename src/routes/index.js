@@ -86,6 +86,9 @@ import DashboardCrypto from "../pages/Dashboard-crypto/index";
 import Blog from "../pages/Dashboard-Blog/index";
 import DashboardJob from "../pages/DashboardJob/index";
 
+//Schemes
+import SvarnaTira from "../pages/Schemes/Svarna_Tira/index";
+
 //Crypto
 import CryptoWallet from "../pages/Crypto/CryptoWallet/crypto-wallet";
 import CryptoBuySell from "../pages/Crypto/crypto-buy-sell";
@@ -196,6 +199,7 @@ const authProtectedRoutes = [
   { path: "/dashboard-crypto", component: <DashboardCrypto /> },
   { path: "/blog", component: <Blog /> },
   { path: "/dashboard-job", component: <DashboardJob /> },
+  { path: "/svarna-tira/index", component: <SvarnaTira /> },
 
   //Crypto
   { path: "/crypto-wallet", component: <CryptoWallet /> },

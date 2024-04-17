@@ -174,7 +174,7 @@ const SidebarContent = props => {
                 <i className="fas fa-coins"></i>
                 <span>{props.t("PAYMENT MANAGEMENT")}</span>
               </Link>
-            </li>
+            </li> */}
 
             <li>
               <Link to="/#" className="has-arrow ">
@@ -183,9 +183,9 @@ const SidebarContent = props => {
               </Link>
               <ul className="sub-menu">
                 <li style={{ whiteSpace: "nowrap" }}>
-                  <Link to="/#">{props.t("SVARNA TIRA SCHEME")}</Link>
+                  <Link to="/svarna-tira/index">{props.t("SVARNA TIRA SCHEME")}</Link>
                 </li>
-                <li >
+                {/* <li >
                   <Link to="/#">{props.t("SVARNA STOKAM NIKSEPA SCHEME")}</Link>
                 </li>
                 <li >
@@ -196,9 +196,9 @@ const SidebarContent = props => {
                 </li>
                 <li style={{ whiteSpace: "nowrap" }}>
                   <Link to="/#">{props.t("SVARNA RUNA SCHEME")}</Link>
-                </li>
+                </li> */}
               </ul>
-            </li> */}
+            </li>
 
 
           </ul>
