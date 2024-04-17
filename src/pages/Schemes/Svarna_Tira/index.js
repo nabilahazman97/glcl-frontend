@@ -23,6 +23,7 @@ import getCash from "../../../assets/images/users/get-cash.png";
 import moneyTo from "../../../assets/images/users/money-to.png";
 import treasure from "../../../assets/images/users/treasure.png";
 import jewel from "../../../assets/images/users/jewel.png";
+import goldBar from "../../../assets/images/users/gold_bars.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import * as apiname from "../../../helpers/url_helper";
@@ -42,7 +43,7 @@ function SvarnaTiraIndex() {
     const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
-        const goldV = 10;
+        const goldV = 8;
         setGoldValue(goldV);
     }, []);
 
@@ -69,9 +70,9 @@ function SvarnaTiraIndex() {
                                         <div className="d-flex justify-content-center gap-5">
                                             <div className="text-center align-content-center">
                                                 <img
-                                                    src={avatar}
+                                                    src={goldBar}
                                                     alt=""
-                                                    className="avatar-md rounded-circle img-thumbnail"
+                                                    className="avatar-md"
                                                 />
                                             </div>
                                             <div className="text-center">
@@ -81,7 +82,9 @@ function SvarnaTiraIndex() {
                                                 </div>
                                             </div>
                                             <div className="text-center align-content-center">
+                                            <Link to={'/svarna-tira/buy'}>
                                                 <Button className=" buyBtn">Buy</Button>
+                                           </Link>
                                             </div>
                                         </div>
                                     </div>

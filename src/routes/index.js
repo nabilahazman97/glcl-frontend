@@ -88,6 +88,7 @@ import DashboardJob from "../pages/DashboardJob/index";
 
 //Schemes
 import SvarnaTira from "../pages/Schemes/Svarna_Tira/index";
+import SvarnaTiraBuy from "../pages/Schemes/Svarna_Tira/Buy";
 
 //Crypto
 import CryptoWallet from "../pages/Crypto/CryptoWallet/crypto-wallet";
@@ -200,6 +201,7 @@ const authProtectedRoutes = [
   { path: "/blog", component: <Blog /> },
   { path: "/dashboard-job", component: <DashboardJob /> },
   { path: "/svarna-tira/index", component: <SvarnaTira /> },
+  { path: "/svarna-tira/buy", component: <SvarnaTiraBuy /> },
   // { path: "/dashboard-saas", component: <DashboardSaas /> },
   // { path: "/dashboard-crypto", component: <DashboardCrypto /> },
   // { path: "/blog", component: <Blog /> },
