@@ -41,10 +41,13 @@ function* loginUser({ payload: { user, history } }) {
 
       console.log("saga");
       const response = yield call(postFakeLogin, {
-        email: user.email,
+        emailid: user.email,
         password: user.password,
       });
       localStorage.setItem("authUser", JSON.stringify(response));
+
+      console.log("setitems");
+      console.log(JSON.stringify(response));
       yield put(loginSuccess(response));
     }
     history('/dashboard');

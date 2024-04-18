@@ -11,6 +11,7 @@ import {
   Input,
   FormFeedback,
   Form,
+  CardTitle,
 } from "reactstrap";
 
 // Formik Validation
@@ -28,139 +29,329 @@ import avatar from "../../assets/images/users/avatar-1.jpg";
 // actions
 import { editProfile, resetProfileFlag } from "../../store/actions";
 
+import axios from "axios";
+import * as apiname from "../../helpers/url_helper";
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import SetPassword from "./SetPassword";
+
 const UserProfile = () => {
-
-  //meta title
   document.title = "GLCL";
-
-  const dispatch = useDispatch();
-
-  const [email, setemail] = useState("");
-  const [name, setname] = useState("");
-  const [idx, setidx] = useState(1);
-
-  const { error, success } = useSelector(state => ({
-    error: state.Profile.error,
-    success: state.Profile.success,
-  }));
-
+  const [fres, setdata] = useState([]);
   useEffect(() => {
-    if (localStorage.getItem("authUser")) {
-      const obj = JSON.parse(localStorage.getItem("authUser"));
-      if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-        setname(obj.displayName);
-        setemail(obj.email);
-        setidx(obj.uid);
-      } else if (
-        process.env.REACT_APP_DEFAULTAUTH === "fake" ||
-        process.env.REACT_APP_DEFAULTAUTH === "jwt"
-      ) {
-        setname(obj.username);
-        setemail(obj.email);
-        setidx(obj.uid);
-      }
-      setTimeout(() => {
-        dispatch(resetProfileFlag());
-      }, 3000);
+    var authUserData = localStorage.getItem("authUser");
+    var authUserObject = JSON.parse(authUserData);
+    var id=authUserObject.result[0].id;
+    const user = {
+      'id': id
+  };
+  axios.post(apiname.base_url + apiname.p_userdetails, user, {
+    headers: {
+        'Authorization': 'Basic ' + apiname.encoded
     }
-  }, [dispatch, success]);
+})
+    .then((res) =>setdata(res['data']['result'][0]))
+    .catch(err => console.log(err));
+  },[fres]);
 
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
+  const textHandler = e => {
+    const { name, value } = e.target;
+    setValues({
+      ...values1,
+      [name]: value,
+    });
+  };
+  const initialValues =fres || {};
+  const [values1, setValues] = useState(initialValues);
 
-    initialValues: {
-      username: name || '',
-      idx: idx || '',
-    },
-    validationSchema: Yup.object({
-      username: Yup.string().required("Please Enter Your UserName"),
-    }),
-    onSubmit: (values) => {
-      dispatch(editProfile(values));
+  function handleSubmit(e) { 
+    e.preventDefault(); 
+    console.log(values1);
+        var authUserData = localStorage.getItem("authUser");
+        var authUserObject = JSON.parse(authUserData);
+        var id=authUserObject.result[0].id;
+        const formData = new FormData();
+        if(values1.Username!=undefined){
+        formData.append('Username', values1.Username);
+        }
+        if(values1.icnumber!=undefined){
+        formData.append('icnumber', values1.icnumber);
+        }
+        if(values1.emailid!=undefined){
+          formData.append('emailid', values1.emailid);
+          }
+        if(values1.phonenum!=undefined){
+            formData.append('phonenum', values1.phonenum);
+            }
+        if(values1.haddress!=undefined){
+              formData.append('haddress', values1.haddress);
+              }
+        formData.append('id', id);
+        
+        axios.post(apiname.base_url + apiname.editProfile, formData, {
+          headers: {
+            'Authorization': 'Basic ' + apiname.encoded
+          }
+        })
+          .then(res => {
+            if (res['data']['status'] == '1') {
+              toast.success('Updated!'); 
+            } else {
+              toast.danger('Failed to Update!'); 
+            }
+          })
+          .catch(err => console.log(err));
+} 
+
+function handleChangePwd() {
+  const oldPwdInput = document.getElementsByName('oldPwd')[0];
+  const newPwdInput = document.getElementsByName('newPwd')[0];
+  const confirmPwdInput = document.getElementsByName('confirmPwd')[0];
+  var authUserData = localStorage.getItem("authUser");
+  var authUserObject = JSON.parse(authUserData);
+  var id=authUserObject.result[0].id;
+  const userId = id;
+
+  const oldPwd = oldPwdInput.value;
+  const newPwd = newPwdInput.value;
+  const confirmPwd = confirmPwdInput.value;
+
+  if (newPwd !== confirmPwd) {
+    toast.warning("Password doesn't match!");
+    return;
+  }
+
+  var formdata = {
+    'id': userId,
+    'password': oldPwd,
+    'confirmpassword': newPwd,
+    'is_login': '2'
+  };
+
+
+  // Assuming you have a user ID available, you can fetch it from somewhere or directly use it
+
+  console.log(formdata)
+  axios.post(apiname.base_url + apiname.changePwd, formdata, {
+
+    headers: {
+      'Authorization': 'Basic ' + apiname.encoded
     }
-  });
+  }
+
+
+  )
+    .then(response => {
+      // Handle success response
+     
+      
+      toast.success('Password changed!'); 
+      newPwdInput.value = '';
+      confirmPwdInput.value = '';
+      // window.location.reload();
+     
+
+    })
+    .catch(error => {
+      console.error('Error occurred:', error);
+      toast.warning('Failed to change password');
+      newPwdInput.value = '';
+      confirmPwdInput.value = '';
+    });
+
+}
 
 
   return (
     <React.Fragment>
+      
       <div className="page-content">
-        <Container fluid>
-          {/* Render Breadcrumb */}
-          <Breadcrumb title="Skote" breadcrumbItem="Profile" />
+        <Form
+           onSubmit={handleSubmit}
+          className="form-horizontal"
 
-          <Row>
-            <Col lg="12">
-              {error && error ? <Alert color="danger">{error}</Alert> : null}
-              {success ? <Alert color="success">{success}</Alert> : null}
+        >
+          <ToastContainer />
+          <Container fluid>
+            {/* Render Breadcrumb */}
+            <Breadcrumb title="Skote" breadcrumbItem="Profile" />
 
-              <Card>
-                <CardBody>
-                  <div className="d-flex">
-                    <div className="ms-3">
-                      <img
-                        src={avatar}
-                        alt=""
-                        className="avatar-md rounded-circle img-thumbnail"
-                      />
-                    </div>
-                    <div className="flex-grow-1 align-self-center">
-                      <div className="text-muted">
-                        <h5>{name}</h5>
-                        <p className="mb-1">{email}</p>
-                        <p className="mb-0">Id no: #{idx}</p>
+            <div className="d-flex gap-3">
+              <div className="col-lg-6 p-0">
+                <Card style={{ background: 'linear-gradient(to bottom, white 40%, #d1b66a 40%)' }}>
+                  <CardBody>
+                    <div>
+                      <div className="d-flex justify-content-center">
+                        <div className="text-center">
+                          <img
+                            src={avatar}
+                            alt=""
+                            className="avatar-md rounded-circle img-thumbnail"
+                          />
+                          <div className="mt-2">
+                            <h3 className="text-white">{fres.Username}</h3>
+                          </div>
+
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+                  </CardBody>
+                </Card>
 
-          <h4 className="card-title mb-4">Change User Name</h4>
+                <Card>
+                  <CardBody>
+                    <CardTitle>Profile Information</CardTitle>
+                    <div>
+                      <div className="mb-3 mt-3">
+                        <label>Name</label>
+                        <Input
+                        id="Username"
+                          name="Username"
+                          className="form-control normal-input"
+                          type="text"
+                          onChange={textHandler}
+                          defaultValue={fres.Username}
+                          required
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label>IC Number</label>
+                        <Input
+                          id="icnumber"
+                          name="icnumber"
+                          className="form-control normal-input"
+                          type="text"
+                          onChange={textHandler}
+                          defaultValue={fres.icnumber}
+                          required     
+                        />
+                      </div>
 
-          <Card>
-            <CardBody>
-              <Form
-                className="form-horizontal"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  validation.handleSubmit();
-                  return false;
-                }}
-              >
-                <div className="form-group">
-                  <Label className="form-label">User Name</Label>
-                  <Input
-                    name="username"
-                    // value={name}
-                    className="form-control"
-                    placeholder="Enter User Name"
-                    type="text"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.username || ""}
-                    invalid={
-                      validation.touched.username && validation.errors.username ? true : false
-                    }
-                  />
-                  {validation.touched.username && validation.errors.username ? (
-                    <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
-                  ) : null}
-                  <Input name="idx" value={idx} type="hidden" />
-                </div>
-                <div className="text-center mt-4">
-                  <Button type="submit" color="danger">
-                    Update User Name
-                  </Button>
-                </div>
-              </Form>
-            </CardBody>
-          </Card>
-        </Container>
+                    </div>
+                  </CardBody>
+                </Card>
+
+              </div>
+              <div className="col-lg-6 p-0">
+
+                <Card>
+                  <CardBody>
+                    <CardTitle>Change Password</CardTitle>
+                    <div className="mb-3">
+                      <label>Old Password</label>
+                      <Input
+                        name="oldPwd"
+                        className="form-control normal-input"
+                        type="text"
+                        value={fres.password}
+                        readOnly
+
+                      />
+                    </div>
+                    <div className="mb-3 mt-3">
+                      <label>New Password</label>
+                      <Input
+                        name="newPwd"
+                        className="form-control normal-input"
+                        type="password"
+
+
+                      />
+                    </div>
+                    <div className="mb-3 mt-3">
+                      <label>Confirm Password</label>
+                      <Input
+                        name="confirmPwd"
+                        className="form-control normal-input"
+                        type="password"
+
+
+                      />
+                    </div>
+
+                    <div className="text-center mt-3 mb-3">
+                      <Button type="submit" onClick={handleChangePwd}  color="primary">
+                        Update Password
+                      </Button>
+
+
+                    </div>
+                  </CardBody>
+                </Card>
+
+                <Card>
+                  <CardBody>
+                    <CardTitle>Contact Information</CardTitle>
+                    <div>
+                      <div className="mb-3 mt-3">
+                        <label>Email Address</label>
+                        <Input
+                          className="form-control normal-input"
+                          type="email"
+                          name="emailid"
+                          id="emailid"
+                          onChange={textHandler}
+                          defaultValue={fres.emailid}
+                          required
+                        />
+                      </div>
+                      <div className="mb-3 mt-3">
+                        <label>Phone Number</label>
+                        <Input
+                         name="phonenum"
+                         id="phonenum"
+                          className="form-control normal-input"
+                          type="text"
+                          onChange={textHandler}
+                          defaultValue={fres.phonenum}
+                            required    
+                        />
+                      </div>
+                      <div className="mb-3 mt-3">
+                        <label>Address</label>
+                        <Input
+                          type="textarea"
+                          name="haddress"
+                          id="haddress"
+                          className="login-textarea mt-3"
+                          maxLength="50"
+                          rows="4"
+                          onChange={textHandler}
+                          defaultValue={fres.haddress}
+                          required
+
+                        />
+                      </div>
+                    </div>
+                  </CardBody>
+                </Card>
+              </div>
+            </div>
+            <div className="text-center mt-3 mb-3">
+              <Button
+                type="submit"
+
+                // onClick={() => {
+                //   // Validate the form
+                //   validation2.validateForm().then(errors => {
+  
+                //   });
+                // }}
+                color="primary">
+                Update data
+              </Button>
+
+
+            </div>
+
+
+
+          </Container>
+        </Form>
       </div>
     </React.Fragment>
   );
+// })
 };
 
 export default withRouter(UserProfile);

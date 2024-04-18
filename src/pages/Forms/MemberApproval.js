@@ -28,18 +28,17 @@ const MemberApproval = () => {
   console.log("Uid:", Uid);
 
   const user = {
-    'uid': Uid
+    'id': Uid
   };
 
-  const [buttonsDisabled, setButtonsDisabled] = useState(
-    localStorage.getItem(`buttonsDisabled_${Uid}`) === "true"
-  );
+
 
   const history = createBrowserHistory();
 
   console.log("user");
   console.log(user);
   const [data, setdata] = useState([]);
+  const [buttonsDisabled, setButtonsDisabled] = useState(true);
   useEffect(() => {
     console.log(apiname.base_url);
     console.log(apiname.p_userdetails);
@@ -53,8 +52,21 @@ const MemberApproval = () => {
       .then(res => setdata(res['data']['result']))
       .catch(err => console.log(err));
   }, []);
-  console.log("data");
+  console.log("data userzzzz");
   console.log(data[0]);
+  useEffect(() => {
+    if (data.length > 0) {
+      console.log("Data:", data[0].ustatus);
+      // Update button disablement based on ustatus value
+      if (data[0].ustatus == 0 || data[0].ustatus == null) {
+        setButtonsDisabled(false); // Enable buttons if ustatus is 0
+      } else {
+        setButtonsDisabled(true); // Disable buttons for any other value
+      }
+    } else {
+      console.log("Data is empty.");
+    }
+  }, [data]);
   // data.forEach(element => {
   //   console.log("data1");
   //   console.log(element.Username);
@@ -62,9 +74,9 @@ const MemberApproval = () => {
   // });
   //meta 
 
-  function handleInput(e) {
+  const handleInput = (e, value) => {
     const user = {
-      'uid': Uid,
+      'id': Uid,
       ustatus: e.target.value,
 
 
@@ -78,19 +90,17 @@ const MemberApproval = () => {
       }
     })
       .then(res => {
-        setButtonsDisabled(true);
-        localStorage.setItem(`buttonsDisabled_${Uid}`, "true");
         if (e.target.value === '1') {
           toast.success('User accepted successfully!');
 
         } else {
-          toast.success('User rejected successfully!');
+          toast.error('User rejected successfully!');
         }
 
         setTimeout(() => {
           // Redirect to the dashboard page
           window.location.href = '/tables-datatable';
-        }, 1000);
+        }, 500);
 
 
       }
@@ -150,25 +160,30 @@ const MemberApproval = () => {
                     <CardTitle className="h4 mb-3">Registration Details  </CardTitle>
 
                     <Row className="mb-3">
+                      <label>Name</label>
                       <div className="col-md-12">
                         <input
-                          className="form-control login-input"
+                          className="form-control normal-input"
                           type="text"
                           defaultValue={datas.Username}
+                          disabled
                         />
                       </div>
                     </Row>
                     <Row className="mb-3">
                       <div className="col-md-6">
+                      <label>IC Number</label>
                         <input
-                          className="form-control login-input"
+                          className="form-control normal-input"
                           type="text"
                           defaultValue={datas.icnumber}
+                          disabled
                         />
                       </div>
                       <div className="col-md-6">
+                      <label>Age</label>
                         <input
-                          className="form-control login-input"
+                          className="form-control normal-input"
                           type="text"
                           defaultValue={datas.age}
                           disabled
@@ -176,247 +191,141 @@ const MemberApproval = () => {
                       </div>
                     </Row>
                     <Row className="mb-3">
+                      <label>Home Address</label>
                       <div className="col-md-12">
-                        <input
-                          className="form-control login-input"
-                          type="text"
+                        <Input
+                          className="textarea form-control normal-input"
+                          type="textarea"
                           defaultValue={datas.haddress}
+                          disabled
                         />
                       </div>
                     </Row>
                     <Row className="mb-3">
                       <div className="col-md-6">
+                      <label>Phone Number</label>
                         <input
-                          className="form-control login-input"
+                          className="form-control normal-input"
                           type="text"
                           defaultValue={datas.phonenum}
+                          disabled
                         />
                       </div>
                       <div className="col-md-6">
+                      <label>Phone Number 2</label>
                         <input
-                          className="form-control login-input"
+                          className="form-control normal-input"
                           type="text"
                           defaultValue={datas.altnum}
+                          disabled
                         />
                       </div>
                     </Row>
                     <Row className="mb-3">
                       <div className="col-md-12">
+                      <label>Email ID</label>
                         <input
-                          className="form-control login_input login-input"
+                          className="form-control  normal-input"
                           type="email"
                           defaultValue={datas.emailid}
+                          disabled
                         />
                       </div>
                     </Row>
                     <Row className="mb-3">
                       <div className="col-md-6">
+                      <label>Ethnicity</label>
                         <input
-                          className="form-control login-input"
+                          className="form-control normal-input"
                           type="text"
                           defaultValue={datas.ethnic}
+                          disabled
                         />
                       </div>
                       <div className="col-md-6">
+                      <label>Religion</label>
                         <input
-                          className="form-control login-input"
+                          className="form-control normal-input"
                           type="text"
                           defaultValue={datas.religion}
+                          disabled
                         />
                       </div>
                     </Row>
                     <Row className="mb-3">
                       <div className="col-md-6">
+                      <label>Sex</label>
                         <input
-                          className="form-control login-input"
+                          className="form-control normal-input"
                           type="text"
                           defaultValue={datas.sex}
+                          disabled
                         />
                       </div>
                       <div className="col-md-6">
+                      <label>Marital Status</label>
                         <input
-                          className="form-control login-input"
+                          className="form-control normal-input"
                           type="text"
                           defaultValue={datas.mstatus}
+                          disabled
                         />
                       </div>
                     </Row>
                     <Row className="mb-3">
                       <div className="col-md-12">
+                      <label>Occupation</label>
                         <input
-                          className="form-control login_input login-input"
+                          className="form-control  normal-input"
                           type="text"
                           defaultValue={datas.occupation}
+                          disabled
                         />
                       </div>
                     </Row>
                     <Row className="mb-3">
                       <div className="col-md-12">
+                      <label>Service</label>
                         <input
-                          className="form-control login_input login-input"
+                          className="form-control  normal-input"
                           type="text"
                           defaultValue={datas.service}
+                          disabled
                         />
                       </div>
                     </Row>
                     <Row className="mb-3">
                       <div className="col-md-12">
                         <input
-                          className="form-control login_input login-input"
+                          className="form-control  normal-input"
                           type="text"
                           defaultValue={datas.paddress}
+                          disabled
                         />
                       </div>
                     </Row>
 
-                    <CardSubtitle className="mb-3 std_font mt-5">
-                      MyKad - Front
-                    </CardSubtitle>
-                    <img className="ic-img" src={datas.f_mykad}></img>
-                    {/* First Dropzone */}
-                    {/* <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles1)}>
-                    {({ getRootProps, getInputProps }) => (
-                      <div className="dropzone login-input">
-                        <div className="dz-message needsclick mt-2" {...getRootProps()}>
-                          <input {...getInputProps()} />
-                          <div className="mb-3">
-                            <i className="display-4 text-muted bx bxs-cloud-upload" />
-                          </div>
-                          <h5>Drop files here or click to upload.</h5>
-                          <button type="button" className="btn mt-3 upload-file-btn">Upload</button>
-                        </div>
+                    <div className="d-flex justify-content-between mt-4 mb-5">
+                      <div>
+                        <CardSubtitle className="std_font">
+                          MyKad - Front
+                        </CardSubtitle>
+                        <img className="ic-img" src={datas.f_mykad}></img>
                       </div>
-                    )}
-                  </Dropzone> */}
-
-                    {/* Display selected files for the first Dropzone */}
-                    {/* <div className="dropzone-previews mt-3" id="file-previews1">
-                    {selectedFiles1.map((f, i) => (
-                      <Card
-                        className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
-                        key={i + "-file1"}
-                      >
-                        <div className="p-2">
-                          <Row className="align-items-center">
-                            <Col className="col-auto">
-                              <img
-                                data-dz-thumbnail=""
-                                height="80"
-                                className="avatar-sm rounded bg-light"
-                                alt={f.name}
-                                src={f.preview}
-                              />
-                            </Col>
-                            <Col>
-                              <a href="#" className="text-muted font-weight-bold">{f.name}</a>
-                              <p className="mb-0"><strong>{f.formattedSize}</strong></p>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Card>
-                    ))}
-                  </div> */}
-
-
-                    <div className="mb-3 mt-5">
-
-                      <CardSubtitle className="mb-3 std_font">
+                      <div>
+                      <CardSubtitle className="std_font">
                         MyKad - Back
                       </CardSubtitle>
                       <img className="ic-img" src={datas.b_mykad}></img>
-                      {/* Second Dropzone */}
-                      {/* <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles2)}>
-                      {({ getRootProps, getInputProps }) => (
-                        <div className="dropzone login-input">
-                          <div className="dz-message needsclick mt-2" {...getRootProps()}>
-                            <input {...getInputProps()} />
-                            <div className="mb-3">
-                              <i className="display-4 text-muted bx bxs-cloud-upload" />
-                            </div>
-                            <h5>Drop files here or click to upload.</h5>
-                            <button type="button" className="btn mt-3 upload-file-btn">Upload</button>
-                          </div>
-                        </div>
-                      )}
-                    </Dropzone> */}
-                      {/* Display selected files for the second Dropzone */}
-                      {/* <div className="dropzone-previews mt-3" id="file-previews2">
-                      {selectedFiles2.map((f, i) => (
-                        <Card
-                          className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
-                          key={i + "-file2"}
-                        >
-                          <div className="p-2">
-                            <Row className="align-items-center">
-                              <Col className="col-auto">
-                                <img
-                                  data-dz-thumbnail=""
-                                  height="80"
-                                  className="avatar-sm rounded bg-light"
-                                  alt={f.name}
-                                  src={f.preview}
-                                />
-                              </Col>
-                              <Col>
-                                <a href="#" className="text-muted font-weight-bold">{f.name}</a>
-                                <p className="mb-0"><strong>{f.formattedSize}</strong></p>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Card>
-                      ))}
-                    </div> */}
+                      </div>
+                      <div>
 
-
-                      <div className="mb-5 mt-5">
-
-                        <CardSubtitle className="mb-3 std_font">
+                      <CardSubtitle className="std_font">
                           Utility Bill
                         </CardSubtitle>
                         <img className="ic-img" src={datas.utilitybill}></img>
-                        {/* Third Dropzone */}
-                        {/* <Dropzone onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles, setSelectedFiles3)}>
-                        {({ getRootProps, getInputProps }) => (
-                          <div className="dropzone login-input">
-                            <div className="dz-message needsclick mt-2" {...getRootProps()}>
-                              <input {...getInputProps()} />
-                              <div className="mb-3">
-                                <i className="display-4 text-muted bx bxs-cloud-upload" />
-                              </div>
-                              <h5>Drop files here or click to upload.</h5>
-                              <button type="button" className="btn mt-3 upload-file-btn">Upload</button>
-                            </div>
-                          </div>
-                        )}
-                      </Dropzone> */}
-                        {/* Display selected files for the second Dropzone */}
-                        {/* <div className="dropzone-previews mt-3" id="file-previews2">
-                        {selectedFiles3.map((f, i) => (
-                          <Card
-                            className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete file-selected-box"
-                            key={i + "-file2"}
-                          >
-                            <div className="p-2">
-                              <Row className="align-items-center">
-                                <Col className="col-auto">
-                                  <img
-                                    data-dz-thumbnail=""
-                                    height="80"
-                                    className="avatar-sm rounded bg-light"
-                                    alt={f.name}
-                                    src={f.preview}
-                                  />
-                                </Col>
-                                <Col>
-                                  <a href="#" className="text-muted font-weight-bold">{f.name}</a>
-                                  <p className="mb-0"><strong>{f.formattedSize}</strong></p>
-                                </Col>
-                              </Row>
-                            </div>
-                          </Card>
-                        ))}
-                      </div> */}
                       </div>
+
                     </div>
 
                     <Row className="mb-3">

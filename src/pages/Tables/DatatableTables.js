@@ -1,5 +1,5 @@
 // src/components/filter.
-import React, { useMemo,useEffect,useState  } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -13,18 +13,20 @@ import { Button } from 'reactstrap';
 import './datatables.scss';
 
 function DatatableTables() {
+
     const [data, setdata] = useState([]);
     useEffect(() => {
         // console.log("hi");
-        axios.get(apiname.base_url+apiname.USER_LIST, {
-          headers: {
-            'Authorization': 'Basic '+ apiname.encoded
-          }
+        axios.get(apiname.base_url + apiname.USER_LIST, {
+            headers: {
+                'Authorization': 'Basic ' + apiname.encoded
+            }
         })
-        // .then(res =>console.log(res['data']['result']))
-        .then(res =>setdata(res['data']['result']))
-        .catch(err => console.log(err));
-      }, []);
+            // .then(res =>console.log(res))
+            .then(res => setdata(res['data']['result']))
+            .catch(err => console.log(err));
+    }, []);
+
 
 
     const columns = useMemo(
@@ -42,9 +44,39 @@ function DatatableTables() {
                 Header: 'Status',
                 accessor: 'ustatus',
                 Cell: ({ row }) => (
-                    <span>
-                        {row.original.ustatus === 1 ? 'Accepted' : row.original.ustatus === 2 ? 'Rejected' : ''}
+                    <span className="d-flex justify-content-center">
+                    {row.original.ustatus == 0 || row.original.ustatus === null ? (
+                      <span>
+                        <button
+                            type="button"
+                            className="btn btn-warning approveBtn"
+                        >
+                            {/* <i className="bx bx-check-circle font-size-16 align-middle me-1"></i>{" "} */}
+                            Pending
+                        </button>
+                        </span>
+                    ) : row.original.ustatus == 1 ? (
+                      <span >
+                        <button
+                            type="button"
+                            className="btn btn-success approveBtn"
+                        >
+                            {/* <i className="bx bx-check-circle font-size-16 align-middle me-1"></i>{" "} */}
+                            Approved
+                        </button>
                     </span>
+                    ) : row.original.ustatus == 2 ? (
+                      <span>
+                         <button
+                            type="button"
+                            className="btn btn-danger approveBtn"
+                        >
+                            {/* <i className="bx bx-check-circle font-size-16 align-middle me-1"></i>{" "} */}
+                            Rejected
+                        </button>
+                    </span>
+                    ) : null}
+                  </span>
                 )
             },
             {
@@ -53,11 +85,11 @@ function DatatableTables() {
             },
             {
                 Header: 'Actions',
-                accessor: 'Uid',
+                accessor: 'id',
                 Cell: ({ row }) => (
-                  
+
                     <div className="d-flex flex-wrap gap-2 justify-content-center">
-                        
+
                         {/* <button
                             type="button"
                             className="btn btn-success approveBtn"
@@ -73,7 +105,7 @@ function DatatableTables() {
                             <i className="bx bx-x-circle font-size-16 align-middle me-1"></i>{" "}
                             Reject
                         </button> */}
-                        <Link to={`/member-approval/${row.original.Uid}`} style={{ textDecoration: 'none' }}>
+                        <Link to={`/member-approval/${row.original.id}`} style={{ textDecoration: 'none' }}>
                             <button
                                 type="button"
                                 className="btn btn-primary rejectBtn"

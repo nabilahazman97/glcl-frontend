@@ -82,11 +82,11 @@ const FormValidations = () => {
         );
     };
 
-    const { Uid } = useParams();
-    console.log("Uid:", Uid);
+    const { id } = useParams();
+    console.log("Uid:", id);
 
     const user = {
-        'uid': Uid
+        'id': id
     };
 
     const [data, setdata] = useState([]);
@@ -103,7 +103,7 @@ const FormValidations = () => {
             .then(res => setdata(res['data']['result']))
             .catch(err => console.log(err));
     }, []);
-    console.log("data");
+    console.log("data user");
     console.log(data[0]);
 
 
@@ -183,7 +183,7 @@ const FormValidations = () => {
                                     <CardBody>
                                         <div>
                                             <div className="d-flex justify-content-end align-items-start">
-                                                <Switch
+                                                {/* <Switch
                                                     uncheckedIcon={<Offsymbol />}
                                                     checkedIcon={<OnSymbol />}
                                                     className="me-1 mb-sm-8 mb-2"
@@ -192,7 +192,7 @@ const FormValidations = () => {
                                                         setswitch1(!switch1);
                                                     }}
                                                     checked={switch1}
-                                                />
+                                                /> */}
                                             </div>
                                             <div className="d-flex justify-content-center">
                                                 <div className="text-center">
@@ -203,12 +203,12 @@ const FormValidations = () => {
                                                     />
                                                     <div className="mt-2">
                                                         <h3 className="text-white">{datas.Username}</h3>
-                                                        <h3 className="text-dark">GLCL0001</h3>
+                                                        {/* <h3 className="text-dark">GLCL0001</h3> */}
                                                     </div>
                                                     <div className="d-flex justify-content-center">
                                                         <div className="d-flex align-items-center gap-2">
-                                                            <span class="dot"></span>
-                                                            <div className="std_font">Active</div>
+                                                            {/* <span class="dot"></span> */}
+                                                            {/* <div className="std_font">Active</div> */}
 
                                                         </div>
                                                     </div>
@@ -219,50 +219,7 @@ const FormValidations = () => {
                                     </CardBody>
                                 </Card>
 
-                                <Card>
-                                    <CardBody>
-                                        <CardTitle>Profile Information</CardTitle>
-                                        <div>
-                                            <div className="mb-3 mt-3">
-                                                <label>Name</label>
-                                                <Input
-                                                    className="form-control login-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.Username}
-                                                />
-                                            </div>
-                                            <div className="mb-3">
-                                                <label>IC Number</label>
-                                                <Input
-                                                    className="form-control login-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.icnumber}
-                                                />
-                                            </div>
-                                            <div className="mb-3">
-                                                <label>Date of Birth</label>
-                                                <Input
-                                                    className="form-control login-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={globalBirthDate}
-
-                                                />
-                                            </div>
-                                            <div className="mb-3">
-                                                <label>Gender</label>
-                                                <Input
-                                                    className="form-control login-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.sex}
-                                                />
-                                            </div>
-                                        </div>
-                                    </CardBody>
-                                </Card>
+                               
                                 <Card>
                                     <CardBody>
                                         <CardTitle>Contact Information</CardTitle>
@@ -270,7 +227,7 @@ const FormValidations = () => {
                                             <div className="mb-3 mt-3">
                                                 <label>Email Address</label>
                                                 <Input
-                                                    className="form-control login-input"
+                                                    className="form-control normal-input"
                                                     type="email"
                                                     disabled
                                                     defaultValue={datas.emailid}
@@ -279,7 +236,7 @@ const FormValidations = () => {
                                             <div className="mb-3 mt-3">
                                                 <label>Phone Number</label>
                                                 <Input
-                                                    className="form-control login-input"
+                                                    className="form-control normal-input"
                                                     type="text"
                                                     disabled
                                                     defaultValue={datas.phonenum}
@@ -304,14 +261,58 @@ const FormValidations = () => {
                                 </Card>
                             </div>
                             <div className="col-lg-6 p-0">
-                                <Card>
+                            <Card>
+                                    <CardBody>
+                                        <CardTitle>Profile Information</CardTitle>
+                                        <div>
+                                            <div className="mb-3 mt-3">
+                                                <label>Name</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.Username}
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label>IC Number</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.icnumber}
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label>Date of Birth</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={globalBirthDate}
+
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label>Gender</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.sex}
+                                                />
+                                            </div>
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                                {/* <Card>
                                     <CardBody>
                                         <CardTitle>Membership Information</CardTitle>
                                         <div>
                                             <div className="mb-3 mt-3">
                                                 <label>Membership Status</label>
                                                 <Input
-                                                    className="form-control login-input"
+                                                    className="form-control normal-input"
                                                     type="text"
                                                     disabled
                                                     defaultValue={"Sarah"}
@@ -320,7 +321,7 @@ const FormValidations = () => {
                                             <div className="mb-3">
                                                 <label>Membership Number</label>
                                                 <Input
-                                                    className="form-control login-input"
+                                                    className="form-control normal-input"
                                                     type="text"
                                                     disabled
                                                     defaultValue={"028484-01-8383"}
@@ -329,7 +330,7 @@ const FormValidations = () => {
                                             <div className="mb-3">
                                                 <label>Date of Joining</label>
                                                 <Input
-                                                    className="form-control login-input"
+                                                    className="form-control normal-input"
                                                     type="date"
                                                     disabled
 
@@ -338,7 +339,7 @@ const FormValidations = () => {
                                             <div className="mb-3">
                                                 <label>Renewal Date</label>
                                                 <Input
-                                                    className="form-control login-input"
+                                                    className="form-control normal-input"
                                                     type="date"
                                                     disabled
 
@@ -346,8 +347,8 @@ const FormValidations = () => {
                                             </div>
                                         </div>
                                     </CardBody>
-                                </Card>
-                                <Card>
+                                </Card> */}
+                                {/* <Card>
                                     <CardBody>
                                         <CardTitle>KYC Documents</CardTitle>
                                         <div className="mb-3 mt-3">
@@ -381,47 +382,17 @@ const FormValidations = () => {
                                         </div>
 
                                     </CardBody>
-                                </Card>
-                                <Card>
-                                    <CardBody>
-                                        <CardTitle>Change Password</CardTitle>
-                                        <div>
-                                            <div className="mb-3 mt-3">
-                                                <label>Old Password</label>
-                                                <Input
-                                                    className="form-control login-input"
-                                                    type="password"
-                                                    disabled
-                                                    defaultValue={datas.password}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label>New Password</label>
-                                                <Input
-                                                    className="form-control login-input"
-                                                    type="password"
-                                                    disabled
-                                                    defaultValue={datas.newpassword}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label>Confirm Password</label>
-                                                <Input
-                                                    className="form-control login-input"
-                                                    type="password"
-                                                    disabled
-                                                    defaultValue={datas.confirmpassword}
-                                                />
-                                            </div>
-                                        </div>
-                                    </CardBody>
-                                </Card>
+                                </Card> */}
+                              
                             </div>
                         </div>
                         <div className="d-flex justify-content-center gap-3 mb-3">
-                            <button className="btn btn-primary backBtn">Back</button>
-                            <button className="btn btn-primary saveBtn">Save</button>
-                            <button className="btn btn-primary deleteBtn">Delete</button>
+                        <Link to="/member-profile-list" style={{ textDecoration: 'none' }}>
+                        <button className="btn btn-primary backBtn">Back</button>
+                        </Link>
+                            
+                            {/* <button className="btn btn-primary saveBtn">Save</button>
+                            <button className="btn btn-primary deleteBtn">Delete</button> */}
                         </div>
 
                     </Container>

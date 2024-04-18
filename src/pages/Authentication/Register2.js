@@ -106,15 +106,16 @@ const Register3 = () => {
       // occupation: Yup.string(),
     }),
     onSubmit: (values) => {
-      // const formData = new FormData();
+
       console.log(values);
-      console.log(selectedFiles1[0]);
+      // const formData = new FormData();
+      
       const formData = new FormData();
       formData.append('f_mykad', selectedFiles1[0]);
       formData.append('b_mykad', selectedFiles2[0]);
       formData.append('utilitybill', selectedFiles3[0]);
       formData.append('nomnric', selectedFiles4[0]);
-      formData.append('email', values.email);
+      formData.append('emailid', values.email);
       formData.append('Username', values.name);
       formData.append('icnumber', values.icNum);
       formData.append('age', age1);
@@ -128,9 +129,14 @@ const Register3 = () => {
       formData.append('occupation', values.occupation);
       formData.append('service', values.service);
       formData.append('paddress', values.address);
-      formData.append('declarion', values.declareName);
+      formData.append('nomname', values.declareName);
       formData.append('nomicnum', values.declareIcNum);
       formData.append('nomrelaship', values.declareRelay);
+      formData.append('declarion', values.declareAgree);
+      formData.append('oethnic', values.otherEthnicity);
+      formData.append('oreligion', values.otherReligion);
+      
+      
       // formData.append('email', values.declareAgree);
 
 
@@ -138,7 +144,7 @@ const Register3 = () => {
 
 
 
-      console.log(formData);
+    
       values.f_mykad = selectedFiles1;
       // 
 
@@ -148,6 +154,8 @@ const Register3 = () => {
       values.b_mykad = selectedFiles2;
       values.utilitybill = selectedFiles3;
       values.nomnric = selectedFiles4;
+      console.log("formData");
+      console.log(formData);
       values.declareAgree = document.getElementById("defaultCheck1").checked;
 
       // useEffect(() => {
@@ -158,7 +166,21 @@ const Register3 = () => {
         }
       })
         // .then(res =>console.log(res['data']['result']))
-        .then(res => console.log(res['data']['result']))
+        .then(res =>{
+
+          if(res['data']['status'] == '1'){
+            toggleTab(activeTab + 2);
+            console.log("success");
+            //redirect to success page
+           
+
+          }else{
+            toggleTab(activeTab + 1);
+            console.log("failure");
+            ///redirect to error page 
+
+          }
+    })
         .catch(err => console.log(err));
       // }, []);
 
@@ -209,7 +231,7 @@ const Register3 = () => {
   function toggleTab(tab) {
     if (activeTab !== tab) {
       var modifiedSteps = [...passedSteps, tab]
-      if (tab >= 1 && tab <= 4) {
+      if (tab >= 1 && tab <= 5) {
         setactiveTab(tab)
         setPassedSteps(modifiedSteps)
       }
@@ -1093,6 +1115,23 @@ const Register3 = () => {
                                     <Col lg="6">
                                       <div className="text-center">
                                         <div className="mb-4">
+                                          <i className="mdi mdi-close-circle failuremsgicon display-4" />
+                                        </div>
+                                        <div>
+                                          <h5>Registration Failed!</h5>
+                                          {/* <p className="text-muted mt-3">
+                                            Your registration details have been submitted for review. Once your document is verified, you will receive an email notification confirming your account activation.
+                                          </p> */}
+                                        </div>
+                                      </div>
+                                    </Col>
+                                  </div>
+                                </TabPane>
+                                <TabPane tabId={5}>
+                                  <div className="row justify-content-center">
+                                    <Col lg="6">
+                                      <div className="text-center">
+                                        <div className="mb-4">
                                           <i className="mdi mdi-check-circle-outline text-success display-4" />
                                         </div>
                                         <div>
@@ -1111,7 +1150,7 @@ const Register3 = () => {
                               <ul>
                                 <li className={activeTab === 1 ? "previous disabled" : "previous"}>
                                   <Link
-                                    className={` ${activeTab === 4 ? "d-none" : ""}`}
+                                    className={` ${activeTab === 4 || activeTab === 5   ? "d-none" : ""}`}
                                     to="#"
                                     onClick={() => {
                                       toggleTab(activeTab - 1)
@@ -1122,7 +1161,7 @@ const Register3 = () => {
                                 </li>
                                 <li className={activeTab === 3 ? "next d-none" : "next"}>
                                   <Link
-                                    className={` ${activeTab === 4 ? "d-none" : ""}`}
+                                    className={` ${activeTab === 4 || activeTab === 5 ? "d-none" : ""}`}
                                     to="#"
                                     onClick={() => {
                                       toggleTab(activeTab + 1);
@@ -1142,12 +1181,16 @@ const Register3 = () => {
                                         validation.validateForm().then(errors => {
                                           if (Object.keys(errors).length === 0) {
                                             // If there are no validation errors, proceed to the next step
-                                            toggleTab(activeTab + 1);
+                                            console.log("no required")
                                           } else {
+
+                                           
                                             // If there are validation errors, display them
                                             validation.setTouched({
                                               ...Object.keys(errors).reduce((acc, key) => ({ ...acc, [key]: true }), {})
                                             });
+                                            console.log("need required")
+                                            // toggleTab(activeTab + 1);
                                           }
                                         });
                                       }}

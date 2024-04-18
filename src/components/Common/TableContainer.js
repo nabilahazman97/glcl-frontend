@@ -201,16 +201,16 @@ const TableContainer = ({
 
       <div className="table-responsive react-table">
         <Table bordered hover {...getTableProps()} className={className}>
-          <thead className="table-light table-nowrap text-center">
+          <thead className="table-secondary table-nowrap text-center">
             {headerGroups.map(headerGroup => (
               <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
                   <th key={column.id}>
-                    <div className="mb-2" {...column.getSortByToggleProps()}>
+                    <div className="" {...column.getSortByToggleProps()}>
                       {column.render("Header")}
                       {generateSortingIndicator(column)}
                     </div>
-                    <Filter column={column} />
+                    {/* <Filter column={column} /> */}
                   </th>
                 ))}
               </tr>
@@ -218,11 +218,11 @@ const TableContainer = ({
           </thead>
 
           <tbody {...getTableBodyProps()}>
-            {page.map(row => {
+            {page.map((row, rowIndex) => {
               prepareRow(row);
               return (
                 <Fragment key={row.getRowProps().key}>
-                  <tr>
+                  <tr className={rowIndex % 2 === 0 ? 'even' : 'odd'}>
                     {row.cells.map(cell => {
                       return (
                         <td key={cell.id} {...cell.getCellProps()}>
