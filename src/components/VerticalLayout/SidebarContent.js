@@ -160,11 +160,18 @@ const SidebarContent = props => {
                 <span >{props.t("MEMBERSHIP MANAGEMENT")}</span>
               </Link>
               <ul className="sub-menu">
-                <li style={{ whiteSpace: "nowrap" }}>
-                  <Link to="/tables-datatable">{props.t("MEMBER REGISTRATION LIST")}</Link>
+              <li  >
+                  <Link to="/tables-datatable">{props.t("NEW MEMBER VERIFICATION")}</Link>
                 </li>
-                <li style={{ whiteSpace: "nowrap" }}>
-                  <Link to="/member-profile-list">{props.t("MEMBER LIST")}</Link>
+              <li  >
+                  <Link to="/member-profile-list">{props.t("MEMBER PROFILE")}</Link>
+                </li>
+                
+                <li  >
+                  <Link to="/admin-announcement-update">{props.t("ANNOUNCEMENT & UPDATE")}</Link>
+                </li>
+                <li  >
+                  <Link to="/module-management">{props.t("MODULE MANAGEMENT")}</Link>
                 </li>
               </ul>
             </li>
@@ -182,19 +189,19 @@ const SidebarContent = props => {
                 <span>{props.t("SCHEMES")}</span>
               </Link>
               <ul className="sub-menu">
-                <li style={{ whiteSpace: "nowrap" }}>
-                  <Link to="/svarna-tira/index">{props.t("SVARNA TIRA SCHEME")}</Link>
+                <li  >
+                  <Link to="/admin-swarna-tira/index">{props.t("SVARNA TIRA SCHEME")}</Link>
                 </li>
-                {/* <li >
-                  <Link to="/#">{props.t("SVARNA STOKAM NIKSEPA SCHEME")}</Link>
+                 <li >
+                  <Link to="/admin-swarna-stokam-niksepa/index">{props.t("SVARNA STOKAM NIKSEPA SCHEME")}</Link>
                 </li>
-                <li >
+               {/* <li >
                   <Link to="/#">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
                 </li>
-                <li style={{ whiteSpace: "nowrap" }}>
+                <li  >
                   <Link to="/#">{props.t("SVARNA AHITA SCHEME")}</Link>
                 </li>
-                <li style={{ whiteSpace: "nowrap" }}>
+                <li  >
                   <Link to="/#">{props.t("SVARNA RUNA SCHEME")}</Link>
                 </li> */}
               </ul>

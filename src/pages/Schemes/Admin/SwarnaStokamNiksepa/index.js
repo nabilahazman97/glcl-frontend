@@ -2,15 +2,28 @@
 import React, { useMemo,useState,useEffect } from "react";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
+import {
+    Container,
+    Row,
+    Col,
+    Card,
+    Alert,
+    CardBody,
+    Button,
+    Label,
+    Input,
+    FormFeedback,
+    Form,
+    CardTitle,
+  } from "reactstrap";
 
 //import components
-import Breadcrumbs from '../../components/Common/Breadcrumb';
-import TableContainer from '../../components/Common/TableContainer';
-import { Button } from 'reactstrap';
+import Breadcrumbs from '../../../../components/Common/Breadcrumb';
+import TableContainer from '../../../../components/Common/TableContainer';
 import axios from "axios";
-import * as apiname from "../../helpers/url_helper";
+import * as apiname from "../../../../helpers/url_helper";
 
-import './datatables.scss';
+//  import './style';
 
 function MemberList() {
     const [data, setdata] = useState([]);
@@ -36,20 +49,24 @@ function MemberList() {
                 accessor: 'Username',
             },
             {
-                Header: 'Email',
+                Header: 'NRIC No.',
+                accessor: 'icnumber',
+            },
+            {
+                Header: 'Email Address',
                 accessor: 'emailid'
             },
 
             {
-                Header: 'Phone Number',
-                accessor: 'phonenum'
+                Header: 'Savings',
+                accessor: ''
             },
             {
                 Header: 'Actions',
                 accessor: 'actions',
                 Cell: ({ row }) => (
                     <div className="d-flex flex-wrap gap-2 justify-content-center">
-                        <Link to={`/member-profile/${row.original.id}`} style={{ textDecoration: 'none' }}>
+                        <Link to={`/admin-swarna-stokam-niksepa/member-details/${row.original.id}`} style={{ textDecoration: 'none' }}>
                         <button
                                 type="button"
                                 className="btn btn-primary rejectBtn"
@@ -97,9 +114,12 @@ function MemberList() {
     return (
         <div className="page-content">
             <div className="container-fluid">
-                <Breadcrumbs title="Tables" breadcrumbItem="MEMBER PROFILE" />
-                {/* <Table columns={columns} data={data} /> */}
-                <TableContainer
+                <Breadcrumbs title="Tables" breadcrumbItem="SWARNA STOKAM NIKSEPA" />
+      
+                <Card>
+                  <CardBody>
+                    <CardTitle>List of Members</CardTitle>
+                    <TableContainer
                     columns={columns}
                     data={data}
                     isGlobalFilter={true}
@@ -107,6 +127,10 @@ function MemberList() {
                     customPageSize={10}
                     className="custom-header-css"
                 />
+                  </CardBody>
+                </Card>
+              
+               
             </div>
         </div>
     );

@@ -94,20 +94,28 @@ function SvarnaTiraBuy() {
                     <Row>
                         <CardTitle className="mb-3">Buy Gold</CardTitle>
                         <Col xl={12}>
-                            <Card style={{ backgroundColor: '#343434', color: '#ddbf6a', borderRadius: '25px 25px 25px 25px', height: '252px', cursor: 'pointer' }}>
-                                <CardBody className="align-content-center">
-                                    <div className="col-md-12">
-                                        <div className="d-flex justify-content-center gap-5">
-                                            <div className="col-md-6 text-end">
-                                                <img
-                                                    src={tripleNote}
-                                                    alt=""
-                                                    className="avatar-md"
-                                                />
-                                            </div>
-                                            <div className="text-start align-content-center col-md-6">
+                            <Card style={{ backgroundColor: '#DBC176', color: 'black', borderRadius: '25px 25px 25px 25px', }}>
+                                <CardBody className="">
+                                    <div className="col-md-15">
+                                        <div className="d-flex justify-content-center">
+                                            <div className="col-md-11 text-end">
+                                                <div className="mb-3">
 
-                                                <h4 className="mt-2">Sell Back</h4>
+                                                    <Input
+                                                        className="form-control login-input text-center"
+                                                        name=""
+                                                        placeholder=""
+                                                        type="text"
+
+                                                    />
+
+                                                </div>
+                                            </div>
+                                            <div className="text-center align-content-center col-md-1 mb-3">
+
+                                                <Button className="addBtn">
+                                                <i className="bx bx-plus-medical"></i>
+                                                </Button>
 
                                             </div>
                                         </div>
@@ -116,10 +124,10 @@ function SvarnaTiraBuy() {
                             </Card>
                         </Col>
 
-                     
+
                     </Row>
 
-                    <Modal className="modal-dialog modal-dialog-centered" isOpen={modalOpen} toggle={() => setModalOpen(false)} style={{  width:"350px" }}>
+                    <Modal className="modal-dialog modal-dialog-centered" isOpen={modalOpen} toggle={() => setModalOpen(false)} style={{ width: "350px" }}>
                         <div class="modal-content  modalLockedScheme">
                             <div class="modal-header">
                                 <button type="button" class="btn-close" onClick={() => setModalOpen(false)}></button>
