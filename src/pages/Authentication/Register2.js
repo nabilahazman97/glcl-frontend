@@ -38,6 +38,7 @@ import classnames from "classnames"
 const Register3 = () => {
 
   const [icNumber, setICNumber] = useState('');
+  const [declareIcNumber, setDeclareIcNumber] = useState('');
   const [age, setAge] = useState('');
   const [age1, setAge1] = useState('');
   const [phoneNumber1, setPhoneNumber1] = useState('');
@@ -87,7 +88,7 @@ const Register3 = () => {
       b_mykad: '',
       utilitybill: '',
       declareName: '',
-      declareIcNum: '',
+      declareIcNum: '' || '',
       declareRelay: '',
       nomnric: '',
       declareAgree: false,
@@ -103,6 +104,8 @@ const Register3 = () => {
       utilitybill: Yup.string().required("File is required"),
       nomnric: Yup.string().required("File is required"),
       declareAgree: Yup.boolean().oneOf([true], 'You must agree to the declaration'),
+      declareName: Yup.string().required("Name is required"),
+      declareIcNum: Yup.string().required("IC number is required"),
       // utilitybill: Yup.string().required("file 3 is required"),
       // occupation: Yup.string(),
     }),
@@ -110,7 +113,7 @@ const Register3 = () => {
 
       console.log(values);
       // const formData = new FormData();
-      
+
       const formData = new FormData();
       formData.append('f_mykad', selectedFiles1[0]);
       formData.append('b_mykad', selectedFiles2[0]);
@@ -136,8 +139,8 @@ const Register3 = () => {
       formData.append('declarion', values.declareAgree);
       formData.append('oethnic', values.otherEthnicity);
       formData.append('oreligion', values.otherReligion);
-      
-      
+
+
       // formData.append('email', values.declareAgree);
 
 
@@ -145,7 +148,7 @@ const Register3 = () => {
 
 
 
-    
+
       values.f_mykad = selectedFiles1;
       // 
 
@@ -167,15 +170,15 @@ const Register3 = () => {
         }
       })
         // .then(res =>console.log(res['data']['result']))
-        .then(res =>{
+        .then(res => {
 
-          if(res['data']['status'] == '1'){
+          if (res['data']['status'] == '1') {
             toggleTab(activeTab + 2);
             console.log("success");
             //redirect to success page
-           
 
-          }else{
+
+          } else {
             toggleTab(activeTab + 1);
             console.log("failure");
             console.log(res['data']['message']);
@@ -183,7 +186,7 @@ const Register3 = () => {
             ///redirect to error page 
 
           }
-    })
+        })
         .catch(err => console.log(err));
       // }, []);
 
@@ -256,6 +259,8 @@ const Register3 = () => {
     // Allow backspace to delete the last character or hyphen
     if (e.keyCode === 8 && icNumber.charAt(icNumber.length - 1) === '-') {
       setICNumber(icNumber.slice(0, -1));
+    } else if (e.keyCode === 8 && declareIcNumber.charAt(declareIcNumber.length - 1) === '-') {
+      setDeclareIcNumber(declareIcNumber.slice(0, -1));
     }
   };
 
@@ -271,6 +276,7 @@ const Register3 = () => {
       formattedValue = numericValue;
     }
     setICNumber(formattedValue);
+  
 
     // Extract the year of birth
     let year = parseInt(formattedValue.slice(0, 2), 10);
@@ -290,6 +296,19 @@ const Register3 = () => {
       setAge(age);
     }
 
+  };
+  const handleChange2 = (e) => {
+    const inputValue = e.target.value;
+    // Remove any non-numeric characters
+    const numericValue = inputValue.replace(/\D/g, '');
+    // Format the IC number as "000000-00-0000" only if it's complete
+    let formattedValue = '';
+    if (numericValue.length > 6) {
+      formattedValue = numericValue.slice(0, 6) + '-' + numericValue.slice(6, 8) + '-' + numericValue.slice(8, 12);
+    } else {
+      formattedValue = numericValue;
+    }
+    setDeclareIcNumber(formattedValue);
   };
 
   const calculateAge = (year) => {
@@ -1005,17 +1024,37 @@ const Register3 = () => {
                                             placeholder="Name (As per IC)"
                                             type="text"
                                             onChange={validation.handleChange}
+                                            onBlur={validation.handleBlur}
+                                            value={validation.values.declareName || ""}
+                                            invalid={
+                                              validation.touched.declareName && validation.errors.declareName ? true : false
+                                            }
                                           />
+                                          {validation.touched.declareName && validation.errors.declareName ? (
+                                            <FormFeedback type="invalid">{validation.errors.declareName}</FormFeedback>
+                                          ) : null}
+
                                         </div>
                                         <div className=" mb-3">
                                           <Input
-                                            id="name"
                                             name="declareIcNum"
                                             className="form-control login-input text_1"
                                             placeholder="IC Number"
                                             type="text"
-                                            onChange={validation.handleChange}
+                                            value={declareIcNumber}
+                                            onChange={(e) => {
+                                              validation.handleChange(e); // Call the formik handleChange
+                                              handleChange2(e); // Call your custom handleChange
+                                            }}
+                                            onKeyDown={handleBackspace}
+                                            onBlur={validation.handleBlur}
+                                            invalid={
+                                              validation.touched.declareIcNum && validation.errors.declareIcNum ? true : false
+                                            }
                                           />
+                                          {validation.touched.declareIcNum && validation.errors.declareIcNum ? (
+                                            <FormFeedback type="invalid">{validation.errors.declareIcNum}</FormFeedback>
+                                          ) : null}
                                         </div>
                                         <div className=" mb-3">
                                           <Input
@@ -1153,7 +1192,7 @@ const Register3 = () => {
                               <ul>
                                 <li className={activeTab === 1 ? "previous disabled" : "previous"}>
                                   <Link
-                                    className={` ${activeTab === 4 || activeTab === 5   ? "d-none" : ""}`}
+                                    className={` ${activeTab === 4 || activeTab === 5 ? "d-none" : ""}`}
                                     to="#"
                                     onClick={() => {
                                       toggleTab(activeTab - 1)
@@ -1187,7 +1226,7 @@ const Register3 = () => {
                                             console.log("no required")
                                           } else {
 
-                                           
+
                                             // If there are validation errors, display them
                                             validation.setTouched({
                                               ...Object.keys(errors).reduce((acc, key) => ({ ...acc, [key]: true }), {})

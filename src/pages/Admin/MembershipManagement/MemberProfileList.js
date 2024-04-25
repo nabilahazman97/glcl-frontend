@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 
 //import components
-import Breadcrumbs from '../../components/Common/Breadcrumb';
-import TableContainer from '../../components/Common/TableContainer';
+import Breadcrumbs from '../../../components/Common/Breadcrumb';
+import TableContainer from '../../../components/Common/TableContainer';
 import { Button } from 'reactstrap';
 import axios from "axios";
-import * as apiname from "../../helpers/url_helper";
+import * as apiname from "../../../helpers/url_helper";
 
-import './datatables.scss';
+// import './datatables.scss';
 
 function MemberList() {
     const [data, setdata] = useState([]);
@@ -36,13 +36,16 @@ function MemberList() {
                 accessor: 'Username',
             },
             {
+                Header: 'NRIC No.',
+                accessor: 'icnumber',
+            },
+            {
+                Header: 'Membership ID',
+                accessor: 'membership_id',
+            },
+            {
                 Header: 'Email',
                 accessor: 'emailid'
-            },
-
-            {
-                Header: 'Phone Number',
-                accessor: 'phonenum'
             },
             {
                 Header: 'Actions',

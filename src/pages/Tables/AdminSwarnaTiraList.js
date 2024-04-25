@@ -2,11 +2,24 @@
 import React, { useMemo,useState,useEffect } from "react";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
+import {
+    Container,
+    Row,
+    Col,
+    Card,
+    Alert,
+    CardBody,
+    Button,
+    Label,
+    Input,
+    FormFeedback,
+    Form,
+    CardTitle,
+  } from "reactstrap";
 
 //import components
 import Breadcrumbs from '../../components/Common/Breadcrumb';
 import TableContainer from '../../components/Common/TableContainer';
-import { Button } from 'reactstrap';
 import axios from "axios";
 import * as apiname from "../../helpers/url_helper";
 
@@ -36,12 +49,16 @@ function MemberList() {
                 accessor: 'Username',
             },
             {
+                Header: 'NRIC No.',
+                accessor: 'icnumber',
+            },
+            {
                 Header: 'Email',
                 accessor: 'emailid'
             },
 
             {
-                Header: 'Phone Number',
+                Header: 'Gold Coin',
                 accessor: 'phonenum'
             },
             {
@@ -97,9 +114,11 @@ function MemberList() {
     return (
         <div className="page-content">
             <div className="container-fluid">
-                <Breadcrumbs title="Tables" breadcrumbItem="MEMBER PROFILE" />
-                {/* <Table columns={columns} data={data} /> */}
-                <TableContainer
+                <Breadcrumbs title="Tables" breadcrumbItem="SWARNA TIRA SCHEME" />
+                <Card>
+                  <CardBody>
+                    <CardTitle>Profile Information</CardTitle>
+                    <TableContainer
                     columns={columns}
                     data={data}
                     isGlobalFilter={true}
@@ -107,6 +126,9 @@ function MemberList() {
                     customPageSize={10}
                     className="custom-header-css"
                 />
+                  </CardBody>
+                </Card>
+               
             </div>
         </div>
     );
