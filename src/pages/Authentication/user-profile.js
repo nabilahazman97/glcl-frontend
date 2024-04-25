@@ -95,7 +95,7 @@ const UserProfile = () => {
         })
           .then(res => {
             if (res['data']['status'] == '1') {
-              toast.success('Updated!'); 
+              toast.success('Updated profile details!'); 
             } else {
               toast.danger('Failed to Update!'); 
             }
@@ -144,10 +144,15 @@ function handleChangePwd() {
     .then(response => {
       // Handle success response
      
+      if (response['data']['status'] == '1') {
+        toast.success('Password changed!'); 
+        newPwdInput.value = '';
+        confirmPwdInput.value = '';
+      } else {
+        toast.danger('Failed to Update!'); 
+      }
       
-      toast.success('Password changed!'); 
-      newPwdInput.value = '';
-      confirmPwdInput.value = '';
+     
       // window.location.reload();
      
 
@@ -174,7 +179,7 @@ function handleChangePwd() {
           <ToastContainer />
           <Container fluid>
             {/* Render Breadcrumb */}
-            <Breadcrumb title="Skote" breadcrumbItem="Profile" />
+            <Breadcrumb title="glcl" breadcrumbItem="Profile" />
 
             <div className="d-flex gap-3">
               <div className="col-lg-6 p-0">
@@ -223,7 +228,8 @@ function handleChangePwd() {
                           type="text"
                           onChange={textHandler}
                           defaultValue={fres.icnumber}
-                          required     
+                          required
+                          maxlength='12'    
                         />
                       </div>
 
@@ -304,7 +310,8 @@ function handleChangePwd() {
                           type="text"
                           onChange={textHandler}
                           defaultValue={fres.phonenum}
-                            required    
+                            required
+                            maxlength="10" 
                         />
                       </div>
                       <div className="mb-3 mt-3">

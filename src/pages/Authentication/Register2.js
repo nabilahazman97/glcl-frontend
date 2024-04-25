@@ -52,6 +52,7 @@ const Register3 = () => {
   const [selectedFiles2, setSelectedFiles2] = useState([]);
   const [selectedFiles3, setSelectedFiles3] = useState([]);
   const [selectedFiles4, setSelectedFiles4] = useState([]);
+  const [apierror, setapierror] = useState('');
 
 
 
@@ -177,6 +178,8 @@ const Register3 = () => {
           }else{
             toggleTab(activeTab + 1);
             console.log("failure");
+            console.log(res['data']['message']);
+            setapierror(res['data']['message']);
             ///redirect to error page 
 
           }
@@ -1118,7 +1121,7 @@ const Register3 = () => {
                                           <i className="mdi mdi-close-circle failuremsgicon display-4" />
                                         </div>
                                         <div>
-                                          <h5>Registration Failed!</h5>
+                                          <h5>Registration Failed! {apierror}</h5>
                                           {/* <p className="text-muted mt-3">
                                             Your registration details have been submitted for review. Once your document is verified, you will receive an email notification confirming your account activation.
                                           </p> */}

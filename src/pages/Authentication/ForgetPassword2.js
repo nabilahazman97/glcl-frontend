@@ -187,7 +187,7 @@ const ForgetPassword3 = () => {
                                                         >
 
                                                             <div className="text-center m-3">
-                                                                <i className="bx bx-check-circle" style={{ fontSize: "80px", marginLeft: "10px", color: "#FF5733" }}></i>
+                                                                <i className="mdi mdi-close-circle" style={{ fontSize: "80px", marginLeft: "10px", color: "#FF5733" }}></i>
                                                                 <div className="d-flex justify-content-center">
 
                                                                     <div className="d-flex align-items-center">
