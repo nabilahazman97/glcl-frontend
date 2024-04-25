@@ -57,7 +57,7 @@ import RegisterFileUpload from "../pages/Authentication/RegisterFileUpload";
 import SetPwd from "../pages/Authentication/SetPassword";
 import Declarations from "../pages/Authentication/Declaration";
 import ForgetPwd3 from "../pages/Authentication/ForgetPassword2";
-import Payment from "../pages/AuthenticationInner/Payment";
+import Payment from "../pages/Authentication/Payment";
 
 
 //  // Inner Authentication
@@ -78,13 +78,37 @@ import EmailVerification2 from "../pages/AuthenticationInner/auth-email-verifica
 import TwostepVerification from "../pages/AuthenticationInner/auth-two-step-verification";
 import TwostepVerification2 from "../pages/AuthenticationInner/auth-two-step-verification-2";
 
+//ADMIN
+import DashboardAdmin from "../pages/Admin/Dashboard";
+import MemberProfileList from "../pages/Admin/MembershipManagement/MemberProfileList";
+import MemberProfile from "../pages/Admin/MembershipManagement/MemberProfileDetails";
+import DatatableTables from "../pages/Admin/MembershipManagement/NewMemberVerification";
+import MemberApproval from "../pages/Admin/MembershipManagement/MemberApproval";
+import AdminSwarnaTira from "../pages/Admin/Schemes/SwarnaTira/MemberList";
+import AdminSwarnaTiraMemberDetails from "../pages/Admin/Schemes/SwarnaTira/MemberDetails";
+import AdminSwarnaStokamNiksepa from "../pages/Admin/Schemes/SwarnaStokamNiksepa/MemberList";
+import AdminSwarnaStokamNiksepaMemberDetails from "../pages/Admin/Schemes/SwarnaStokamNiksepa/MemberDetails";
+import AnouncementUpdate from "../pages/Admin/MembershipManagement/AnnouncementUpdate";
+import ModuleManagement from "../pages/Admin/MembershipManagement/ModuleManagement";
+//ADMIN
+
 // Dashboard
-import DashboardAdmin from "../pages/Dashboard/index2";
+import DashboardAdmin2 from "../pages/Dashboard/index2";
 import Dashboard from "../pages/Dashboard/index";
 import DashboardSaas from "../pages/Dashboard-saas/index";
 import DashboardCrypto from "../pages/Dashboard-crypto/index";
 import Blog from "../pages/Dashboard-Blog/index";
 import DashboardJob from "../pages/DashboardJob/index";
+
+//Schemes
+
+import SvarnaTira2 from "../pages/Schemes/Svarna_Tira/index";
+import SvarnaTiraBuy from "../pages/Schemes/Svarna_Tira/Buy";
+import AdminSwarnaTira2 from "../pages/Schemes/Admin/SwarnaTira/index";
+import AdminSwarnaTiraMemberDetails2 from "../pages/Schemes/Admin/SwarnaTira/MemberDetails";
+import AdminSwarnaStokamNiksepa2 from "../pages/Schemes/Admin/SwarnaStokamNiksepa/index";
+import AdminSwarnaStokamNiksepaMemberDetails2 from "../pages/Schemes/Admin/SwarnaStokamNiksepa/MemberDetails";
+
 
 //Crypto
 import CryptoWallet from "../pages/Crypto/CryptoWallet/crypto-wallet";
@@ -117,10 +141,10 @@ import IconFontawesome from "../pages/Icons/IconFontawesome";
 
 //Tables
 import BasicTables from "../pages/Tables/BasicTables";
-import DatatableTables from "../pages/Tables/DatatableTables";
-import MemberApproval from "../pages/Forms/MemberApproval";
-import MemberProfileList from "../pages/Tables/MemberProfileList";
-import MemberProfile from "../pages/Tables/MemberProfile";
+import DatatableTables2 from "../pages/Tables/DatatableTables";
+import MemberApproval2 from "../pages/Forms/MemberApproval";
+import MemberProfileList2 from "../pages/Tables/MemberProfileList";
+import MemberProfile2 from "../pages/Tables/MemberProfile";
 import ResponsiveTables from "../pages/Tables/ResponsiveTables";
 import DragDropTables from "../pages/Tables/DragDropTables";
 
@@ -192,6 +216,18 @@ import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile"
 const authProtectedRoutes = [
   { path: "/dashboard", component: <DashboardAdmin /> },
   { path: "/member-approval/:Uid", component: <MemberApproval /> },
+  { path: "/dashboard-saas", component: <DashboardSaas /> },
+  { path: "/dashboard-crypto", component: <DashboardCrypto /> },
+  { path: "/blog", component: <Blog /> },
+  { path: "/dashboard-job", component: <DashboardJob /> },
+  { path: "/admin-swarna-tira/index", component: <AdminSwarnaTira /> },
+  { path: "/admin-swarna-stokam-niksepa/index", component: <AdminSwarnaStokamNiksepa /> },
+  { path: "/admin-swarna-tira/member-details/:Uid", component: <AdminSwarnaTiraMemberDetails /> },
+  { path: "/admin-swarna-stokam-niksepa/member-details/:Uid", component: <AdminSwarnaStokamNiksepaMemberDetails /> },
+  { path: "/admin-announcement-update", component: <AnouncementUpdate /> },
+  { path: "/module-management", component: <ModuleManagement /> },
+  // { path: "/svarna-tira/index", component: <SvarnaTira /> },
+  { path: "/svarna-tira/buy", component: <SvarnaTiraBuy /> },
   // { path: "/dashboard-saas", component: <DashboardSaas /> },
   // { path: "/dashboard-crypto", component: <DashboardCrypto /> },
   // { path: "/blog", component: <Blog /> },

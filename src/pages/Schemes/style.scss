@@ -195,6 +195,13 @@ tbody tr {
   src: url("../../assets/fonts/Inter-Medium.ttf");
 }
 
+.inter_bold{
+  font-family: inter_bold;
+}
+.inter_regular{
+  font-family: inter_regular;
+}
+
 @font-face {
   font-family: inter_bold;
   src: url("../../assets/fonts/Inter-Bold.ttf");
@@ -228,7 +235,7 @@ tbody tr {
   width: 110px;
   background-color: #797681 !important;
   border-radius: none;
-  border: none !important;
+  border: none;
 }
 
 .saveBtn {
@@ -250,24 +257,18 @@ tbody tr {
 }
 
 table thead {
-  background-color: #485cbe !important;
+  background-color: #848aac !important;
   color: white;
 }
 
 
 table tbody tr.even {
   background-color: #ffffff !important;
-  font-weight: 500;
-  font-family: inter_regular;
-  text-align: center;
   /* Even rows */
 }
 
 table tbody tr.odd {
   background-color: #f5f5f5 !important;
-  font-weight: 500;
-  font-family: inter_regular;
-  text-align: center;
   /* Odd rows */
 }
 

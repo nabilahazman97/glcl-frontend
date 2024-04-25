@@ -131,7 +131,7 @@ const TableContainer = ({
   return (
     <Fragment>
       <Row className="mb-2">
-        <Col md={customPageSizeOptions ? 2 : 1}>
+        <Col md={customPageSizeOptions ? 2 : 2}>
           <select
             className="form-select"
             value={pageSize}
@@ -201,7 +201,7 @@ const TableContainer = ({
 
       <div className="table-responsive react-table">
         <Table bordered hover {...getTableProps()} className={className}>
-          <thead className="table-secondary table-nowrap text-center">
+          <thead className=" table-nowrap text-center">
             {headerGroups.map(headerGroup => (
               <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
@@ -243,7 +243,7 @@ const TableContainer = ({
           <div className="d-flex gap-1">
             <Button
               color="primary"
-              style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"40px" }}
+              style={{ backgroundColor:"#0e174d", borderRadius:"5px", }}
               onClick={() => gotoPage(0)}
               disabled={!canPreviousPage}
             >
@@ -251,7 +251,7 @@ const TableContainer = ({
             </Button>
             <Button
               color="primary"
-              style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"40px" }}
+              style={{ backgroundColor:"#0e174d", borderRadius:"5px", }}
               onClick={previousPage}
               disabled={!canPreviousPage}
             >
@@ -278,11 +278,11 @@ const TableContainer = ({
 
         <Col className="col-md-auto">
           <div className="d-flex gap-1">
-            <Button color="primary" style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"40px" }} onClick={nextPage} disabled={!canNextPage}>
+            <Button color="primary" style={{ backgroundColor:"#0e174d", borderRadius:"5px", }} onClick={nextPage} disabled={!canNextPage}>
               {">"}
             </Button>
             <Button
-             style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"40px" }}
+             style={{ backgroundColor:"#0e174d", borderRadius:"5px",  }}
               onClick={() => gotoPage(pageCount - 1)}
               disabled={!canNextPage}
             >

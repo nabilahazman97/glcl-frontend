@@ -215,9 +215,16 @@ $value in $theme-colors {
     }
   }
 
-  .dot {
+  .activeIndicator {
     height: 15px;
     width: 15px;
     background-color: #14ff00;
+    border-radius: 50%;
+  }
+
+  .deactiveIndicator {
+    height: 15px;
+    width: 15px;
+    background-color: red;
     border-radius: 50%;
   }

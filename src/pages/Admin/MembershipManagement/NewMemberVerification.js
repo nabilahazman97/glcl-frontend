@@ -3,14 +3,14 @@ import React, { useMemo, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import axios from "axios";
-import * as apiname from "../../helpers/url_helper";
+import * as apiname from "../../../helpers/url_helper";
 
 //import components
-import Breadcrumbs from '../../components/Common/Breadcrumb';
-import TableContainer from '../../components/Common/TableContainer';
+import Breadcrumbs from '../../../components/Common/Breadcrumb';
+import TableContainer from '../../../components/Common/TableContainer';
 import { Button } from 'reactstrap';
 
-import './datatables.scss';
+// import './datatables.scss';
 
 function DatatableTables() {
 
@@ -51,7 +51,7 @@ function DatatableTables() {
                             type="button"
                             className="btn btn-warning approveBtn"
                         >
-                            {/* <i className="bx bx-check-circle font-size-16 align-middle me-1"></i>{" "} */}
+                            <i className="mdi mdi-alert-circle-outline font-size-16 align-middle me-1"></i>{" "}
                             Pending
                         </button>
                         </span>
@@ -61,7 +61,7 @@ function DatatableTables() {
                             type="button"
                             className="btn btn-success approveBtn"
                         >
-                            {/* <i className="bx bx-check-circle font-size-16 align-middle me-1"></i>{" "} */}
+                            <i className="mdi mdi-check-circle-outline font-size-16 align-middle me-1"></i>{" "}
                             Approved
                         </button>
                     </span>
@@ -71,7 +71,7 @@ function DatatableTables() {
                             type="button"
                             className="btn btn-danger approveBtn"
                         >
-                            {/* <i className="bx bx-check-circle font-size-16 align-middle me-1"></i>{" "} */}
+                            <i className="mdi mdi-close-circle-outline font-size-16 align-middle me-1"></i>{" "}
                             Rejected
                         </button>
                     </span>

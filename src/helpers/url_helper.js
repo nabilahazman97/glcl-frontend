@@ -141,3 +141,9 @@ export const register="/api/user/register"; //
 export const changePwd="/api/user/changepassword"; //
 
 export const editProfile="/api/user/editprofile"; //
+
+export const schemeList="/api/scheme/"; //
+
+export const userScheme ="/api/scheme/schemelist"; //
+
+export const remainGold ="/api/scheme/remaininggold"; //
