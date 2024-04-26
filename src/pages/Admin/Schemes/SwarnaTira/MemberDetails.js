@@ -239,7 +239,7 @@ const FormValidations = () => {
     const filteredData = useMemo(() => {
         if (!startDate || !endDate) return data2; // Return all data if start or end date is not selected
 
-        return data.filter(item => {
+        return data2.filter(item => {
             const createdAtDate = new Date(item.createdAt);
             return createdAtDate >= startDate && createdAtDate <= new Date(endDate.getTime() + 86400000); // Adding 1 day to the end date
         });
