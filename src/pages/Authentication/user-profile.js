@@ -178,7 +178,7 @@ function handleChangePwd() {
 
             <div className="d-flex gap-3">
               <div className="col-lg-6 p-0">
-                <Card style={{ background: 'linear-gradient(to bottom, white 40%, #d1b66a 40%)' }}>
+                <Card className="defCard" style={{ background: 'linear-gradient(to bottom, white 40%, #d1b66a 40%)' }}>
                   <CardBody>
                     <div>
                       <div className="d-flex justify-content-center">
@@ -198,7 +198,7 @@ function handleChangePwd() {
                   </CardBody>
                 </Card>
 
-                <Card>
+                <Card className="defCard">
                   <CardBody>
                     <CardTitle>Profile Information</CardTitle>
                     <div>
@@ -234,7 +234,7 @@ function handleChangePwd() {
               </div>
               <div className="col-lg-6 p-0">
 
-                <Card>
+                <Card className="defCard">
                   <CardBody>
                     <CardTitle>Change Password</CardTitle>
                     <div className="mb-3">
@@ -279,7 +279,7 @@ function handleChangePwd() {
                   </CardBody>
                 </Card>
 
-                <Card>
+                <Card className="defCard">
                   <CardBody>
                     <CardTitle>Contact Information</CardTitle>
                     <div>

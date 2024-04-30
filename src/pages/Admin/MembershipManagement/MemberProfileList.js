@@ -1,12 +1,12 @@
 // src/components/filter.
-import React, { useMemo,useState,useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 
 //import components
 import Breadcrumbs from '../../../components/Common/Breadcrumb';
 import TableContainer from '../../../components/Common/TableContainer';
-import { Button } from 'reactstrap';
+import { Button,Card,CardBody,CardTitle } from 'reactstrap';
 import axios from "axios";
 import * as apiname from "../../../helpers/url_helper";
 
@@ -16,18 +16,18 @@ function MemberList() {
     const [data, setdata] = useState([]);
     useEffect(() => {
         // console.log("hi");
-        axios.get(apiname.base_url+apiname.USER_LIST, {
-          headers: {
-            'Authorization': 'Basic '+ apiname.encoded
-          }
+        axios.get(apiname.base_url + apiname.USER_LIST, {
+            headers: {
+                'Authorization': 'Basic ' + apiname.encoded
+            }
         })
-        // .then(res =>console.log(res))
-        .then(res => {
-            const filteredData = res.data.result.filter(item => item.ustatus == 1);
-            setdata(filteredData);
-        })
-        .catch(err => console.log(err));
-      }, []);
+            // .then(res =>console.log(res))
+            .then(res => {
+                const filteredData = res.data.result.filter(item => item.ustatus == 1);
+                setdata(filteredData);
+            })
+            .catch(err => console.log(err));
+    }, []);
 
     const columns = useMemo(
         () => [
@@ -53,15 +53,15 @@ function MemberList() {
                 Cell: ({ row }) => (
                     <div className="d-flex flex-wrap gap-2 justify-content-center">
                         <Link to={`/member-profile/${row.original.id}`} style={{ textDecoration: 'none' }}>
-                        <button
+                            <button
                                 type="button"
-                                className="btn btn-primary rejectBtn"
+                                className="btn btn-primary viewBtn"
                             >
-                                <i className="mdi mdi-eye-outline font-size-16 align-middle me-1"></i>{" "}
+                                {/* <i className="mdi mdi-eye-outline font-size-16 align-middle me-1"></i>{" "} */}
                                 View
                             </button>
                         </Link>
-                        
+
                         {/* <button
                             type="button"
                             className="btn btn-danger rejectBtn"
@@ -89,7 +89,7 @@ function MemberList() {
     //         "memberid": "1",
     //         "email": "sarah@gmail.com",
     //     },
-        
+
 
 
     // ];
@@ -98,18 +98,26 @@ function MemberList() {
     document.title = "GLCL";
 
     return (
-        <div className="page-content">
+        <div className="page-content picBg">
             <div className="container-fluid">
                 <Breadcrumbs title="Tables" breadcrumbItem="MEMBER PROFILE" />
-                {/* <Table columns={columns} data={data} /> */}
-                <TableContainer
-                    columns={columns}
-                    data={data}
-                    isGlobalFilter={true}
-                    isAddOptions={false}
-                    customPageSize={10}
-                    className="custom-header-css"
-                />
+                <Card className="defCard">
+                    <CardBody>
+                        <CardTitle className="mb-3">List of Members</CardTitle>
+                        <div className="container-fluid">
+
+                            {/* <Table columns={columns} data={data} /> */}
+                            <TableContainer
+                                columns={columns}
+                                data={data}
+                                isGlobalFilter={true}
+                                isAddOptions={false}
+                                customPageSize={10}
+                                className="custom-header-css"
+                            />
+                        </div>
+                    </CardBody>
+                </Card>
             </div>
         </div>
     );

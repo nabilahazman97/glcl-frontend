@@ -398,7 +398,7 @@ const FormValidations = () => {
                                                 </div>
                                             </div>
                                             <div className="float-end ">
-                                                <button
+                                                {/* <button
                                                     type="button"
                                                     className="btn btn-primary downloadBtn me-2"
                                                 >
@@ -408,7 +408,7 @@ const FormValidations = () => {
                                                     className="avatar-md print_icon"
                                                 />
 
-                                                </button>
+                                                </button> */}
                                                 <Link
                                                     to="#"
                                                     onClick={printInvoice}

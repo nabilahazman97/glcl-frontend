@@ -58,10 +58,10 @@ function ModuleManagement() {
                 Header: 'Name',
                 accessor: 'Scheme_name',
             },
-            // {
-            //     Header: 'Required gold',
-            //     accessor: '',
-            // },
+            {
+                Header: 'Required gold',
+                accessor: '',
+            },
             {
                 Header: 'Status',
                 accessor: 'status',

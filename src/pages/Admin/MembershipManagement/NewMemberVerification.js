@@ -8,9 +8,10 @@ import * as apiname from "../../../helpers/url_helper";
 //import components
 import Breadcrumbs from '../../../components/Common/Breadcrumb';
 import TableContainer from '../../../components/Common/TableContainer';
-import { Button } from 'reactstrap';
+import { Button, Card, CardBody, CardTitle } from 'reactstrap';
 
 // import './datatables.scss';
+import '../style.scss';
 
 function DatatableTables() {
 
@@ -32,59 +33,58 @@ function DatatableTables() {
     const columns = useMemo(
         () => [
             {
-                Header: 'Username',
+                Header: 'Name',
                 accessor: 'Username',
             },
             {
-                Header: 'Email',
+                Header: 'NRIC No.',
+                accessor: 'icnumber'
+            },
+            {
+                Header: 'Email Address',
                 accessor: 'emailid'
             },
-
             {
                 Header: 'Status',
                 accessor: 'ustatus',
                 Cell: ({ row }) => (
                     <span className="d-flex justify-content-center">
-                    {row.original.ustatus == 0 || row.original.ustatus === null ? (
-                      <span>
-                        <button
-                            type="button"
-                            className="btn btn-warning approveBtn"
-                        >
-                            <i className="mdi mdi-alert-circle-outline font-size-16 align-middle me-1"></i>{" "}
-                            Pending
-                        </button>
-                        </span>
-                    ) : row.original.ustatus == 1 ? (
-                      <span >
-                        <button
-                            type="button"
-                            className="btn btn-success approveBtn"
-                        >
-                            <i className="mdi mdi-check-circle-outline font-size-16 align-middle me-1"></i>{" "}
-                            Approved
-                        </button>
+                        {row.original.ustatus == 0 || row.original.ustatus === null ? (
+                            <span>
+                                <button
+                                    type="button"
+                                    className="btn btn-warning statusBtn statusPending"
+                                >
+                                    <i className="mdi mdi-alert-circle font-size-16 align-middle me-1"></i>{" "}
+                                    Pending&nbsp;&nbsp;&nbsp;
+                                </button>
+                            </span>
+                        ) : row.original.ustatus == 1 ? (
+                            <span >
+                                <button
+                                    type="button"
+                                    className="btn btn-success statusBtn statusApproved"
+                                >
+                                    <i className="bx bxs-check-circle font-size-16 align-middle me-1"></i>{" "}
+                                    Approved
+                                </button>
+                            </span>
+                        ) : row.original.ustatus == 2 ? (
+                            <span>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger statusBtn statusRejected"
+                                >
+                                    <i className="mdi mdi-close-circle font-size-16 align-middle me-1"></i>{" "}
+                                    Rejected
+                                </button>
+                            </span>
+                        ) : null}
                     </span>
-                    ) : row.original.ustatus == 2 ? (
-                      <span>
-                         <button
-                            type="button"
-                            className="btn btn-danger approveBtn"
-                        >
-                            <i className="mdi mdi-close-circle-outline font-size-16 align-middle me-1"></i>{" "}
-                            Rejected
-                        </button>
-                    </span>
-                    ) : null}
-                  </span>
                 )
             },
             {
-                Header: 'Phone Number',
-                accessor: 'phonenum'
-            },
-            {
-                Header: 'Actions',
+                Header: 'Action',
                 accessor: 'id',
                 Cell: ({ row }) => (
 
@@ -108,9 +108,9 @@ function DatatableTables() {
                         <Link to={`/member-approval/${row.original.id}`} style={{ textDecoration: 'none' }}>
                             <button
                                 type="button"
-                                className="btn btn-primary rejectBtn"
+                                className="btn btn-primary viewBtn"
                             >
-                                <i className="mdi mdi-eye-outline font-size-16 align-middle me-1"></i>{" "}
+                                {/* <i className="mdi mdi-eye-outline font-size-16 align-middle me-1"></i>{" "} */}
                                 View
                             </button>
                         </Link>
@@ -143,19 +143,26 @@ function DatatableTables() {
     document.title = "GLCL";
 
     return (
-        <div className="page-content">
-            <div className="container-fluid">
-                <Breadcrumbs title="Tables" breadcrumbItem="NEW MEMBER VERIFICATION" />
-                {/* <Table columns={columns} data={data} /> */}
-                <TableContainer
-                    columns={columns}
-                    data={data}
-                    isGlobalFilter={true}
-                    isAddOptions={false}
-                    customPageSize={10}
-                    className="custom-header-css"
-                />
-            </div>
+        <div className="page-content picBg">
+            <Breadcrumbs title="Tables" breadcrumbItem="NEW MEMBER VERIFICATION" />
+            <Card className="defCard">
+                <CardBody>
+                    <CardTitle className="mb-3 cardTitle">List of New Members</CardTitle>
+                    <div className="container-fluid">
+
+                        {/* <Table columns={columns} data={data} /> */}
+                        <TableContainer
+                            columns={columns}
+                            data={data}
+                            isGlobalFilter={true}
+                            isAddOptions={false}
+                            customPageSize={10}
+                            className="custom-header-css"
+                        />
+                    </div>
+                </CardBody>
+            </Card>
+
         </div>
     );
 }

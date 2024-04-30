@@ -145,9 +145,9 @@ function MemberList() {
             <Link to={`/admin-swarna-tira/member-details/${row.original.id}`} style={{ textDecoration: 'none' }}>
               <button
                 type="button"
-                className="btn btn-primary rejectBtn"
+                className="btn btn-primary viewBtn"
               >
-                <i className="mdi mdi-eye-outline font-size-16 align-middle me-1"></i>{" "}
+                {/* <i className="mdi mdi-eye-outline font-size-16 align-middle me-1"></i>{" "} */}
                 View
               </button>
             </Link>
@@ -247,7 +247,7 @@ function MemberList() {
         <Card className="defCard" style={{ minHeight:'250px' }}>
           <CardBody>
             <CardTitle>List of Members</CardTitle>
-            <div className="d-print-none mt-4">
+            {/* <div className="d-print-none mt-4">
               <div className="float-end ">
                 <button
                   type="button"
@@ -258,7 +258,7 @@ function MemberList() {
                 </button>
 
               </div>
-            </div>
+            </div> */}
             <TableContainer
               columns={columns}
               data={data}
