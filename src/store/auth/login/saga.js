@@ -20,6 +20,7 @@ function* loginUser({ payload: { user, history } }) {
       email_id: user.email,
       password: user.password,
     });
+
     localStorage.setItem("authUser", JSON.stringify(response));
     localStorage.setItem("accessToken", response.accessToken);
     yield put(loginSuccess(response));

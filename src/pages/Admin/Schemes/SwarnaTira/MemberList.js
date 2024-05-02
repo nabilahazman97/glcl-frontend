@@ -105,10 +105,13 @@ function MemberList() {
   const mergeData = (userListData, userSchemeData) => {
     const mergedData = [];
     userListData.forEach(userList => {
-      const matchingUserScheme = userSchemeData.find(userScheme => userList.id === userScheme.user_id);
-      if (matchingUserScheme) {
-        mergedData.push({ ...userList, ...matchingUserScheme });
+      if(userSchemeData) {
+        const matchingUserScheme = userSchemeData.find(userScheme => userList.id === userScheme.user_id);
+        if (matchingUserScheme) {
+          mergedData.push({ ...userList, ...matchingUserScheme });
+        }
       }
+      
       console.log(mergedData)
     });
     return mergedData;
@@ -120,7 +123,7 @@ function MemberList() {
     () => [
       {
         Header: 'Name',
-        accessor: 'Username',
+        accessor: 'username',
       },
       {
         Header: 'NRIC No.',
@@ -128,7 +131,7 @@ function MemberList() {
       },
       {
         Header: 'Email Address',
-        accessor: 'emailid'
+        accessor: 'email_id'
       },
 
       {
