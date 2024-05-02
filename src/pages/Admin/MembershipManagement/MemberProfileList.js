@@ -17,8 +17,7 @@ function MemberList() {
     const [data, setdata] = useState([]);
 
     useEffect(() => {
-        get(apiname.USER_LIST, {
-        })
+        get(apiname.USER_LIST)
         .then(res => {
             const filteredData = res.result.filter(item => item.ustatus === '1');
             setdata(filteredData);
