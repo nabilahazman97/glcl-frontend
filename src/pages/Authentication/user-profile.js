@@ -44,8 +44,8 @@ const UserProfile = () => {
     var authUserData = localStorage.getItem("authUser");
     var authUserObject = JSON.parse(authUserData);
 
-    setdata(authUserObject.result[0])
-    var id=authUserObject.result[0].id;
+    setdata(authUserObject.result)
+    var id=authUserObject.result.id;
     const user = {
         'id': id
     };
@@ -77,9 +77,9 @@ const UserProfile = () => {
     console.log(values1);
         var authUserData = localStorage.getItem("authUser");
         var authUserObject = JSON.parse(authUserData);
-        var id=authUserObject.result[0].id;
+        var id=authUserObject.result.id;
         const formData = new FormData();
-        if(values1.Username!=undefined){
+        if(values1.username!=undefined){
         formData.append('Username', values1.username);
         }
         if(values1.icnumber!=undefined){
@@ -127,7 +127,7 @@ function handleChangePwd() {
   const confirmPwdInput = document.getElementsByName('confirmPwd')[0];
   var authUserData = localStorage.getItem("authUser");
   var authUserObject = JSON.parse(authUserData);
-  var id=authUserObject.result[0].id;
+  var id=authUserObject.result.id;
   const userId = id;
 
   const oldPwd = oldPwdInput.value;

@@ -46,7 +46,7 @@ function MemberList() {
     // })
     get(apiname.USER_LIST)
     .then(res => {
-      const userListData = res.data.result;
+      const userListData = res.result;
       // Fetch data from userScheme
       post(apiname.userScheme, userScheme)
       .then(res => {
@@ -81,10 +81,13 @@ function MemberList() {
   const mergeData = (userListData, userSchemeData) => {
     const mergedData = [];
     userListData.forEach(userList => {
-      const matchingUserScheme = userSchemeData.find(userScheme => userList.id === userScheme.user_id);
-      if (matchingUserScheme) {
-        mergedData.push({ ...userList, ...matchingUserScheme });
+      if(userSchemeData){
+        const matchingUserScheme = userSchemeData.find(userScheme => userList.id === userScheme.user_id);
+        if (matchingUserScheme) {
+          mergedData.push({ ...userList, ...matchingUserScheme });
+        }
       }
+      
       console.log(mergedData)
     });
     return mergedData;

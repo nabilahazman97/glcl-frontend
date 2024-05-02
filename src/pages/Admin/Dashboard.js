@@ -123,7 +123,7 @@ useEffect(() => {
             } else if (index === 4) {
                 title = 'SVARNA RUNA SCHEME';
             }
-            const total = responses[index].data.result ? responses[index].data.result.length : 0;
+            const total = responses[index].result ? responses[index].result.length : 0;
             return {
               title: title,
               iconClass: "bx-copy-alt",
@@ -133,7 +133,7 @@ useEffect(() => {
         });
         setReports(updatedReports);
         // Update data for the first scheme
-        setdata2(responses[0].data.result);
+        setdata2(responses[0].result);
     }).catch(err => console.log(err));
 }, []);
 
@@ -187,13 +187,14 @@ useEffect(() => {
   console.log(apiname.base_url);
   console.log(apiname.userScheme);
   console.log(user);
-  axios.post(apiname.base_url + apiname.userScheme, userSchemeid5, {
-      headers: {
-          'Authorization': 'Basic ' + apiname.encoded
-      }
-  })
+  // axios.post(apiname.base_url + apiname.userScheme, userSchemeid5, {
+  //     headers: {
+  //         'Authorization': 'Basic ' + apiname.encoded
+  //     }
+  // })
+  post(apiname.userScheme, userSchemeid5)
       // .then(res =>console.log(res))
-      .then(res => setdata5(res['data']['result']))
+      .then(res => setdata5(res.result))
       .catch(err => console.log(err));
 }, []);
 console.log("data5");
