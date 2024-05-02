@@ -11,7 +11,6 @@ import TableContainer from '../../../components/Common/TableContainer';
 import { Button, Card, CardBody, CardTitle } from 'reactstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Button } from 'reactstrap';
 import { del, get, post, put } from "../../../helpers/api_helper";
 
 // import './datatables.scss';

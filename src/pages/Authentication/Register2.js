@@ -445,15 +445,15 @@ const Register3 = () => {
     };
 
     try {
-      const response = await axios.post(apiname.base_url + apiname.emailCheck, userScheme, {
-        headers: {
-          'Authorization': 'Basic ' + apiname.encoded
-        }
-      });
-
-      if (response.data.status === "1") {
+      // const response = await axios.post(apiname.base_url + apiname.emailCheck, userScheme, {
+      //   headers: {
+      //     'Authorization': 'Basic ' + apiname.encoded
+      //   }
+      // });
+      const response = await post(apiname.emailCheck, userScheme);
+      if (response.status === "1") {
         setErrorMessage("Email ID has taken");
-      } else if( response.data.status === "2"){
+      } else if( response.status === "2"){
         setErrorMessage('');
       }
     } catch (error) {
@@ -477,15 +477,17 @@ const Register3 = () => {
     };
 
     try {
-      const response = await axios.post(apiname.base_url + apiname.icnumberCheck, userScheme, {
-        headers: {
-          'Authorization': 'Basic ' + apiname.encoded
-        }
-      });
+      // const response = await axios.post(apiname.base_url + apiname.icnumberCheck, userScheme, {
+      //   headers: {
+      //     'Authorization': 'Basic ' + apiname.encoded
+      //   }
+      // });
 
-      if (response.data.status === "1") {
+      const response = await post(apiname.icnumberCheck, userScheme);
+
+      if (response.status === "1") {
         setErrorMessage3("IC Number has taken");
-      } else if( response.data.status === "2"){
+      } else if( response.status === "2"){
         setErrorMessage3('');
       }
     } catch (error) {

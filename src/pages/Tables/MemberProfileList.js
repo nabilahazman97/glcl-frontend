@@ -17,11 +17,11 @@ function MemberList() {
     const [data, setdata] = useState([]);
     useEffect(() => {
         // console.log("hi");
-        axios.get(apiname.base_url+apiname.USER_LIST, {
-          headers: {
-            'Authorization': 'Basic '+ apiname.encoded
-          }
-        })
+        // axios.get(apiname.base_url+apiname.USER_LIST, {
+        //   headers: {
+        //     'Authorization': 'Basic '+ apiname.encoded
+        //   }
+        // })
         // .then(res =>console.log(res))
         get(apiname.USER_LIST)
         .then(res => {
