@@ -22,27 +22,35 @@ import Breadcrumbs from '../../../components/Common/Breadcrumb';
 import TableContainer from '../../../components/Common/TableContainer';
 import axios from "axios";
 import * as apiname from "../../../helpers/url_helper";
+import { del, get, post, put } from "../../../helpers/api_helper";
 
   import '../style.scss';
 
 function ModuleManagement() {
   const [data, setdata] = useState([]);
   useEffect(() => {
-      console.log(apiname.base_url);
-      console.log(apiname.schemeList);
-      // console.log(user);
-      axios.get(apiname.base_url + apiname.schemeList, {
-          headers: {
-              'Authorization': 'Basic ' + apiname.encoded
-          }
+      get(apiname.schemeList)
+      .then(res => {
+        // Sort data in descending order based on 'id' column
+        if(res.result) {
+          const sortedData = res.result.sort((a, b) => b.id - a.id);
+          setdata(sortedData);
+        }
+        
       })
-          // .then(res =>console.log(res))
-          .then(res => {
-            // Sort data in descending order based on 'id' column
-            const sortedData = res.data.result.sort((a, b) => b.id - a.id);
-            setdata(sortedData);
-          })
-          .catch(err => console.log(err));
+      .catch(err => console.log(err));
+      // axios.get(apiname.base_url + apiname.schemeList, {
+      //     headers: {
+      //         'Authorization': 'Basic ' + apiname.encoded
+      //     }
+      // })
+      //     // .then(res =>console.log(res))
+      //     .then(res => {
+      //       // Sort data in descending order based on 'id' column
+      //       const sortedData = res.data.result.sort((a, b) => b.id - a.id);
+      //       setdata(sortedData);
+      //     })
+      //     .catch(err => console.log(err));
   }, []);
   console.log("data schemes");
   console.log(data);

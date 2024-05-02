@@ -26,6 +26,7 @@ import * as apiname from "../../../../helpers/url_helper";
 import { useParams } from 'react-router-dom';
 import goldBar from "../../../../assets/images/users/gold_bars.png";
 import TableContainer from '../../../../components/Common/TableContainer';
+import { del, get, post, put } from "../../../../helpers/api_helper";
 
 
 //Import Breadcrumb
@@ -90,14 +91,17 @@ const FormValidations = () => {
         console.log(apiname.base_url);
         console.log(apiname.p_userdetails);
         console.log(user);
-        axios.post(apiname.base_url + apiname.p_userdetails, user, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
-        })
-            // .then(res =>console.log(res))
-            .then(res => setdata(res['data']['result']))
-            .catch(err => console.log(err));
+        post(apiname.p_userdetails, user)
+        .then(res => setdata(res.result))
+        .catch(err => console.log(err));
+        // axios.post(apiname.base_url + apiname.p_userdetails, user, {
+        //     headers: {
+        //         'Authorization': 'Basic ' + apiname.encoded
+        //     }
+        // })
+        //     // .then(res =>console.log(res))
+        //     .then(res => setdata(res['data']['result']))
+        //     .catch(err => console.log(err));
     }, []);
     console.log("data userzzzz");
     console.log(data[0]);
@@ -156,7 +160,7 @@ const FormValidations = () => {
                                                         className="avatar-md rounded-circle img-thumbnail"
                                                     />
                                                     <div className="mt-2">
-                                                        <h3 className="text-white">{datas.Username}</h3>
+                                                        <h3 className="text-white">{datas.username}</h3>
                                                         <h3 className="text-dark">{datas.membership_id}</h3>
                                                     </div>
                                                     <div className="d-flex justify-content-center">

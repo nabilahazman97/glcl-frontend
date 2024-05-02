@@ -26,15 +26,17 @@ import logo from "assets/images/logo.svg";
 import { facebook, google } from "../../config";
 import { Buffer } from 'buffer';
 import * as apiname from "../../helpers/url_helper";
+import { del, get, post, put } from "../../helpers/api_helper";
 
 
 const Login = props => {
 useEffect(() => {
-  axios.get(apiname.base_url+apiname.USER_LIST, {
-    headers: {
-      'Authorization': 'Basic '+ apiname.encoded
-    }
-  })
+  // axios.get(apiname.base_url+apiname.USER_LIST, {
+  //   headers: {
+  //     'Authorization': 'Basic '+ apiname.encoded
+  //   }
+  // })
+  get(apiname.USER_LIST)
   .then(res => console.log(res))
   .catch(err => console.log(err));
 }, []);

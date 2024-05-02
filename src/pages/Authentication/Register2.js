@@ -22,6 +22,7 @@ import Select from "react-select";
 import PropTypes from "prop-types";
 import axios from "axios";
 import * as apiname from "../../helpers/url_helper";
+import { del, get, post, put } from "../../helpers/api_helper";
 
 // Formik Validation
 import * as Yup from "yup";
@@ -163,28 +164,45 @@ const Register3 = () => {
 
       // useEffect(() => {
       // console.log("hi");
-      axios.post(apiname.base_url + apiname.register, formData, {
-        headers: {
-          'Authorization': 'Basic ' + apiname.encoded
+      post(apiname.register, formData)
+      .then(res => {
+        if (res.status == '1') {
+          toggleTab(activeTab + 2);
+          console.log("success");
+          //redirect to success page
+
+
+        } else {
+          toggleTab(activeTab + 1);
+          console.log("failure");
+          ///redirect to error page 
+
         }
       })
-        // .then(res =>console.log(res['data']['result']))
-        .then(res => {
+      .catch(err => console.log(err));
 
-          if (res['data']['status'] == '1') {
-            toggleTab(activeTab + 2);
-            console.log("success");
-            //redirect to success page
+      // axios.post(apiname.base_url + apiname.register, formData, {
+      //   headers: {
+      //     'Authorization': 'Basic ' + apiname.encoded
+      //   }
+      // })
+      //   // .then(res =>console.log(res['data']['result']))
+      //   .then(res => {
+
+      //     if (res['data']['status'] == '1') {
+      //       toggleTab(activeTab + 2);
+      //       console.log("success");
+      //       //redirect to success page
 
 
-          } else {
-            toggleTab(activeTab + 1);
-            console.log("failure");
-            ///redirect to error page 
+      //     } else {
+      //       toggleTab(activeTab + 1);
+      //       console.log("failure");
+      //       ///redirect to error page 
 
-          }
-        })
-        .catch(err => console.log(err));
+      //     }
+      //   })
+      //   .catch(err => console.log(err));
       // }, []);
 
     }
