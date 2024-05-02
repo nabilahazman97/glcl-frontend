@@ -29,6 +29,7 @@ import { del, get, post, put } from "../../../helpers/api_helper";
 
 //Import Breadcrumb
 import Breadcrumbs from "../../../components/Common/Breadcrumb";
+import pdfIcon from "../../../assets/images/PDF_file_icon.png";
 
 const FormValidations = () => {
 
@@ -111,6 +112,9 @@ const FormValidations = () => {
     }, []);
     console.log("data user");
     console.log(data[0]);
+
+
+
 
 
     let numIc = '';
@@ -235,11 +239,197 @@ const FormValidations = () => {
                                     </CardBody>
                                 </Card>
 
-
                                 <Card className="defCard">
                                     <CardBody>
-                                        <CardTitle>Contact Information</CardTitle>
+                                        <CardTitle>KYC Documents</CardTitle>
+                                        <div className="mt-4 mb-5 p-3 ">
+                                            <div className="mb-3">
+                                                <CardSubtitle className="std_font mb-2">
+                                                    MyKad - Front
+                                                </CardSubtitle>
+                                                {datas.f_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
+                                                    <div>
+                                                        <div className="text-center">
+                                                            <img className="ic-img" src={datas.f_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
+                                                        </div>
+
+                                                        <Card className="pdfInput">
+                                                            <CardBody className="m-3">
+                                                                <div className="text-center">
+                                                                    <img className="pdfIcon" src={pdfIcon}></img>
+                                                                </div>
+                                                            </CardBody>
+                                                        </Card>
+                                                    </div>
+                                                ) : (
+                                                    <Card className="pdfInput">
+                                                        <CardBody className="m-3">
+                                                            <div className="text-center">
+                                                                <img className="ic-img mb-3" src={datas.f_mykad} alt="MyKad Front"></img>
+
+                                                            </div>
+                                                        </CardBody>
+                                                    </Card>
+
+
+                                                )}
+                                            </div>
+                                            <div className="mb-3">
+                                                <CardSubtitle className="std_font mb-2">
+                                                    MyKad - Back
+                                                </CardSubtitle>
+                                                {datas.b_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
+                                                    <div>
+                                                        <div className="text-center">
+                                                            <img className="ic-img" src={datas.b_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
+                                                        </div>                          <Card className="pdfInput">
+                                                            <CardBody className="m-3">
+                                                                <div className="text-center">
+                                                                    <img className="pdfIcon" src={pdfIcon}></img>
+                                                                </div>
+                                                            </CardBody>
+                                                        </Card>
+                                                    </div>
+                                                ) : (
+                                                    <Card className="pdfInput">
+                                                        <CardBody className="m-3">
+                                                            <div className="text-center">
+                                                                <img className="ic-img mb-3" src={datas.b_mykad} alt="MyKad Front"></img>
+
+                                                            </div>
+                                                        </CardBody>
+                                                    </Card>
+                                                )}
+                                            </div>
+                                            <div className="mb-3">
+
+                                                <CardSubtitle className="std_font mb-2">
+                                                    Utility Bill
+                                                </CardSubtitle>
+                                                {datas.utilitybill.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
+                                                    <div>
+                                                        <img className="ic-img mb-3" src={datas.utilitybill} style={{ display: 'none' }}></img> {/* Hide the image */}
+                                                        <Card className="pdfInput">
+                                                            <CardBody className="m-3">
+                                                                <div className="text-center">
+                                                                    <img className="pdfIcon" src={pdfIcon}></img>
+                                                                </div>
+                                                            </CardBody>
+                                                        </Card>
+                                                    </div>
+                                                ) : (
+                                                    <Card className="pdfInput">
+                                                        <CardBody className="m-3">
+                                                            <div className="text-center">
+                                                                <img className="ic-img" src={datas.utilitybill} alt="MyKad Front"></img>
+
+                                                            </div>
+                                                        </CardBody>
+                                                    </Card>
+                                                )}                                            </div>
+
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                                <Card className="defCard">
+                                    <CardBody>
+                                        <CardTitle>Membership Infromation</CardTitle>
                                         <div>
+                                            <div className="mb-3 mt-3">
+                                                <label>Membership Status</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue="Active"
+                                                />
+                                            </div>
+                                            <div className="mb-3 mt-3">
+                                                <label>Membership Number</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.membership_id}
+                                                />
+                                            </div>
+                                            <div className="mb-3 mt-3">
+                                                <label>Date of Joining</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.createdAt}
+                                                />
+                                            </div>
+
+
+
+
+
+
+
+
+                                        </div>
+                                    </CardBody>
+                                </Card>
+
+                            </div>
+                            <div className="col-lg-6 p-0">
+                                <Card className="defCard">
+                                    <CardBody>
+                                        <CardTitle>Profile Information</CardTitle>
+                                        <div>
+                                            <div className="mb-3 mt-3">
+                                                <label>Name</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.Username}
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label>IC Number</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.icnumber}
+                                                />
+                                            </div>
+                                            <div className="mb-3 mt-3">
+                                                <label>Address</label>
+                                                <Input
+                                                    type="textarea"
+                                                    name="address"
+                                                    id="textarea"
+                                                    className="login-textarea mt-3"
+                                                    maxLength="50"
+                                                    rows="4"
+                                                    placeholder="Home Address"
+                                                    disabled
+                                                    defaultValue={datas.haddress}
+                                                />
+                                            </div>
+                                            <div className="mb-3 mt-3">
+                                                <label>Mobile Phone 1</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.phonenum}
+                                                />
+                                            </div>
+                                            <div className="mb-3 mt-3">
+                                                <label>Mobile Phone 2</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.altnum}
+                                                />
+                                            </div>
                                             <div className="mb-3 mt-3">
                                                 <label>Email Address</label>
                                                 <Input
@@ -250,16 +440,7 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Phone Number</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.phonenum}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label>Ethnicity</label>
+                                                <label>Ethnic</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -323,37 +504,10 @@ const FormValidations = () => {
                                                     rows="4"
                                                     placeholder="Home Address"
                                                     disabled
-                                                    defaultValue={datas.haddress}
+                                                    defaultValue={datas.paddress}
                                                 />
                                             </div>
-                                        </div>
-                                    </CardBody>
-                                </Card>
-                            </div>
-                            <div className="col-lg-6 p-0">
-                                <Card className="defCard">
-                                    <CardBody>
-                                        <CardTitle>Profile Information</CardTitle>
-                                        <div>
-                                            <div className="mb-3 mt-3">
-                                                <label>Name</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.username}
-                                                />
-                                            </div>
-                                            <div className="mb-3">
-                                                <label>IC Number</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.icnumber}
-                                                />
-                                            </div>
-                                            <div className="mb-3">
+                                            {/* <div className="mb-3">
                                                 <label>Date of Birth</label>
                                                 <Input
                                                     className="form-control normal-input"
@@ -371,39 +525,10 @@ const FormValidations = () => {
                                                     disabled
                                                     defaultValue={datas.sex}
                                                 />
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </CardBody>
                                 </Card>
-
-                                <Card className="defCard">
-                                    <CardBody>
-                                        <CardTitle>Documents</CardTitle>
-                                        <div className="mt-4 mb-5 p-3 ">
-                                            <div className="mb-3">
-                                                <CardSubtitle className="std_font mb-2">
-                                                    MyKad - Front
-                                                </CardSubtitle>
-                                                <img className="ic-img" src={datas.f_mykad}></img>
-                                            </div>
-                                            <div className="mb-3">
-                                                <CardSubtitle className="std_font mb-2">
-                                                    MyKad - Back
-                                                </CardSubtitle>
-                                                <img className="ic-img" src={datas.b_mykad}></img>
-                                            </div>
-                                            <div className="mb-3">
-
-                                                <CardSubtitle className="std_font mb-2">
-                                                    Utility Bill
-                                                </CardSubtitle>
-                                                <img className="ic-img" src={datas.utilitybill}></img>
-                                            </div>
-
-                                        </div>
-                                    </CardBody>
-                                </Card>
-
 
                                 {/* <Card>
                                     <CardBody>

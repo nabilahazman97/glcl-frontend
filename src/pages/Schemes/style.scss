@@ -207,17 +207,17 @@ tbody tr {
   src: url("../../assets/fonts/Inter-Bold.ttf");
 }
 
-.approveBtn {
-  font-family: inter_regular !important;
-  border-radius: 80px !important;
-  width: 110px;
-}
+// .approveBtn {
+//   font-family: inter_regular !important;
+//   border-radius: 80px !important;
+//   width: 110px;
+// }
 
-.rejectBtn {
-  font-family: inter_regular !important;
-  border-radius: 80px !important;
-  width: 110px;
-}
+// .rejectBtn {
+//   font-family: inter_regular !important;
+//   border-radius: 80px !important;
+//   width: 110px;
+// }
 
 .buyBtn {
   font-family: inter_regular !important;
@@ -261,16 +261,6 @@ table thead {
   color: white;
 }
 
-
-table tbody tr.even {
-  background-color: #ffffff !important;
-  /* Even rows */
-}
-
-table tbody tr.odd {
-  background-color: #f5f5f5 !important;
-  /* Odd rows */
-}
 
 .modalLockedScheme{
    background: linear-gradient(136.91deg, #FBE39A 0%, #CAAF63 100%);

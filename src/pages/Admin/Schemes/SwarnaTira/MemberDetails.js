@@ -239,7 +239,7 @@ const FormValidations = () => {
     const filteredData = useMemo(() => {
         if (!startDate || !endDate) return data2; // Return all data if start or end date is not selected
 
-        return data.filter(item => {
+        return data2.filter(item => {
             const createdAtDate = new Date(item.createdAt);
             return createdAtDate >= startDate && createdAtDate <= new Date(endDate.getTime() + 86400000); // Adding 1 day to the end date
         });
@@ -354,7 +354,7 @@ const FormValidations = () => {
                                             <div className="float-start ">
                                                 <div style={{ position: 'relative' }}>
                                                     <input
-                                                        className="form-control"
+                                                        className="form-control filterInput"
                                                         type="text"
                                                         placeholder="Filter by date range"
                                                         value={
@@ -398,7 +398,7 @@ const FormValidations = () => {
                                                 </div>
                                             </div>
                                             <div className="float-end ">
-                                                <button
+                                                {/* <button
                                                     type="button"
                                                     className="btn btn-primary downloadBtn me-2"
                                                 >
@@ -408,7 +408,7 @@ const FormValidations = () => {
                                                     className="avatar-md print_icon"
                                                 />
 
-                                                </button>
+                                                </button> */}
                                                 <Link
                                                     to="#"
                                                     onClick={printInvoice}
