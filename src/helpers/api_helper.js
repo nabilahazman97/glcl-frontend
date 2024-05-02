@@ -1,11 +1,12 @@
 import axios from "axios";
 import accessToken from "./jwt-token-access/accessToken";
+import * as url from "./url_helper";
 
 //pass new generated access token here
 const token = accessToken;
 
 //apply base url for axios
-const API_URL = "";
+const API_URL = url.base_url
 
 const axiosApi = axios.create({
   baseURL: API_URL,

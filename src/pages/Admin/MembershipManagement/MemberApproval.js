@@ -23,6 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createBrowserHistory } from 'history';
 //Import Breadcrumb
 import Breadcrumbs from "../../../components/Common/Breadcrumb";
+import { del, get, post, put } from "../../../helpers/api_helper";
 
 const MemberApproval = () => {
   const { Uid } = useParams();
@@ -32,15 +33,22 @@ const MemberApproval = () => {
   const [action, setAction] = useState(null);
   const history = createBrowserHistory();
 
+
   useEffect(() => {
-    axios.post(apiname.base_url + apiname.p_userdetails, { id: Uid }, {
-      headers: {
-        'Authorization': 'Basic ' + apiname.encoded
-      }
-    })
-      .then(res => setdata(res.data.result))
-      .catch(err => console.log(err));
-  }, []);
+    post(apiname.p_userdetails, { id: Uid })
+    .then(res => setdata(res.result))
+    .catch(err => console.log(err));
+}, []);
+
+  // useEffect(() => {
+  //   axios.post(apiname.base_url + apiname.p_userdetails, { id: Uid }, {
+  //     headers: {
+  //       'Authorization': 'Basic ' + apiname.encoded
+  //     }
+  //   })
+  //     .then(res => setdata(res.data.result))
+  //     .catch(err => console.log(err));
+  // }, []);
 
   useEffect(() => {
     if (data.length > 0) {
@@ -62,23 +70,37 @@ const MemberApproval = () => {
       ustatus: status,
     };
 
-    axios.post(apiname.base_url + apiname.userapproval, user, {
-      headers: {
-        'Authorization': 'Basic ' + apiname.encoded
+    post(apiname.userapproval,user)
+    .then(res => {
+      if (status === '1') {
+        toast.success('User accepted successfully!');
+      } else {
+        toast.error('User rejected successfully!');
       }
+      setTimeout(() => {
+        // Redirect to the dashboard page
+        window.location.href = '/tables-datatable';
+      }, 500);
     })
-      .then(res => {
-        if (status === '1') {
-          toast.success('User accepted successfully!');
-        } else {
-          toast.error('User rejected successfully!');
-        }
-        setTimeout(() => {
-          // Redirect to the dashboard page
-          window.location.href = '/tables-datatable';
-        }, 500);
-      })
-      .catch(err => console.log(err));
+    .catch(err => console.log(err));
+
+    // axios.post(apiname.base_url + apiname.userapproval, user, {
+    //   headers: {
+    //     'Authorization': 'Basic ' + apiname.encoded
+    //   }
+    // })
+    //   .then(res => {
+    //     if (status === '1') {
+    //       toast.success('User accepted successfully!');
+    //     } else {
+    //       toast.error('User rejected successfully!');
+    //     }
+    //     setTimeout(() => {
+    //       // Redirect to the dashboard page
+    //       window.location.href = '/tables-datatable';
+    //     }, 500);
+    //   })
+    //   .catch(err => console.log(err));
   };
 
   const toggleModal = () => setModalOpen(!modalOpen);
@@ -109,7 +131,7 @@ const MemberApproval = () => {
                       <input
                         className="form-control normal-input"
                         type="text"
-                        defaultValue={datas.Username}
+                        defaultValue={datas.username}
                         disabled
                       />
                     </div>
@@ -171,7 +193,7 @@ const MemberApproval = () => {
                       <input
                         className="form-control  normal-input"
                         type="email"
-                        defaultValue={datas.emailid}
+                        defaultValue={datas.email_id}
                         disabled
                       />
                     </div>

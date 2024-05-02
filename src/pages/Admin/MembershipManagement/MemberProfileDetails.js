@@ -24,6 +24,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import * as apiname from "../../../helpers/url_helper";
 import { useParams } from 'react-router-dom';
+import { del, get, post, put } from "../../../helpers/api_helper";
+
 
 //Import Breadcrumb
 import Breadcrumbs from "../../../components/Common/Breadcrumb";
@@ -94,14 +96,18 @@ const FormValidations = () => {
         console.log(apiname.base_url);
         console.log(apiname.p_userdetails);
         console.log(user);
-        axios.post(apiname.base_url + apiname.p_userdetails, user, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
-        })
-            // .then(res =>console.log(res))
-            .then(res => setdata(res['data']['result']))
-            .catch(err => console.log(err));
+
+        post(apiname.p_userdetails,user)
+        .then(res => setdata(res.result))
+        .catch(err => console.log(err));
+        // axios.post(apiname.base_url + apiname.p_userdetails, user, {
+        //     headers: {
+        //         'Authorization': 'Basic ' + apiname.encoded
+        //     }
+        // })
+        //     // .then(res =>console.log(res))
+        //     .then(res => setdata(res['data']['result']))
+        //     .catch(err => console.log(err));
     }, []);
     console.log("data user");
     console.log(data[0]);
@@ -240,7 +246,7 @@ const FormValidations = () => {
                                                     className="form-control normal-input"
                                                     type="email"
                                                     disabled
-                                                    defaultValue={datas.emailid}
+                                                    defaultValue={datas.email_id}
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
@@ -335,7 +341,7 @@ const FormValidations = () => {
                                                     className="form-control normal-input"
                                                     type="text"
                                                     disabled
-                                                    defaultValue={datas.Username}
+                                                    defaultValue={datas.username}
                                                 />
                                             </div>
                                             <div className="mb-3">
