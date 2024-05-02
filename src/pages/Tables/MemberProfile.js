@@ -94,14 +94,17 @@ const FormValidations = () => {
         console.log(apiname.base_url);
         console.log(apiname.p_userdetails);
         console.log(user);
-        axios.post(apiname.base_url + apiname.p_userdetails, user, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
-        })
-            // .then(res =>console.log(res))
-            .then(res => setdata(res['data']['result']))
-            .catch(err => console.log(err));
+        post(apiname.p_userdetails, user)
+        .then(res => setdata(res.result))
+        .catch(err => console.log(err));
+        // axios.post(apiname.base_url + apiname.p_userdetails, user, {
+        //     headers: {
+        //         'Authorization': 'Basic ' + apiname.encoded
+        //     }
+        // })
+        //     // .then(res =>console.log(res))
+        //     .then(res => setdata(res['data']['result']))
+        //     .catch(err => console.log(err));
     }, []);
     console.log("data user");
     console.log(data[0]);

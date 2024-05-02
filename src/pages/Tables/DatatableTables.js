@@ -9,6 +9,7 @@ import * as apiname from "../../helpers/url_helper";
 import Breadcrumbs from '../../components/Common/Breadcrumb';
 import TableContainer from '../../components/Common/TableContainer';
 import { Button } from 'reactstrap';
+import { del, get, post, put } from "../../helpers/api_helper";
 
 import './datatables.scss';
 
@@ -17,14 +18,17 @@ function DatatableTables() {
     const [data, setdata] = useState([]);
     useEffect(() => {
         // console.log("hi");
-        axios.get(apiname.base_url + apiname.USER_LIST, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
-        })
-            // .then(res =>console.log(res))
-            .then(res => setdata(res['data']['result']))
-            .catch(err => console.log(err));
+        get(apiname.USER_LIST)
+        .then(res => setdata(res.result))
+        .catch(err => console.log(err));
+        // axios.get(apiname.base_url + apiname.USER_LIST, {
+        //     headers: {
+        //         'Authorization': 'Basic ' + apiname.encoded
+        //     }
+        // })
+        //     // .then(res =>console.log(res))
+        //     .then(res => setdata(res['data']['result']))
+        //     .catch(err => console.log(err));
     }, []);
 
 

@@ -120,9 +120,9 @@ export const ON_ADD_REPLY = "/comments-product-add-reply";
 
 export const ON_ADD_COMMENT = "/comments-product-add-comment";
 
-export const USER_LIST = "/api/user";
+export const USER_LIST = "/api/user/getAllUser";
 
-export const LOG_IN="/api/user/logincheck";
+export const LOG_IN="/api/auth/logincheck";
 
 export const base_url = "http://localhost:4200";
 
@@ -130,13 +130,13 @@ export const USERNAME = 'glcl';
 export const PASSWORD = 'glcl@567';
 export const encoded = Buffer.from(USERNAME + ':' + PASSWORD).toString('base64');
 
-export const forgotpassword="/api/user/forgotpassword";
+export const forgotpassword="/api/auth/forgotpassword";
 
 export const p_userdetails="/api/user/p_userdetails"; //declare url
 
 export const userapproval="/api/user/userapproval"; //declare url
 
-export const register="/api/user/register"; //
+export const register="/api/auth/register"; //
 
 export const changePwd="/api/user/changepassword"; //
 
@@ -146,7 +146,7 @@ export const emailCheck="/api/user/emailCheck"; //
 
 export const icnumberCheck="/api/user/icnumberCheck"; //
 
-export const schemeList="/api/scheme/"; //
+export const schemeList="/api/scheme/list"; //
 
 export const userScheme ="/api/scheme/schemelist"; //
 

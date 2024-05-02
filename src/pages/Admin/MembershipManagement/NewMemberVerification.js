@@ -11,6 +11,8 @@ import TableContainer from '../../../components/Common/TableContainer';
 import { Button, Card, CardBody, CardTitle } from 'reactstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Button } from 'reactstrap';
+import { del, get, post, put } from "../../../helpers/api_helper";
 
 // import './datatables.scss';
 import '../style.scss';
@@ -18,17 +20,27 @@ import '../style.scss';
 function DatatableTables() {
 
     const [data, setdata] = useState([]);
+
     useEffect(() => {
-        // console.log("hi");
-        axios.get(apiname.base_url + apiname.USER_LIST, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
+        get(apiname.USER_LIST, {
         })
-            // .then(res =>console.log(res))
-            .then(res => setdata(res['data']['result']))
-            .catch(err => console.log(err));
+        .then(res => setdata(res.result))
+        .catch(err => console.log(err));
     }, []);
+    
+    // useEffect(() => {
+    //     // console.log("hi");
+    //     get()
+    //     const data = () => get(apiname.USER_LIST);
+    //     axios.get(apiname.base_url + apiname.USER_LIST, {
+    //         headers: {
+    //             'Authorization': 'Basic ' + apiname.encoded
+    //         }
+    //     })
+    //         // .then(res =>console.log(res))
+    //         .then(res => setdata(res['data']['result']))
+    //         .catch(err => console.log(err));
+    // }, []);
 
 
     const [startDate, setStartDate] = useState(null);
@@ -84,16 +96,12 @@ function DatatableTables() {
     const columns = useMemo(
         () => [
             {
-                Header: 'Name',
-                accessor: 'Username',
+                Header: 'Username',
+                accessor: 'username',
             },
             {
-                Header: 'NRIC No.',
-                accessor: 'icnumber'
-            },
-            {
-                Header: 'Email Address',
-                accessor: 'emailid'
+                Header: 'Email',
+                accessor: 'email_id'
             },
             {
                 Header: 'Status',

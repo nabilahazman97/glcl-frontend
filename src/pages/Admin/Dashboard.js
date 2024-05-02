@@ -15,6 +15,7 @@ import {
   Table,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { del, get, post, put } from "../../helpers/api_helper";
 
 import classNames from "classnames";
 
@@ -97,12 +98,14 @@ useEffect(() => {
     console.log(apiname.base_url);
     console.log(apiname.userScheme);
     // Fetch data for each scheme ID
+    // Promise.all(
+    //     userSchemeIds.map(userSchemeid => axios.post(apiname.base_url + apiname.userScheme, userSchemeid, {
+    //         headers: {
+    //             'Authorization': 'Basic ' + apiname.encoded
+    //         }
+    //     }))
     Promise.all(
-        userSchemeIds.map(userSchemeid => axios.post(apiname.base_url + apiname.userScheme, userSchemeid, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
-        }))
+        userSchemeIds.map(userSchemeid => post(apiname.userScheme, userSchemeid))
     ).then(responses => {
         // Update reports for each scheme ID
         const updatedReports = userSchemeIds.map((userSchemeid, index) => {
@@ -150,14 +153,17 @@ useEffect(() => {
   console.log(apiname.base_url);
   console.log(apiname.p_userdetails);
   console.log(user);
-  axios.post(apiname.base_url + apiname.p_userdetails, user, {
-      headers: {
-          'Authorization': 'Basic ' + apiname.encoded
-      }
-  })
-      // .then(res =>console.log(res))
-      .then(res => setdata(res['data']['result']))
-      .catch(err => console.log(err));
+  post(apiname.p_userdetails, user)
+  .then(res => setdata(res.result))
+  .catch(err => console.log(err));
+  // axios.post(apiname.base_url + apiname.p_userdetails, user, {
+  //     headers: {
+  //         'Authorization': 'Basic ' + apiname.encoded
+  //     }
+  // })
+  //     // .then(res =>console.log(res))
+  //     .then(res => setdata(res['data']['result']))
+  //     .catch(err => console.log(err));
 }, []);
 console.log("User Data");
 console.log(data[0]);

@@ -32,6 +32,7 @@ import coins from "../../../../assets/images/schemes/single-coin.png";
 import dload from "../../../../assets/images/schemes/download-icon.png";
 import print from "../../../../assets/images/schemes/print-icon.png";
 import walletDuoTone from "../../../../assets/images/schemes/Wallet_duotone.png";
+import { del, get, post, put } from "../../../../helpers/api_helper";
 
 //Import Breadcrumb
 import Breadcrumbs from "../../../../components/Common/Breadcrumb";
@@ -55,14 +56,17 @@ const FormValidations = () => {
         console.log(apiname.base_url);
         console.log(apiname.p_userdetails);
         console.log(user);
-        axios.post(apiname.base_url + apiname.p_userdetails, user, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
-        })
-            // .then(res =>console.log(res))
-            .then(res => setdata(res['data']['result']))
-            .catch(err => console.log(err));
+        post(apiname.p_userdetails, user)
+        .then(res => setdata(res.result))
+        .catch(err => console.log(err));
+        // axios.post(apiname.base_url + apiname.p_userdetails, user, {
+        //     headers: {
+        //         'Authorization': 'Basic ' + apiname.encoded
+        //     }
+        // })
+        //     // .then(res =>console.log(res))
+        //     .then(res => setdata(res['data']['result']))
+        //     .catch(err => console.log(err));
     }, []);
     console.log("USER DATA");
     console.log(data[0]);
@@ -77,17 +81,27 @@ const FormValidations = () => {
         console.log(apiname.base_url);
         console.log(apiname.userScheme);
         console.log(user);
-        axios.post(apiname.base_url + apiname.userScheme, userSchemeid, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
-        })
-            .then(res => {
-                // Filter out data where payment_id is not null
-                const filteredData = res.data.result.filter(item => item.type == 1);
+        post(apiname.userScheme, userSchemei)
+        .then(res => {
+            // Filter out data where payment_id is not null
+            if(res.result){
+                const filteredData = res.result.filter(item => item.type == 1);
                 setdata2(filteredData);
-            })
-            .catch(err => console.log(err));
+            }
+            
+        })
+        .catch(err => console.log(err));
+        // axios.post(apiname.base_url + apiname.userScheme, userSchemeid, {
+        //     headers: {
+        //         'Authorization': 'Basic ' + apiname.encoded
+        //     }
+        // })
+        //     .then(res => {
+        //         // Filter out data where payment_id is not null
+        //         const filteredData = res.data.result.filter(item => item.type == 1);
+        //         setdata2(filteredData);
+        //     })
+        //     .catch(err => console.log(err));
     }, []);
 
     console.log("User Scheme");

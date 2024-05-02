@@ -25,6 +25,7 @@ import TableContainer from '../../../../components/Common/TableContainer';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import * as apiname from "../../../../helpers/url_helper";
+import { del, get, post, put } from "../../../../helpers/api_helper";
 
 //  import './style';
 
@@ -34,21 +35,23 @@ function MemberList() {
 
   useEffect(() => {
     // Fetch data from USER_LIST
-    axios.get(apiname.base_url + apiname.USER_LIST, {
-      headers: {
-        'Authorization': 'Basic ' + apiname.encoded
-      }
-    })
+    // axios.get(apiname.base_url + apiname.USER_LIST, {
+    //   headers: {
+    //     'Authorization': 'Basic ' + apiname.encoded
+    //   }
+    // })
+    get(apiname.USER_LIST)
     .then(res => {
-      const userListData = res.data.result;
+      const userListData = res.result;
       // Fetch data from userScheme
-      axios.post(apiname.base_url + apiname.userScheme, userScheme, {
-        headers: {
-          'Authorization': 'Basic ' + apiname.encoded
-        }
-      })
+      // axios.post(apiname.base_url + apiname.userScheme, userScheme, {
+      //   headers: {
+      //     'Authorization': 'Basic ' + apiname.encoded
+      //   }
+      // })
+      post(apiname.userScheme, userScheme)
       .then(res => {
-        const userSchemeData = res.data.result;
+        const userSchemeData = res.result;
         console.log("userSchemeData")
         console.log(userSchemeData)
         // Merge data based on matching id and user_id values
@@ -84,14 +87,17 @@ function MemberList() {
       console.log(apiname.base_url);
       console.log(apiname.userScheme);
       // console.log(user);
-      axios.post(apiname.base_url + apiname.remainGold, userSchemeid, {
-          headers: {
-              'Authorization': 'Basic ' + apiname.encoded
-          }
-      })
-          // .then(res =>console.log(res))
-          .then(res => setdata4(res['data']))
-          .catch(err => console.log(err));
+      post(apiname.remainGold, userSchemeid)
+      .then(res => setdata4(res))
+      .catch(err => console.log(err));
+      // axios.post(apiname.base_url + apiname.remainGold, userSchemeid, {
+      //     headers: {
+      //         'Authorization': 'Basic ' + apiname.encoded
+      //     }
+      // })
+      //     // .then(res =>console.log(res))
+      //     .then(res => setdata4(res['data']))
+      //     .catch(err => console.log(err));
   }, []);
   console.log("Data 4");
   console.log(data4);

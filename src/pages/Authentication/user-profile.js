@@ -34,25 +34,33 @@ import * as apiname from "../../helpers/url_helper";
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import SetPassword from "./SetPassword";
+import { del, get, post, put } from "../../helpers/api_helper";
 
 const UserProfile = () => {
   document.title = "GLCL";
-  const [fres, setdata] = useState([]);
+  // const [fres, setdata] = useState([]);
+  const [fres, setdata] = useState({});
   useEffect(() => {
     var authUserData = localStorage.getItem("authUser");
     var authUserObject = JSON.parse(authUserData);
+
+    setdata(authUserObject.result[0])
     var id=authUserObject.result[0].id;
     const user = {
-      'id': id
-  };
-  axios.post(apiname.base_url + apiname.p_userdetails, user, {
-    headers: {
-        'Authorization': 'Basic ' + apiname.encoded
-    }
-})
-    .then((res) =>setdata(res['data']['result'][0]))
-    .catch(err => console.log(err));
-  },[fres]);
+        'id': id
+    };
+
+  // post(apiname.p_userdetails, user)
+  // .then((res) =>setdata(res.result))
+  // .catch(err => console.log(err));
+//   axios.post(apiname.base_url + apiname.p_userdetails, user, {
+//     headers: {
+//         'Authorization': 'Basic ' + apiname.encoded
+//     }
+// })
+//     .then((res) =>setdata(res['data']['result'][0]))
+//     .catch(err => console.log(err));
+  },{});
 
   const textHandler = e => {
     const { name, value } = e.target;
@@ -72,13 +80,13 @@ const UserProfile = () => {
         var id=authUserObject.result[0].id;
         const formData = new FormData();
         if(values1.Username!=undefined){
-        formData.append('Username', values1.Username);
+        formData.append('Username', values1.username);
         }
         if(values1.icnumber!=undefined){
         formData.append('icnumber', values1.icnumber);
         }
         if(values1.emailid!=undefined){
-          formData.append('emailid', values1.emailid);
+          formData.append('emailid', values1.email_id);
           }
         if(values1.phonenum!=undefined){
             formData.append('phonenum', values1.phonenum);
@@ -88,19 +96,29 @@ const UserProfile = () => {
               }
         formData.append('id', id);
         
-        axios.post(apiname.base_url + apiname.editProfile, formData, {
-          headers: {
-            'Authorization': 'Basic ' + apiname.encoded
+
+        post(apiname.editProfile, formData)
+        .then(res => {
+          if (res.status == '1') {
+            toast.success('Updated!'); 
+          } else {
+            toast.danger('Failed to Update!'); 
           }
         })
-          .then(res => {
-            if (res['data']['status'] == '1') {
-              toast.success('Updated!'); 
-            } else {
-              toast.danger('Failed to Update!'); 
-            }
-          })
-          .catch(err => console.log(err));
+        .catch(err => console.log(err));
+        // axios.post(apiname.base_url + apiname.editProfile, formData, {
+        //   headers: {
+        //     'Authorization': 'Basic ' + apiname.encoded
+        //   }
+        // })
+        //   .then(res => {
+        //     if (res['data']['status'] == '1') {
+        //       toast.success('Updated!'); 
+        //     } else {
+        //       toast.danger('Failed to Update!'); 
+        //     }
+        //   })
+        //   .catch(err => console.log(err));
 } 
 
 function handleChangePwd() {
@@ -130,35 +148,42 @@ function handleChangePwd() {
 
 
   // Assuming you have a user ID available, you can fetch it from somewhere or directly use it
-
   console.log(formdata)
-  axios.post(apiname.base_url + apiname.changePwd, formdata, {
+  post(apiname.changePwd, formdata)
+  .then(response => {
+    // Handle success response
+    toast.success('Password changed!'); 
+    newPwdInput.value = '';
+    confirmPwdInput.value = '';
+    // window.location.reload();
+   
 
-    headers: {
-      'Authorization': 'Basic ' + apiname.encoded
-    }
-  }
+  })
+  .catch(error => {
+    console.error('Error occurred:', error);
+    toast.warning('Failed to change password');
+    newPwdInput.value = '';
+    confirmPwdInput.value = '';
+  });
+  // axios.post(apiname.base_url + apiname.changePwd, formdata, {
 
-
-  )
-    .then(response => {
-      // Handle success response
-     
-      
-      toast.success('Password changed!'); 
-      newPwdInput.value = '';
-      confirmPwdInput.value = '';
-      // window.location.reload();
-     
-
-    })
-    .catch(error => {
-      console.error('Error occurred:', error);
-      toast.warning('Failed to change password');
-      newPwdInput.value = '';
-      confirmPwdInput.value = '';
-    });
-
+  //   headers: {
+  //     'Authorization': 'Basic ' + apiname.encoded
+  //   }
+  // })
+  //   .then(response => {
+  //     // Handle success response 
+  //     toast.success('Password changed!'); 
+  //     newPwdInput.value = '';
+  //     confirmPwdInput.value = '';
+  //     // window.location.reload();
+  //   })
+  //   .catch(error => {
+  //     console.error('Error occurred:', error);
+  //     toast.warning('Failed to change password');
+  //     newPwdInput.value = '';
+  //     confirmPwdInput.value = '';
+  //   });
 }
 
 
@@ -189,7 +214,7 @@ function handleChangePwd() {
                             className="avatar-md rounded-circle img-thumbnail"
                           />
                           <div className="mt-2">
-                            <h3 className="text-white">{fres.Username}</h3>
+                            <h3 className="text-white">{fres.username}</h3>
                           </div>
 
                         </div>
@@ -210,7 +235,7 @@ function handleChangePwd() {
                           className="form-control normal-input"
                           type="text"
                           onChange={textHandler}
-                          defaultValue={fres.Username}
+                          defaultValue={fres.username}
                           required
                         />
                       </div>
@@ -242,10 +267,9 @@ function handleChangePwd() {
                       <Input
                         name="oldPwd"
                         className="form-control normal-input"
-                        type="text"
+                        type="password"
                         value={fres.password}
                         readOnly
-
                       />
                     </div>
                     <div className="mb-3 mt-3">
@@ -254,8 +278,7 @@ function handleChangePwd() {
                         name="newPwd"
                         className="form-control normal-input"
                         type="password"
-
-
+                        value=''
                       />
                     </div>
                     <div className="mb-3 mt-3">
@@ -264,7 +287,7 @@ function handleChangePwd() {
                         name="confirmPwd"
                         className="form-control normal-input"
                         type="password"
-
+                        value=''
 
                       />
                     </div>
@@ -291,7 +314,7 @@ function handleChangePwd() {
                           name="emailid"
                           id="emailid"
                           onChange={textHandler}
-                          defaultValue={fres.emailid}
+                          defaultValue={fres.email_id}
                           required
                         />
                       </div>
