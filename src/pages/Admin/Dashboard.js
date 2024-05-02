@@ -162,6 +162,37 @@ useEffect(() => {
 console.log("User Data");
 console.log(data[0]);
 
+const [Uid, setUid] = useState(0);
+const [SchemeIdAll, setSchemeIdAll] = useState(1,2);
+const updateUid = (newUid) => {
+  setUid(newUid);
+};
+const allSchemeId = (newSchemeIdAll) => {
+  setSchemeIdAll(newSchemeIdAll);
+};
+
+const userSchemeid5 = {
+  'scheme_id': SchemeIdAll,
+  'user_id' : Uid
+};
+
+const [data5, setdata5] = useState([]);
+useEffect(() => {
+  console.log(apiname.base_url);
+  console.log(apiname.userScheme);
+  console.log(user);
+  axios.post(apiname.base_url + apiname.userScheme, userSchemeid5, {
+      headers: {
+          'Authorization': 'Basic ' + apiname.encoded
+      }
+  })
+      // .then(res =>console.log(res))
+      .then(res => setdata5(res['data']['result']))
+      .catch(err => console.log(err));
+}, []);
+console.log("data5");
+console.log(data5);
+
 
 const columns = useMemo(
   () => [

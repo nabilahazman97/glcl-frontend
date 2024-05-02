@@ -310,7 +310,7 @@ const FormValidations = () => {
                                             <div className="float-start ">
                                                 <div style={{ position: 'relative' }}>
                                                     <input
-                                                        className="form-control"
+                                                        className="form-control filterInput"
                                                         type="text"
                                                         placeholder="Filter by date range"
                                                         value={
