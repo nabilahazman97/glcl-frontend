@@ -142,6 +142,10 @@ export const changePwd="/api/user/changepassword"; //
 
 export const editProfile="/api/user/editprofile"; //
 
+export const emailCheck="/api/user/emailCheck"; //
+
+export const icnumberCheck="/api/user/icnumberCheck"; //
+
 export const schemeList="/api/scheme/list"; //
 
 export const userScheme ="/api/scheme/schemelist"; //

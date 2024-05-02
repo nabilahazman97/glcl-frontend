@@ -28,6 +28,8 @@ import { Buffer } from 'buffer';
 import * as apiname from "../../helpers/url_helper";
 import { del, get, post, put } from "../../helpers/api_helper";
 
+import '../Authentication/AuthStyle.scss';
+
 
 const Login = props => {
 useEffect(() => {
@@ -81,7 +83,7 @@ useEffect(() => {
 
   return (
     <React.Fragment>
-      <div>
+      <div className="whiteBg">
         <Container fluid className="p-0">
           <Row className="g-0">
             <CarouselPage />
@@ -117,7 +119,7 @@ useEffect(() => {
                     >
                       {error ? <Alert color="danger">{error}</Alert> : null}
 
-                          <div className="text-center">
+                          <div className="text-center mb-3">
                             <p className="login_title mb-4">SIGN IN</p>
                           </div>
                           <div className="mb-3">
@@ -125,7 +127,7 @@ useEffect(() => {
                           <Input
                            className="form-contro login-input"
                           name="email"
-                          placeholder="Enter email"
+                          placeholder="Email"
                           type="email"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
@@ -148,7 +150,7 @@ useEffect(() => {
                           name="password"
                           value={validation.values.password || ""}
                           type="password"
-                          placeholder="Enter Password"
+                          placeholder="Password"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           invalid={
@@ -182,7 +184,7 @@ useEffect(() => {
                               className="btn btn-primary btn-block signIn_btn"
                               type="submit"
                             >
-                              Log In
+                              Sign In
                             </button>
 
                           </div>

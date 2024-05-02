@@ -54,7 +54,20 @@ const Register3 = () => {
   const [selectedFiles2, setSelectedFiles2] = useState([]);
   const [selectedFiles3, setSelectedFiles3] = useState([]);
   const [selectedFiles4, setSelectedFiles4] = useState([]);
-
+  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage3, setErrorMessage3] = useState('');
+  const [validation2, setValidation] = useState({
+    touched: {
+      email: false
+    },
+    errors: {}
+  });
+  const [validation3, setValidation3] = useState({
+    touched: {
+      icNum: false
+    },
+    errors: {}
+  });
 
 
   //meta title
@@ -291,7 +304,7 @@ const Register3 = () => {
       formattedValue = numericValue;
     }
     setICNumber(formattedValue);
-  
+
 
     // Extract the year of birth
     let year = parseInt(formattedValue.slice(0, 2), 10);
@@ -416,9 +429,73 @@ const Register3 = () => {
   };
 
 
+  const handleEmailChange = async (e) => {
+    const email = e.target.value;
+    
+    setValidation({
+      ...validation2,
+      touched: {
+        ...validation2.touched,
+        email: true
+      }
+    });
+
+    const userScheme = {
+      emailid: email,
+    };
+
+    try {
+      const response = await axios.post(apiname.base_url + apiname.emailCheck, userScheme, {
+        headers: {
+          'Authorization': 'Basic ' + apiname.encoded
+        }
+      });
+
+      if (response.data.status === "1") {
+        setErrorMessage("Email ID has taken");
+      } else if( response.data.status === "2"){
+        setErrorMessage('');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  const handleIcNumberChange = async (e) => {
+    const icNum = e.target.value;
+    
+    setValidation3({
+      ...validation3,
+      touched: {
+        ...validation3.touched,
+        icNum: true
+      }
+    });
+
+    const userScheme = {
+      icnumber: icNum,
+    };
+
+    try {
+      const response = await axios.post(apiname.base_url + apiname.icnumberCheck, userScheme, {
+        headers: {
+          'Authorization': 'Basic ' + apiname.encoded
+        }
+      });
+
+      if (response.data.status === "1") {
+        setErrorMessage3("IC Number has taken");
+      } else if( response.data.status === "2"){
+        setErrorMessage3('');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
   return (
     <React.Fragment>
-      <div>
+      <div className="whiteBg">
         <Container fluid className="p-0">
           <Row className="g-0">
             <CarouselPage />
@@ -549,6 +626,7 @@ const Register3 = () => {
                                         onChange={(e) => {
                                           validation.handleChange(e); // Call the formik handleChange
                                           handleChange(e); // Call your custom handleChange
+                                          handleIcNumberChange(e); // Call your custom handleChange
                                         }}
                                         onKeyDown={handleBackspace}
                                         onBlur={validation.handleBlur}
@@ -559,7 +637,15 @@ const Register3 = () => {
                                       {validation.touched.icNum && validation.errors.icNum ? (
                                         <FormFeedback type="invalid">{validation.errors.icNum}</FormFeedback>
                                       ) : null}
+                                       {errorMessage3 && (
+                                    
+                                    <div className="error-message required-indicator mt-1" >
+                                      {errorMessage3}
+                                     
+                                    </div>
+                                  )}
                                     </Col>
+                                    
                                     <Col lg="6">
                                       <Input
                                         className="form-control login-input"
@@ -634,7 +720,10 @@ const Register3 = () => {
                                         className="form-control login-input text_1 mt-3"
                                         placeholder="Email"
                                         type="email"
-                                        onChange={validation.handleChange}
+                                        onChange={(e) => {
+                                          handleEmailChange(e);
+                                          validation.handleChange(e); // Call the validation.handleChange function
+                                        }}
                                         onKeyDown={handleBackspace}
                                         onBlur={validation.handleBlur}
                                         invalid={
@@ -644,9 +733,18 @@ const Register3 = () => {
                                       {validation.touched.email && validation.errors.email ? (
                                         <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
                                       ) : null}
+
                                     </Col>
 
                                   </Row>
+                                  {errorMessage && (
+                                    
+                                    <div className="error-message required-indicator mt-1" >
+                                      {errorMessage}
+                                     
+                                    </div>
+                                  )}
+                                  {/* <button onClick={handleNextButtonClick}>Next</button> */}
 
                                   <Row className="mt-3">
                                     <Col lg="6">
@@ -807,7 +905,7 @@ const Register3 = () => {
                                   <Row className="mt-3 mb-3">
                                     <Col lg="12">
                                       <Input
-                                        id="email"
+                                        id="name"
                                         name="service"
                                         className="form-control login-input text_1"
                                         placeholder="Service"
@@ -853,7 +951,7 @@ const Register3 = () => {
                                           <div className="dropzone login-input">
                                             <div className="dz-message needsclick mt-2" {...getRootProps()}>
                                               <input {...getInputProps()} />
-                                              <div className="mb-3">
+                                              <div className="">
                                                 <i className="display-4 text-muted bx bxs-cloud-upload" />
                                               </div>
                                               <h5>Drop files here or click to upload.</h5>
@@ -891,7 +989,7 @@ const Register3 = () => {
                                       </div>
 
                                       {validation.errors.f_mykad && (
-                                        <div className="text-danger">{validation.errors.f_mykad}</div>
+                                        <div className="required-indicator">{validation.errors.f_mykad}</div>
                                       )}
 
                                     </div>
@@ -912,7 +1010,7 @@ const Register3 = () => {
                                           <div className="dropzone login-input">
                                             <div className="dz-message needsclick mt-2" {...getRootProps()}>
                                               <input {...getInputProps()} />
-                                              <div className="mb-3">
+                                              <div className="">
                                                 <i className="display-4 text-muted bx bxs-cloud-upload" />
                                               </div>
                                               <h5>Drop files here or click to upload.</h5>
@@ -950,7 +1048,7 @@ const Register3 = () => {
                                       </div>
 
                                       {validation.errors.b_mykad && (
-                                        <div className="text-danger">{validation.errors.b_mykad}</div>
+                                        <div className="required-indicator">{validation.errors.b_mykad}</div>
                                       )}
 
                                     </div>
@@ -971,7 +1069,7 @@ const Register3 = () => {
                                           <div className="dropzone login-input">
                                             <div className="dz-message needsclick mt-2" {...getRootProps()}>
                                               <input {...getInputProps()} />
-                                              <div className="mb-3">
+                                              <div className="m">
                                                 <i className="display-4 text-muted bx bxs-cloud-upload" />
                                               </div>
                                               <h5>Drop files here or click to upload.</h5>
@@ -1008,7 +1106,7 @@ const Register3 = () => {
                                         ))}
                                       </div>
                                       {validation.errors.utilitybill && (
-                                        <div className="text-danger">{validation.errors.utilitybill}</div>
+                                        <div className="required-indicator">{validation.errors.utilitybill}</div>
                                       )}
                                     </div>
 
@@ -1132,7 +1230,7 @@ const Register3 = () => {
                                           ))}
 
                                           {validation.errors.nomnric && (
-                                            <div className="text-danger">{validation.errors.nomnric}</div>
+                                            <div className="required-indicator">{validation.errors.nomnric}</div>
                                           )}
                                         </div>
 
@@ -1158,7 +1256,7 @@ const Register3 = () => {
                                               I agree to this declaration
                                             </label>
                                             {validation.errors.declareAgree && (
-                                              <div className="text-danger">{validation.errors.declareAgree}</div>
+                                              <div className="required-indicator">{validation.errors.declareAgree}</div>
                                             )}
                                           </div>
                                         </div>
@@ -1216,6 +1314,9 @@ const Register3 = () => {
                                     Previous
                                   </Link>
                                 </li>
+
+
+
                                 <li className={activeTab === 3 ? "next d-none" : "next"}>
                                   <Link
                                     className={` ${activeTab === 4 || activeTab === 5 ? "d-none" : ""}`}
@@ -1227,6 +1328,7 @@ const Register3 = () => {
                                     Next
                                   </Link>
                                 </li>
+
                                 <div className="col-12">
                                   <div className="text-center">
 

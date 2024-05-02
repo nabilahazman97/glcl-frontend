@@ -118,9 +118,9 @@ function MemberList() {
             <Link to={`/admin-swarna-stokam-niksepa/member-details/${row.original.id}`} style={{ textDecoration: 'none' }}>
               <button
                 type="button"
-                className="btn btn-primary rejectBtn"
+                className="btn btn-primary viewBtn"
               >
-                <i className="mdi mdi-eye-outline font-size-16 align-middle me-1"></i>{" "}
+                {/* <i className="mdi mdi-eye-outline font-size-16 align-middle me-1"></i>{" "} */}
                 View
               </button>
             </Link>
@@ -212,53 +212,7 @@ function MemberList() {
         <Card className="defCard">
           <CardBody>
             <CardTitle>List of Members</CardTitle>
-            <div className="d-print-none mt-4">
-              <div className="float-start ">
-                <div style={{ position: 'relative' }}>
-                  <input
-                    className="form-control"
-                    type="text"
-                    placeholder="Filter by date range"
-                    value={
-                      (startDate && endDate) ?
-                        `${formatDate(startDate)} - ${formatDate(endDate)}` :
-                        ''
-                    }
-                    onClick={toggleDropdown}
-                    readOnly
-                    style={{ cursor: 'pointer' }}
-                  />
-
-                  {isOpen && (
-                    <div
-                      ref={dropdownRef}
-                      style={{
-                        position: 'absolute',
-                        top: '100%',
-                        height:'100%',
-                        left: 0,
-                        zIndex: 999,
-                        backgroundColor: '#fff',
-                        border: '1px solid #ccc',
-                        borderRadius: '4px',
-                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                      }}
-                    >
-                      <DatePicker
-                        selectsRange
-                        startDate={startDate}
-                        endDate={endDate}
-                        onChange={handleDateChange}
-                        inline
-                      />
-                      {/* <div className="text-center mb-2">
-                                                                <button className="btn btn-primary" onClick={handleSelect}>Select Date</button>
-                                                            </div> */}
-
-                    </div>
-                  )}
-                </div>
-              </div>
+            {/* <div className="d-print-none mt-4">
               <div className="float-end ">
                 <button
                   type="button"
@@ -269,7 +223,80 @@ function MemberList() {
                 </button>
 
               </div>
-            </div>
+            </div> */}
+              <div className="d-print-none mt-4">
+                                            <div className="float-start ">
+                                                <div style={{ position: 'relative' }}>
+                                                    <input
+                                                        className="form-control filterInput"
+                                                        type="text"
+                                                        placeholder="Filter by date range"
+                                                        value={
+                                                            (startDate && endDate) ?
+                                                                `${formatDate(startDate)} - ${formatDate(endDate)}` :
+                                                                ''
+                                                        }
+                                                        onClick={toggleDropdown}
+                                                        readOnly
+                                                        style={{ cursor: 'pointer' }}
+                                                    />
+
+                                                    {isOpen && (
+                                                        <div
+                                                            ref={dropdownRef}
+                                                            style={{
+                                                                position: 'absolute',
+                                                                top: '100%',
+                                                                height:'100%',
+                                                                left: 0,
+                                                                zIndex: 999,
+                                                                backgroundColor: '#fff',
+                                                                border: '1px solid #ccc',
+                                                                borderRadius: '4px',
+                                                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                                                            }}
+                                                        >
+                                                            <DatePicker
+                                                                selectsRange
+                                                                startDate={startDate}
+                                                                endDate={endDate}
+                                                                onChange={handleDateChange}
+                                                                inline
+                                                            />
+                                                            {/* <div className="text-center mb-2">
+                                                                <button className="btn btn-primary" onClick={handleSelect}>Select Date</button>
+                                                            </div> */}
+
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className="float-end ">
+                                                {/* <button
+                                                    type="button"
+                                                    className="btn btn-primary downloadBtn me-2"
+                                                >
+                                                    <img
+                                                    src={dload}
+                                                    alt=""
+                                                    className="avatar-md print_icon"
+                                                />
+
+                                                </button> */}
+                                                {/* <Link
+                                                    to="#"
+                                                    onClick={printInvoice}
+                                                    className="btn btn-success downloadBtn"
+                                                >
+                                                    <img
+                                                    src={print}
+                                                    alt=""
+                                                    className="avatar-md print_icon"
+                                                />
+                                                </Link> */}
+
+                                            </div>
+                                        </div>
             <TableContainer
               columns={columns}
               data={filteredData}

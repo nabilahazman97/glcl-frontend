@@ -324,7 +324,7 @@ const FormValidations = () => {
                                             <div className="float-start ">
                                                 <div style={{ position: 'relative' }}>
                                                     <input
-                                                        className="form-control"
+                                                        className="form-control filterInput"
                                                         type="text"
                                                         placeholder="Filter by date range"
                                                         value={
@@ -368,7 +368,7 @@ const FormValidations = () => {
                                                 </div>
                                             </div>
                                             <div className="float-end ">
-                                                <button
+                                                {/* <button
                                                     type="button"
                                                     className="btn btn-primary downloadBtn me-2"
                                                 >
@@ -378,7 +378,7 @@ const FormValidations = () => {
                                                         className="avatar-md print_icon"
                                                     />
 
-                                                </button>
+                                                </button> */}
                                                 <Link
                                                     to="#"
                                                     onClick={printInvoice}
