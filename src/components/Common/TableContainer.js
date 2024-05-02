@@ -200,7 +200,7 @@ const TableContainer = ({
       </Row>
 
       <div className="table-responsive react-table">
-        <Table bordered hover {...getTableProps()} className={className}>
+        <Table bordered hover {...getTableProps()} className="table table-striped">
           <thead className=" table-nowrap text-center">
             {headerGroups.map(headerGroup => (
               <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
@@ -240,20 +240,20 @@ const TableContainer = ({
 
       <Row className="justify-content-md-end justify-content-center align-items-center">
         <Col className="col-md-auto">
-          <div className="d-flex gap-1">
+          <div className="d-flex gap-1  ">
             <Button
               color="primary"
-              style={{ backgroundColor:"#0e174d", borderRadius:"5px", }}
+              style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"41px" }}
               onClick={() => gotoPage(0)}
-              disabled={!canPreviousPage}
+              // disabled={!canPreviousPage}
             >
               {"<<"}
             </Button>
             <Button
               color="primary"
-              style={{ backgroundColor:"#0e174d", borderRadius:"5px", }}
+              style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"41px" }}
               onClick={previousPage}
-              disabled={!canPreviousPage}
+              // disabled={!canPreviousPage}
             >
               {"<"}
             </Button>
@@ -278,13 +278,14 @@ const TableContainer = ({
 
         <Col className="col-md-auto">
           <div className="d-flex gap-1">
-            <Button color="primary" style={{ backgroundColor:"#0e174d", borderRadius:"5px", }} onClick={nextPage} disabled={!canNextPage}>
+            <Button color="primary" style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"41px" }}  >
+            {/* disabled={!canNextPage} */}
               {">"}
             </Button>
             <Button
-             style={{ backgroundColor:"#0e174d", borderRadius:"5px",  }}
+             style={{ backgroundColor:"#0e174d",borderRadius:"50%", width:"41px"  }}
               onClick={() => gotoPage(pageCount - 1)}
-              disabled={!canNextPage}
+              // disabled={!canNextPage}
             >
               {">>"}
             </Button>

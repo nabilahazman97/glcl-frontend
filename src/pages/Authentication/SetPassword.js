@@ -88,7 +88,7 @@ const SetPassword = () => {
 
     return (
         <React.Fragment>
-            <div>
+            <div className="whiteBg">
                 <Container fluid className="p-0">
                     <Row className="g-0">
                         <CarouselPage />
