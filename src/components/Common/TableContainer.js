@@ -133,7 +133,7 @@ const TableContainer = ({
       <Row className="mb-2">
         <Col md={customPageSizeOptions ? 2 : 2}>
           <select
-            className="form-select"
+            className="form-select filterInput"
             value={pageSize}
             onChange={onChangeInSelect}
           >
@@ -238,7 +238,7 @@ const TableContainer = ({
         </Table>
       </div>
 
-      <Row className="justify-content-md-end justify-content-center align-items-center">
+      <Row className="justify-content-md-end justify-content-center align-items-center mt-4 mb-2">
         <Col className="col-md-auto">
           <div className="d-flex gap-1  ">
             <Button

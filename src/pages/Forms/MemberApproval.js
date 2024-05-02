@@ -43,14 +43,17 @@ const MemberApproval = () => {
     console.log(apiname.base_url);
     console.log(apiname.p_userdetails);
     console.log(user);
-    axios.post(apiname.base_url + apiname.p_userdetails, user, {
-      headers: {
-        'Authorization': 'Basic ' + apiname.encoded
-      }
-    })
-      // .then(res =>console.log(res))
-      .then(res => setdata(res['data']['result']))
+    post(apiname.p_userdetails, user)
+    .then(res => setdata(res.result))
       .catch(err => console.log(err));
+    // axios.post(apiname.base_url + apiname.p_userdetails, user, {
+    //   headers: {
+    //     'Authorization': 'Basic ' + apiname.encoded
+    //   }
+    // })
+    //   // .then(res =>console.log(res))
+    //   .then(res => setdata(res['data']['result']))
+    //   .catch(err => console.log(err));
   }, []);
   console.log("data userzzzz");
   console.log(data[0]);
@@ -84,30 +87,39 @@ const MemberApproval = () => {
 
     // useEffect(() => { 
 
-    axios.post(apiname.base_url + apiname.userapproval, user, {
-      headers: {
-        'Authorization': 'Basic ' + apiname.encoded
+    post(userapproval, user)
+    .then(res => {
+      if (e.target.value === '1') {
+        toast.success('User accepted successfully!');
+      } else {
+        toast.error('User rejected successfully!');
       }
+      setTimeout(() => {
+        // Redirect to the dashboard page
+        window.location.href = '/tables-datatable';
+      }, 500);
     })
-      .then(res => {
-        if (e.target.value === '1') {
-          toast.success('User accepted successfully!');
+    // .then(res =>setdata(res['data']['result']))
+    .catch(err => console.log(err));
 
-        } else {
-          toast.error('User rejected successfully!');
-        }
-
-        setTimeout(() => {
-          // Redirect to the dashboard page
-          window.location.href = '/tables-datatable';
-        }, 500);
-
-
-      }
-      )
-
-      // .then(res =>setdata(res['data']['result']))
-      .catch(err => console.log(err));
+    // axios.post(apiname.base_url + apiname.userapproval, user, {
+    //   headers: {
+    //     'Authorization': 'Basic ' + apiname.encoded
+    //   }
+    // })
+    //   .then(res => {
+    //     if (e.target.value === '1') {
+    //       toast.success('User accepted successfully!');
+    //     } else {
+    //       toast.error('User rejected successfully!');
+    //     }
+    //     setTimeout(() => {
+    //       // Redirect to the dashboard page
+    //       window.location.href = '/tables-datatable';
+    //     }, 500);
+    //   })
+    //   // .then(res =>setdata(res['data']['result']))
+    //   .catch(err => console.log(err));
     // }, []);
 
 

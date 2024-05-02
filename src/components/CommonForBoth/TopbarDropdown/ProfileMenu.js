@@ -29,7 +29,7 @@ const ProfileMenu = props => {
 
     console.log(authUserData);
     var authUserObject = JSON.parse(authUserData);
-    var username = setname(authUserObject.result[0].Username);
+    var username = setname(authUserObject.result.username);
 
     // console.log(localStorage.getItem("authUser"))
     // if (localStorage.getItem("authUser")) {

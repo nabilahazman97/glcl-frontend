@@ -35,6 +35,7 @@ import dload from "../../../../assets/images/schemes/download-icon.png";
 //Import Breadcrumb
 import Breadcrumbs from "../../../../components/Common/Breadcrumb";
 // import '../../../style.scss';
+import { del, get, post, put } from "../../../../helpers/api_helper";
 
 const FormValidations = () => {
 
@@ -53,20 +54,18 @@ const FormValidations = () => {
 
     const [data, setdata] = useState([]);
     useEffect(() => {
-        console.log(apiname.base_url);
-        console.log(apiname.p_userdetails);
-        console.log(user);
-        axios.post(apiname.base_url + apiname.p_userdetails, user, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
-        })
-            // .then(res =>console.log(res))
-            .then(res => setdata(res['data']['result']))
-            .catch(err => console.log(err));
+        post(apiname.p_userdetails, user)
+        .then(res => setdata(res.result))
+        .catch(err => console.log(err));
+        // axios.post(apiname.base_url + apiname.p_userdetails, user, {
+        //     headers: {
+        //         'Authorization': 'Basic ' + apiname.encoded
+        //     }
+        // })
+        //     // .then(res =>console.log(res))
+        //     .then(res => setdata(res['data']['result']))
+        //     .catch(err => console.log(err));
     }, []);
-    console.log("User Data");
-    console.log(data[0]);
 
     const userSchemeid = {
         'scheme_id': '1',
@@ -75,17 +74,17 @@ const FormValidations = () => {
 
     const [data2, setdata2] = useState([]);
     useEffect(() => {
-        console.log(apiname.base_url);
-        console.log(apiname.userScheme);
-        console.log(user);
-        axios.post(apiname.base_url + apiname.userScheme, userSchemeid, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
-        })
-            // .then(res =>console.log(res))
-            .then(res => setdata2(res['data']['result']))
-            .catch(err => console.log(err));
+        post(apiname.userScheme, userSchemeid)
+        .then(res => setdata2(res.result))
+        .catch(err => console.log(err));
+        // axios.post(apiname.base_url + apiname.userScheme, userSchemeid, {
+        //     headers: {
+        //         'Authorization': 'Basic ' + apiname.encoded
+        //     }
+        // })
+        //     // .then(res =>console.log(res))
+        //     .then(res => setdata2(res['data']['result']))
+        //     .catch(err => console.log(err));
     }, []);
     console.log("User Scheme");
     console.log(data2);
@@ -99,21 +98,25 @@ const FormValidations = () => {
       };
   useEffect(() => {
     // Fetch data from USER_LIST
-    axios.get(apiname.base_url + apiname.USER_LIST, {
-      headers: {
-        'Authorization': 'Basic ' + apiname.encoded
-      }
-    })
+    // axios.get(apiname.base_url + apiname.USER_LIST, {
+    //   headers: {
+    //     'Authorization': 'Basic ' + apiname.encoded
+    //   }
+    // })
+    get(apiname.USER_LIST)
     .then(res => {
-      const userListData = res.data.result;
+      const userListData = res.result;
       // Fetch data from userScheme
-      axios.post(apiname.base_url + apiname.userScheme, userScheme, {
-        headers: {
-          'Authorization': 'Basic ' + apiname.encoded
-        }
-      })
-       .then(res => setUserData3(res['data']['result']))
+      post(apiname.userScheme, userScheme)
+      .then(res => setUserData3(res.result))
       .catch(err => console.log(err));
+    //   axios.post(apiname.base_url + apiname.userScheme, userScheme, {
+    //     headers: {
+    //       'Authorization': 'Basic ' + apiname.encoded
+    //     }
+    //   })
+    //    .then(res => setUserData3(res['data']['result']))
+    //   .catch(err => console.log(err));
     })
     .catch(err => console.log(err));
   }, []);
@@ -127,21 +130,18 @@ const FormValidations = () => {
   };
     const [data4, setdata4] = useState([]);
     useEffect(() => {
-        console.log(apiname.base_url);
-        console.log(apiname.userScheme);
-        console.log(user);
-        axios.post(apiname.base_url + apiname.remainGold, userSchemeidzz, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
-        })
-            // .then(res =>console.log(res))
-            .then(res => setdata4(res['data'].remaininggold))
-            .catch(err => console.log(err));
+        post(apiname.remainGold, userSchemeidzz)
+        .then(res => setdata4(res.remaininggold))
+        .catch(err => console.log(err));
+        // axios.post(apiname.base_url + apiname.remainGold, userSchemeidzz, {
+        //     headers: {
+        //         'Authorization': 'Basic ' + apiname.encoded
+        //     }
+        // })
+        //     // .then(res =>console.log(res))
+        //     .then(res => setdata4(res['data'].remaininggold))
+        //     .catch(err => console.log(err));
     }, []);
-    console.log("Data 4");
-    console.log(data4);
-
 
     const columns = useMemo(
         () => [
@@ -354,7 +354,7 @@ const FormValidations = () => {
                                             <div className="float-start ">
                                                 <div style={{ position: 'relative' }}>
                                                     <input
-                                                        className="form-control"
+                                                        className="form-control filterInput"
                                                         type="text"
                                                         placeholder="Filter by date range"
                                                         value={

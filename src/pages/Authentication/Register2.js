@@ -22,6 +22,7 @@ import Select from "react-select";
 import PropTypes from "prop-types";
 import axios from "axios";
 import * as apiname from "../../helpers/url_helper";
+import { del, get, post, put } from "../../helpers/api_helper";
 
 // Formik Validation
 import * as Yup from "yup";
@@ -176,28 +177,45 @@ const Register3 = () => {
 
       // useEffect(() => {
       // console.log("hi");
-      axios.post(apiname.base_url + apiname.register, formData, {
-        headers: {
-          'Authorization': 'Basic ' + apiname.encoded
+      post(apiname.register, formData)
+      .then(res => {
+        if (res.status == '1') {
+          toggleTab(activeTab + 2);
+          console.log("success");
+          //redirect to success page
+
+
+        } else {
+          toggleTab(activeTab + 1);
+          console.log("failure");
+          ///redirect to error page 
+
         }
       })
-        // .then(res =>console.log(res['data']['result']))
-        .then(res => {
+      .catch(err => console.log(err));
 
-          if (res['data']['status'] == '1') {
-            toggleTab(activeTab + 2);
-            console.log("success");
-            //redirect to success page
+      // axios.post(apiname.base_url + apiname.register, formData, {
+      //   headers: {
+      //     'Authorization': 'Basic ' + apiname.encoded
+      //   }
+      // })
+      //   // .then(res =>console.log(res['data']['result']))
+      //   .then(res => {
+
+      //     if (res['data']['status'] == '1') {
+      //       toggleTab(activeTab + 2);
+      //       console.log("success");
+      //       //redirect to success page
 
 
-          } else {
-            toggleTab(activeTab + 1);
-            console.log("failure");
-            ///redirect to error page 
+      //     } else {
+      //       toggleTab(activeTab + 1);
+      //       console.log("failure");
+      //       ///redirect to error page 
 
-          }
-        })
-        .catch(err => console.log(err));
+      //     }
+      //   })
+      //   .catch(err => console.log(err));
       // }, []);
 
     }
@@ -427,15 +445,15 @@ const Register3 = () => {
     };
 
     try {
-      const response = await axios.post(apiname.base_url + apiname.emailCheck, userScheme, {
-        headers: {
-          'Authorization': 'Basic ' + apiname.encoded
-        }
-      });
-
-      if (response.data.status === "1") {
+      // const response = await axios.post(apiname.base_url + apiname.emailCheck, userScheme, {
+      //   headers: {
+      //     'Authorization': 'Basic ' + apiname.encoded
+      //   }
+      // });
+      const response = await post(apiname.emailCheck, userScheme);
+      if (response.status === "1") {
         setErrorMessage("Email ID has taken");
-      } else if( response.data.status === "2"){
+      } else if( response.status === "2"){
         setErrorMessage('');
       }
     } catch (error) {
@@ -459,15 +477,17 @@ const Register3 = () => {
     };
 
     try {
-      const response = await axios.post(apiname.base_url + apiname.icnumberCheck, userScheme, {
-        headers: {
-          'Authorization': 'Basic ' + apiname.encoded
-        }
-      });
+      // const response = await axios.post(apiname.base_url + apiname.icnumberCheck, userScheme, {
+      //   headers: {
+      //     'Authorization': 'Basic ' + apiname.encoded
+      //   }
+      // });
 
-      if (response.data.status === "1") {
+      const response = await post(apiname.icnumberCheck, userScheme);
+
+      if (response.status === "1") {
         setErrorMessage3("IC Number has taken");
-      } else if( response.data.status === "2"){
+      } else if( response.status === "2"){
         setErrorMessage3('');
       }
     } catch (error) {

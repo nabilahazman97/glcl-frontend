@@ -40,6 +40,7 @@ import tag from "../../../assets/images/schemes/tag-icon.png";
 //Import Breadcrumb
 import Breadcrumbs from "../../../components/Common/Breadcrumb";
 // import '../../style.scss';
+import { del, get, post, put } from "../../../helpers/api_helper";
 
 const FormValidations = () => {
 
@@ -99,14 +100,17 @@ const FormValidations = () => {
         console.log(apiname.base_url);
         console.log(apiname.p_userdetails);
         console.log(user);
-        axios.post(apiname.base_url + apiname.p_userdetails, user, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
-        })
-            // .then(res =>console.log(res))
-            .then(res => setdata(res['data']['result']))
-            .catch(err => console.log(err));
+        post(apiname.p_userdetails, user)
+        .then(res => setdata(res.result))
+        .catch(err => console.log(err));
+        // axios.post(apiname.base_url + apiname.p_userdetails, user, {
+        //     headers: {
+        //         'Authorization': 'Basic ' + apiname.encoded
+        //     }
+        // })
+        //     // .then(res =>console.log(res))
+        //     .then(res => setdata(res['data']['result']))
+        //     .catch(err => console.log(err));
     }, []);
     console.log("data userzzzz");
     console.log(data[0]);
