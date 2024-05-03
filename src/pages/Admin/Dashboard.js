@@ -15,6 +15,7 @@ import {
   Table,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { del, get, post, put } from "../../helpers/api_helper";
 
 import classNames from "classnames";
 
@@ -97,12 +98,14 @@ useEffect(() => {
     console.log(apiname.base_url);
     console.log(apiname.userScheme);
     // Fetch data for each scheme ID
+    // Promise.all(
+    //     userSchemeIds.map(userSchemeid => axios.post(apiname.base_url + apiname.userScheme, userSchemeid, {
+    //         headers: {
+    //             'Authorization': 'Basic ' + apiname.encoded
+    //         }
+    //     }))
     Promise.all(
-        userSchemeIds.map(userSchemeid => axios.post(apiname.base_url + apiname.userScheme, userSchemeid, {
-            headers: {
-                'Authorization': 'Basic ' + apiname.encoded
-            }
-        }))
+        userSchemeIds.map(userSchemeid => post(apiname.userScheme, userSchemeid))
     ).then(responses => {
         // Update reports for each scheme ID
         const updatedReports = userSchemeIds.map((userSchemeid, index) => {
@@ -120,7 +123,7 @@ useEffect(() => {
             } else if (index === 4) {
                 title = 'SVARNA RUNA SCHEME';
             }
-            const total = responses[index].data.result ? responses[index].data.result.length : 0;
+            const total = responses[index].result ? responses[index].result.length : 0;
             return {
               title: title,
               iconClass: "bx-copy-alt",
@@ -130,7 +133,7 @@ useEffect(() => {
         });
         setReports(updatedReports);
         // Update data for the first scheme
-        setdata2(responses[0].data.result);
+        setdata2(responses[0].result);
     }).catch(err => console.log(err));
 }, []);
 
@@ -150,17 +153,52 @@ useEffect(() => {
   console.log(apiname.base_url);
   console.log(apiname.p_userdetails);
   console.log(user);
-  axios.post(apiname.base_url + apiname.p_userdetails, user, {
-      headers: {
-          'Authorization': 'Basic ' + apiname.encoded
-      }
-  })
-      // .then(res =>console.log(res))
-      .then(res => setdata(res['data']['result']))
-      .catch(err => console.log(err));
+  post(apiname.p_userdetails, user)
+  .then(res => setdata(res.result))
+  .catch(err => console.log(err));
+  // axios.post(apiname.base_url + apiname.p_userdetails, user, {
+  //     headers: {
+  //         'Authorization': 'Basic ' + apiname.encoded
+  //     }
+  // })
+  //     // .then(res =>console.log(res))
+  //     .then(res => setdata(res['data']['result']))
+  //     .catch(err => console.log(err));
 }, []);
 console.log("User Data");
 console.log(data[0]);
+
+const [Uid, setUid] = useState(0);
+const [SchemeIdAll, setSchemeIdAll] = useState(1,2);
+const updateUid = (newUid) => {
+  setUid(newUid);
+};
+const allSchemeId = (newSchemeIdAll) => {
+  setSchemeIdAll(newSchemeIdAll);
+};
+
+const userSchemeid5 = {
+  'scheme_id': SchemeIdAll,
+  'user_id' : Uid
+};
+
+const [data5, setdata5] = useState([]);
+useEffect(() => {
+  console.log(apiname.base_url);
+  console.log(apiname.userScheme);
+  console.log(user);
+  // axios.post(apiname.base_url + apiname.userScheme, userSchemeid5, {
+  //     headers: {
+  //         'Authorization': 'Basic ' + apiname.encoded
+  //     }
+  // })
+  post(apiname.userScheme, userSchemeid5)
+      // .then(res =>console.log(res))
+      .then(res => setdata5(res.result))
+      .catch(err => console.log(err));
+}, []);
+console.log("data5");
+console.log(data5);
 
 
 const columns = useMemo(

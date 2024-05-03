@@ -23,33 +23,45 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createBrowserHistory } from 'history';
 //Import Breadcrumb
 import Breadcrumbs from "../../../components/Common/Breadcrumb";
+import pdfIcon from "../../../assets/images/PDF_file_icon.png";
+
+import { del, get, post, put } from "../../../helpers/api_helper";
 
 const MemberApproval = () => {
   const { Uid } = useParams();
   const [data, setdata] = useState([]);
-  const [buttonsDisabled, setButtonsDisabled] = useState(true);
+  const [buttonsreadOnly, setButtonsreadOnly] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [action, setAction] = useState(null);
   const history = createBrowserHistory();
 
+
   useEffect(() => {
-    axios.post(apiname.base_url + apiname.p_userdetails, { id: Uid }, {
-      headers: {
-        'Authorization': 'Basic ' + apiname.encoded
-      }
-    })
-      .then(res => setdata(res.data.result))
-      .catch(err => console.log(err));
-  }, []);
+    post(apiname.p_userdetails, { id: Uid })
+    .then(res => setdata(res.result))
+    .catch(err => console.log(err));
+}, []);
+
+  // useEffect(() => {
+  //   axios.post(apiname.base_url + apiname.p_userdetails, { id: Uid }, {
+  //     headers: {
+  //       'Authorization': 'Basic ' + apiname.encoded
+  //     }
+  //   })
+  //     .then(res => setdata(res.data.result))
+  //     .catch(err => console.log(err));
+  // }, []);
 
   useEffect(() => {
     if (data.length > 0) {
       console.log("Data:", data[0].ustatus);
       // Update button disablement based on ustatus value
       if (data[0].ustatus == 0 || data[0].ustatus == null) {
-        setButtonsDisabled(false); // Enable buttons if ustatus is 0
+        setButtonsreadOnly(false); // Enable buttons if ustatus is 0
+        console.log("enabled")
       } else {
-        setButtonsDisabled(true); // Disable buttons for any other value
+        setButtonsreadOnly(true); // Disable buttons for any other value
+        console.log("disabled")
       }
     } else {
       console.log("Data is empty.");
@@ -62,23 +74,37 @@ const MemberApproval = () => {
       ustatus: status,
     };
 
-    axios.post(apiname.base_url + apiname.userapproval, user, {
-      headers: {
-        'Authorization': 'Basic ' + apiname.encoded
+    post(apiname.userapproval,user)
+    .then(res => {
+      if (status === '1') {
+        toast.success('User accepted successfully!');
+      } else {
+        toast.error('User rejected successfully!');
       }
+      setTimeout(() => {
+        // Redirect to the dashboard page
+        window.location.href = '/tables-datatable';
+      }, 500);
     })
-      .then(res => {
-        if (status === '1') {
-          toast.success('User accepted successfully!');
-        } else {
-          toast.error('User rejected successfully!');
-        }
-        setTimeout(() => {
-          // Redirect to the dashboard page
-          window.location.href = '/tables-datatable';
-        }, 500);
-      })
-      .catch(err => console.log(err));
+    .catch(err => console.log(err));
+
+    // axios.post(apiname.base_url + apiname.userapproval, user, {
+    //   headers: {
+    //     'Authorization': 'Basic ' + apiname.encoded
+    //   }
+    // })
+    //   .then(res => {
+    //     if (status === '1') {
+    //       toast.success('User accepted successfully!');
+    //     } else {
+    //       toast.error('User rejected successfully!');
+    //     }
+    //     setTimeout(() => {
+    //       // Redirect to the dashboard page
+    //       window.location.href = '/tables-datatable';
+    //     }, 500);
+    //   })
+    //   .catch(err => console.log(err));
   };
 
   const toggleModal = () => setModalOpen(!modalOpen);
@@ -104,137 +130,139 @@ const MemberApproval = () => {
                 <CardBody className="m-3">
                   <CardTitle className="h4 mb-4">Registration Details</CardTitle>
                   <Row className="mb-3">
-                    <label>Name</label>
+                    {/* <label>Name</label> */}
                     <div className="col-md-12">
                       <input
                         className="form-control normal-input"
                         type="text"
-                        defaultValue={datas.Username}
+                        defaultValue={datas.username}
                         disabled
                       />
                     </div>
                   </Row>
                   <Row className="mb-3">
                     <div className="col-md-6">
-                      <label>IC Number</label>
+                      {/* <label>IC Number</label> */}
                       <input
                         className="form-control normal-input"
                         type="text"
                         defaultValue={datas.icnumber}
-                        disabled
+                        readOnly
                       />
                     </div>
                     <div className="col-md-6">
-                      <label>Age</label>
+                      {/* <label>Age</label> */}
                       <input
                         className="form-control normal-input"
                         type="text"
                         defaultValue={datas.age}
                         disabled
+                        readOnly
+
                       />
                     </div>
                   </Row>
                   <Row className="mb-3">
-                    <label>Home Address</label>
+                    {/* <label>Home Address</label> */}
                     <div className="col-md-12">
                       <Input
                         className="textarea form-control normal-input"
                         type="textarea"
                         defaultValue={datas.haddress}
-                        disabled
+                        readOnly
                       />
                     </div>
                   </Row>
                   <Row className="mb-3">
                     <div className="col-md-6">
-                      <label>Phone Number</label>
+                      {/* <label>Phone Number</label> */}
                       <input
                         className="form-control normal-input"
                         type="text"
                         defaultValue={datas.phonenum}
-                        disabled
+                        readOnly
                       />
                     </div>
                     <div className="col-md-6">
-                      <label>Phone Number 2</label>
+                      {/* <label>Phone Number 2</label> */}
                       <input
                         className="form-control normal-input"
                         type="text"
                         defaultValue={datas.altnum}
-                        disabled
+                        readOnly
                       />
                     </div>
                   </Row>
                   <Row className="mb-3">
                     <div className="col-md-12">
-                      <label>Email ID</label>
+                      {/* <label>Email ID</label> */}
                       <input
                         className="form-control  normal-input"
                         type="email"
-                        defaultValue={datas.emailid}
+                        defaultValue={datas.email_id}
                         disabled
                       />
                     </div>
                   </Row>
                   <Row className="mb-3">
                     <div className="col-md-6">
-                      <label>Ethnicity</label>
+                      {/* <label>Ethnicity</label> */}
                       <input
                         className="form-control normal-input"
                         type="text"
                         defaultValue={datas.ethnic}
-                        disabled
+                        readOnly
                       />
                     </div>
                     <div className="col-md-6">
-                      <label>Religion</label>
+                      {/* <label>Religion</label> */}
                       <input
                         className="form-control normal-input"
                         type="text"
                         defaultValue={datas.religion}
-                        disabled
+                        readOnly
                       />
                     </div>
                   </Row>
                   <Row className="mb-3">
                     <div className="col-md-6">
-                      <label>Sex</label>
+                      {/* <label>Sex</label> */}
                       <input
                         className="form-control normal-input"
                         type="text"
                         defaultValue={datas.sex}
-                        disabled
+                        readOnly
                       />
                     </div>
                     <div className="col-md-6">
-                      <label>Marital Status</label>
+                      {/* <label>Marital Status</label> */}
                       <input
                         className="form-control normal-input"
                         type="text"
                         defaultValue={datas.mstatus}
-                        disabled
+                        readOnly
                       />
                     </div>
                   </Row>
                   <Row className="mb-3">
                     <div className="col-md-12">
-                      <label>Occupation</label>
+                      {/* <label>Occupation</label> */}
                       <input
                         className="form-control  normal-input"
                         type="text"
                         defaultValue={datas.occupation}
-                        disabled
+                        readOnly
                       />
                     </div>
                   </Row>
                   <Row className="mb-3">
                     <div className="col-md-12">
-                      <label>Service</label>
+                      {/* <label>Service</label> */}
                       <input
                         className="form-control  normal-input"
                         type="text"
                         defaultValue={datas.service}
-                        disabled
+                        readOnly
                       />
                     </div>
                   </Row>
@@ -244,30 +272,96 @@ const MemberApproval = () => {
                         className="form-control  normal-input"
                         type="text"
                         defaultValue={datas.paddress}
-                        disabled
+                        readOnly
                       />
                     </div>
                   </Row>
 
-                  <div className="d-flex justify-content-between mt-4 mb-5">
+                  <div className=" mt-4 mb-5">
                     <div>
                       <CardSubtitle className="std_font mb-3">
                         MyKad - Front
                       </CardSubtitle>
-                      <img className="ic-img" src={datas.f_mykad}></img>
+                      {datas.f_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
+                        <div>
+                          <div className="text-center">
+                            <img className="ic-img" src={datas.f_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
+                          </div>
+
+                          <Card className="pdfInput">
+                            <CardBody className="m-3">
+                              <div className="text-center">
+                                <img className="pdfIcon" src={pdfIcon}></img>
+                              </div>
+                            </CardBody>
+                          </Card>
+                        </div>
+                      ) : (
+                        <Card className="pdfInput">
+                          <CardBody className="m-3">
+                            <div className="text-center">
+                              <img className="ic-img mb-3" src={datas.f_mykad} alt="MyKad Front"></img>
+
+                            </div>
+                          </CardBody>
+                        </Card>
+
+
+                      )}
                     </div>
                     <div>
                       <CardSubtitle className="std_font mb-3">
                         MyKad - Back
                       </CardSubtitle>
-                      <img className="ic-img" src={datas.b_mykad}></img>
+                      {datas.b_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
+                        <div>
+                          <div className="text-center">
+                            <img className="ic-img" src={datas.b_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
+                          </div>                          <Card className="pdfInput">
+                            <CardBody className="m-3">
+                              <div className="text-center">
+                                <img className="pdfIcon" src={pdfIcon}></img>
+                              </div>
+                            </CardBody>
+                          </Card>
+                        </div>
+                      ) : (
+                        <Card className="pdfInput">
+                          <CardBody className="m-3">
+                            <div className="text-center">
+                              <img className="ic-img mb-3" src={datas.b_mykad} alt="MyKad Front"></img>
+
+                            </div>
+                          </CardBody>
+                        </Card>
+                      )}
                     </div>
                     <div>
 
                       <CardSubtitle className="std_font mb-3">
                         Utility Bill
                       </CardSubtitle>
-                      <img className="ic-img" src={datas.utilitybill}></img>
+                      {datas.utilitybill.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
+                        <div>
+                          <img className="ic-img mb-3" src={datas.utilitybill} style={{ display: 'none' }}></img> {/* Hide the image */}
+                          <Card className="pdfInput">
+                            <CardBody className="m-3">
+                              <div className="text-center">
+                                <img className="pdfIcon" src={pdfIcon}></img>
+                              </div>
+                            </CardBody>
+                          </Card>
+                        </div>
+                      ) : (
+                        <Card className="pdfInput">
+                          <CardBody className="m-3">
+                            <div className="text-center">
+                              <img className="ic-img" src={datas.utilitybill} alt="MyKad Front"></img>
+
+                            </div>
+                          </CardBody>
+                        </Card>
+                      )}
                     </div>
 
                   </div>                  <Row className="mb-3">
@@ -279,9 +373,10 @@ const MemberApproval = () => {
                           setAction('approve');
                           toggleModal();
                         }}
-                        className="btn btn-success approveBtn mr-1"
-                        disabled={buttonsDisabled}
+                        className="btn btn-success approveBtn statusApproved mr-1"
+                        disabled={buttonsreadOnly}
                       >
+                        <i className="bx bxs-check-circle font-size-16 align-middle me-1"></i>{" "}
                         Approve
                       </button>
                       <button
@@ -290,9 +385,10 @@ const MemberApproval = () => {
                           setAction('reject');
                           toggleModal();
                         }}
-                        className="btn btn-danger rejectBtn ml-2"
-                        disabled={buttonsDisabled}
+                        className="btn btn-danger rejectBtn statusRejected ml-2"
+                        disabled={buttonsreadOnly}
                       >
+                        <i className="mdi mdi-close-circle font-size-16 align-middle me-1"></i>{" "}
                         Reject
                       </button>
                     </div>
@@ -316,14 +412,15 @@ const MemberApproval = () => {
           </div>
 
           <div className="approval-popup-btn">
-            <Button color="primary" onClick={confirmAction}>Confirm</Button>{' '}
-            <Button color="secondary" onClick={toggleModal}>Cancel</Button>
+            <Button color="warning" className="modalCancelBtn me-2" outline onClick={toggleModal}>Cancel</Button>{' '}
+            <Button color="primary" className="modalConfirmBtn" onClick={confirmAction}>Confirm</Button>
+
           </div>
         </ModalBody>
-        
-        
 
-       
+
+
+
       </Modal>
     </React.Fragment>
   ));

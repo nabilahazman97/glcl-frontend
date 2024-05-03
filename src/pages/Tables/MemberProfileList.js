@@ -9,6 +9,7 @@ import TableContainer from '../../components/Common/TableContainer';
 import { Button } from 'reactstrap';
 import axios from "axios";
 import * as apiname from "../../helpers/url_helper";
+import { del, get, post, put } from "../../helpers/api_helper";
 
 import './datatables.scss';
 
@@ -16,15 +17,20 @@ function MemberList() {
     const [data, setdata] = useState([]);
     useEffect(() => {
         // console.log("hi");
-        axios.get(apiname.base_url+apiname.USER_LIST, {
-          headers: {
-            'Authorization': 'Basic '+ apiname.encoded
-          }
-        })
+        // axios.get(apiname.base_url+apiname.USER_LIST, {
+        //   headers: {
+        //     'Authorization': 'Basic '+ apiname.encoded
+        //   }
+        // })
         // .then(res =>console.log(res))
+        get(apiname.USER_LIST)
         .then(res => {
-            const filteredData = res.data.result.filter(item => item.ustatus == 1);
-            setdata(filteredData);
+            if(res.result){
+                const filteredData = res.result.filter(item => item.ustatus == 1);
+                setdata(filteredData);
+            }
+            // const filteredData = res.data.result.filter(item => item.ustatus == 1);
+            // setdata(filteredData);
         })
         .catch(err => console.log(err));
       }, []);

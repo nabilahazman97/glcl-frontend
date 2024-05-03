@@ -11,6 +11,7 @@ import axios, { Axios } from "axios";
 import logodark from "../../assets/images/logo-dark.png";
 import logolight from "../../assets/images/logo-light.png";
 import CarouselPage from "../AuthenticationInner/CarouselPage";
+import { del, get, post, put } from "../../helpers/api_helper";
 
 const ForgetPassword3 = () => {
 
@@ -46,30 +47,51 @@ const ForgetPassword3 = () => {
     const [modal_centerfailure, setmodal_centerfailure] = useState(false);
     
     function sendemail(values){
-        axios.post(apiname.base_url+apiname.forgotpassword,values,{
-            headers: {
-              'Authorization': 'Basic '+ apiname.encoded
-            }
-          })
-            .then(res => {
-                if(res['data']['status'] == '1'){
-                setmodal_center(!modal_center);
+        post(apiname.forgotpassword,values)
+        .then(res => {
+            if(res.status == '1'){
+            setmodal_center(!modal_center);
+        setTimeout(() => {
+            setmodal_center(modal_center);
+            window.location.reload();
+          }, 3000);
+          }else{
+            setmodal_centerfailure(!modal_centerfailure);
+            // alert("Failed to send Mail");
             setTimeout(() => {
-                setmodal_center(modal_center);
+                setmodal_centerfailure(modal_centerfailure);
                 window.location.reload();
-              }, 3000);
-              }else{
-                setmodal_centerfailure(!modal_centerfailure);
-                // alert("Failed to send Mail");
-                setTimeout(() => {
-                    setmodal_centerfailure(modal_centerfailure);
-                    window.location.reload();
-                  }, 8000);
-              }
-            })
-            .catch(err => {
-              console.error(err);
-            });
+              }, 8000);
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
+
+        // axios.post(apiname.base_url+apiname.forgotpassword,values,{
+        //     headers: {
+        //       'Authorization': 'Basic '+ apiname.encoded
+        //     }
+        //   })
+        //     .then(res => {
+        //         if(res['data']['status'] == '1'){
+        //         setmodal_center(!modal_center);
+        //     setTimeout(() => {
+        //         setmodal_center(modal_center);
+        //         window.location.reload();
+        //       }, 3000);
+        //       }else{
+        //         setmodal_centerfailure(!modal_centerfailure);
+        //         // alert("Failed to send Mail");
+        //         setTimeout(() => {
+        //             setmodal_centerfailure(modal_centerfailure);
+        //             window.location.reload();
+        //           }, 8000);
+        //       }
+        //     })
+        //     .catch(err => {
+        //       console.error(err);
+        //     });
 
     }
     function tog_center() {
@@ -79,7 +101,7 @@ const ForgetPassword3 = () => {
 
     return (
         <React.Fragment>
-            <div>
+            <div className="whiteBg">
                 <Container fluid className="p-0">
                     <Row className="g-0">
                         <CarouselPage />
