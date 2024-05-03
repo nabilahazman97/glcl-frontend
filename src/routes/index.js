@@ -5,9 +5,9 @@ import { Navigate } from "react-router-dom";
 import Logout from "../pages/Authentication/Logout";
 
 //Login & Register //Badrul
-import Login_1 from "../pages/Authentication/Login2";
-import Register_1 from "../pages/Authentication/Register2";
-import ForgetPwd3 from "../pages/Authentication/ForgetPassword2";
+import Login_1 from "../pages/Authentication/Login";
+import Register_1 from "../pages/Authentication/Register";
+import ForgetPwd3 from "../pages/Authentication/ForgetPassword";
 import UserProfile from "../pages/Authentication/user-profile";
 
 

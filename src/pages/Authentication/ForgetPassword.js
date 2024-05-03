@@ -13,7 +13,7 @@ import logolight from "../../assets/images/logo-light.png";
 import CarouselPage from "../AuthenticationInner/CarouselPage";
 import { del, get, post, put } from "../../helpers/api_helper";
 
-const ForgetPassword3 = () => {
+const ForgetPassword = () => {
 
     //meta title
     document.title = "GLCL";
@@ -255,4 +255,4 @@ const ForgetPassword3 = () => {
     );
 };
 
-export default ForgetPassword3;
+export default ForgetPassword;

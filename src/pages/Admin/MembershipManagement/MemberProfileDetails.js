@@ -31,7 +31,7 @@ import { del, get, post, put } from "../../../helpers/api_helper";
 import Breadcrumbs from "../../../components/Common/Breadcrumb";
 import pdfIcon from "../../../assets/images/PDF_file_icon.png";
 
-const FormValidations = () => {
+const MemberProfileDetails = () => {
 
     //meta title
     document.title = "GLCL";
@@ -628,4 +628,4 @@ const FormValidations = () => {
 
 };
 
-export default FormValidations;
+export default MemberProfileDetails;

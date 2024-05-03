@@ -36,7 +36,7 @@ import CarouselPage from "../AuthenticationInner/CarouselPage";
 import Dropzone from "react-dropzone";
 import classnames from "classnames"
 
-const Register2 = () => {
+const Register = () => {
 
   const [icNumber, setICNumber] = useState('');
   const [declareIcNumber, setDeclareIcNumber] = useState('');
@@ -1397,4 +1397,4 @@ const Register2 = () => {
   );
 };
 
-export default Register2;
+export default Register;

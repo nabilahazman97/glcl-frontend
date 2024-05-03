@@ -15,7 +15,7 @@ import { del, get, post, put } from "../../../helpers/api_helper";
 
 // import './datatables.scss';
 
-function MemberList() {
+function MemberProfileList() {
     const [data, setdata] = useState([]);
 
     useEffect(() => {
@@ -250,10 +250,10 @@ function MemberList() {
         </div>
     );
 }
-MemberList.propTypes = {
+MemberProfileList.propTypes = {
     preGlobalFilteredRows: PropTypes.any,
 
 };
 
 
-export default MemberList;
+export default MemberProfileList;

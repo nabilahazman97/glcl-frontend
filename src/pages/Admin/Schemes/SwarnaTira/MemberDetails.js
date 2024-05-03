@@ -38,7 +38,7 @@ import Breadcrumbs from "../../../../components/Common/Breadcrumb";
 // import '../../../style.scss';
 import { del, get, post, put } from "../../../../helpers/api_helper";
 
-const FormValidations = () => {
+const MemberDetails = () => {
 
     //meta title
     document.title = "GLCL";
@@ -471,4 +471,4 @@ const FormValidations = () => {
 
 };
 
-export default FormValidations;
+export default MemberDetails;
