@@ -117,8 +117,15 @@
   margin: 30px 0px 20px 0px;
 }
 
+.std_input_label{
+  font-weight: 400 !important;
+  font-size: 1em !important;
+  font-family: inter_regular!important;
+}
+
 .cardTitle{
   font-weight: 700 !important;
+  font-size: 1.2em !important;
 }
 
 .normal-input{
@@ -131,6 +138,14 @@
   height: 45px;
 }
 
+.normal-textarea{
+  border-radius: 15px!important;
+  border: 1px solid #dfdcdc!important;
+  box-shadow: inset 0 3px 0px #bfbfbf!important;
+  font-size: 1em!important;
+  font-family: inter_regular!important;
+}
+
 .pdfInput{
     border-radius: 15px !important;
     border: 1px solid #dfdcdc!important;
@@ -139,8 +154,8 @@
 }
 
 .pdfIcon{
-  height: 102px !important;
-  width: 85px !important;
+  height: 70px !important;
+  width: 60px !important;
 }
 
 .filterInput{
@@ -153,3 +168,168 @@
   background-color: #ffffff !important;
 }
 
+.statusApproved{
+  background-color: #4fb946 !important;
+}
+.statusRejected{
+  background-color: #e33232 !important;
+}
+.statusPending{
+  background-color: #ffc107 !important;
+}
+
+.viewBtn{
+  font-size: 10px !important;
+  width: 70px;
+  border-radius: 50px !important;
+  height: 28px;
+  border: none !important;
+}
+
+.statusBtn{
+  padding: 0 !important;
+  font-size: 10px !important;
+  width: 100px;
+  border-radius: 50px !important;
+  height: 32px;
+  border: none !important;
+}
+
+.statusBtn i{
+  font-size: 20px !important;
+  color: #000;
+}
+
+.approveBtn {
+  font-family: inter_regular !important;
+  border-radius: 80px !important;
+  width: 110px;
+  height: 40px;
+  padding: 0 !important;
+}
+.approveBtn i{
+  color: #000;
+  font-size: 20px !important;
+}
+
+.rejectBtn {
+  font-family: inter_regular !important;
+  border-radius: 80px !important;
+  width: 110px;
+  height: 40px;
+  padding: 0 !important;
+}
+.rejectBtn i{
+  color: #000;
+  font-size: 20px !important;
+}
+
+.buyBtn {
+  font-family: inter_regular !important;
+  border-radius: 80px !important;
+  width: 110px;
+  background-color: #d4af37 !important;
+  border-radius: none !important;
+  border: none !important;
+}
+
+
+.backBtn {
+  font-family: inter_regular !important;
+  border-radius: 80px !important;
+  width: 110px;
+  background-color: #797681 !important;
+  border-radius: none;
+  border: none !important;
+}
+
+.saveBtn {
+  font-family: inter_regular !important;
+  border-radius: 80px !important;
+  width: 110px;
+  background-color: #1a2b88 !important;
+  border-radius: none;
+  border: none;
+}
+
+.deleteBtn {
+  font-family: inter_regular !important;
+  border-radius: 80px !important;
+  width: 110px;
+  background-color: #d4af37 !important;
+  border-radius: none;
+  border: none;
+}
+
+.modalCancelBtn{
+  color: #D4AF37 !important;
+  border-radius: 25px !important;
+  width: 100px !important;
+}
+.modalCancelBtn:hover{
+  background-color: #D4AF37 !important;
+  color: #ffffff !important;
+  border-radius: 25px !important;
+  width: 100px !important;
+}
+.modalConfirmBtn{
+  background-color: #0E174D !important;
+  color: #fff;
+  border-radius: 25px !important;
+  width: 100px !important;
+}
+.modalConfirmBtn:hover{
+  background-color: #ffffff !important;
+  color: #0E174D !important;
+  border-radius: 25px !important;
+  width: 100px !important;
+}
+
+table thead {
+  background-color: #fff !important;
+  color: black;
+  border: 0px solid #fff !important;
+  border-bottom: 1px #000 !important;
+}
+
+table tbody{
+  border: 0px solid #fff !important;
+}
+
+
+table tbody tr.even {
+  background-color: #be3737 !important;
+  font-weight: 600;
+  font-family: inter_regular;
+  text-align: center;
+  /* Even rows */
+}
+
+table tbody tr.odd {
+  background-color: #fff !important;
+  font-weight: 600;
+  font-family: inter_regular;
+  text-align: center;
+  /* Odd rows */
+}
+
+table tbody tr.odd:hover {
+  background-color: #fff !important;
+}
+
+.modalLockedScheme{
+   background: linear-gradient(136.91deg, #FBE39A 0%, #CAAF63 100%);
+   font-family: inter_bold;
+   font-size: 1.5em;
+  
+}
+
+.btn-close{
+  font-size: 0.8em !important;
+}
+
+.addBtn{
+  background: linear-gradient(95.1deg, #DDBF6A 0%, #9B7700 49.76%, #DDBF6A 100%);
+  border: 2px solid #e5cd87 !important;
+
+}

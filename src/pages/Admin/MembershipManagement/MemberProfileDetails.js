@@ -212,7 +212,7 @@ const FormValidations = () => {
                                                         className="avatar-md rounded-circle img-thumbnail"
                                                     />
                                                     <div className="mt-2">
-                                                        <h3 className="text-white">{datas.Username}</h3>
+                                                        <h3 className="text-white">{datas.username}</h3>
                                                         <h3 className="text-dark">{datas.membership_id}</h3>
                                                     </div>
                                                     <div className="d-flex justify-content-center">
@@ -241,10 +241,10 @@ const FormValidations = () => {
 
                                 <Card className="defCard">
                                     <CardBody>
-                                        <CardTitle>KYC Documents</CardTitle>
+                                        <CardTitle className="cardTitle">KYC Documents</CardTitle>
                                         <div className="mt-4 mb-5 p-3 ">
                                             <div className="mb-3">
-                                                <CardSubtitle className="std_font mb-2">
+                                                <CardSubtitle className="std_input_label mb-2">
                                                     MyKad - Front
                                                 </CardSubtitle>
                                                 {datas.f_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
@@ -275,7 +275,7 @@ const FormValidations = () => {
                                                 )}
                                             </div>
                                             <div className="mb-3">
-                                                <CardSubtitle className="std_font mb-2">
+                                                <CardSubtitle className="std_input_label mb-2">
                                                     MyKad - Back
                                                 </CardSubtitle>
                                                 {datas.b_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
@@ -303,7 +303,7 @@ const FormValidations = () => {
                                             </div>
                                             <div className="mb-3">
 
-                                                <CardSubtitle className="std_font mb-2">
+                                                <CardSubtitle className="std_input_label mb-2">
                                                     Utility Bill
                                                 </CardSubtitle>
                                                 {datas.utilitybill.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
@@ -333,10 +333,10 @@ const FormValidations = () => {
                                 </Card>
                                 <Card className="defCard">
                                     <CardBody>
-                                        <CardTitle>Membership Infromation</CardTitle>
+                                        <CardTitle className="cardTitle">Membership Information</CardTitle>
                                         <div>
                                             <div className="mb-3 mt-3">
-                                                <label>Membership Status</label>
+                                                <label className="std_input_label">Membership Status</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -345,7 +345,7 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Membership Number</label>
+                                                <label className="std_input_label">Membership Number</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -354,7 +354,7 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Date of Joining</label>
+                                                <label className="std_input_label">Date of Joining</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -378,19 +378,19 @@ const FormValidations = () => {
                             <div className="col-lg-6 p-0">
                                 <Card className="defCard">
                                     <CardBody>
-                                        <CardTitle>Profile Information</CardTitle>
+                                        <CardTitle className="cardTitle">Profile Information</CardTitle>
                                         <div>
                                             <div className="mb-3 mt-3">
-                                                <label>Name</label>
+                                                <label className="std_input_label">Name</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
                                                     disabled
-                                                    defaultValue={datas.Username}
+                                                    defaultValue={datas.username}
                                                 />
                                             </div>
                                             <div className="mb-3">
-                                                <label>IC Number</label>
+                                                <label className="std_input_label">IC Number</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -399,12 +399,12 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Address</label>
+                                                <label className="std_input_label">Address</label>
                                                 <Input
                                                     type="textarea"
                                                     name="address"
                                                     id="textarea"
-                                                    className="login-textarea mt-3"
+                                                    className="normal-textarea mt-3"
                                                     maxLength="50"
                                                     rows="4"
                                                     placeholder="Home Address"
@@ -413,7 +413,7 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Mobile Phone 1</label>
+                                                <label className="std_input_label">Mobile Phone 1</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -422,7 +422,7 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Mobile Phone 2</label>
+                                                <label className="std_input_label">Mobile Phone 2</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -431,7 +431,7 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Email Address</label>
+                                                <label className="std_input_label">Email Address</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="email"
@@ -440,7 +440,7 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Ethnic</label>
+                                                <label className="std_input_label">Ethnic</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -449,7 +449,7 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Religion</label>
+                                                <label className="std_input_label">Religion</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -458,7 +458,7 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Gender</label>
+                                                <label className="std_input_label">Gender</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -467,7 +467,7 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Marital Status</label>
+                                                <label className="std_input_label">Marital Status</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -476,7 +476,7 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Occupation</label>
+                                                <label className="std_input_label">Occupation</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -485,7 +485,7 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Service</label>
+                                                <label className="">Service</label>
                                                 <Input
                                                     className="form-control normal-input"
                                                     type="text"
@@ -494,12 +494,12 @@ const FormValidations = () => {
                                                 />
                                             </div>
                                             <div className="mb-3 mt-3">
-                                                <label>Address</label>
+                                                <label className="std_input_label">Address</label>
                                                 <Input
                                                     type="textarea"
                                                     name="address"
                                                     id="textarea"
-                                                    className="login-textarea mt-3"
+                                                    className="normal-textarea mt-3"
                                                     maxLength="50"
                                                     rows="4"
                                                     placeholder="Home Address"

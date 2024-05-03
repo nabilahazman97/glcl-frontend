@@ -255,7 +255,7 @@ function MemberList() {
 
         <Card className="defCard" style={{ minHeight:'250px' }}>
           <CardBody>
-            <CardTitle>List of Members</CardTitle>
+            <CardTitle className="cardTitle">List of Members</CardTitle>
             {/* <div className="d-print-none mt-4">
               <div className="float-end ">
                 <button

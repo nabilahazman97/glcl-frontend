@@ -157,7 +157,7 @@ function MemberList() {
                 <Breadcrumbs title="Tables" breadcrumbItem="MEMBER PROFILE" />
                 <Card className="defCard">
                     <CardBody>
-                        <CardTitle className="mb-3">List of Members</CardTitle>
+                        <CardTitle className="mb-3 cardTitle">List of Members</CardTitle>
                         <div className="container-fluid">
 
                             <div className="d-print-none mt-4">

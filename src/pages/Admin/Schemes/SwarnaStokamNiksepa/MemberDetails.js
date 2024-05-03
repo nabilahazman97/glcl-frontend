@@ -81,7 +81,7 @@ const FormValidations = () => {
         console.log(apiname.base_url);
         console.log(apiname.userScheme);
         console.log(user);
-        post(apiname.userScheme, userSchemei)
+        post(apiname.userScheme, userSchemeid)
         .then(res => {
             // Filter out data where payment_id is not null
             if(res.result){
@@ -319,7 +319,7 @@ const FormValidations = () => {
                                 <Card className="defCard" style={{}}>
                                     <CardBody>
 
-                                        <CardTitle className="">Transaction History</CardTitle>
+                                        <CardTitle className="cardTitle">Transaction History</CardTitle>
                                         <div className="d-print-none mt-4">
                                             <div className="float-start ">
                                                 <div style={{ position: 'relative' }}>
