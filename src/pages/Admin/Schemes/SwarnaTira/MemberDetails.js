@@ -148,7 +148,7 @@ const FormValidations = () => {
             {
                 Header: 'Date',
                 accessor: 'createdAt',
-                Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
+                // Cell: ({ value }) => format(new Date(value), "dd/mm/yyyy")
             },
             {
                 Header: 'Purpose',

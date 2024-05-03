@@ -34,6 +34,9 @@ function MemberList() {
   const [data, setUserData] = useState([]);
 
   useEffect(() => {
+    const userScheme = {
+      'scheme_id': '1'
+    };
     // Fetch data from USER_LIST
     // axios.get(apiname.base_url + apiname.USER_LIST, {
     //   headers: {
@@ -65,9 +68,9 @@ function MemberList() {
     .catch(err => console.log(err));
   }, []);
 
-  const userScheme = {
-    'scheme_id': '1'
-  };
+  // const userScheme = {
+  //   'scheme_id': '1'
+  // };
 
   const Uid = 1;
   console.log("Uid:", Uid);

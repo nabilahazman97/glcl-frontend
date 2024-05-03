@@ -81,7 +81,7 @@ const FormValidations = () => {
         console.log(apiname.base_url);
         console.log(apiname.userScheme);
         console.log(user);
-        post(apiname.userScheme, userSchemei)
+        post(apiname.userScheme, userSchemeid)
         .then(res => {
             // Filter out data where payment_id is not null
             if(res.result){
@@ -112,7 +112,7 @@ const FormValidations = () => {
             {
                 Header: 'Date',
                 accessor: 'createdAt',
-                Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
+                // Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
             },
             {
                 Header: 'Purpose',
