@@ -187,7 +187,7 @@ function ModuleManagement() {
 
         <Card className="defCard">
           <CardBody>
-            <CardTitle>List of Module</CardTitle>
+            <CardTitle className="cardTitle">List of Module</CardTitle>
             <div className="d-print-none mt-4">
               <div className="float-end ">
                 <button

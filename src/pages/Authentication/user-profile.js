@@ -33,7 +33,6 @@ import axios from "axios";
 import * as apiname from "../../helpers/url_helper";
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
-import SetPassword from "./SetPassword";
 import { del, get, post, put } from "../../helpers/api_helper";
 
 const UserProfile = () => {

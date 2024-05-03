@@ -4,6 +4,7 @@ import * as url from "./url_helper";
 
 //pass new generated access token here
 const token = accessToken;
+console.log(token)
 
 //apply base url for axios
 const API_URL = url.base_url
