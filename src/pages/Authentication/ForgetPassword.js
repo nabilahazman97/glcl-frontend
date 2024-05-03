@@ -1,164 +1,258 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { Row, Col, Alert, Card, CardBody, Container, FormFeedback, Input, Label, Form } from "reactstrap";
-
-//redux
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import withRouter from "components/Common/withRouter";
-
+import { Col, Container, Row, Button, Form, Label, Input, FormFeedback, Modal, } from "reactstrap";
 // Formik Validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
-
-// action
-import { userForgetPassword } from "../../store/actions";
+import * as apiname from "../../helpers/url_helper";
+import axios, { Axios } from "axios";
 
 // import images
-import profile from "../../assets/images/profile-img.png";
-import logo from "../../assets/images/logo.svg";
+import logodark from "../../assets/images/logo-dark.png";
+import logolight from "../../assets/images/logo-light.png";
+import CarouselPage from "../AuthenticationInner/CarouselPage";
+import { del, get, post, put } from "../../helpers/api_helper";
 
-const ForgetPasswordPage = props => {
+const ForgetPassword = () => {
 
-  //meta title
-  document.title = "Forget Password | Skote - React Admin & Dashboard Template";
+    //meta title
+    document.title = "GLCL";
+   
+    // Form validation 
+    // let {email} = this.state;
+    const validationType = useFormik({
+        // enableReinitialize : use this flag when initial values needs to be changed
+        enableReinitialize: true,
 
-  const dispatch = useDispatch();
+        initialValues: {
+            email: '',
+        },
+        validationSchema: Yup.object().shape({
+            email: Yup.string().required(
+                "Email is required"
+            ),
 
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
 
-    initialValues: {
-      email: '',
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
-    }),
-    onSubmit: (values) => {
-      dispatch(userForgetPassword(values, props.history));
+        }),
+        onSubmit: (values) => {
+
+            var newobj={
+                emailid:values.email
+            };
+           sendemail(newobj);
+  
+        }
+    });
+    const [modal_center, setmodal_center] = useState(false);
+    const [modal_centerfailure, setmodal_centerfailure] = useState(false);
+    
+    function sendemail(values){
+        post(apiname.forgotpassword,values)
+        .then(res => {
+            if(res.status == '1'){
+            setmodal_center(!modal_center);
+        setTimeout(() => {
+            setmodal_center(modal_center);
+            window.location.reload();
+          }, 3000);
+          }else{
+            setmodal_centerfailure(!modal_centerfailure);
+            // alert("Failed to send Mail");
+            setTimeout(() => {
+                setmodal_centerfailure(modal_centerfailure);
+                window.location.reload();
+              }, 8000);
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
+
+        // axios.post(apiname.base_url+apiname.forgotpassword,values,{
+        //     headers: {
+        //       'Authorization': 'Basic '+ apiname.encoded
+        //     }
+        //   })
+        //     .then(res => {
+        //         if(res['data']['status'] == '1'){
+        //         setmodal_center(!modal_center);
+        //     setTimeout(() => {
+        //         setmodal_center(modal_center);
+        //         window.location.reload();
+        //       }, 3000);
+        //       }else{
+        //         setmodal_centerfailure(!modal_centerfailure);
+        //         // alert("Failed to send Mail");
+        //         setTimeout(() => {
+        //             setmodal_centerfailure(modal_centerfailure);
+        //             window.location.reload();
+        //           }, 8000);
+        //       }
+        //     })
+        //     .catch(err => {
+        //       console.error(err);
+        //     });
+
     }
-  });
+    function tog_center() {
+        setmodal_center(!modal_center);
+    }
 
-  const { forgetError, forgetSuccessMsg } = useSelector(state => ({
-    forgetError: state.ForgetPassword.forgetError,
-    forgetSuccessMsg: state.ForgetPassword.forgetSuccessMsg,
-  }));
 
-  return (
-    <React.Fragment>
-      <div className="home-btn d-none d-sm-block">
-        <Link to="/" className="text-dark">
-          <i className="bx bx-home h2" />
-        </Link>
-      </div>
-      <div className="account-pages my-5 pt-sm-5">
-        <Container>
-          <Row className="justify-content-center">
-            <Col md={8} lg={6} xl={5}>
-              <Card className="overflow-hidden">
-                <div className="bg-primary bg-softbg-soft-primary">
-                  <Row>
-                    <Col xs={7}>
-                      <div className="text-primary p-4">
-                        <h5 className="text-primary">Welcome Back !</h5>
-                        <p>Sign in to continue to Skote.</p>
-                      </div>
-                    </Col>
-                    <Col className="col-5 align-self-end">
-                      <img src={profile} alt="" className="img-fluid" />
-                    </Col>
-                  </Row>
-                </div>
-                <CardBody className="pt-0">
-                  <div>
-                    <Link to="/">
-                      <div className="avatar-md profile-user-wid mb-4">
-                        <span className="avatar-title rounded-circle bg-light">
-                          <img
-                            src={logo}
-                            alt=""
-                            className="rounded-circle"
-                            height="34"
-                          />
-                        </span>
-                      </div>
-                    </Link>
-                  </div>
-                  <div className="p-2">
-                    {forgetError && forgetError ? (
-                      <Alert color="danger" style={{ marginTop: "13px" }}>
-                        {forgetError}
-                      </Alert>
-                    ) : null}
-                    {forgetSuccessMsg ? (
-                      <Alert color="success" style={{ marginTop: "13px" }}>
-                        {forgetSuccessMsg}
-                      </Alert>
-                    ) : null}
+    return (
+        <React.Fragment>
+            <div className="whiteBg">
+                <Container fluid className="p-0">
+                    <Row className="g-0">
+                        <CarouselPage />
 
-                    <Form
-                      className="form-horizontal"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        validation.handleSubmit();
-                        return false;
-                      }}
-                    >
-                      <div className="mb-3">
-                        <Label className="form-label">Email</Label>
-                        <Input
-                          name="email"
-                          className="form-control"
-                          placeholder="Enter email"
-                          type="email"
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.email || ""}
-                          invalid={
-                            validation.touched.email && validation.errors.email ? true : false
-                          }
-                        />
-                        {validation.touched.email && validation.errors.email ? (
-                          <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
-                        ) : null}
-                      </div>
-                      <Row className="mb-3">
-                        <Col className="text-end">
-                          <button
-                            className="btn btn-primary w-md "
-                            type="submit"
-                          >
-                            Reset
-                          </button>
+                        <Col xl={6}>
+                            <div className="auth-full-page-content p-md-5 p-4">
+                                <div className="w-100">
+                                    <div className="d-flex flex-column h-100">
+                                        <div className="my-auto">
+                                            <div className="m-5">
+
+                                                <Form className="form-horizontal"
+                                                    onSubmit={(e) => {
+                                                        e.preventDefault();
+                                                        validationType.handleSubmit();
+                                                        return false;
+                                                    }}
+                                                >
+                                                    <div className="text-center">
+                                                        <p className="login_title mb-5">FORGOT PASSWORD</p>
+                                                    </div>
+                                                    <div className="text-center mb-4">
+                                                        <h6 className="card-title text_1">Enter your email to reset your password</h6>
+                                                    </div>
+
+                                                    <div className="mb-4">
+                                                        <Input
+                                                            className="login-input"
+                                                            name="email"
+                                                            placeholder="Email"
+                                                            type="email"
+                                                            onChange={validationType.handleChange}
+                                                            onBlur={validationType.handleBlur}
+                                                            value={validationType.values.email || ""}
+                                                            invalid={
+                                                                validationType.touched.email && validationType.errors.email ? true : false
+                                                            }
+                                                        />
+                                                        {validationType.touched.email && validationType.errors.email ? (
+                                                            <FormFeedback type="invalid">{validationType.errors.email}</FormFeedback>
+                                                        ) : null}
+
+                                                    </div>
+                                                    <div className="mt-4 d-grid">
+                                                        <button
+                                                            className="btn btn-primary btn-block signIn_btn text_1"
+                                                            type="submit"
+                                                            // onClick={() => {
+                                                            //     tog_center();
+                                                            // }}
+                                                        >
+                                                            Submit
+                                                        </button>
+                                                    </div>
+
+
+
+                                                </Form>
+
+                                                {/* Modal */}
+                                                <Col lg={6}>
+                                                    <div>
+                                                        <Modal
+                                                            isOpen={modal_center}
+                                                            toggle={() => {
+                                                                tog_center();
+                                                            }}
+                                                            centered
+                                                        >
+
+                                                            <div className="text-center m-3">
+                                                                <i className="bx bx-check-circle success-alert-sign" style={{ fontSize: "80px", marginLeft: "10px", color: "#34C38F" }}></i>
+                                                                <div className="d-flex justify-content-center">
+
+                                                                    <div className="d-flex align-items-center">
+                                                                        <h3 className="modal-title mt-0">Check email for reset link</h3>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        setmodal_center(false);
+                                                                    }}
+                                                                    className="close"
+                                                                    data-dismiss="modal"
+                                                                    aria-label="Close"
+                                                                >
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+
+                                                               
+                                                            </div>
+
+
+                                                        </Modal>
+                                                        <Modal
+                                                            isOpen={modal_centerfailure}
+                                                            toggle={() => {
+                                                                tog_center();
+                                                            }}
+                                                            centered
+                                                        >
+
+                                                            <div className="text-center m-3">
+                                                                <i className="mdi mdi-close-circle" style={{ fontSize: "80px", marginLeft: "10px", color: "#FF5733" }}></i>
+                                                                <div className="d-flex justify-content-center">
+
+                                                                    <div className="d-flex align-items-center">
+                                                                        <h3 className="modal-title mt-0">Failed to send reset link to your mailid</h3>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        setmodal_center(false);
+                                                                    }}
+                                                                    className="close"
+                                                                    data-dismiss="modal"
+                                                                    aria-label="Close"
+                                                                >
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+
+                                                               
+                                                            </div>
+
+
+                                                        </Modal>
+                                                    </div>
+                                                </Col>
+                                                {/* Modal */}
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
                         </Col>
-                      </Row>
-                    </Form>
-                  </div>
-                </CardBody>
-              </Card>
-              <div className="mt-5 text-center">
-                <p>
-                  Go back to{" "}
-                  <Link to="login" className="font-weight-medium text-primary">
-                    Login
-                  </Link>{" "}
-                </p>
-                <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
-                </p>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    </React.Fragment>
-  );
+                    </Row>
+                </Container>
+            </div>
+        </React.Fragment>
+    );
 };
 
-ForgetPasswordPage.propTypes = {
-  history: PropTypes.object,
-};
-
-export default withRouter(ForgetPasswordPage);
+export default ForgetPassword;

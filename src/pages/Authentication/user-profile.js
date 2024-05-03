@@ -33,7 +33,6 @@ import axios from "axios";
 import * as apiname from "../../helpers/url_helper";
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
-import SetPassword from "./SetPassword";
 import { del, get, post, put } from "../../helpers/api_helper";
 
 const UserProfile = () => {
@@ -199,7 +198,7 @@ function handleChangePwd() {
           <ToastContainer />
           <Container fluid>
             {/* Render Breadcrumb */}
-            <Breadcrumb title="Skote" breadcrumbItem="Profile" />
+            <Breadcrumb title="glcl" breadcrumbItem="Profile" />
 
             <div className="d-flex gap-3">
               <div className="col-lg-6 p-0">
@@ -248,7 +247,8 @@ function handleChangePwd() {
                           type="text"
                           onChange={textHandler}
                           defaultValue={fres.icnumber}
-                          required     
+                          required
+                          maxlength='12'    
                         />
                       </div>
 
@@ -327,7 +327,8 @@ function handleChangePwd() {
                           type="text"
                           onChange={textHandler}
                           defaultValue={fres.phonenum}
-                            required    
+                            required
+                            maxlength="10" 
                         />
                       </div>
                       <div className="mb-3 mt-3">

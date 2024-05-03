@@ -51,6 +51,7 @@ function MemberList() {
       post(apiname.userScheme, userScheme)
       .then(res => {
         const userSchemeData = res.result;
+        console.log(res)
         // Merge data based on matching id and user_id values
         const mergedData = mergeData(userListData, userSchemeData);
         setUserData(mergedData);
@@ -98,7 +99,7 @@ function MemberList() {
     () => [
       {
         Header: 'Name',
-        accessor: 'Username',
+        accessor: 'username',
       },
       {
         Header: 'NRIC No.',
@@ -106,12 +107,15 @@ function MemberList() {
       },
       {
         Header: 'Email Address',
-        accessor: 'emailid'
+        accessor: 'email_id'
       },
 
       {
         Header: 'Savings',
-        accessor: 'buyedgoldweight'
+        accessor: 'gweight',
+        Cell: ({ value }) => (
+          <span>{value} g</span>
+        )
       },
       {
         Header: 'Actions',
@@ -214,7 +218,7 @@ function MemberList() {
 
         <Card className="defCard">
           <CardBody>
-            <CardTitle>List of Members</CardTitle>
+            <CardTitle className="cardTitle">List of Members</CardTitle>
             {/* <div className="d-print-none mt-4">
               <div className="float-end ">
                 <button

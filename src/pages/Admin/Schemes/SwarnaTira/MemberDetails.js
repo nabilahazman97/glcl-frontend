@@ -31,18 +31,22 @@ import TableContainer from '../../../../components/Common/TableContainer';
 import coins from "../../../../assets/images/schemes/single-coin.png";
 import print from "../../../../assets/images/schemes/print-icon.png";
 import dload from "../../../../assets/images/schemes/download-icon.png";
+import goldBar from "../../../../assets/images/users/gold_bars.png";
 
 //Import Breadcrumb
 import Breadcrumbs from "../../../../components/Common/Breadcrumb";
 // import '../../../style.scss';
 import { del, get, post, put } from "../../../../helpers/api_helper";
 
-const FormValidations = () => {
+const MemberDetails = () => {
 
     //meta title
     document.title = "GLCL";
 
-    
+    const printInvoice = () => {
+        window.print();
+    };
+
 
     const { Uid } = useParams();
     console.log("Uid:", Uid);
@@ -55,8 +59,8 @@ const FormValidations = () => {
     const [data, setdata] = useState([]);
     useEffect(() => {
         post(apiname.p_userdetails, user)
-        .then(res => setdata(res.result))
-        .catch(err => console.log(err));
+            .then(res => setdata(res.result))
+            .catch(err => console.log(err));
         // axios.post(apiname.base_url + apiname.p_userdetails, user, {
         //     headers: {
         //         'Authorization': 'Basic ' + apiname.encoded
@@ -69,14 +73,14 @@ const FormValidations = () => {
 
     const userSchemeid = {
         'scheme_id': '1',
-        'user_id' : Uid
-      };
+        'user_id': Uid
+    };
 
     const [data2, setdata2] = useState([]);
     useEffect(() => {
         post(apiname.userScheme, userSchemeid)
-        .then(res => setdata2(res.result))
-        .catch(err => console.log(err));
+            .then(res => setdata2(res.result))
+            .catch(err => console.log(err));
         // axios.post(apiname.base_url + apiname.userScheme, userSchemeid, {
         //     headers: {
         //         'Authorization': 'Basic ' + apiname.encoded
@@ -95,44 +99,45 @@ const FormValidations = () => {
     console.log(schemedata)
     const userScheme = {
         'scheme_id': '1',
-      };
-  useEffect(() => {
-    // Fetch data from USER_LIST
-    // axios.get(apiname.base_url + apiname.USER_LIST, {
-    //   headers: {
-    //     'Authorization': 'Basic ' + apiname.encoded
-    //   }
-    // })
-    get(apiname.USER_LIST)
-    .then(res => {
-      const userListData = res.result;
-      // Fetch data from userScheme
-      post(apiname.userScheme, userScheme)
-      .then(res => setUserData3(res.result))
-      .catch(err => console.log(err));
-    //   axios.post(apiname.base_url + apiname.userScheme, userScheme, {
-    //     headers: {
-    //       'Authorization': 'Basic ' + apiname.encoded
-    //     }
-    //   })
-    //    .then(res => setUserData3(res['data']['result']))
-    //   .catch(err => console.log(err));
-    })
-    .catch(err => console.log(err));
-  }, []);
-  console.log("total gram: ");
-  console.log(data3);
-  
+    };
+    useEffect(() => {
+        // Fetch data from USER_LIST
+        // axios.get(apiname.base_url + apiname.USER_LIST, {
+        //   headers: {
+        //     'Authorization': 'Basic ' + apiname.encoded
+        //   }
+        // })
+        get(apiname.USER_LIST)
+            .then(res => {
+                const userListData = res.result;
+                // Fetch data from userScheme
+                post(apiname.userScheme, userScheme)
+                    .then(res => setUserData3(res.result))
+                    .catch(err => console.log(err));
+                //   axios.post(apiname.base_url + apiname.userScheme, userScheme, {
+                //     headers: {
+                //       'Authorization': 'Basic ' + apiname.encoded
+                //     }
+                //   })
+                //    .then(res => setUserData3(res['data']['result']))
+                //   .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
+    }, []);
+    console.log("total gram: ");
+    console.log(data3);
+    console.log(data3);
 
-  const userSchemeidzz = {
-    'scheme_id': '1',
-    'user_id' : Uid
-  };
+
+    const userSchemeidzz = {
+        'scheme_id': '1',
+        'user_id': Uid
+    };
     const [data4, setdata4] = useState([]);
     useEffect(() => {
         post(apiname.remainGold, userSchemeidzz)
-        .then(res => setdata4(res.remaininggold))
-        .catch(err => console.log(err));
+            .then(res => setdata4(res.remaininggold))
+            .catch(err => console.log(err));
         // axios.post(apiname.base_url + apiname.remainGold, userSchemeidzz, {
         //     headers: {
         //         'Authorization': 'Basic ' + apiname.encoded
@@ -148,20 +153,20 @@ const FormValidations = () => {
             {
                 Header: 'Date',
                 accessor: 'createdAt',
-                Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
+                // Cell: ({ value }) => format(new Date(value), "dd/mm/yyyy")
             },
             {
                 Header: 'Purpose',
                 accessor: 'gweight',
                 Cell: ({ row }) => (
-                  <span style={{ color: row.original.type === 1 ? '#4fb946' : 'red' }}>
-                    {row.original.type === 1 ? 'Buy - ' : 'Sell - '}
-                    {row.values.gweight}
-                    {row.original.type === 1 ? ' g' : ' g'}
-                  </span>
+                    <span style={{ color: row.original.type === 1 ? '#4fb946' : 'red' }}>
+                        {row.original.type === 1 ? 'Buy - ' : 'Sell - '}
+                        {row.values.gweight}
+                        {row.original.type === 1 ? ' g' : ' g'}
+                    </span>
                 )
-              },
-              
+            },
+
             {
                 Header: 'Amount (RM)',
                 accessor: 'total'
@@ -171,7 +176,7 @@ const FormValidations = () => {
                 Header: 'Status',
                 accessor: ''
             },
-            
+
             // {
             //     Header: 'Actions',
             //     accessor: 'actions',
@@ -193,9 +198,6 @@ const FormValidations = () => {
         []
     );
 
-    const printInvoice = () => {
-        window.print();
-    };
 
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -237,13 +239,13 @@ const FormValidations = () => {
 
 
     const filteredData = useMemo(() => {
-        if (!startDate || !endDate) return data2; // Return all data if start or end date is not selected
+        if (!startDate || !endDate) return data3; // Return all data if start or end date is not selected
 
-        return data2.filter(item => {
+        return data3.filter(item => {
             const createdAtDate = new Date(item.createdAt);
             return createdAtDate >= startDate && createdAtDate <= new Date(endDate.getTime() + 86400000); // Adding 1 day to the end date
         });
-    }, [data2, startDate, endDate]);
+    }, [data3, startDate, endDate]);
 
 
     return data.map((datas) => {
@@ -253,7 +255,7 @@ const FormValidations = () => {
                     <Container fluid={true}>
                         <Breadcrumbs title="Forms" breadcrumbItem="SVARNA TIRA SCHEME" />
                         <div className="d-flex gap-3">
-                            <div className="col-lg-12 p-0">
+                            <div className="col-12 p-0">
                                 <Card className="defCard" style={{ background: 'linear-gradient(to bottom, white 40%, #d1b66a 40%)' }}>
                                     <CardBody>
                                         <div>
@@ -300,13 +302,13 @@ const FormValidations = () => {
                                     <CardBody>
                                         <div>
                                             <div className="d-flex justify-content-center gap-3">
-                                            <div className="text-center align-content-center">
-                                                <img
-                                                    src={coins}
-                                                    alt=""
-                                                    className="avatar-md"
-                                                />
-                                            </div>
+                                                <div className="text-center align-content-center">
+                                                    <img
+                                                        src={coins}
+                                                        alt=""
+                                                        className="avatar-md"
+                                                    />
+                                                </div>
                                                 <div className="text-center">
                                                     <div className="mt-2">
                                                         <h4 className="text-white">Gold Coin</h4>
@@ -347,58 +349,59 @@ const FormValidations = () => {
                                         </div>
                                     </CardBody>
                                 </Card>
-                                <Card className="defCard">
-                                    <CardBody>
-                                        <CardTitle>Transaction History</CardTitle>
-                                        <div className="d-print-none mt-4">
-                                            <div className="float-start ">
-                                                <div style={{ position: 'relative' }}>
-                                                    <input
-                                                        className="form-control filterInput"
-                                                        type="text"
-                                                        placeholder="Filter by date range"
-                                                        value={
-                                                            (startDate && endDate) ?
-                                                                `${formatDate(startDate)} - ${formatDate(endDate)}` :
-                                                                ''
-                                                        }
-                                                        onClick={toggleDropdown}
-                                                        readOnly
-                                                        style={{ cursor: 'pointer' }}
-                                                    />
+                                <div className="d-flex gap-2">
+                                    <Card className="defCard col-7">
+                                        <CardBody>
+                                            <CardTitle className="cardTitle">Transaction History</CardTitle>
+                                            <div className="d-print-none mt-4">
+                                                <div className="float-start ">
+                                                    <div style={{ position: 'relative' }}>
+                                                        <input
+                                                            className="form-control filterInput"
+                                                            type="text"
+                                                            placeholder="Filter by date range"
+                                                            value={
+                                                                (startDate && endDate) ?
+                                                                    `${formatDate(startDate)} - ${formatDate(endDate)}` :
+                                                                    ''
+                                                            }
+                                                            onClick={toggleDropdown}
+                                                            readOnly
+                                                            style={{ cursor: 'pointer' }}
+                                                        />
 
-                                                    {isOpen && (
-                                                        <div
-                                                            ref={dropdownRef}
-                                                            style={{
-                                                                position: 'absolute',
-                                                                top: '100%',
-                                                                height:'100%',
-                                                                left: 0,
-                                                                zIndex: 999,
-                                                                backgroundColor: '#fff',
-                                                                border: '1px solid #ccc',
-                                                                borderRadius: '4px',
-                                                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                                            }}
-                                                        >
-                                                            <DatePicker
-                                                                selectsRange
-                                                                startDate={startDate}
-                                                                endDate={endDate}
-                                                                onChange={handleDateChange}
-                                                                inline
-                                                            />
-                                                            {/* <div className="text-center mb-2">
+                                                        {isOpen && (
+                                                            <div
+                                                                ref={dropdownRef}
+                                                                style={{
+                                                                    position: 'absolute',
+                                                                    top: '100%',
+                                                                    height: '100%',
+                                                                    left: 0,
+                                                                    zIndex: 999,
+                                                                    backgroundColor: '#fff',
+                                                                    border: '1px solid #ccc',
+                                                                    borderRadius: '4px',
+                                                                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                                                                }}
+                                                            >
+                                                                <DatePicker
+                                                                    selectsRange
+                                                                    startDate={startDate}
+                                                                    endDate={endDate}
+                                                                    onChange={handleDateChange}
+                                                                    inline
+                                                                />
+                                                                {/* <div className="text-center mb-2">
                                                                 <button className="btn btn-primary" onClick={handleSelect}>Select Date</button>
                                                             </div> */}
 
-                                                        </div>
-                                                    )}
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="float-end ">
-                                                {/* <button
+                                                <div className="float-end ">
+                                                    {/* <button
                                                     type="button"
                                                     className="btn btn-primary downloadBtn me-2"
                                                 >
@@ -409,30 +412,44 @@ const FormValidations = () => {
                                                 />
 
                                                 </button> */}
-                                                <Link
-                                                    to="#"
-                                                    onClick={printInvoice}
-                                                    className="btn btn-success downloadBtn"
-                                                >
-                                                    <img
-                                                    src={print}
-                                                    alt=""
-                                                    className="avatar-md print_icon"
-                                                />
-                                                </Link>
+                                                    <Link
+                                                        to="#"
+                                                        onClick={printInvoice}
+                                                        className="btn btn-success downloadBtn"
+                                                    >
+                                                        <img
+                                                            src={print}
+                                                            alt=""
+                                                            className="avatar-md print_icon"
+                                                        />
+                                                    </Link>
 
+                                                </div>
+                                            </div>
+                                            <TableContainer
+                                                columns={columns}
+                                                data={filteredData}
+                                                // isGlobalFilter={true}
+                                                isAddOptions={false}
+                                                customPageSize={10}
+                                                className="custom-header-css"
+                                            />
+                                        </CardBody>
+                                    </Card>
+
+                                    <Card className="defCard col-5 p-3 " style={{ background: '#090F2F' }}>
+                                        <div>
+                                            <div className="text-center mt-3">
+                                            <img
+                                                    src={goldBar}
+                                                    alt=""
+                                                    className="avatar-md"
+                                                />
                                             </div>
                                         </div>
-                                        <TableContainer
-                                            columns={columns}
-                                            data={filteredData}
-                                            // isGlobalFilter={true}
-                                            isAddOptions={false}
-                                            customPageSize={10}
-                                            className="custom-header-css"
-                                        />
-                                    </CardBody>
-                                </Card>
+                                    </Card>
+                                </div>
+
 
                             </div>
 
@@ -454,4 +471,4 @@ const FormValidations = () => {
 
 };
 
-export default FormValidations;
+export default MemberDetails;

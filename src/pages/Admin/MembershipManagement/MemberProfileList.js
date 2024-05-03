@@ -15,7 +15,7 @@ import { del, get, post, put } from "../../../helpers/api_helper";
 
 // import './datatables.scss';
 
-function MemberList() {
+function MemberProfileList() {
     const [data, setdata] = useState([]);
 
     useEffect(() => {
@@ -157,7 +157,7 @@ function MemberList() {
                 <Breadcrumbs title="Tables" breadcrumbItem="MEMBER PROFILE" />
                 <Card className="defCard">
                     <CardBody>
-                        <CardTitle className="mb-3">List of Members</CardTitle>
+                        <CardTitle className="mb-3 cardTitle">List of Members</CardTitle>
                         <div className="container-fluid">
 
                             <div className="d-print-none mt-4">
@@ -250,10 +250,10 @@ function MemberList() {
         </div>
     );
 }
-MemberList.propTypes = {
+MemberProfileList.propTypes = {
     preGlobalFilteredRows: PropTypes.any,
 
 };
 
 
-export default MemberList;
+export default MemberProfileList;

@@ -205,7 +205,7 @@ const TableContainer = ({
             {headerGroups.map(headerGroup => (
               <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
-                  <th key={column.id}>
+                  <th key={column.id}  style={{ backgroundColor:"#fff", color:'#000' }}>
                     <div className="" {...column.getSortByToggleProps()}>
                       {column.render("Header")}
                       {generateSortingIndicator(column)}

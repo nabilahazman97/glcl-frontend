@@ -16,7 +16,7 @@ import { del, get, post, put } from "../../../helpers/api_helper";
 // import './datatables.scss';
 import '../style.scss';
 
-function DatatableTables() {
+function NewMemberVerification() {
 
     const [data, setdata] = useState([]);
 
@@ -297,10 +297,10 @@ function DatatableTables() {
         </div>
     );
 }
-DatatableTables.propTypes = {
+NewMemberVerification.propTypes = {
     preGlobalFilteredRows: PropTypes.any,
 
 };
 
 
-export default DatatableTables;
+export default NewMemberVerification;

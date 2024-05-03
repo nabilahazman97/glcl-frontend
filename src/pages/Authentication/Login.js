@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState,useEffect } from "react";
 
 import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
 
@@ -10,126 +10,106 @@ import withRouter from "components/Common/withRouter";
 
 // Formik validation
 import * as Yup from "yup";
-import { useFormik } from "formik"; 
-
-//Social Media Imports
-// import { GoogleLogin } from "react-google-login";
-// import TwitterLogin from "react-twitter-auth"
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-
+import { useFormik } from "formik";
+import axios, { Axios } from "axios";
 // actions
 import { loginUser, socialLogin } from "../../store/actions";
 
 // import images
+import logodark from "../../assets/images/logo-dark.png";
+import logolight from "../../assets/images/logo-light.png";
+import CarouselPage from "../AuthenticationInner/CarouselPage";
 import profile from "assets/images/profile-img.png";
 import logo from "assets/images/logo.svg";
 
 //Import config
 import { facebook, google } from "../../config";
+import { Buffer } from 'buffer';
+import * as apiname from "../../helpers/url_helper";
+import { del, get, post, put } from "../../helpers/api_helper";
+
+import '../Authentication/AuthStyle.scss';
+
 
 const Login = props => {
- 
+useEffect(() => {
+  // axios.get(apiname.base_url+apiname.USER_LIST, {
+  //   headers: {
+  //     'Authorization': 'Basic '+ apiname.encoded
+  //   }
+  // })
+  get(apiname.USER_LIST)
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
+}, []);
+
+    document.title = "GLCL";
+
+    const dispatch = useDispatch();
+
+  const [passwordShow, setPasswordShow] = useState(false);
+
   //meta title
-  document.title = "Login | Skote - React Admin & Dashboard Template";
 
-  const dispatch = useDispatch();
 
-  const validation = useFormik({
+   // Form validation 
+   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      email: "admin@glcl.com" || '',
-      password: "123456" || '',
+    email: "" || '',
+      password: "" || '',
     },
-    validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
-      password: Yup.string().required("Please Enter Your Password"),
+    validationSchema: Yup.object().shape({
+      email: Yup.string().required(
+        "Email is required"
+      ),
+      password: Yup.string().required(
+        "Password is required"
+      ),
+      
+  
     }),
     onSubmit: (values) => {
-      dispatch(loginUser(values, props.router.navigate));
-    }
+      console.log(values);
+        dispatch(loginUser(values, props.router.navigate));
+      }
   });
 
   const { error } = useSelector(state => ({
     error: state.Login.error,
   }));
 
-  const signIn = (res, type) => {
-    if (type === "google" && res) {
-      const postData = {
-        name: res.profileObj.name,
-        email: res.profileObj.email,
-        token: res.tokenObj.access_token,
-        idToken: res.tokenId,
-      };
-      dispatch(socialLogin(postData, props.router.navigate, type));
-    } else if (type === "facebook" && res) {
-      const postData = {
-        name: res.name,
-        email: res.email,
-        token: res.accessToken,
-        idToken: res.tokenId,
-      };
-      dispatch(socialLogin(postData, props.router.navigate, type));
-    }
-  };
- 
-  //handleGoogleLoginResponse
-  const googleResponse = response => {
-    signIn(response, "google");
-  };
-
-  //handleTwitterLoginResponse
-  // const twitterResponse = e => {}
-
-  //handleFacebookLoginResponse
-  const facebookResponse = response => {
-    signIn(response, "facebook");
-  };
-
   return (
     <React.Fragment>
-      <div className="home-btn d-none d-sm-block">
-        <Link to="/" className="text-dark">
-          <i className="bx bx-home h2" />
-        </Link>
-      </div>
-      <div className="account-pages my-5 pt-sm-5">
-        <Container>
-          <Row className="justify-content-center">
-            <Col md={8} lg={6} xl={5}>
-              <Card className="overflow-hidden">
-                <div className="bg-primary bg-soft">
-                  <Row>
-                    <Col xs={7}>
-                      <div className="text-primary p-4">
-                        <h5 className="text-primary">Welcome Back !</h5>
-                        <p>Sign in to continue to Skote.</p>
+      <div className="whiteBg">
+        <Container fluid className="p-0">
+          <Row className="g-0">
+            <CarouselPage />
+
+            <Col xl={6}>
+              <div className="auth-full-page-content p-md-5 p-4">
+                <div className="w-100">
+                  <div className="d-flex flex-column h-100">
+
+                    <div className="my-auto">
+                      <div>
+
+                        <div className="d-flex text-center std_font">
+                          <p className="">New here? &nbsp; </p>
+                          <Link to="/register" style={{ textDecoration: 'none' }}>
+                            <p className='text-gold'>Register Now</p>
+                          </Link>
+
+                          {/* <Link to="/register" style={{ textDecoration: 'none' }}>
+                            <p className='text-gold'>Register Now</p>
+                          </Link> */}
+                        </div>
                       </div>
-                    </Col>
-                    <Col className="col-5 align-self-end">
-                      <img src={profile} alt="" className="img-fluid" />
-                    </Col>
-                  </Row>
-                </div>
-                <CardBody className="pt-0">
-                  <div>
-                    <Link to="/" className="logo-light-element">
-                      <div className="avatar-md profile-user-wid mb-4">
-                        <span className="avatar-title rounded-circle bg-light">
-                        <img
-                            src={logo}
-                            alt=""
-                            className="rounded-circle"
-                            height="34"
-                          />
-                        </span>
-                      </div>
-                    </Link>
-                  </div>
-                  <div className="p-2">
-                    <Form
+
+                      <div className="m-5">
+                      <Form
                       className="form-horizontal"
                       onSubmit={(e) => {
                         e.preventDefault();
@@ -139,12 +119,15 @@ const Login = props => {
                     >
                       {error ? <Alert color="danger">{error}</Alert> : null}
 
-                      <div className="mb-3">
-                        <Label className="form-label">Email</Label>
-                        <Input
+                          <div className="text-center mb-3">
+                            <p className="login_title mb-4">SIGN IN</p>
+                          </div>
+                          <div className="mb-3">
+
+                          <Input
+                           className="form-contro login-input"
                           name="email"
-                          className="form-control"
-                          placeholder="Enter email"
+                          placeholder="Email"
                           type="email"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
@@ -157,14 +140,17 @@ const Login = props => {
                           <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
                         ) : null}
                       </div>
+                            
+                           
 
-                      <div className="mb-3">
-                        <Label className="form-label">Password</Label>
-                        <Input
+                          <div className="mb-3">
+
+                          <Input
+                           className="login-input"
                           name="password"
                           value={validation.values.password || ""}
                           type="password"
-                          placeholder="Enter Password"
+                          placeholder="Password"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           invalid={
@@ -174,113 +160,102 @@ const Login = props => {
                         {validation.touched.password && validation.errors.password ? (
                           <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
                         ) : null}
-                      </div>
 
-                      <div className="form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="customControlInline"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="customControlInline"
-                        >
-                          Remember me
-                        </label>
-                      </div>
+                    
 
-                      <div className="mt-3 d-grid">
-                        <button
-                          className="btn btn-primary btn-block"
-                          type="submit"
-                        >
-                          Log In
-                        </button>
-                      </div>
+                          </div>
 
-                      <div className="mt-4 text-center">
-                        <h5 className="font-size-14 mb-3">Sign in with</h5>
+                          {/* <div className="form-check m-2">
+                            <Input
+                              type="checkbox"
+                              className="form-check-input text_1"
+                              id="auth-remember-check"
+                            />
+                            <label
+                              className="form-check-label std_font"
+                              htmlFor="auth-remember-check"
+                            >
+                              Remember me
+                            </label>
+                          </div> */}
 
-                        <ul className="list-inline">
-                          <li className="list-inline-item">
-                            {/* <FacebookLogin
-                              appId={facebook.APP_ID}
-                              autoLoad={false}
-                              callback={facebookResponse}
-                              render={renderProps => (
+                          <div className="mt-5 text-center">
+                            <button
+                              className="btn btn-primary btn-block signIn_btn"
+                              type="submit"
+                            >
+                              Sign In
+                            </button>
+
+                          </div>
+
+
+                        </Form>
+
+
+
+                        {/* <Form action="dashboard">
+                          <div className="mt-4 text-center">
+                            <h5 className="font-size-14 mb-3">
+                              Sign in with
+                            </h5>
+
+                            <ul className="list-inline">
+                              <li className="list-inline-item">
                                 <Link
                                   to="#"
-                                  className="social-list-item bg-primary text-white border-primary"
-                                  onClick={renderProps.onClick}
+                                  className="social-list-item bg-primary text-white border-primary me-1"
                                 >
-                                  <i className="mdi mdi-facebook" />
+                                  <i className="mdi mdi-facebook"></i>
                                 </Link>
-                              )}
-                            /> */}
-                          </li>
-                          {/*<li className="list-inline-item">*/}
-                          {/*  <TwitterLogin*/}
-                          {/*    loginUrl={*/}
-                          {/*      "http://localhost:4000/api/v1/auth/twitter"*/}
-                          {/*    }*/}
-                          {/*    onSuccess={this.twitterResponse}*/}
-                          {/*    onFailure={this.onFailure}*/}
-                          {/*    requestTokenUrl={*/}
-                          {/*      "http://localhost:4000/api/v1/auth/twitter/revers"*/}
-                          {/*    }*/}
-                          {/*    showIcon={false}*/}
-                          {/*    tag={"div"}*/}
-                          {/*  >*/}
-                          {/*    <a*/}
-                          {/*      href=""*/}
-                          {/*      className="social-list-item bg-info text-white border-info"*/}
-                          {/*    >*/}
-                          {/*      <i className="mdi mdi-twitter"/>*/}
-                          {/*    </a>*/}
-                          {/*  </TwitterLogin>*/}
-                          {/*</li>*/}
-                          <li className="list-inline-item">
-                            {/* <GoogleLogin
-                              clientId={google.CLIENT_ID}
-                              render={renderProps => (
+                              </li>
+                              <li className="list-inline-item">
+                                <Link
+                                  to="#"
+                                  className="social-list-item bg-info text-white border-info me-1"
+                                >
+                                  <i className="mdi mdi-twitter"></i>
+                                </Link>
+                              </li>
+                              <li className="list-inline-item">
                                 <Link
                                   to="#"
                                   className="social-list-item bg-danger text-white border-danger"
-                                  onClick={renderProps.onClick}
                                 >
-                                  <i className="mdi mdi-google" />
+                                  <i className="mdi mdi-google"></i>
                                 </Link>
-                              )}
-                              onSuccess={googleResponse}
-                              onFailure={() => { }}
-                            /> */}
-                          </li>
-                        </ul>
+                              </li>
+                            </ul>
+                          </div>
+                        </Form>
+                        <div className="mt-5 text-center">
+                          <p>
+                            Don&apos;t have an account ?
+                            <Link
+                              to="pages-register-2"
+                              className="fw-medium text-primary"
+                            >
+                              Signup now
+                            </Link>
+                          </p>
+                        </div> */}
                       </div>
-
-                      <div className="mt-4 text-center">
-                        <Link to="/forgot-password" className="text-muted">
-                          <i className="mdi mdi-lock me-1" />
-                          Forgot your password?
+                      <div className="float-start mt-4">
+                        <Link to="/auth-recoverpw-3" >
+                          <p className="std_font text-gold">Forgot password?</p>
                         </Link>
                       </div>
-                    </Form>
+                    </div>
+
+                    {/* <div className="mt-4 mt-md-5 text-center">
+                      <p className="mb-0">
+                        © {new Date().getFullYear()} Skote. Crafted with{" "}
+                        <i className="mdi mdi-heart text-danger"></i> by
+                        Themesbrand
+                      </p>
+                    </div> */}
                   </div>
-                </CardBody>
-              </Card>
-              <div className="mt-5 text-center">
-                <p>
-                  Don&#39;t have an account ?{" "}
-                  <Link to="/register" className="fw-medium text-primary">
-                    {" "}
-                    Signup now{" "}
-                  </Link>{" "}
-                </p>
-                <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
-                </p>
+                </div>
               </div>
             </Col>
           </Row>
@@ -293,5 +268,5 @@ const Login = props => {
 export default withRouter(Login);
 
 Login.propTypes = {
-  history: PropTypes.object,
-};
+    history: PropTypes.object,
+  };

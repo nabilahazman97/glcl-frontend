@@ -32,6 +32,8 @@ function ModuleManagement() {
   useEffect(() => {
       get(apiname.schemeList)
       .then(res => {
+
+        console.log(res);
         // Sort data in descending order based on 'id' column
         if(res.result) {
           const sortedData = res.result.sort((a, b) => b.id - a.id);
@@ -106,7 +108,7 @@ function ModuleManagement() {
       },
       {
         Header: 'Name',
-        accessor: 'Scheme_name',
+        accessor: 'scheme_name',
       },
       {
         Header: 'Required gold',
@@ -185,7 +187,7 @@ function ModuleManagement() {
 
         <Card className="defCard">
           <CardBody>
-            <CardTitle>List of Module</CardTitle>
+            <CardTitle className="cardTitle">List of Module</CardTitle>
             <div className="d-print-none mt-4">
               <div className="float-end ">
                 <button

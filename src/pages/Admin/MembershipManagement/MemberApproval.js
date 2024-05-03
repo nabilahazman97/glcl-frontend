@@ -38,9 +38,9 @@ const MemberApproval = () => {
 
   useEffect(() => {
     post(apiname.p_userdetails, { id: Uid })
-    .then(res => setdata(res.result))
-    .catch(err => console.log(err));
-}, []);
+      .then(res => setdata(res.result))
+      .catch(err => console.log(err));
+  }, []);
 
   // useEffect(() => {
   //   axios.post(apiname.base_url + apiname.p_userdetails, { id: Uid }, {
@@ -63,9 +63,7 @@ const MemberApproval = () => {
         setButtonsreadOnly(true); // Disable buttons for any other value
         console.log("disabled")
       }
-    } else {
-      console.log("Data is empty.");
-    }
+    } 
   }, [data]);
 
   const handleInput = (status) => {
@@ -74,19 +72,19 @@ const MemberApproval = () => {
       ustatus: status,
     };
 
-    post(apiname.userapproval,user)
-    .then(res => {
-      if (status === '1') {
-        toast.success('User accepted successfully!');
-      } else {
-        toast.error('User rejected successfully!');
-      }
-      setTimeout(() => {
-        // Redirect to the dashboard page
-        window.location.href = '/tables-datatable';
-      }, 500);
-    })
-    .catch(err => console.log(err));
+    post(apiname.userapproval, user)
+      .then(res => {
+        if (status === '1') {
+          toast.success('User accepted successfully!');
+        } else {
+          toast.error('User rejected successfully!');
+        }
+        setTimeout(() => {
+          // Redirect to the dashboard page
+          window.location.href = '/tables-datatable';
+        }, 500);
+      })
+      .catch(err => console.log(err));
 
     // axios.post(apiname.base_url + apiname.userapproval, user, {
     //   headers: {
@@ -128,7 +126,7 @@ const MemberApproval = () => {
             <Col>
               <Card className="defCard">
                 <CardBody className="m-3">
-                  <CardTitle className="h4 mb-4">Registration Details</CardTitle>
+                  <CardTitle className="cardTitle mb-4 ">Registration Details</CardTitle>
                   <Row className="mb-3">
                     {/* <label>Name</label> */}
                     <div className="col-md-12">
@@ -279,7 +277,7 @@ const MemberApproval = () => {
 
                   <div className=" mt-4 mb-5">
                     <div>
-                      <CardSubtitle className="std_font mb-3">
+                      <CardSubtitle className="std_input_label mb-3">
                         MyKad - Front
                       </CardSubtitle>
                       {datas.f_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
@@ -310,7 +308,7 @@ const MemberApproval = () => {
                       )}
                     </div>
                     <div>
-                      <CardSubtitle className="std_font mb-3">
+                      <CardSubtitle className="std_input_label mb-3">
                         MyKad - Back
                       </CardSubtitle>
                       {datas.b_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
@@ -338,7 +336,7 @@ const MemberApproval = () => {
                     </div>
                     <div>
 
-                      <CardSubtitle className="std_font mb-3">
+                      <CardSubtitle className="std_input_label mb-3">
                         Utility Bill
                       </CardSubtitle>
                       {datas.utilitybill.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'

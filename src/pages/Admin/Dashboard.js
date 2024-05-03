@@ -82,6 +82,35 @@ const Dashboard = props => {
     dispatch(onGetChartsData("yearly"));
   }, [dispatch]);
 
+  const [dataSchemes, setDataSchemes] = useState([]);
+  useEffect(() => {
+      get(apiname.schemeList)
+      .then(res => {
+
+        // Sort data in descending order based on 'id' column
+        if(res.result) {
+          const sortedData = res.result.sort((a, b) => b.id - a.id);
+          setDataSchemes(sortedData);
+        }
+        
+      })
+      .catch(err => console.log(err));
+      // axios.get(apiname.base_url + apiname.schemeList, {
+      //     headers: {
+      //         'Authorization': 'Basic ' + apiname.encoded
+      //     }
+      // })
+      //     // .then(res =>console.log(res))
+      //     .then(res => {
+      //       // Sort data in descending order based on 'id' column
+      //       const sortedData = res.data.result.sort((a, b) => b.id - a.id);
+      //       setdata(sortedData);
+      //     })
+      //     .catch(err => console.log(err));
+  }, []);
+  console.log("data schemes");
+  console.log(dataSchemes);
+
 
   const userSchemeIds = [
     { 'scheme_id': '1' },
@@ -110,17 +139,17 @@ useEffect(() => {
         // Update reports for each scheme ID
         const updatedReports = userSchemeIds.map((userSchemeid, index) => {
             let title = '';
-            if (index === 0) {
+            if (index == 0) {
                 title = 'SVARNA TIRA SCHEME';
-            } else if (index === 1) {
+            } else if (index == 1) {
                 title = 'SVARNA STOKAM NIKSEPA SCHEME';
-            } else if (index === 2) {
+            } else if (index == 2) {
                 title = 'SVARNA ROKA AGRIMA SCHEME';
             
-            } else if (index === 3) {
+            } else if (index == 3) {
                 title = 'SVARNA AHITA SCHEME';
             
-            } else if (index === 4) {
+            } else if (index == 4) {
                 title = 'SVARNA RUNA SCHEME';
             }
             const total = responses[index].result ? responses[index].result.length : 0;
