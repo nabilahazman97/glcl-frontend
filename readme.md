@@ -59,3 +59,22 @@ Start the development server:
 ## Accessing the Application
 
 Open your browser and navigate to http://localhost:3000 to view the application.
+
+
+## Debugger Setup for vscode
+1. Click on the debugger icon on the left side of the vs code and create a launch.json
+2. copy the below setup into the file
+    ```bash
+            {
+                "version": "0.2.0",
+                "configurations": [
+                    {
+                        "type": "chrome",
+                        "request": "launch",
+                        "name": "Launch Chrome against localhost",
+                        "url": "http://localhost:3000",
+                        "webRoot": "${workspaceFolder}"
+                    }
+                ]
+            }
+3. Run the debugger 
