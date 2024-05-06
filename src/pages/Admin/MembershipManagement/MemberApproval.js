@@ -15,10 +15,11 @@ import {
   Button
 } from "reactstrap";
 import * as apiname from "../../../helpers/url_helper";
-import axios from "axios";
+
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 import { createBrowserHistory } from 'history';
 //Import Breadcrumb
@@ -37,23 +38,26 @@ const MemberApproval = () => {
 
 
   useEffect(() => {
+    const userScheme = {
+      scheme_id: "1",
+    };
+
     post(apiname.p_userdetails, { id: Uid })
-      .then(res => setdata(res.result))
-      .catch(err => console.log(err));
-  }, []);
+      .then((res) => {
+        console.log("res");
+        console.log(res);
+        if(res.status==='204'){
+          // setUserData(0);
+        }else{
+        let filteredData = res.data.result;
+       
+        setdata(filteredData);
+      }
 
-  // useEffect(() => {
-  //   axios.post(apiname.base_url + apiname.p_userdetails, { id: Uid }, {
-  //     headers: {
-  //       'Authorization': 'Basic ' + apiname.encoded
-  //     }
-  //   })
-  //     .then(res => setdata(res.data.result))
-  //     .catch(err => console.log(err));
-  // }, []);
+      })
+      .catch((err) => console.log(err));
 
-  useEffect(() => {
-    if (data.length > 0) {
+         if (data.length > 0) {
       console.log("Data:", data[0].ustatus);
       // Update button disablement based on ustatus value
       if (data[0].ustatus == 0 || data[0].ustatus == null) {
@@ -64,17 +68,19 @@ const MemberApproval = () => {
         console.log("disabled")
       }
     } 
+
   }, [data]);
 
   const handleInput = (status) => {
     const user = {
       'id': Uid,
-      ustatus: status,
+      ustatus: status,handleInput
     };
 
     post(apiname.userapproval, user)
       .then(res => {
-        if (status === '1') {
+        console.log(res.data.status);
+        if (res.data.status === '200') {
           toast.success('User accepted successfully!');
         } else {
           toast.error('User rejected successfully!');
@@ -86,23 +92,7 @@ const MemberApproval = () => {
       })
       .catch(err => console.log(err));
 
-    // axios.post(apiname.base_url + apiname.userapproval, user, {
-    //   headers: {
-    //     'Authorization': 'Basic ' + apiname.encoded
-    //   }
-    // })
-    //   .then(res => {
-    //     if (status === '1') {
-    //       toast.success('User accepted successfully!');
-    //     } else {
-    //       toast.error('User rejected successfully!');
-    //     }
-    //     setTimeout(() => {
-    //       // Redirect to the dashboard page
-    //       window.location.href = '/tables-datatable';
-    //     }, 500);
-    //   })
-    //   .catch(err => console.log(err));
+
   };
 
   const toggleModal = () => setModalOpen(!modalOpen);

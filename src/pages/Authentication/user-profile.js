@@ -43,8 +43,10 @@ const UserProfile = () => {
     var authUserData = localStorage.getItem("authUser");
     var authUserObject = JSON.parse(authUserData);
 
-    setdata(authUserObject.result)
-    var id=authUserObject.result.id;
+    setdata(authUserObject.data.result)
+    console.log(authUserObject.data.result.id);
+    var id=authUserObject.data.result.id;
+    
     const user = {
         'id': id
     };
@@ -73,19 +75,24 @@ const UserProfile = () => {
 
   function handleSubmit(e) { 
     e.preventDefault(); 
+    console.log("values1");
     console.log(values1);
+
         var authUserData = localStorage.getItem("authUser");
         var authUserObject = JSON.parse(authUserData);
-        var id=authUserObject.result.id;
+        console.log(authUserObject);
+        var id=authUserObject.data.result.id;
+
         const formData = new FormData();
+
         if(values1.username!=undefined){
-        formData.append('Username', values1.username);
+        formData.append('username', values1.username);
         }
         if(values1.icnumber!=undefined){
         formData.append('icnumber', values1.icnumber);
         }
         if(values1.emailid!=undefined){
-          formData.append('emailid', values1.email_id);
+          formData.append('email_id', values1.email_id);
           }
         if(values1.phonenum!=undefined){
             formData.append('phonenum', values1.phonenum);
@@ -94,11 +101,14 @@ const UserProfile = () => {
               formData.append('haddress', values1.haddress);
               }
         formData.append('id', id);
-        
 
+        console.log("formData");  
+        console.log(formData);
         post(apiname.editProfile, formData)
         .then(res => {
-          if (res.status == '1') {
+          console.log(res);
+          console.log(res.status);
+          if (res.status == '200') {
             toast.success('Updated!'); 
           } else {
             toast.danger('Failed to Update!'); 
@@ -126,7 +136,7 @@ function handleChangePwd() {
   const confirmPwdInput = document.getElementsByName('confirmPwd')[0];
   var authUserData = localStorage.getItem("authUser");
   var authUserObject = JSON.parse(authUserData);
-  var id=authUserObject.result.id;
+  var id=authUserObject.data.result.id;
   const userId = id;
 
   const oldPwd = oldPwdInput.value;
@@ -229,8 +239,8 @@ function handleChangePwd() {
                       <div className="mb-3 mt-3">
                         <label>Name</label>
                         <Input
-                        id="Username"
-                          name="Username"
+                        id="username"
+                          name="username"
                           className="form-control normal-input"
                           type="text"
                           onChange={textHandler}
@@ -262,7 +272,7 @@ function handleChangePwd() {
                 <Card className="defCard">
                   <CardBody>
                     <CardTitle>Change Password</CardTitle>
-                    <div className="mb-3">
+                    <div className="mb-3" style={{ display: 'none' }}>
                       <label>Old Password</label>
                       <Input
                         name="oldPwd"
@@ -278,7 +288,7 @@ function handleChangePwd() {
                         name="newPwd"
                         className="form-control normal-input"
                         type="password"
-                        value=''
+                       
                       />
                     </div>
                     <div className="mb-3 mt-3">
@@ -287,7 +297,7 @@ function handleChangePwd() {
                         name="confirmPwd"
                         className="form-control normal-input"
                         type="password"
-                        value=''
+                        
 
                       />
                     </div>
@@ -311,8 +321,8 @@ function handleChangePwd() {
                         <Input
                           className="form-control normal-input"
                           type="email"
-                          name="emailid"
-                          id="emailid"
+                          name="email_id"
+                          id="email_id"
                           onChange={textHandler}
                           defaultValue={fres.email_id}
                           required

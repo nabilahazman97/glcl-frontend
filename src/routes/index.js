@@ -17,8 +17,12 @@ import MemberProfileList from "../pages/Admin/MembershipManagement/MemberProfile
 import MemberProfile from "../pages/Admin/MembershipManagement/MemberProfileDetails";
 import DatatableTables from "../pages/Admin/MembershipManagement/NewMemberVerification";
 import MemberApproval from "../pages/Admin/MembershipManagement/MemberApproval";
+
 import AdminSwarnaTira from "../pages/Admin/Schemes/SwarnaTira/MemberList";
+
+
 import AdminSwarnaTiraMemberDetails from "../pages/Admin/Schemes/SwarnaTira/MemberDetails";
+
 import AdminSwarnaStokamNiksepa from "../pages/Admin/Schemes/SwarnaStokamNiksepa/MemberList";
 import AdminSwarnaStokamNiksepaMemberDetails from "../pages/Admin/Schemes/SwarnaStokamNiksepa/MemberDetails";
 import AnouncementUpdate from "../pages/Admin/MembershipManagement/AnnouncementUpdate";
@@ -28,9 +32,17 @@ import ModuleManagement from "../pages/Admin/MembershipManagement/ModuleManageme
 const authProtectedRoutes = [
   { path: "/dashboard", component: <DashboardAdmin /> },
   { path: "/member-approval/:Uid", component: <MemberApproval /> },
+
+
+
+
   { path: "/admin-swarna-tira/index", component: <AdminSwarnaTira /> },
-  { path: "/admin-swarna-stokam-niksepa/index", component: <AdminSwarnaStokamNiksepa /> },
   { path: "/admin-swarna-tira/member-details/:Uid", component: <AdminSwarnaTiraMemberDetails /> },
+
+
+
+
+  { path: "/admin-swarna-stokam-niksepa/index", component: <AdminSwarnaStokamNiksepa /> },
   { path: "/admin-swarna-stokam-niksepa/member-details/:Uid", component: <AdminSwarnaStokamNiksepaMemberDetails /> },
   { path: "/admin-announcement-update", component: <AnouncementUpdate /> },
   { path: "/module-management", component: <ModuleManagement /> },

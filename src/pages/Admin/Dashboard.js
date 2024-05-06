@@ -88,8 +88,8 @@ const Dashboard = props => {
       .then(res => {
 
         // Sort data in descending order based on 'id' column
-        if(res.result) {
-          const sortedData = res.result.sort((a, b) => b.id - a.id);
+        if(res.data.result) {
+          const sortedData = res.data.result.sort((a, b) => b.id - a.id);
           setDataSchemes(sortedData);
         }
         
@@ -136,6 +136,8 @@ useEffect(() => {
     Promise.all(
         userSchemeIds.map(userSchemeid => post(apiname.userScheme, userSchemeid))
     ).then(responses => {
+      console.log("responses");
+      console.log(responses);
         // Update reports for each scheme ID
         const updatedReports = userSchemeIds.map((userSchemeid, index) => {
             let title = '';
@@ -152,7 +154,7 @@ useEffect(() => {
             } else if (index == 4) {
                 title = 'SVARNA RUNA SCHEME';
             }
-            const total = responses[index].result ? responses[index].result.length : 0;
+            const total = responses[index].data.result ? responses[index].data.result.length : 0;
             return {
               title: title,
               iconClass: "bx-copy-alt",
@@ -162,7 +164,7 @@ useEffect(() => {
         });
         setReports(updatedReports);
         // Update data for the first scheme
-        setdata2(responses[0].result);
+        setdata2(responses[0].data.result);
     }).catch(err => console.log(err));
 }, []);
 
@@ -183,7 +185,7 @@ useEffect(() => {
   console.log(apiname.p_userdetails);
   console.log(user);
   post(apiname.p_userdetails, user)
-  .then(res => setdata(res.result))
+  .then(res => setdata(res.data.result))
   .catch(err => console.log(err));
   // axios.post(apiname.base_url + apiname.p_userdetails, user, {
   //     headers: {

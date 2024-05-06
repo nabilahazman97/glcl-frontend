@@ -142,12 +142,14 @@ export const changePwd="/api/user/changepassword"; //
 
 export const editProfile="/api/user/editprofile"; //
 
-export const emailCheck="/api/user/emailCheck"; //
+export const emailCheck="/api/auth/emailCheck"; //
 
-export const icnumberCheck="/api/user/icnumberCheck"; //
+export const icnumberCheck="/api/auth/icnumberCheck"; //
 
 export const schemeList="/api/scheme/list"; //
 
 export const userScheme ="/api/scheme/schemelist"; //
 
 export const remainGold ="/api/scheme/remaininggold"; //
+
+export const walletbal ="/api/scheme/getwalletbal"; //
