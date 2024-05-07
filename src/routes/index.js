@@ -19,6 +19,8 @@ import DatatableTables from "../pages/Admin/MembershipManagement/NewMemberVerifi
 import MemberApproval from "../pages/Admin/MembershipManagement/MemberApproval";
 import AdminSwarnaTira from "../pages/Admin/Schemes/SwarnaTira/MemberList";
 import AdminSwarnaTiraMemberDetails from "../pages/Admin/Schemes/SwarnaTira/MemberDetails";
+import AdminSwarnaTiraGoldPurchaseList from "../pages/Admin/Schemes/SwarnaTira/GoldPurchase";
+import AdminSwarnaTiraGoldSellingList from "../pages/Admin/Schemes/SwarnaTira/GoldSelling";
 import AdminSwarnaStokamNiksepa from "../pages/Admin/Schemes/SwarnaStokamNiksepa/MemberList";
 import AdminSwarnaStokamNiksepaMemberDetails from "../pages/Admin/Schemes/SwarnaStokamNiksepa/MemberDetails";
 import AnouncementUpdate from "../pages/Admin/MembershipManagement/AnnouncementUpdate";
@@ -29,8 +31,10 @@ const authProtectedRoutes = [
   { path: "/dashboard", component: <DashboardAdmin /> },
   { path: "/member-approval/:Uid", component: <MemberApproval /> },
   { path: "/admin-swarna-tira/index", component: <AdminSwarnaTira /> },
-  { path: "/admin-swarna-stokam-niksepa/index", component: <AdminSwarnaStokamNiksepa /> },
   { path: "/admin-swarna-tira/member-details/:Uid", component: <AdminSwarnaTiraMemberDetails /> },
+  { path: "/admin-swarna-tira/gold-purchase-list", component: <AdminSwarnaTiraGoldPurchaseList /> },
+  { path: "/admin-swarna-tira/gold-selling-list", component: <AdminSwarnaTiraGoldSellingList /> },
+  { path: "/admin-swarna-stokam-niksepa/index", component: <AdminSwarnaStokamNiksepa /> },
   { path: "/admin-swarna-stokam-niksepa/member-details/:Uid", component: <AdminSwarnaStokamNiksepaMemberDetails /> },
   { path: "/admin-announcement-update", component: <AnouncementUpdate /> },
   { path: "/module-management", component: <ModuleManagement /> },

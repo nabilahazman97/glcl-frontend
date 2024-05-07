@@ -132,8 +132,8 @@ const Register = () => {
       formData.append('b_mykad', selectedFiles2[0]);
       formData.append('utilitybill', selectedFiles3[0]);
       formData.append('nomnric', selectedFiles4[0]);
-      formData.append('emailid', values.email);
-      formData.append('Username', values.name);
+      formData.append('email_id', values.email);
+      formData.append('username', values.name);
       formData.append('icnumber', values.icNum);
       formData.append('age', age1);
       formData.append('haddress', values.homeAddress);
@@ -153,7 +153,9 @@ const Register = () => {
       formData.append('oethnic', values.otherEthnicity);
       formData.append('oreligion', values.otherReligion);
 
-
+      formDataObject.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+    });
       // formData.append('email', values.declareAgree);
 
 
