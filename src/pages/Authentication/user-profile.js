@@ -103,18 +103,21 @@ const UserProfile = () => {
         formData.append('id', id);
 
         console.log("formData");  
-        console.log(formData);
+        console.log(values1.length);
+       
         post(apiname.editProfile, formData)
         .then(res => {
+          console.log("resupdate");
           console.log(res);
           console.log(res.status);
-          if (res.status == '200') {
+          if (res.status == 200) {
             toast.success('Updated!'); 
           } else {
             toast.danger('Failed to Update!'); 
           }
         })
-        .catch(err => console.log(err));
+        .catch(err => toast.error('Nothing changed!'));
+      
         // axios.post(apiname.base_url + apiname.editProfile, formData, {
         //   headers: {
         //     'Authorization': 'Basic ' + apiname.encoded
