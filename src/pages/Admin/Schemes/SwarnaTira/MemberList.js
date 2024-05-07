@@ -49,7 +49,7 @@ function MemberList() {
         console.log("res");
         console.log(res);
         if(res.status==='204'){
-          // setUserData(0);
+          setUserData('');
         }else{
         let filteredData = res.data.result;
         if (startDate && endDate) {
@@ -62,9 +62,9 @@ function MemberList() {
         }
             setUserData(filteredData);
       }
-          console.log(filteredData);
+         
 
-        // setUserData(filteredData);
+       
       })
       .catch((err) => console.log(err));
   }, [startDate,endDate]);
@@ -131,14 +131,26 @@ function MemberList() {
                   placeholderText="Select Date Range"
                 />
                 </div></div></div>
-               
-            <TableContainer
-              columns={columns}
-              data={data}
-              isAddOptions={false}
-              customPageSize={10}
-              className="custom-header-css"
-            />
+                {data && data.length > 0 ? (
+    // Render table body if data exists and is not empty
+    <TableContainer
+        columns={columns}
+        data={data}
+        isAddOptions={false}
+        customPageSize={10}
+        className="custom-header-css"
+    />
+) : (
+    // Render only table headers if data is empty or undefined
+    <TableContainer
+        columns={columns}
+        data={[]}
+        isAddOptions={false}
+        customPageSize={10}
+        className="custom-header-css"
+    />
+)}
+           
           
           </CardBody>
         </Card>

@@ -46,6 +46,9 @@ const MemberDetails = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [remaininggold, setremainggold] = useState([]);
+  const [username, setusername] = useState([]);
+  const [membership_id, setmembership_id] = useState([]);
+  
 
   useEffect(() => {
     const userScheme = {
@@ -55,7 +58,6 @@ const MemberDetails = () => {
     post(apiname.userScheme, userScheme)
       .then((res) => {
         if(res.status=='204'){
-         
           }else{
         let filteredData = res.data.result;
         if (startDate && endDate) {
@@ -66,10 +68,12 @@ const MemberDetails = () => {
             return itemDate >= startTimestamp && itemDate <= endTimestamp;
           });
         }
+        setusername(filteredData[0].username)
+        setmembership_id(filteredData[0].membership_id)
         
           setUserData(filteredData);
       }
-        
+
       })
       .catch((err) => console.log(err));
 
@@ -134,7 +138,8 @@ const MemberDetails = () => {
     setStartDate(start);
     setEndDate(end);
   };
-
+  console.log("data");
+  console.log(data);
 
     return (
       <React.Fragment>
@@ -160,8 +165,8 @@ const MemberDetails = () => {
                             className="avatar-md rounded-circle img-thumbnail"
                           />
                           <div className="mt-2">
-                            <h3 className="text-white">username</h3>
-                            <h3 className="text-dark">membership id</h3>
+                            <h3 className="text-white">{username}</h3>
+                            <h3 className="text-dark">{membership_id}</h3>
                           </div>
                         </div>
                       </div>

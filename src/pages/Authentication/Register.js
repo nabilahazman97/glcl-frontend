@@ -1443,7 +1443,7 @@ const Register = () => {
 
 
 
-                                <li className={activeTab === 3 ? "next d-none" : "next"}>
+                                {/* <li className={activeTab === 3 ? "next d-none" : "next" }>
                                 <Button
                                     type="button"
                                     onClick={() => {
@@ -1453,16 +1453,19 @@ const Register = () => {
                                   >
                                     Next
                                   </Button>
-                                  {/* <Link
-                                    className={` ${activeTab === 4 || activeTab === 5 ? "d-none" : ""}`}
-                                    to="#"
+                                  
+                                </li> */}
+                                <li className={(activeTab === 3 || activeTab === 4 || activeTab === 5) ? "next d-none" : "next"}>
+                                <Button
+                                    type="button"
                                     onClick={() => {
-                                      toggleTab(activeTab + 1);
+                                        toggleTab(activeTab + 1);
                                     }}
-                                  >
+                                    disabled={icExists || emailExists}
+                                >
                                     Next
-                                  </Link> */}
-                                </li>
+                                </Button>
+                            </li>
 
                                 <div className="col-12">
                                   <div className="text-center">

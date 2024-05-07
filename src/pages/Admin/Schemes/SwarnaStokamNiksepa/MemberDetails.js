@@ -44,6 +44,8 @@ const MemberDetails = () => {
   const [endDate, setEndDate] = useState(null);
   const [walletbal, setwalletbal] = useState([]);
   const[overallbal,setoverallbal]=useState([]);
+  const [username, setusername] = useState([]);
+  const [membership_id, setmembership_id] = useState([]);
 
   useEffect(() => {
     const userScheme = {
@@ -61,6 +63,8 @@ const MemberDetails = () => {
             return itemDate >= startTimestamp && itemDate <= endTimestamp;
           });
         }
+        setusername(filteredData[0].username)
+        setmembership_id(filteredData[0].membership_id)
         setUserData(filteredData);
        
         //to get wallet bal
@@ -106,6 +110,8 @@ const MemberDetails = () => {
     setEndDate(end);
   };
 
+  
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -133,8 +139,8 @@ const MemberDetails = () => {
                           className="avatar-md rounded-circle img-thumbnail"
                         />
                         <div className="mt-2">
-                          <h3 className="text-white">username</h3>
-                          <h3 className="text-dark">membership_id</h3>
+                        <h3 className="text-white">{username}</h3>
+                            <h3 className="text-dark">{membership_id}</h3>
                         </div>
                       </div>
                     </div>
