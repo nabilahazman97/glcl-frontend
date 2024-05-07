@@ -249,14 +249,7 @@ const TableContainer = ({
             >
               {"<<"}
             </Button>
-            <Button
-              color="primary"
-              style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"41px" }}
-              onClick={previousPage}
-              // disabled={!canPreviousPage}
-            >
-              {"<"}
-            </Button>
+            
           </div>
         </Col>
         <Col className="col-md-auto d-none d-md-block">
@@ -278,10 +271,7 @@ const TableContainer = ({
 
         <Col className="col-md-auto">
           <div className="d-flex gap-1">
-            <Button color="primary" style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"41px" }}  >
-            {/* disabled={!canNextPage} */}
-              {">"}
-            </Button>
+            
             <Button
              style={{ backgroundColor:"#0e174d",borderRadius:"50%", width:"41px"  }}
               onClick={() => gotoPage(pageCount - 1)}

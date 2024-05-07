@@ -99,7 +99,8 @@ const MemberProfileDetails = () => {
         console.log(user);
 
         post(apiname.p_userdetails,user)
-        .then(res => setdata(res.result))
+        // .then(res => console.log(res.data.result))
+        .then(res => setdata(res.data.result))
         .catch(err => console.log(err));
         // axios.post(apiname.base_url + apiname.p_userdetails, user, {
         //     headers: {

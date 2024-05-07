@@ -17,6 +17,7 @@ import {
   TabContent,
   TabPane,
   FormFeedback,
+  Button
 } from "reactstrap";
 import Select from "react-select";
 import PropTypes from "prop-types";
@@ -56,6 +57,16 @@ const Register = () => {
   const [selectedFiles4, setSelectedFiles4] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [errorMessage3, setErrorMessage3] = useState('');
+  const [errorMessage4, setErrorMessage4] = useState('');
+  
+  const [icExists, setIcExists] = useState(false);
+
+  const [emailExists, setEmailExists] = useState(false);
+
+
+ 
+
+  
   const [validation2, setValidation] = useState({
     touched: {
       email: false
@@ -132,8 +143,8 @@ const Register = () => {
       formData.append('b_mykad', selectedFiles2[0]);
       formData.append('utilitybill', selectedFiles3[0]);
       formData.append('nomnric', selectedFiles4[0]);
-      formData.append('emailid', values.email);
-      formData.append('Username', values.name);
+      formData.append('email_id', values.email);
+      formData.append('username', values.name);
       formData.append('icnumber', values.icNum);
       formData.append('age', age1);
       formData.append('haddress', values.homeAddress);
@@ -175,19 +186,90 @@ const Register = () => {
       console.log(formData);
       values.declareAgree = document.getElementById("defaultCheck1").checked;
 
+
+      // const checkIcNumber = async (icNumber) => {
+      //   try {
+      //     const icnumber = {
+      //       icnumber: icNumber
+      //     };
+      //     const response = await post(apiname.icnumberCheck, icnumber);
+      //     if (response.status === 208) {
+      //       return true;
+      //     } else if (response.status === 200) {
+      //       return false;
+      //     } else {
+      //       console.error("Unexpected status code:", response.status);
+      //       return false;
+      //     }
+      //   } catch (error) {
+      //     console.error("Error checking IC number:", error);
+      //     return false;
+      //   }
+      // };
+    
+      // const checkEmail = async (email) => {
+      //   try {
+      //     const email_id = {
+      //       email_id: email
+      //     };
+      //     const response = await post(apiname.emailCheck, email_id);
+      //     if (response.status === 208) {
+      //       return true;
+      //     } else if (response.status === 200) {
+      //       return false;
+      //     } else {
+      //       console.error("Unexpected status code:", response.status);
+      //       return false;
+      //     }
+      //   } catch (error) {
+      //     console.error("Error checking email:", error);
+      //     return false;
+      //   }
+      // };
+    
+      // useEffect(() => {
+        // const handleIcNumberChange = async (icNumber) => {
+          
+        //   if (icNumber.trim() !== "") {
+        //     const exists = await checkIcNumber(icNumber);
+        //     setIcExists(exists);
+        //   } else {
+        //     setIcExists(false);
+        //   }
+        // };
+    
+        // const handleEmailChange = async (email) => {
+        //   if (email.trim() !== "") {
+        //     const exists = await checkEmail(email);
+        //     setEmailExists(exists);
+        //   } else {
+        //     setEmailExists(false);
+        //   }
+        // };
+    
+        // handleIcNumberChange(formData.icnumber);
+        // handleEmailChange(formData.email_id);
+      // }, [formData.icnumber, formData.email_id]); 
+
+
+
       // useEffect(() => {
       // console.log("hi");
       post(apiname.register, formData)
       .then(res => {
-        if (res.status == '1') {
+        console.log(res);
+        console.log(res.status);
+        if (res.status =='200') {
           toggleTab(activeTab + 2);
           console.log("success");
+          console.log(activeTab + 2);
           //redirect to success page
 
 
         } else {
           toggleTab(activeTab + 1);
           console.log("failure");
+          console.log(activeTab + 1);
           ///redirect to error page 
 
         }
@@ -440,30 +522,66 @@ const Register = () => {
       }
     });
 
-    const userScheme = {
-      emailid: email,
+    const emailid = {
+      email_id: email,
     };
-
+  
+    console.log(emailid);
+  
     try {
-      // const response = await axios.post(apiname.base_url + apiname.emailCheck, userScheme, {
-      //   headers: {
-      //     'Authorization': 'Basic ' + apiname.encoded
-      //   }
-      // });
-      const response = await post(apiname.emailCheck, userScheme);
-      if (response.status === "1") {
-        setErrorMessage("Email ID has taken");
-      } else if( response.status === "2"){
-        setErrorMessage('');
+      const response = await post(apiname.emailCheck, emailid, {
+        headers: {
+          'Content-Type': 'application/json',
+          // Include any other headers if needed
+        }
+      });
+  
+      console.log(response.status);
+      console.log(response.status);
+      if(response.status=='208'){
+        setEmailExists(true);
+        setErrorMessage3(response.data.message);
+      }else if(response.status=='200'){
+        setEmailExists(false);
+        setIcExists(false);
+        setErrorMessage3('');
+
       }
+      
+  
+      // Handle the response data here
     } catch (error) {
       console.error('Error:', error);
+      setErrorMessage3(error);
     }
+
+
+    // const userScheme = {
+    //   emailid: email,
+    // };
+
+    // try {
+    //   // const response = await axios.post(apiname.base_url + apiname.emailCheck, userScheme, {
+    //   //   headers: {
+    //   //     'Authorization': 'Basic ' + apiname.encoded
+    //   //   }
+    //   // });
+    //   const response = await post(apiname.emailCheck, userScheme);
+    //   if (response.status === "1") {
+    //     setErrorMessage("Email ID has taken");
+    //   } else if( response.status === "2"){
+    //     setErrorMessage('');
+    //   }
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // }
   }
 
   const handleIcNumberChange = async (e) => {
     const icNum = e.target.value;
-    
+  
+    console.log(icNum);
+  
     setValidation3({
       ...validation3,
       touched: {
@@ -471,27 +589,34 @@ const Register = () => {
         icNum: true
       }
     });
-
-    const userScheme = {
+  
+    const ic = {
       icnumber: icNum,
     };
-
+  
+    console.log(ic);
+  
     try {
-      // const response = await axios.post(apiname.base_url + apiname.icnumberCheck, userScheme, {
-      //   headers: {
-      //     'Authorization': 'Basic ' + apiname.encoded
-      //   }
-      // });
-
-      const response = await post(apiname.icnumberCheck, userScheme);
-
-      if (response.status === "1") {
-        setErrorMessage3("IC Number has taken");
-      } else if( response.status === "2"){
-        setErrorMessage3('');
+      const response = await post(apiname.icnumberCheck, ic, {
+        headers: {
+          'Content-Type': 'application/json',
+          // Include any other headers if needed
+        }
+      });
+  
+      console.log(response.status);
+      if(response.status=='208'){
+        setIcExists(true);
+        setErrorMessage4(response.data.message);
+      }else if(response.status=='200'){
+        // setIcExists(false);
+        setErrorMessage4('');
       }
+  
+      // Handle the response data here
     } catch (error) {
       console.error('Error:', error);
+      setErrorMessage4(error);
     }
   }
 
@@ -639,13 +764,9 @@ const Register = () => {
                                       {validation.touched.icNum && validation.errors.icNum ? (
                                         <FormFeedback type="invalid">{validation.errors.icNum}</FormFeedback>
                                       ) : null}
-                                       {errorMessage3 && (
-                                    
-                                    <div className="error-message required-indicator mt-1" >
-                                      {errorMessage3}
-                                     
-                                    </div>
-                                  )}
+                                      {errorMessage4 && (
+  <div className="error-message">{errorMessage4}</div>
+)}
                                     </Col>
                                     
                                     <Col lg="6">
@@ -735,6 +856,9 @@ const Register = () => {
                                       {validation.touched.email && validation.errors.email ? (
                                         <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
                                       ) : null}
+                                       {errorMessage3 && (
+  <div className="error-message">{errorMessage3}</div>
+)}
 
                                     </Col>
 
@@ -1320,7 +1444,16 @@ const Register = () => {
 
 
                                 <li className={activeTab === 3 ? "next d-none" : "next"}>
-                                  <Link
+                                <Button
+                                    type="button"
+                                    onClick={() => {
+                                      toggleTab(activeTab + 1);
+                                    }}
+                                    disabled={icExists || emailExists}
+                                  >
+                                    Next
+                                  </Button>
+                                  {/* <Link
                                     className={` ${activeTab === 4 || activeTab === 5 ? "d-none" : ""}`}
                                     to="#"
                                     onClick={() => {
@@ -1328,7 +1461,7 @@ const Register = () => {
                                     }}
                                   >
                                     Next
-                                  </Link>
+                                  </Link> */}
                                 </li>
 
                                 <div className="col-12">
