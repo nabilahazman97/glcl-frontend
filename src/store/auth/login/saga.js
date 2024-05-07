@@ -22,7 +22,9 @@ function* loginUser({ payload: { user, history } }) {
     });
     console.log(response)
     localStorage.setItem("authUser", JSON.stringify(response));
-    localStorage.setItem("accessToken", response.accessToken);
+    localStorage.setItem("accessToken", response.data.accessToken);
+
+    console.log(response.data.accessToken)
     yield put(loginSuccess(response));
 
     // if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {

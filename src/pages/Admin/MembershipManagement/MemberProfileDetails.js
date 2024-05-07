@@ -98,9 +98,10 @@ const MemberProfileDetails = () => {
         console.log(apiname.p_userdetails);
         console.log(user);
 
-        post(apiname.p_userdetails, user)
-            .then(res => setdata(res.result))
-            .catch(err => console.log(err));
+        post(apiname.p_userdetails,user)
+        // .then(res => console.log(res.data.result))
+        .then(res => setdata(res.data.result))
+        .catch(err => console.log(err));
         // axios.post(apiname.base_url + apiname.p_userdetails, user, {
         //     headers: {
         //         'Authorization': 'Basic ' + apiname.encoded
