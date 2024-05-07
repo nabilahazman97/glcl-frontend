@@ -212,6 +212,19 @@
   font-size: 20px !important;
 }
 
+.modal-approved-icon i{
+  color: #14ff00;
+  font-size: 50px !important;
+}
+.modal-reject-icon i{
+  color: #EFB201;
+  font-size: 50px !important;
+}
+.modal-rejected-icon i{
+  color: #ff0000;
+  font-size: 50px !important;
+}
+
 .rejectBtn {
   font-family: inter_regular !important;
   border-radius: 80px !important;
@@ -332,4 +345,24 @@ table tbody tr.odd:hover {
   background: linear-gradient(95.1deg, #DDBF6A 0%, #9B7700 49.76%, #DDBF6A 100%);
   border: 2px solid #e5cd87 !important;
 
+}
+
+.inactive {
+  background-color: #e0e0e0 !important; /* Change the background color for inactive tabs */
+  color: #8f8888 !important; /* Change the text color for inactive tabs */
+ 
+}
+
+.Nav-link{
+  cursor: pointer !important;
+  border-radius: 15px 15px 0px 0px !important;
+}
+
+.card-line{
+  border: 2px solid #D4AF37!important;
+  border-radius: 15px !important;
+}
+
+.filterDate{
+  width: 200px;
 }

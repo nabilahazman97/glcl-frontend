@@ -247,7 +247,7 @@ const AnnouncementUpdate = () => {
         <React.Fragment>
             <div className="page-content">
                 <Container fluid={true}>
-                    <Breadcrumbs title="Forms" breadcrumbItem="ADMIN ANNOUNCEMENTS" />
+                    <Breadcrumbs title="MEMBERSHIP MANAGEMENT" breadcrumbItem="ADMIN ANNOUNCEMENTS" />
                     <div className="d-flex gap-3">
                         <div className="col-lg-12 p-0">
                             <Card className="defCard" style={{ background: '#0E174D' }}>

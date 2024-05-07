@@ -154,14 +154,14 @@ function MemberProfileList() {
     return (
         <div className="page-content picBg">
             <div className="container-fluid">
-                <Breadcrumbs title="Tables" breadcrumbItem="MEMBER PROFILE" />
+                <Breadcrumbs title="MEMBERSHIP MANAGEMENT" breadcrumbItem="MEMBER PROFILE" />
                 <Card className="defCard">
                     <CardBody>
                         <CardTitle className="mb-3 cardTitle">List of Members</CardTitle>
                         <div className="container-fluid">
 
                             <div className="d-print-none mt-4">
-                                <div className="float-start ">
+                                <div className="filterDate">
                                     <div style={{ position: 'relative' }}>
                                         <input
                                             className="form-control filterInput"

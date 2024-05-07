@@ -353,8 +353,8 @@ const MemberDetails = () => {
                                     <Card className="defCard col-7">
                                         <CardBody>
                                             <CardTitle className="cardTitle">Transaction History</CardTitle>
-                                            <div className="d-print-none mt-4">
-                                                <div className="float-start ">
+                                            <div className="d-print-none mt-4 d-flex justify-content-between">
+                                                <div className="filterDate">
                                                     <div style={{ position: 'relative' }}>
                                                         <input
                                                             className="form-control filterInput"
@@ -400,7 +400,7 @@ const MemberDetails = () => {
                                                         )}
                                                     </div>
                                                 </div>
-                                                <div className="float-end ">
+                                                <div className="">
                                                     {/* <button
                                                     type="button"
                                                     className="btn btn-primary downloadBtn me-2"
@@ -440,11 +440,40 @@ const MemberDetails = () => {
                                     <Card className="defCard col-5 p-3 " style={{ background: '#090F2F' }}>
                                         <div>
                                             <div className="text-center mt-3">
-                                            <img
+                                                <img
                                                     src={goldBar}
                                                     alt=""
                                                     className="avatar-md"
                                                 />
+                                                <div className="text-white mt-3 mb-3 std_font">Gold Coin Owned</div>
+                                               
+                                                    <CardBody className="p-0 mb-2" style={{ background: '#494441', color: '#d4af37' }}>
+                                                        <div className="d-flex justify-content-between align-items-center p-2">
+                                                            <div>Date Bought</div>
+                                                            <div>Serial Number</div>
+                                                        </div>
+                                                    </CardBody>
+                                     
+                                     
+                                                    <CardBody className="p-0 mb-2" style={{ background: '#D4AF37', color: 'black', borderRadius:'10px' }}>
+                                                        <div className="d-flex justify-content-between align-items-center p-2">
+                                                            <div>12-04-2022</div>
+                                                            <div>V00001-V00002</div>
+                                                        </div>
+                                                    </CardBody>
+                                                    <CardBody className="p-0 mb-2" style={{ background: '#D4AF37', color: 'black', borderRadius:'10px' }}>
+                                                        <div className="d-flex justify-content-between align-items-center p-2">
+                                                            <div>12-04-2022</div>
+                                                            <div>V00001-V00002</div>
+                                                        </div>
+                                                    </CardBody>
+                                                    <CardBody className="p-0 mb-2" style={{ background: '#D4AF37', color: 'black', borderRadius:'10px' }}>
+                                                        <div className="d-flex justify-content-between align-items-center p-2">
+                                                            <div>12-04-2022</div>
+                                                            <div>V00001-V00002</div>
+                                                        </div>
+                                                    </CardBody>
+                                           
                                             </div>
                                         </div>
                                     </Card>

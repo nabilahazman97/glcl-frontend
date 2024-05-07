@@ -202,14 +202,14 @@ function NewMemberVerification() {
 
     return (
         <div className="page-content picBg">
-            <Breadcrumbs title="Tables" breadcrumbItem="NEW MEMBER VERIFICATION" />
+            <Breadcrumbs title="MEMBERSHIP MANAGEMENT" breadcrumbItem="NEW MEMBER VERIFICATION" />
             <Card className="defCard">
                 <CardBody>
                     <CardTitle className="mb-3 cardTitle">List of New Members</CardTitle>
                     <div className="container-fluid">
 
                     <div className="d-print-none mt-4">
-                                            <div className="float-start ">
+                                            <div className="filterDate">
                                                 <div style={{ position: 'relative' }}>
                                                     <input
                                                         className="form-control filterInput"

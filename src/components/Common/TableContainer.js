@@ -131,7 +131,7 @@ const TableContainer = ({
   return (
     <Fragment>
       <Row className="mb-2">
-        <Col md={customPageSizeOptions ? 2 : 2}>
+        {/* <Col md={customPageSizeOptions ? 2 : 2}>
           <select
             className="form-select filterInput"
             value={pageSize}
@@ -143,7 +143,7 @@ const TableContainer = ({
               </option>
             ))}
           </select>
-        </Col>
+        </Col> */}
         {isGlobalFilter && (
           <GlobalFilter
             preGlobalFilteredRows={preGlobalFilteredRows}

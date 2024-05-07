@@ -254,7 +254,7 @@ function MemberList() {
   return (
     <div className="page-content">
       <div className="container-fluid">
-        <Breadcrumbs title="Tables" breadcrumbItem="SVARNA TIRA SCHEME" />
+        <Breadcrumbs title="" breadcrumbItem="SVARNA TIRA SCHEME" />
 
         <Card className="defCard" style={{ minHeight:'250px' }}>
           <CardBody>
@@ -272,7 +272,7 @@ function MemberList() {
               </div>
             </div> */}
               <div className="d-print-none mt-4">
-                                            <div className="float-start ">
+                                            <div className="filterDate">
                                                 <div style={{ position: 'relative' }}>
                                                     <input
                                                         className="form-control filterInput"

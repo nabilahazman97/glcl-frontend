@@ -183,20 +183,20 @@ function ModuleManagement() {
   return (
     <div className="page-content">
       <div className="container-fluid">
-        <Breadcrumbs title="Tables" breadcrumbItem="MODULE MANAGEMENT" />
+        <Breadcrumbs title="MEMBERSHIP MANAGEMENT" breadcrumbItem="MODULE MANAGEMENT" />
 
         <Card className="defCard">
           <CardBody>
             <CardTitle className="cardTitle">List of Module</CardTitle>
             <div className="d-print-none mt-4">
               <div className="float-end ">
-                <button
+                {/* <button
                   type="button"
                   className="btn btn-primary exportBtn  me-2"
                 >
                   <i className="mdi mdi-upload  "></i>{" "}
                   EXPORT
-                </button>
+                </button> */}
                 {/* <Link
                           to="#"
                           onClick={printInvoice}

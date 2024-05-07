@@ -193,7 +193,7 @@ const MemberDetails = () => {
             <React.Fragment>
                 <div className="page-content">
                     <Container fluid={true}>
-                        <Breadcrumbs title="Forms" breadcrumbItem="SVARNA STOKAM NIKSEPA SCHEME" />
+                        <Breadcrumbs title="" breadcrumbItem="SVARNA STOKAM NIKSEPA SCHEME" />
                         <div className="d-flex gap-3">
                             <div className="col-lg-12 p-0">
                                 <Card className="defCard" style={{ background: 'linear-gradient(to bottom, white 40%, #d1b66a 40%)' }}>
@@ -320,8 +320,8 @@ const MemberDetails = () => {
                                     <CardBody>
 
                                         <CardTitle className="cardTitle">Transaction History</CardTitle>
-                                        <div className="d-print-none mt-4">
-                                            <div className="float-start ">
+                                        <div className="d-print-none mt-4 d-flex justify-content-between">
+                                            <div className="filterDate ">
                                                 <div style={{ position: 'relative' }}>
                                                     <input
                                                         className="form-control filterInput"
@@ -367,7 +367,7 @@ const MemberDetails = () => {
                                                     )}
                                                 </div>
                                             </div>
-                                            <div className="float-end ">
+                                            <div className="">
                                                 {/* <button
                                                     type="button"
                                                     className="btn btn-primary downloadBtn me-2"
