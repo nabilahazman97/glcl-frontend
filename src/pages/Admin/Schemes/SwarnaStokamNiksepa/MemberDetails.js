@@ -193,7 +193,7 @@ const MemberDetails = () => {
             <React.Fragment>
                 <div className="page-content">
                     <Container fluid={true}>
-                        <Breadcrumbs title="" breadcrumbItem="SVARNA STOKAM NIKSEPA SCHEME" />
+                        <Breadcrumbs title="Schemes" breadcrumbItem="SVARNA STOKAM NIKSEPA SCHEME" />
                         <div className="d-flex gap-3">
                             <div className="col-lg-12 p-0">
                                 <Card className="defCard" style={{ background: 'linear-gradient(to bottom, white 40%, #d1b66a 40%)' }}>

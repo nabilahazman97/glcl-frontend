@@ -154,7 +154,7 @@ function MemberProfileList() {
     return (
         <div className="page-content picBg">
             <div className="container-fluid">
-                <Breadcrumbs title="MEMBERSHIP MANAGEMENT" breadcrumbItem="MEMBER PROFILE" />
+                <Breadcrumbs title="MEMBERSHIP" breadcrumbItem="MEMBER PROFILE" />
                 <Card className="defCard">
                     <CardBody>
                         <CardTitle className="mb-3 cardTitle">List of Members</CardTitle>

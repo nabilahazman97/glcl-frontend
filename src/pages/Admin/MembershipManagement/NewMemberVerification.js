@@ -202,7 +202,7 @@ function NewMemberVerification() {
 
     return (
         <div className="page-content picBg">
-            <Breadcrumbs title="MEMBERSHIP MANAGEMENT" breadcrumbItem="NEW MEMBER VERIFICATION" />
+            <Breadcrumbs title="MEMBERSHIP" breadcrumbItem="NEW MEMBER VERIFICATION" />
             <Card className="defCard">
                 <CardBody>
                     <CardTitle className="mb-3 cardTitle">List of New Members</CardTitle>

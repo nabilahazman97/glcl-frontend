@@ -214,7 +214,7 @@ function MemberList() {
   return (
     <div className="page-content">
       <div className="container-fluid">
-        <Breadcrumbs title="" breadcrumbItem="SVARNA STOKAM NIKSEPA SCHEME" />
+        <Breadcrumbs title="Schemes" breadcrumbItem="SVARNA STOKAM NIKSEPA SCHEME" />
 
         <Card className="defCard">
           <CardBody>
