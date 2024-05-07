@@ -22,12 +22,8 @@ import AdminSwarnaTira from "../pages/Admin/Schemes/SwarnaTira/MemberList";
 
 
 import AdminSwarnaTiraMemberDetails from "../pages/Admin/Schemes/SwarnaTira/MemberDetails";
-<<<<<<< HEAD
 import AdminSwarnaTiraGoldPurchaseList from "../pages/Admin/Schemes/SwarnaTira/GoldPurchase";
 import AdminSwarnaTiraGoldSellingList from "../pages/Admin/Schemes/SwarnaTira/GoldSelling";
-=======
-
->>>>>>> cf1d0ee5de630d0fb09ea8abcdd91ad8563f9897
 import AdminSwarnaStokamNiksepa from "../pages/Admin/Schemes/SwarnaStokamNiksepa/MemberList";
 import AdminSwarnaStokamNiksepaMemberDetails from "../pages/Admin/Schemes/SwarnaStokamNiksepa/MemberDetails";
 import AnouncementUpdate from "../pages/Admin/MembershipManagement/AnnouncementUpdate";
