@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
 import {
   Row,
   Col,
@@ -83,12 +84,13 @@ const MemberDetails = () => {
       })
       .catch((err) => console.log(err));
   }, [startDate, endDate]);
-
+  const comp= "Completed"; 
   const columns = useMemo(
     () => [
       {
         Header: "Date",
         accessor: "createdAt",
+        Cell: ({ value }) => moment(value).format("DD/MM/YYYY")
         // Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
       },
       {
@@ -98,7 +100,8 @@ const MemberDetails = () => {
 
       {
         Header: "Status",
-        accessor: "",
+        accessor: "pay_status",
+        Cell: ({ value }) => comp
       },
     ],
     []

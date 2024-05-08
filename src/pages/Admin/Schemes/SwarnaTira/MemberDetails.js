@@ -3,6 +3,8 @@ import React, { useMemo, useState, useEffect, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import moment from 'moment';
+
 import {
   Row,
   Col,
@@ -95,12 +97,13 @@ const MemberDetails = () => {
 
   }, [startDate,endDate]);
  
-
+  const comp= "Completed"; 
   const columns = useMemo(
     () => [
       {
         Header: "Date",
         accessor: "createdAt",
+        Cell: ({ value }) => moment(value).format("DD/MM/YYYY")
         // Cell: ({ value }) => format(new Date(value), "dd/mm/yyyy")
       },
       {
@@ -122,7 +125,8 @@ const MemberDetails = () => {
 
       {
         Header: "Status",
-        accessor: "",
+        accessor: "pay_status",
+        Cell: ({ value }) => comp
       },
     ],
     []
@@ -193,7 +197,7 @@ const MemberDetails = () => {
                   </CardBody>
                 </Card>
                 <div className="d-flex gap-2">
-                  <Card className="defCard col-7">
+                  <Card className="defCard col-12">
                     <CardBody>
                       <CardTitle className="cardTitle">
                         Transaction History
@@ -234,7 +238,7 @@ const MemberDetails = () => {
                     </CardBody>
                   </Card>
 
-                  <Card
+                  {/* <Card
                     className="defCard col-5 p-3 "
                     style={{ background: "#090F2F" }}
                   >
@@ -243,7 +247,7 @@ const MemberDetails = () => {
                         <img src={goldBar} alt="" className="avatar-md" />
                       </div>
                     </div>
-                  </Card>
+                  </Card> */}
                 </div>
               </div>
             </div>
