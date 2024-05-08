@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
 import {
   Row,
   Col,
@@ -44,6 +45,8 @@ const MemberDetails = () => {
   const [endDate, setEndDate] = useState(null);
   const [walletbal, setwalletbal] = useState([]);
   const[overallbal,setoverallbal]=useState([]);
+  const [username, setusername] = useState([]);
+  const [membership_id, setmembership_id] = useState([]);
 
   useEffect(() => {
     const userScheme = {
@@ -61,6 +64,8 @@ const MemberDetails = () => {
             return itemDate >= startTimestamp && itemDate <= endTimestamp;
           });
         }
+        setusername(filteredData[0].username)
+        setmembership_id(filteredData[0].membership_id)
         setUserData(filteredData);
        
         //to get wallet bal
@@ -79,12 +84,13 @@ const MemberDetails = () => {
       })
       .catch((err) => console.log(err));
   }, [startDate, endDate]);
-
+  const comp= "Completed"; 
   const columns = useMemo(
     () => [
       {
         Header: "Date",
         accessor: "createdAt",
+        Cell: ({ value }) => moment(value).format("DD/MM/YYYY")
         // Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
       },
       {
@@ -94,7 +100,8 @@ const MemberDetails = () => {
 
       {
         Header: "Status",
-        accessor: "",
+        accessor: "pay_status",
+        Cell: ({ value }) => comp
       },
     ],
     []
@@ -105,6 +112,8 @@ const MemberDetails = () => {
     setStartDate(start);
     setEndDate(end);
   };
+
+  
 
   return (
     <React.Fragment>
@@ -133,8 +142,8 @@ const MemberDetails = () => {
                           className="avatar-md rounded-circle img-thumbnail"
                         />
                         <div className="mt-2">
-                          <h3 className="text-white">username</h3>
-                          <h3 className="text-dark">membership_id</h3>
+                        <h3 className="text-white">{username}</h3>
+                            <h3 className="text-dark">{membership_id}</h3>
                         </div>
                       </div>
                     </div>

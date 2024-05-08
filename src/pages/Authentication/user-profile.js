@@ -74,6 +74,9 @@ const UserProfile = () => {
   const [values1, setValues] = useState(initialValues);
 
   function handleSubmit(e) { 
+
+    
+  console.log("df");
     e.preventDefault(); 
     console.log("values1");
     console.log(values1);
@@ -103,18 +106,21 @@ const UserProfile = () => {
         formData.append('id', id);
 
         console.log("formData");  
-        console.log(formData);
+        console.log(values1.length);
+       
         post(apiname.editProfile, formData)
         .then(res => {
+          console.log("resupdate");
           console.log(res);
           console.log(res.status);
-          if (res.status == '200') {
+          if (res.status == 200) {
             toast.success('Updated!'); 
           } else {
             toast.danger('Failed to Update!'); 
           }
         })
-        .catch(err => console.log(err));
+        .catch(err =>console.log(err));
+      
         // axios.post(apiname.base_url + apiname.editProfile, formData, {
         //   headers: {
         //     'Authorization': 'Basic ' + apiname.encoded
@@ -131,6 +137,8 @@ const UserProfile = () => {
 } 
 
 function handleChangePwd() {
+
+  console.log("function");
   const oldPwdInput = document.getElementsByName('oldPwd')[0];
   const newPwdInput = document.getElementsByName('newPwd')[0];
   const confirmPwdInput = document.getElementsByName('confirmPwd')[0];
@@ -161,18 +169,24 @@ function handleChangePwd() {
   post(apiname.changePwd, formdata)
   .then(response => {
     // Handle success response
+  
     toast.success('Password changed!'); 
     newPwdInput.value = '';
     confirmPwdInput.value = '';
+   
+    
+  
     // window.location.reload();
    
 
   })
   .catch(error => {
+ 
     console.error('Error occurred:', error);
     toast.warning('Failed to change password');
     newPwdInput.value = '';
     confirmPwdInput.value = '';
+   
   });
   // axios.post(apiname.base_url + apiname.changePwd, formdata, {
 

@@ -79,11 +79,11 @@ const MemberApproval = () => {
 
     post(apiname.userapproval, user)
       .then(res => {
-        console.log(res.data.status);
-        if (res.data.status === '200') {
-          toast.success('User accepted successfully!');
-        } else {
-          toast.error('User rejected successfully!');
+        
+        if(user.ustatus=='1') {
+          toast.success('User accepted!');
+        }else if(user.ustatus=='2'){
+          toast.error('User rejected!');
         }
         setTimeout(() => {
           // Redirect to the dashboard page
