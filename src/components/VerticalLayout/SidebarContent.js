@@ -207,6 +207,9 @@ const SidebarContent = props => {
                 <li >
                   <Link to="/admin-swarna-stokam-niksepa/index">{props.t("SVARNA STOKAM NIKSEPA SCHEME")}</Link>
                 </li>
+                {/* <li >
+                  <Link to="/admin-svarna-roka-agrima/loan-application">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
+                </li> */}
               </ul>
 
               {/* <li >

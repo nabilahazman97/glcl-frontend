@@ -164,7 +164,7 @@ const Register = () => {
       formData.append('oethnic', values.otherEthnicity);
       formData.append('oreligion', values.otherReligion);
 
-      formDataObject.forEach((value, key) => {
+      formData.forEach((value, key) => {
         console.log(`${key}: ${value}`);
     });
       // formData.append('email', values.declareAgree);
