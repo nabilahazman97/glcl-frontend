@@ -187,7 +187,7 @@ const MemberProfileDetails = () => {
             <React.Fragment>
                 <div className="page-content">
                     <Container fluid={true}>
-                        <Breadcrumbs title="Forms" breadcrumbItem="MEMBER PROFILE" />
+                        <Breadcrumbs title="" breadcrumbItem="MEMBER PROFILE" />
                         <div className="d-flex gap-3">
                             <div className="col-lg-6 p-0">
                                 <Card className="defCard" style={{ background: 'linear-gradient(to bottom, white 40%, #d1b66a 40%)' }}>
@@ -239,6 +239,221 @@ const MemberProfileDetails = () => {
                                         </div>
                                     </CardBody>
                                 </Card>
+
+
+                                <Card className="defCard">
+                                    <CardBody>
+                                        <CardTitle className="cardTitle">Profile Information</CardTitle>
+                                        <div>
+                                            <div className="mb-3 mt-3">
+                                                <label className="std_input_label">Name (As per IC)</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.username}
+                                                />
+                                            </div>
+                                            <Row>
+                                                <Col lg="6">
+                                                    <div className="mb-3">
+                                                    <label className="std_input_label">IC Number</label>                                                        <Input
+                                                            className="form-control normal-input"
+                                                            type="text"
+                                                            disabled
+                                                            defaultValue={datas.icnumber}
+                                                        />
+                                                    </div>
+                                                  
+                                                </Col>
+
+                                                <Col lg="6">
+                                                    <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
+                                                    <label className="std_input_label">Age</label>
+                                                        <Input
+                                                            className="form-control normal-input"
+                                                            type="text"
+                                                            disabled
+                                                            defaultValue={datas.age}
+                                                        />
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                           
+                                            <Row>
+                                                <Col lg="6">
+                                                    <div className="mb-3">
+                                                    <label className="std_input_label">Mobile Phone 1</label>
+                                                    <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.phonenum}
+                                                />
+                                                    </div>
+                                                  
+                                                </Col>
+
+                                                <Col lg="6">
+                                                    <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
+                                                    <label className="std_input_label">Mobile Phone 2</label>
+                                                    <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.altnum}
+                                                />
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                           
+                                            <div className="mb-3">
+                                                <label className="std_input_label">Email Address</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="email"
+                                                    disabled
+                                                    defaultValue={datas.email_id}
+                                                />
+                                            </div>
+                                            <Row>
+                                                <Col lg="4">
+                                                    <div className="mb-3">
+                                                    <label className="std_input_label">Ethnic</label>
+                                                    <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.ethnic}
+                                                />
+                                                    </div>
+                                                  
+                                                </Col>
+
+                                                <Col lg="4">
+                                                    <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
+                                                    <label className="std_input_label">Religion</label>
+                                                    <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.religion}
+                                                />
+                                                    </div>
+                                                </Col>
+
+                                                <Col lg="4">
+                                                    <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
+                                                    <label className="std_input_label">Sex</label>
+                                                    <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.sex}
+                                                />
+                                                    </div>
+                                                </Col>
+                                            </Row>
+
+                                            <Row>
+                                                <Col lg="4">
+                                                    <div className="mb-3">
+                                                    <label className="std_input_label">Marital Status</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.mstatus}
+                                                />
+                                                    </div>
+                                                  
+                                                </Col>
+
+                                                <Col lg="4">
+                                                    <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
+                                                    <label className="std_input_label">Occupation</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.occupation}
+                                                />
+                                                    </div>
+                                                </Col>
+
+                                                <Col lg="4">
+                                                    <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
+                                                    <label className="">Service</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.service}
+                                                />
+                                                    </div>
+                                                </Col>
+                                            </Row>
+
+                                            {/* <div className="mb-3">
+                                                <label>Date of Birth</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={globalBirthDate}
+
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label>Gender</label>
+                                                <Input
+                                                    className="form-control normal-input"
+                                                    type="text"
+                                                    disabled
+                                                    defaultValue={datas.sex}
+                                                />
+                                            </div> */}
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                                <Card className="defCard">
+                                    <CardBody>
+                                        <CardTitle className="cardTitle">Address Information</CardTitle>
+                                         <div className="mb-3">
+                                                <label className="std_input_label">Address</label>
+                                                <Input
+                                                    type="textarea"
+                                                    name="address"
+                                                    id="textarea"
+                                                    className="normal-textarea"
+                                                    maxLength="50"
+                                                    rows="3"
+                                                    placeholder="Home Address"
+                                                    disabled
+                                                    defaultValue={datas.haddress}
+                                                />
+                                            </div>
+                                        <div className="mb-3">
+                                                <label className="std_input_label">Permanent Address</label>
+                                                <Input
+                                                    type="textarea"
+                                                    name="address"
+                                                    id="textarea"
+                                                    className="normal-textarea"
+                                                    maxLength="50"
+                                                    rows="3"
+                                                    placeholder="Home Address"
+                                                    disabled
+                                                    defaultValue={datas.paddress}
+                                                />
+                                            </div>
+                                            
+                                        </CardBody>
+                                </Card>
+
+
+                            </div>
+                            <div className="col-lg-6 p-0">
 
                                 <Card className="defCard">
                                     <CardBody>
@@ -332,6 +547,7 @@ const MemberProfileDetails = () => {
                                         </div>
                                     </CardBody>
                                 </Card>
+
                                 <Card className="defCard">
                                     <CardBody>
                                         <CardTitle className="cardTitle">Membership Information</CardTitle>
@@ -363,174 +579,9 @@ const MemberProfileDetails = () => {
                                                     defaultValue={datas.createdAt}
                                                 />
                                             </div>
-
-
-
-
-
-
-
-
                                         </div>
                                     </CardBody>
                                 </Card>
-
-                            </div>
-                            <div className="col-lg-6 p-0">
-                                <Card className="defCard">
-                                    <CardBody>
-                                        <CardTitle className="cardTitle">Profile Information</CardTitle>
-                                        <div>
-                                            <div className="mb-3 mt-3">
-                                                <label className="std_input_label">Name</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.username}
-                                                />
-                                            </div>
-                                            <div className="mb-3">
-                                                <label className="std_input_label">IC Number</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.icnumber}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label className="std_input_label">Address</label>
-                                                <Input
-                                                    type="textarea"
-                                                    name="address"
-                                                    id="textarea"
-                                                    className="normal-textarea mt-3"
-                                                    maxLength="50"
-                                                    rows="4"
-                                                    placeholder="Home Address"
-                                                    disabled
-                                                    defaultValue={datas.haddress}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label className="std_input_label">Mobile Phone 1</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.phonenum}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label className="std_input_label">Mobile Phone 2</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.altnum}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label className="std_input_label">Email Address</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="email"
-                                                    disabled
-                                                    defaultValue={datas.email_id}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label className="std_input_label">Ethnic</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.ethnic}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label className="std_input_label">Religion</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.religion}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label className="std_input_label">Gender</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.sex}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label className="std_input_label">Marital Status</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.mstatus}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label className="std_input_label">Occupation</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.occupation}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label className="">Service</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.service}
-                                                />
-                                            </div>
-                                            <div className="mb-3 mt-3">
-                                                <label className="std_input_label">Address</label>
-                                                <Input
-                                                    type="textarea"
-                                                    name="address"
-                                                    id="textarea"
-                                                    className="normal-textarea mt-3"
-                                                    maxLength="50"
-                                                    rows="4"
-                                                    placeholder="Home Address"
-                                                    disabled
-                                                    defaultValue={datas.paddress}
-                                                />
-                                            </div>
-                                            {/* <div className="mb-3">
-                                                <label>Date of Birth</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={globalBirthDate}
-
-                                                />
-                                            </div>
-                                            <div className="mb-3">
-                                                <label>Gender</label>
-                                                <Input
-                                                    className="form-control normal-input"
-                                                    type="text"
-                                                    disabled
-                                                    defaultValue={datas.sex}
-                                                />
-                                            </div> */}
-                                        </div>
-                                    </CardBody>
-                                </Card>
-
                                 {/* <Card>
                                     <CardBody>
                                         <CardTitle>Membership Information</CardTitle>

@@ -56,7 +56,7 @@ function MemberList() {
           const startTimestamp = startDate.getTime();
           const endTimestamp = endDate.getTime();
           filteredData = filteredData.filter(item => {
-            const itemDate = new Date(item.date).getTime();
+            const itemDate = new Date(item.createdAt).getTime();
             return itemDate >= startTimestamp && itemDate <= endTimestamp;
           });
         }
@@ -102,7 +102,7 @@ function MemberList() {
               style={{ textDecoration: "none" }}
             >
               <button type="button" className="btn btn-primary viewBtn">
-                View
+              <i className="mdi mdi-eye"></i>{" "}
               </button>
             </Link>
           </div>

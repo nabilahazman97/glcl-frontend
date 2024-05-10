@@ -138,7 +138,7 @@ function MemberList() {
               style={{ textDecoration: "none" }}
             >
               <button type="button" className="btn btn-primary viewBtn">
-                View
+              <i className="mdi mdi-eye"></i>{" "}
               </button>
             </Link>
           </div>

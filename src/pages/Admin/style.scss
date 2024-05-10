@@ -179,10 +179,11 @@
 }
 
 .viewBtn{
-  font-size: 10px !important;
-  width: 70px;
+  padding: 0 !important;
+  font-size: 15px !important;
+  width: 50px;
   border-radius: 50px !important;
-  height: 28px;
+  height: 30px;
   border: none !important;
 }
 
@@ -210,6 +211,19 @@
 .approveBtn i{
   color: #000;
   font-size: 20px !important;
+}
+
+.modal-approved-icon i{
+  color: #14ff00;
+  font-size: 50px !important;
+}
+.modal-reject-icon i{
+  color: #EFB201;
+  font-size: 50px !important;
+}
+.modal-rejected-icon i{
+  color: #ff0000;
+  font-size: 50px !important;
 }
 
 .rejectBtn {
@@ -334,6 +348,25 @@ table tbody tr.odd:hover {
 
 }
 
+.inactive {
+  background-color: #e0e0e0 !important; /* Change the background color for inactive tabs */
+  color: #8f8888 !important; /* Change the text color for inactive tabs */
+ 
+}
+
+.Nav-link{
+  cursor: pointer !important;
+  border-radius: 15px 15px 0px 0px !important;
+}
+
+.card-line{
+  border: 2px solid #D4AF37!important;
+  border-radius: 15px !important;
+}
+
+.filterDate{
+  width: 200px;
+}
 .div1{
   border: 3px solid #d4af37!important;
   border-radius: 25px!important; 

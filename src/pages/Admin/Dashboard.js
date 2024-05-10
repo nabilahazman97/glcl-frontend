@@ -291,7 +291,7 @@ const columns = useMemo(
         <Container fluid>
           {/* Render Breadcrumb */}
           <Breadcrumbs
-            title={props.t("Dashboards")}
+            title={props.t("")}
             breadcrumbItem={props.t("Dashboard")}
           />
 
