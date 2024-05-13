@@ -33,6 +33,9 @@ export * from "./tasks/actions";
 // contacts
 export * from "./contacts/actions";
 
+// membershiptier
+export * from "./membershiptier/actions";
+
 // contacts
 export * from "./mails/actions";
 
@@ -50,4 +53,6 @@ export * from "./dashboard-blog/actions";
 
 //dashboard-jobs
 export * from "./dashboard-jobs/actions";
+
+
 

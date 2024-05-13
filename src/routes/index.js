@@ -30,11 +30,22 @@ import AdminSwarnaStokamNiksepaMemberDetails from "../pages/Admin/Schemes/Swarna
 import AdminSvarnaRokaAgrima from "../pages/Admin/Schemes/SvarnaRokaAgrima/LoanApplication";
 import AnouncementUpdate from "../pages/Admin/MembershipManagement/AnnouncementUpdate";
 import ModuleManagement from "../pages/Admin/MembershipManagement/ModuleManagement";
+import Goldvault from "../pages/Admin/GoldManagement/Goldvault";
+
+import Membertier from  "../pages/Admin/MemberTier/Membertier";
+
 //ADMIN
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <DashboardAdmin /> },
   { path: "/member-approval/:Uid", component: <MemberApproval /> },
+
+  { path: "/Goldvault", component: <Goldvault /> },
+
+  { path: "/Membertier", component: <Membertier /> },
+
+  
+
 
 
 

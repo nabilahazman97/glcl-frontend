@@ -14,7 +14,59 @@ import {
   DELETE_USER,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAIL,
+  FETCH_GOLDVAULTLIST_SUCCESS,
+  FETCH_GOLDVAULTLIST_FAILURE,
+  // FETCH_GOLDVAULTLIST_REQUEST
+
 } from "./actionTypes"
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import * as apiname from "../../helpers/url_helper";
+
+import { del, get, post, put } from "../../helpers/api_helper";
+
+
+
+
+
+const fetchGoldvaultlistSuccess = (users) => ({
+  type: FETCH_GOLDVAULTLIST_SUCCESS,
+  payload: users
+});
+
+
+const fetchGoldvaultlistFailure = (error) => ({
+  type: FETCH_GOLDVAULTLIST_FAILURE,
+  payload: error
+});
+
+
+export const fetchGoldvaultlist = () => {
+
+  return async (dispatch) => {
+    try {
+      get(apiname.Goldvaultlist)
+        .then((reslist) => {
+          if (reslist.status == 200) {
+            dispatch(fetchGoldvaultlistSuccess(reslist.data.result));
+           
+
+          } else {
+            dispatch(fetchGoldvaultlistFailure('Failed to fetch data'));
+          
+          }
+          })
+    .catch((err) => console.log(err))
+      
+     
+    } catch (error) {
+      dispatch(fetchGoldvaultlistFailure(error.message));
+    
+    }
+  };
+};
 
 export const getUsers = () => ({
   type: GET_USERS,
@@ -25,10 +77,28 @@ export const getUsersSuccess = users => ({
   payload: users,
 })
 
-export const addNewUser = user => ({
-  type: ADD_NEW_USER,
-  payload: user,
-})
+
+  export const addNewUser = (additionalFieldsArray) => {
+    return async (dispatch) => {
+      try {
+        post(apiname.Goldvaultadd, additionalFieldsArray)
+          .then((reslist) => {
+            if (reslist.status == 201) {
+              dispatch(addUserSuccess(reslist.data.result[0]));
+              toast.success('Gold Gram Added Successfully!');
+            } else {
+              dispatch(addUserFail('Failed to fetch data'));
+              toast.error('Failed to add!');
+            }
+            })
+      .catch((err) => console.log(err))
+      } catch (error) {
+        dispatch(addUserFail(error.message));
+      }
+    };
+
+  
+};
 
 export const addUserSuccess = user => ({
   type: ADD_USER_SUCCESS,
@@ -59,10 +129,33 @@ export const getUserProfileFail = error => ({
   payload: error,
 })
 
-export const updateUser = user => ({
-  type: UPDATE_USER,
-  payload: user,
-})
+
+
+
+
+
+export const updateUser = (user) => {
+   return async (dispatch) => {
+    try {
+      put(`${apiname.Goldvaultedit}/${user.id}`,user)
+        .then((updatereslist) => {
+          if (updatereslist.status == 200) {
+            dispatch(updateUserSuccess(user));
+            toast.success('Updated Successfully!');
+          } else {
+            dispatch(updateUserFail('Failed to fetch data'));
+            toast.error('Failed to update!');
+          }
+          })
+    .catch((err) => console.log(err))
+    } catch (error) {
+      dispatch(updateUserFail(error.message));
+     
+    }
+  };
+  
+};
+
 
 export const updateUserSuccess = user => ({
   type: UPDATE_USER_SUCCESS,
@@ -74,10 +167,34 @@ export const updateUserFail = error => ({
   payload: error,
 })
 
-export const deleteUser = user => ({
-  type: DELETE_USER,
-  payload: user,
-})
+
+
+
+export const deleteUser = (user) => {
+ 
+  return async (dispatch) => {
+    try {
+      del(`${apiname.Goldvaultdelete}/${user}`)
+        .then((resdelete) => {
+          if (resdelete.status == 200) {
+            dispatch(deleteUserSuccess(user));
+            toast.success('Deleted Successfully!');
+
+          } else {
+            dispatch(deleteUserFail('Failed to Delete data'));
+            toast.error('Failed to delete data!');
+          }
+          })
+    .catch((err) => console.log(err))
+      
+     
+    } catch (error) {
+      dispatch(deleteUserFail(error.message));
+     
+    }
+  };
+};
+
 
 export const deleteUserSuccess = user => ({
   type: DELETE_USER_SUCCESS,

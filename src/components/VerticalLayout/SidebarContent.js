@@ -231,6 +231,54 @@ const SidebarContent = props => {
             </li>
 
 
+            <li>
+              <Link to="/#" className="has-arrow ">
+                <i className="bx bx-file"></i>
+                <span>{props.t("GOLDMANAGEMENT")}</span>
+              </Link>
+              <ul className="sub-menu">
+                <li  >
+                  <Link to="/Goldvault">{props.t("Gold Vault")}</Link>
+                </li>
+                
+               {/* <li >
+                  <Link to="/#">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
+                </li>
+                <li  >
+                  <Link to="/#">{props.t("SVARNA AHITA SCHEME")}</Link>
+                </li>
+                <li  >
+                  <Link to="/#">{props.t("SVARNA RUNA SCHEME")}</Link>
+                </li> */}
+              </ul>
+            </li>
+
+
+            <li>
+              <Link to="/#" className="has-arrow ">
+                <i className="bx bx-file"></i>
+                <span>{props.t("MEMBERSHIPTIER")}</span>
+              </Link>
+              <ul className="sub-menu">
+                <li  >
+                  <Link to="/Membertier">{props.t("Membership tier")}</Link>
+                </li>
+                
+               {/* <li >
+                  <Link to="/#">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
+                </li>
+                <li  >
+                  <Link to="/#">{props.t("SVARNA AHITA SCHEME")}</Link>
+                </li>
+                <li  >
+                  <Link to="/#">{props.t("SVARNA RUNA SCHEME")}</Link>
+                </li> */}
+              </ul>
+            </li>
+
+
+
+
           </ul>
         </div>
       </SimpleBar>
