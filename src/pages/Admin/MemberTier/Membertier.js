@@ -62,9 +62,9 @@ const Membertier = props => {
     
     },
     validationSchema: Yup.object({
-    //   name: Yup.string().required("Please Enter Your Name"),
-    //   designation: Yup.string().required("Please Enter Your Designation"),
-    //   tags: Yup.array().required("Please Enter Tag"),
+      tierName: Yup.string().required("Please Enter Your tiername"),
+      totalGold: Yup.string().required("Please Enter Your totalgold"),
+      discountPrice: Yup.string().required("Please Enter discountprice"),
     //   email: Yup.string().matches(
     //     /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
     //     "Please Enter Valid Email"
@@ -104,7 +104,9 @@ const Membertier = props => {
     users: state.membershiptier.users,
   }));
 
-
+  function closemodel(){
+    setModal(false);
+  }
 
 
   
@@ -250,6 +252,8 @@ const Membertier = props => {
     setModal(!modal);
   };
 
+
+
   const handleUserClick = arg => {
     const user = arg;
 
@@ -347,7 +351,7 @@ const Membertier = props => {
                               <Input
                                 name="tierName"
                                 type="tierName"
-                                placeholder="tierName"
+                                placeholder="TierName"
                                 onChange={validation.handleChange}
                                 onBlur={validation.handleBlur}
                                 value={validation.values.tierName || ""}
@@ -361,7 +365,7 @@ const Membertier = props => {
                               {validation.touched.tierName &&
                                 validation.errors.tierName ? (
                                 <FormFeedback type="invalid">
-                                  {validation.errors.name}
+                                  {validation.errors.tierName}
                                 </FormFeedback>
                               ) : null}
                             </div>
@@ -370,7 +374,7 @@ const Membertier = props => {
                               <Input
                                 name="totalGold"
                                 label="totgoldcoin"
-                                placeholder="totgoldcoin"
+                                placeholder="Totgoldcoin"
                                 type="text"
                                 onChange={validation.handleChange}
                                 onBlur={validation.handleBlur}
@@ -395,7 +399,7 @@ const Membertier = props => {
                                 name="discountPrice"
                                 label="discountPrice"
                                 type="text"
-                                placeholder="discountPrice"
+                                placeholder="DiscountPrice"
                                 onChange={validation.handleChange}
                                 onBlur={validation.handleBlur}
                                 value={validation.values.discountPrice || ""}
@@ -418,13 +422,15 @@ const Membertier = props => {
                         </Row>
                         <Row>
                           <Col>
-                            <div className="text-end">
+                            <div className="text-button">
                               <button
                                 type="submit"
-                                className="btn btn-success save-user"
+                                className="btn btn-success save-user savebustyle"
                               >
                                 Save
                               </button>
+                              &nbsp;&nbsp;
+                              <button type="button" class="btn btn-secondary bu_yle"  onClick={closemodel}>Cancel</button>
                             </div>
                           </Col>
                         </Row>

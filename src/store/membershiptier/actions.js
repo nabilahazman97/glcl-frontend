@@ -31,6 +31,7 @@ import { del, get, post, put } from "../../helpers/api_helper";
 
 
 
+
 const fetchGoldvaultlistSuccess1 = (users) => ({
   type: FETCH_GOLDVAULTLIST_SUCCESS1,
   payload: users
@@ -94,7 +95,9 @@ export const getUsersSuccess1 = users => ({
             
             if (reslist.status == 201) {
               dispatch(addUserSuccess1(reslist.data.result));
+             
               toast.success('Gold Gram Added Successfully!');
+
 
 
             } else {
