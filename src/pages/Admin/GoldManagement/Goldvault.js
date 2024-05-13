@@ -50,6 +50,10 @@ const Goldvault = (props) => {
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
 
+  function closemodel(){
+    setModal(false);
+  }
+
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -58,21 +62,25 @@ const Goldvault = (props) => {
       // tags: (contact && contact.tags) || "",
       // email: (contact && contact.email) || "",
       // projects: (contact && contact.projects) || "",
+      // additionalField_1:'',
       additionalFields:[],
       additionalField_0:additionalField0Value,
 
     },
     validationSchema: Yup.object({
       // name: Yup.string().required("Please Enter Your Name"),
-      // designation: Yup.string().required("Please Enter Your Designation"),
-      // tags: Yup.array().required("Please Enter Tag"),
+       additionalField_0: Yup.string().required("Please Enter Your Serial number"),
+      //  additionalField_1: Yup.string().required("Please Enter Your Serial number"),
+      //  additionalField_2: Yup.string().required("Please Enter Your Serial number"),
+      //  additionalField_1: Yup.array().required("Please Enter Your Serial number"),
+    
       // email: Yup.string()
       //   .matches(
       //     /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
       //     "Please Enter Valid Email"
       //   )
       //   .required("Please Enter Your Email"),
-      // projects: Yup.string().required("Please Enter Your Project"),
+      // additionalFields: Yup.string().required("Please Enter Your Project"),
     }),
     onSubmit: (values) => {
       var authUserData = localStorage.getItem("authUser");
@@ -395,7 +403,7 @@ const Goldvault = (props) => {
 
                   <Modal isOpen={modal} toggle={toggle}>
                     <ModalHeader toggle={toggle} tag="h4">
-                      {!!isEdit ? "Edit Gold Coin" : "Add Gold Coin"}
+                      {!!isEdit ? "Edit Gold Coin" : "Add New Gold Coin"}
                     </ModalHeader>
                     <ModalBody>
                       <Form
@@ -415,12 +423,12 @@ const Goldvault = (props) => {
                                           <div>
                                             <Label className="form-label">
                                            
-                                              Gold Coin{index + 1}
+                                              {/* Gold Coin{index + 1} */}
                                             </Label>
                                             <Input
                                               name={`additionalField_${index}`}
                                               type="text"
-                                              placeholder={`Insert Additional Field ${index + 1}`}
+                                              placeholder={`Enter Serial Number ${index + 1}`}
                                               onChange={validation.handleChange}
                                               onBlur={validation.handleBlur}
                                               value={validation.values[`additionalField_${index}`] || ""}
@@ -440,7 +448,7 @@ const Goldvault = (props) => {
                                         {index !== 0 && (
                                           <Col xs={3}>
                                             <button
-                                              className="btn btn-danger"
+                                              className="btn btn-danger goldbuttondesign"
                                               onClick={deleteRow}
                                             >
                                               <i className="fas fa-minus"></i>
@@ -456,7 +464,7 @@ const Goldvault = (props) => {
                             <div className="mt-3">
                               <button
                                 type="button"
-                                className="btn btn-primary"
+                                className="btn btn-primary goldbuttondesign btnmove"
                                 onClick={addRow}
                               >
                                 <i className="fas fa-plus"></i>
@@ -466,15 +474,19 @@ const Goldvault = (props) => {
                                   )}
 
                         </Row>
+                        <br></br>
                         <Row>
+                         
                           <Col>
-                            <div className="text-end">
+                            <div className="text-button">
                               <button
                                 type="submit"
-                                className="btn btn-success save-user"
+                                className="btn btn-success save-user savebustyle"
                               >
                                 Save
                               </button>
+                              &nbsp;&nbsp;
+                              <button type="button" class="btn btn-secondary bu_yle"  onClick={closemodel}>Cancel</button>
                               
                             </div>
                           </Col>
