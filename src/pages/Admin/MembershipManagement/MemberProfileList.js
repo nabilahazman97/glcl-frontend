@@ -12,6 +12,7 @@ import * as apiname from "../../../helpers/url_helper";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { del, get, post, put } from "../../../helpers/api_helper";
+import html2pdf from 'html2pdf.js';
 
 // import './datatables.scss';
 
@@ -31,6 +32,14 @@ function MemberProfileList() {
         setEndDate(end);
     };
 
+    const exportToPDF = () => {
+        const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+    
+        html2pdf()
+          .from(element)
+          .save('document.pdf');
+      };
+
     useEffect(() => {
         get(apiname.USER_LIST)
             .then((res) => {
@@ -43,15 +52,15 @@ function MemberProfileList() {
                         const startOfDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
                         const endOfDay = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), 23, 59, 59);
                         filteredData = filteredData.filter((item) => {
-                          const itemDate = new Date(item.createdAt);
-                          return itemDate >= startOfDay && itemDate <= endOfDay;
+                            const itemDate = new Date(item.createdAt);
+                            return itemDate >= startOfDay && itemDate <= endOfDay;
                         });
-                      }
-                      filteredData = filteredData.filter(
+                    }
+                    filteredData = filteredData.filter(
                         (item) => item.ustatus == 1
-                      );
-                      setUserData(filteredData);
-                    
+                    );
+                    setUserData(filteredData);
+
                 }
             })
             .catch((err) => console.log(err));
@@ -59,6 +68,13 @@ function MemberProfileList() {
 
     const columns = useMemo(
         () => [
+            {
+                Header: "No.",
+                accessor: "",
+                Cell: ({ row, rows }) => {
+                    return <span>{rows.findIndex(r => r.id === row.id) + 1}</span>;
+                },
+            },
             {
                 Header: 'Name',
                 accessor: 'username',
@@ -81,13 +97,16 @@ function MemberProfileList() {
                 Cell: ({ row }) => (
                     <div className="d-flex flex-wrap gap-2 justify-content-center">
                         <Link to={`/member-profile/${row.original.id}`} style={{ textDecoration: 'none' }}>
-                            <button
+
+                            <i className="mdi mdi-eye" style={{ fontSize: "20px", color: 'black' }}></i>{" "}
+
+                            {/* <button
                                 type="button"
                                 className="btn btn-primary viewBtn"
                             >
-                                <i className="mdi mdi-eye"></i>{" "}
+
                                 
-                            </button>
+                            </button> */}
                         </Link>
 
 
@@ -107,8 +126,8 @@ function MemberProfileList() {
         <div className="page-content picBg">
             <div className="container-fluid">
                 <Breadcrumbs title="MEMBERSHIP" breadcrumbItem="MEMBER PROFILE" />
-                <Card className="defCard">
-                    <CardBody>
+                <Card className="defCard" id="contentToExport">
+                    <CardBody >
                         <CardTitle className="mb-3 cardTitle">List of Members</CardTitle>
                         <div className="container-fluid">
 
@@ -125,8 +144,19 @@ function MemberProfileList() {
                                             placeholderText="Select Date Range"
                                         />
                                     </div>
-                                </div>
 
+                                </div>
+                                <div className="float-end">
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary exportBtn  me-2"
+                                    onClick={exportToPDF}
+                                    >
+                                        <i className="mdi mdi-upload  "></i>{" "}
+                                        EXPORT
+                                    </button>
+
+                                </div>
                             </div>
                             <TableContainer
                                 columns={columns}

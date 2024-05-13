@@ -19,7 +19,7 @@ import Breadcrumbs from "../../../../components/Common/Breadcrumb";
 import TableContainer from "../../../../components/Common/TableContainer";
 import * as apiname from "../../../../helpers/url_helper";
 import { del, get, post, put } from "../../../../helpers/api_helper";
-
+import html2pdf from 'html2pdf.js';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -37,7 +37,13 @@ function MemberList() {
     setEndDate(end);
   };
 
+  const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
 
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
+  };
   
   useEffect(() => {
     const userScheme = {
@@ -75,6 +81,13 @@ function MemberList() {
   const columns = useMemo(
     () => [
       {
+        Header: "No.",
+        accessor: "",
+        Cell: ({ row, rows }) => {
+          return <span>{rows.findIndex(r => r.id === row.id) + 1}</span>;
+        },
+      },
+      {
         Header: "Name",
         accessor: "username",
       },
@@ -101,9 +114,11 @@ function MemberList() {
               to={`/admin-swarna-tira/member-details/${row.original.id}`}
               style={{ textDecoration: "none" }}
             >
-              <button type="button" className="btn btn-primary viewBtn">
-              <i className="mdi mdi-eye"></i>{" "}
-              </button>
+                            <i className="mdi mdi-eye" style={{ fontSize: "20px", color: 'black' }}></i>{" "}
+
+              {/* <button type="button" className="btn btn-primary viewBtn">
+             
+              </button> */}
             </Link>
           </div>
         ),
@@ -116,7 +131,7 @@ function MemberList() {
     <div className="page-content">
       <div className="container-fluid">
         <Breadcrumbs title="Tables" breadcrumbItem="SVARNA TIRA SCHEME" />
-        <Card className="defCard" style={{ minHeight: "250px" }}>
+        <Card className="defCard" style={{ minHeight: "250px" }} id="contentToExport">
           <CardBody>
             <CardTitle className="cardTitle">List of Members</CardTitle>
             <div className="d-print-none mt-4">
@@ -130,7 +145,19 @@ function MemberList() {
                   selectsRange
                   placeholderText="Select Date Range"
                 />
-                </div></div></div>
+                </div></div>
+                <div className="float-end">
+              <button
+                type="button"
+                className="btn btn-primary exportBtn  me-2"
+                onClick={exportToPDF}
+              >
+                <i className="mdi mdi-upload  "></i>{" "}
+                EXPORT
+              </button>
+
+            </div>
+                </div>
                 {data && data.length > 0 ? (
     // Render table body if data exists and is not empty
     <TableContainer

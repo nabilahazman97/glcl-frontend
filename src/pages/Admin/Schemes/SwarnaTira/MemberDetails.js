@@ -36,8 +36,7 @@ import coins from "../../../../assets/images/schemes/single-coin.png";
 import print from "../../../../assets/images/schemes/print-icon.png";
 import dload from "../../../../assets/images/schemes/download-icon.png";
 import goldBar from "../../../../assets/images/users/gold_bars.png";
-
-
+import html2pdf from 'html2pdf.js';
 
 
 const MemberDetails = () => {
@@ -74,7 +73,7 @@ const MemberDetails = () => {
           setusername(filteredData[0].username)
           setmembership_id(filteredData[0].membership_id)
 
-          
+
         }
 
       })
@@ -134,9 +133,17 @@ const MemberDetails = () => {
   );
 
 
+  const printInvoice = () => {
+    window.print();
+  };
 
+  const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
 
-
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
+  };
 
   const handleDateChange = (dates) => {
     const [start, end] = dates;
@@ -151,9 +158,10 @@ const MemberDetails = () => {
       <div className="page-content">
         <Container fluid={true}>
           <Breadcrumbs title="Forms" breadcrumbItem="SVARNA TIRA SCHEME" />
-          <div className="d-flex gap-3">
+          <div className="d-flex gap-3"  id="contentToExport">
             <div className="col-12 p-0">
               <Card
+              
                 className="defCard"
                 style={{
                   background:
@@ -198,7 +206,7 @@ const MemberDetails = () => {
                 </CardBody>
               </Card>
               <div className="d-flex gap-2">
-                <Card className="defCard col-12">
+                <Card className="defCard col-7">
                   <CardBody>
                     <CardTitle className="cardTitle">
                       Transaction History
@@ -217,9 +225,18 @@ const MemberDetails = () => {
                         </div>
                       </div>
                       <div className="float-end">
+                        <button
+                          type="button"
+                          className="btn btn-primary exportBtn  me-2"
+                          onClick={exportToPDF}
+                        >
+                          <i className="mdi mdi-upload  "></i>{" "}
+                          EXPORT
+                        </button>
                         <Link
                           to="#"
                           className="btn btn-success downloadBtn"
+                          onClick={printInvoice}
                         >
                           <img
                             src={print}
@@ -227,6 +244,7 @@ const MemberDetails = () => {
                             className="avatar-md print_icon"
                           />
                         </Link>
+
                       </div>
                     </div>
                     <TableContainer
@@ -239,16 +257,16 @@ const MemberDetails = () => {
                   </CardBody>
                 </Card>
 
-                {/* <Card
-                    className="defCard col-5 p-3 "
-                    style={{ background: "#090F2F" }}
-                  >
-                    <div>
-                      <div className="text-center mt-3">
-                        <img src={goldBar} alt="" className="avatar-md" />
-                      </div>
+                <Card
+                  className="defCard col-5 p-3 "
+                  style={{ background: "#090F2F" }}
+                >
+                  <div>
+                    <div className="text-center mt-3">
+                      <img src={goldBar} alt="" className="avatar-md" />
                     </div>
-                  </Card> */}
+                  </div>
+                </Card>
               </div>
             </div>
           </div>

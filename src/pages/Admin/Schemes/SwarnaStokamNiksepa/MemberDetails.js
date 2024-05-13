@@ -31,7 +31,7 @@ import dload from "../../../../assets/images/schemes/download-icon.png";
 import print from "../../../../assets/images/schemes/print-icon.png";
 import walletDuoTone from "../../../../assets/images/schemes/Wallet_duotone.png";
 import { del, get, post, put } from "../../../../helpers/api_helper";
-
+import html2pdf from 'html2pdf.js';
 //Import Breadcrumb
 import Breadcrumbs from "../../../../components/Common/Breadcrumb";
 // import '../../style.scss';
@@ -39,12 +39,12 @@ import Breadcrumbs from "../../../../components/Common/Breadcrumb";
 const MemberDetails = () => {
   document.title = "GLCL";
   const { Uid } = useParams();
- 
+
   const [data, setUserData] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [walletbal, setwalletbal] = useState([]);
-  const[overallbal,setoverallbal]=useState([]);
+  const [overallbal, setoverallbal] = useState([]);
   const [username, setusername] = useState([]);
   const [membership_id, setmembership_id] = useState([]);
 
@@ -67,24 +67,24 @@ const MemberDetails = () => {
         setusername(filteredData[0].username)
         setmembership_id(filteredData[0].membership_id)
         setUserData(filteredData);
-       
+
         //to get wallet bal
 
         const getwalletbal = {
           user_id: Uid,
         };
         post(apiname.walletbal, getwalletbal)
-        // .then((res) => console.log(res.result.type_3_walletbal))
+          // .then((res) => console.log(res.result.type_3_walletbal))
           .then((res) => {
             setwalletbal(res.data.result.walletbal);
             setoverallbal(res.data.result.type_3_walletbal);
           })
-         
+
           .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   }, [startDate, endDate]);
-  const comp= "Completed"; 
+  const comp = "Completed";
   const columns = useMemo(
     () => [
       {
@@ -113,7 +113,13 @@ const MemberDetails = () => {
     setEndDate(end);
   };
 
-  
+  const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
+  };
 
   return (
     <React.Fragment>
@@ -123,9 +129,10 @@ const MemberDetails = () => {
             title="Forms"
             breadcrumbItem="SVARNA STOKAM NIKSEPA SCHEME"
           />
-          <div className="d-flex gap-3">
+          <div className="d-flex gap-3" id="contentToExport">
             <div className="col-lg-12 p-0">
               <Card
+              
                 className="defCard"
                 style={{
                   background:
@@ -142,8 +149,8 @@ const MemberDetails = () => {
                           className="avatar-md rounded-circle img-thumbnail"
                         />
                         <div className="mt-2">
-                        <h3 className="text-white">{username}</h3>
-                            <h3 className="text-dark">{membership_id}</h3>
+                          <h3 className="text-white">{username}</h3>
+                          <h3 className="text-dark">{membership_id}</h3>
                         </div>
                       </div>
                     </div>
@@ -228,6 +235,16 @@ const MemberDetails = () => {
                       </div>
                     </div>
                     <div className="float-end ">
+
+                      <button
+                        type="button"
+                        className="btn btn-primary exportBtn  me-2"
+                        onClick={exportToPDF}
+                      >
+                        <i className="mdi mdi-upload  "></i>{" "}
+                        EXPORT
+                      </button>
+
                       <Link to="#" className="btn btn-success downloadBtn">
                         <img
                           src={print}

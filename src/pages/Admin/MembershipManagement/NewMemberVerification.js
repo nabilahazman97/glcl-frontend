@@ -14,7 +14,7 @@ import Breadcrumbs from "../../../components/Common/Breadcrumb";
 import TableContainer from "../../../components/Common/TableContainer";
 import classnames from "classnames";
 import { ToastContainer } from 'react-toastify';
-
+import html2pdf from 'html2pdf.js';
 
 import "../style.scss";
 
@@ -27,6 +27,16 @@ function NewMemberVerification() {
   const [action, setAction] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const [activeTab, setactiveTab] = useState("1");
+
+
+  const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
+  };
+
 
   const toggle = tab => {
     if (activeTab !== tab) {
@@ -384,7 +394,7 @@ function NewMemberVerification() {
     <div className="page-content picBg">
       <ToastContainer />
       <Breadcrumbs title="Tables" breadcrumbItem="NEW MEMBER VERIFICATION" />
-      <Card className="defCard">
+      <Card className="defCard" id="contentToExport">
         <CardBody>
           <CardTitle className="mb-3 cardTitle">List of New Members</CardTitle>
           <div className="container-fluid">
@@ -392,6 +402,7 @@ function NewMemberVerification() {
               <button
                 type="button"
                 className="btn btn-primary exportBtn  me-2"
+                onClick={exportToPDF}
               >
                 <i className="mdi mdi-upload  "></i>{" "}
                 EXPORT
@@ -400,7 +411,7 @@ function NewMemberVerification() {
             </div>
 
 
-            <div className="p-3">
+            <div className="p-3"  >
               <Nav tabs>
                 <NavItem className="me-3" >
                   <NavLink
