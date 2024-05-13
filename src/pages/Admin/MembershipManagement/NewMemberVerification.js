@@ -14,7 +14,7 @@ import Breadcrumbs from "../../../components/Common/Breadcrumb";
 import TableContainer from "../../../components/Common/TableContainer";
 import classnames from "classnames";
 import { ToastContainer } from 'react-toastify';
-
+import html2pdf from 'html2pdf.js';
 
 import "../style.scss";
 
@@ -28,6 +28,16 @@ function NewMemberVerification() {
   const [selectedId, setSelectedId] = useState(null);
   const [activeTab, setactiveTab] = useState("1");
 
+
+  const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
+  };
+
+
   const toggle = tab => {
     if (activeTab !== tab) {
       setactiveTab(tab);
@@ -40,7 +50,7 @@ function NewMemberVerification() {
     setEndDate(end);
   };
 
-   const handleReset = () => {
+  const handleReset = () => {
     setStartDate(null);
     setEndDate(null);
   };
@@ -122,11 +132,22 @@ function NewMemberVerification() {
   const columns = useMemo(
     () => [
       {
+        Header: "No.",
+        accessor: "",
+        Cell: ({ row, rows }) => {
+          return <span>{rows.findIndex(r => r.id === row.id) + 1}</span>;
+        },
+      },
+      {
         Header: "Username",
         accessor: "username",
       },
       {
-        Header: "Email",
+        Header: "NRIC No.",
+        accessor: "icnumber",
+      },
+      {
+        Header: "Email Address",
         accessor: "email_id",
       },
       // {
@@ -161,41 +182,41 @@ function NewMemberVerification() {
       //   ),
       // },
 
+      // {
+      //   Header: "Status",
+      //   accessor: "ustatus",
+      //   Cell: ({ row }) => (
+      //     <span className="d-flex justify-content-center">
+      //       {row.original.ustatus == 0 || row.original.ustatus === null ? (
+      //         <span>
+      //           <button type="button" className="btn btn-warning statusBtn statusPending">
+      //             Pending
+      //           </button>
+      //         </span>
+      //       ) : row.original.ustatus == 1 ? (
+      //         <span>
+      //           <button type="button" className="btn btn-success statusBtn statusApproved">
+      //             Approved
+      //           </button>
+      //         </span>
+      //       ) : row.original.ustatus == 2 ? (
+      //         <span>
+      //           <button type="button" className="btn btn-danger statusBtn statusRejected">
+      //             Rejected
+      //           </button>
+      //         </span>
+      //       ) : null}
+      //     </span>
+      //   ),
+      // },
       {
-        Header: "Status",
-        accessor: "ustatus",
-        Cell: ({ row }) => (
-          <span className="d-flex justify-content-center">
-            {row.original.ustatus == 0 || row.original.ustatus === null ? (
-              <span>
-                <button type="button" className="btn btn-warning statusBtn statusPending">
-                  Pending
-                </button>
-              </span>
-            ) : row.original.ustatus == 1 ? (
-              <span>
-                <button type="button" className="btn btn-success statusBtn statusApproved">
-                  Approved
-                </button>
-              </span>
-            ) : row.original.ustatus == 2 ? (
-              <span>
-                <button type="button" className="btn btn-danger statusBtn statusRejected">
-                  Rejected
-                </button>
-              </span>
-            ) : null}
-          </span>
-        ),
-      },
-      {
-        Header: "Actions",
+        Header: "Action",
         accessor: "id",
         Cell: ({ row }) => (
           <div className="d-flex flex-wrap gap-2 justify-content-center ">
             {row.original.ustatus != 0 && row.original.ustatus != null ? null : (
               <>
-                <button
+                {/* <button
                   style={{ marginRight: "5px" }}
                   type="button"
                   onClick={() => {
@@ -221,15 +242,15 @@ function NewMemberVerification() {
                   <i className="mdi mdi-close-circle font-size-16 align-middle me-1"></i>{" "}
 
                   Reject
-                </button>
+                </button> */}
               </>
             )}
             <Link to={`/member-approval/${row.original.id}`} style={{ textDecoration: "none" }}>
-              <button type="button" className="btn btn-primary viewBtn">
-              <i className="mdi mdi-eye"></i>{" "}
 
+              <i className="mdi mdi-eye" style={{ fontSize: "20px", color: 'black' }}></i>{" "}
+              {/* <button type="button" className="btn btn-primary viewBtn">
            
-              </button>
+              </button> */}
             </Link>
           </div>
         ),
@@ -242,11 +263,22 @@ function NewMemberVerification() {
   const columns2 = useMemo(
     () => [
       {
+        Header: "No.",
+        accessor: "",
+        Cell: ({ row, rows }) => {
+          return <span>{rows.findIndex(r => r.id === row.id) + 1}</span>;
+        },
+      },
+      {
         Header: "Username",
         accessor: "username",
       },
       {
-        Header: "Email",
+        Header: "NRIC No.",
+        accessor: "icnumber",
+      },
+      {
+        Header: "Email Address",
         accessor: "email_id",
       },
       // {
@@ -281,35 +313,35 @@ function NewMemberVerification() {
       //   ),
       // },
 
+      // {
+      //   Header: "Status",
+      //   accessor: "ustatus",
+      //   Cell: ({ row }) => (
+      //     <span className="d-flex justify-content-center">
+      //       {row.original.ustatus == 0 || row.original.ustatus === null ? (
+      //         <span>
+      //           <button type="button" className="btn btn-warning statusBtn statusPending">
+      //             Pending
+      //           </button>
+      //         </span>
+      //       ) : row.original.ustatus == 1 ? (
+      //         <span>
+      //           <button type="button" className="btn btn-success statusBtn statusApproved">
+      //             Approved
+      //           </button>
+      //         </span>
+      //       ) : row.original.ustatus == 2 ? (
+      //         <span>
+      //           <button type="button" className="btn btn-danger statusBtn statusRejected">
+      //             Rejected
+      //           </button>
+      //         </span>
+      //       ) : null}
+      //     </span>
+      //   ),
+      // },
       {
-        Header: "Status",
-        accessor: "ustatus",
-        Cell: ({ row }) => (
-          <span className="d-flex justify-content-center">
-            {row.original.ustatus == 0 || row.original.ustatus === null ? (
-              <span>
-                <button type="button" className="btn btn-warning statusBtn statusPending">
-                  Pending
-                </button>
-              </span>
-            ) : row.original.ustatus == 1 ? (
-              <span>
-                <button type="button" className="btn btn-success statusBtn statusApproved">
-                  Approved
-                </button>
-              </span>
-            ) : row.original.ustatus == 2 ? (
-              <span>
-                <button type="button" className="btn btn-danger statusBtn statusRejected">
-                  Rejected
-                </button>
-              </span>
-            ) : null}
-          </span>
-        ),
-      },
-      {
-        Header: "Actions",
+        Header: "Action",
         accessor: "id",
         Cell: ({ row }) => (
           <div className="d-flex flex-wrap gap-2 justify-content-center">
@@ -343,10 +375,10 @@ function NewMemberVerification() {
               </>
             )}
             <Link to={`/member-approval/${row.original.id}`} style={{ textDecoration: "none" }}>
-              <button type="button" className="btn btn-primary viewBtn">
-              <i className="mdi mdi-eye"></i>{" "}
               
-              </button>
+              <i className="mdi mdi-eye" style={{ fontSize: "20px", color: 'black' }}></i>{" "}
+              {/* <button type="button" className="btn btn-primary viewBtn">
+              </button> */}
             </Link>
           </div>
         ),
@@ -362,23 +394,24 @@ function NewMemberVerification() {
     <div className="page-content picBg">
       <ToastContainer />
       <Breadcrumbs title="Tables" breadcrumbItem="NEW MEMBER VERIFICATION" />
-      <Card className="defCard">
+      <Card className="defCard" id="contentToExport">
         <CardBody>
           <CardTitle className="mb-3 cardTitle">List of New Members</CardTitle>
           <div className="container-fluid">
-          <div className="d-flex justify-content-end">
-                <button
-                  type="button"
-                  className="btn btn-primary exportBtn  me-2"
-                >
-                  <i className="mdi mdi-upload  "></i>{" "}
-                  EXPORT
-  </button>
+            <div className="d-flex justify-content-end">
+              <button
+                type="button"
+                className="btn btn-primary exportBtn  me-2"
+                onClick={exportToPDF}
+              >
+                <i className="mdi mdi-upload  "></i>{" "}
+                EXPORT
+              </button>
 
-              </div>
+            </div>
 
 
-            <div className="p-3">
+            <div className="p-3"  >
               <Nav tabs>
                 <NavItem className="me-3" >
                   <NavLink
@@ -405,7 +438,7 @@ function NewMemberVerification() {
                       handleReset();
                     }}
                   >
-                    Rejected Approval
+                    Rejected User
                   </NavLink>
                 </NavItem>
               </Nav>

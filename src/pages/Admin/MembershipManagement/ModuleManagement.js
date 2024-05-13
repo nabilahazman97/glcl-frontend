@@ -24,12 +24,12 @@ import axios from "axios";
 import * as apiname from "../../../helpers/url_helper";
 import Switch from "react-switch";
 import { del, get, post, put } from "../../../helpers/api_helper";
-
+import html2pdf from 'html2pdf.js';
 import '../style.scss';
 
 function ModuleManagement() {
   const [data, setdata] = useState([]);
- 
+
 
   useEffect(() => {
     get(apiname.schemeList)
@@ -91,9 +91,11 @@ function ModuleManagement() {
   const columns = useMemo(
     () => [
       {
-        Header: 'No',
-        accessor: 'id',
-
+        Header: "No.",
+        accessor: "",
+        Cell: ({ row, rows }) => {
+          return <span>{rows.findIndex(r => r.id === row.id) + 1}</span>;
+        },
       },
       {
         Header: 'Name',
@@ -144,7 +146,13 @@ function ModuleManagement() {
     []
   );
 
+  const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
 
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
+  };
 
 
   //meta title
@@ -155,18 +163,19 @@ function ModuleManagement() {
       <div className="container-fluid">
         <Breadcrumbs title="MEMBERSHIP MANAGEMENT" breadcrumbItem="MODULE MANAGEMENT" />
 
-        <Card className="defCard">
+        <Card className="defCard" id="contentToExport">
           <CardBody>
             <CardTitle className="cardTitle">List of Module</CardTitle>
             <div className="d-print-none mt-4">
               <div className="float-end ">
-                {/* <button
+                <button
                   type="button"
                   className="btn btn-primary exportBtn  me-2"
+                  onClick={exportToPDF}
                 >
                   <i className="mdi mdi-upload  "></i>{" "}
                   EXPORT
-  </button>*/}
+                </button>
 
               </div>
             </div>

@@ -25,7 +25,7 @@ import TableContainer from "../../../../components/Common/TableContainer";
 
 import * as apiname from "../../../../helpers/url_helper";
 import { del, get, post, put } from "../../../../helpers/api_helper";
-
+import html2pdf from 'html2pdf.js';
 import "../../style.scss";
 
 function MemberList() {
@@ -38,37 +38,37 @@ function MemberList() {
       scheme_id: "2",
     };
     post(apiname.userScheme, userScheme)
-      .then(async(res) => {
+      .then(async (res) => {
 
-        if(res.status=='204'){
-        }else{
-        let filteredData = res.data.result;
+        if (res.status == '204') {
+        } else {
+          let filteredData = res.data.result;
 
-        
-        if (startDate && endDate) {
-          const startTimestamp = startDate.getTime();
-          const endTimestamp = endDate.getTime();
-          filteredData = filteredData.filter((item) => {
-            const itemDate = new Date(item.date).getTime();
-            return itemDate >= startTimestamp && itemDate <= endTimestamp;
-          });
+
+          if (startDate && endDate) {
+            const startTimestamp = startDate.getTime();
+            const endTimestamp = endDate.getTime();
+            filteredData = filteredData.filter((item) => {
+              const itemDate = new Date(item.date).getTime();
+              return itemDate >= startTimestamp && itemDate <= endTimestamp;
+            });
+          }
+
+          const ids = filteredData.map(item => item.user_id);
+
+          // Making API calls to get additional information for each item
+          const additionalInfoResults = await Promise.all(ids.map(id => getAdditionalInfo(id)));
+
+          const combinedData = filteredData.map((item, key) => ({
+
+            ...item,
+            key: key,
+            additionalInfo: additionalInfoResults[key]
+          }));
+
+          console.log(combinedData);
+          setUserData(combinedData);
         }
-
-        const ids = filteredData.map(item => item.user_id);
-
-    // Making API calls to get additional information for each item
-        const additionalInfoResults = await Promise.all(ids.map(id => getAdditionalInfo(id)));
-       
-        const combinedData = filteredData.map((item, key) => ({
-         
-          ...item,
-          key:key,
-          additionalInfo: additionalInfoResults[key]
-        }));
-
-        console.log(combinedData);
-        setUserData(combinedData);
-      }
 
       })
       .catch((err) => console.log(err));
@@ -77,23 +77,23 @@ function MemberList() {
   }, [startDate, endDate]);
 
 
-  function getAdditionalInfo(id){
+  function getAdditionalInfo(id) {
 
 
     const getwalletbal = {
       user_id: id,
     };
 
-   
-    
- 
+
+
+
 
 
     return post(apiname.walletbal, getwalletbal)
       .then((res) => {
         console.log("res.result");
         console.log(res.data.statusCode);
-        if (res.data.result!='') {
+        if (res.data.result != '') {
           return res.data.result.walletbal;
         } else {
           throw new Error("No wallet balance found");
@@ -103,10 +103,10 @@ function MemberList() {
         console.log(err);
         throw err; // Rethrow the error to handle it elsewhere
       });
-  
+
 
   }
- 
+
 
   const columns = useMemo(
     () => [
@@ -137,9 +137,10 @@ function MemberList() {
               to={`/admin-swarna-stokam-niksepa/member-details/${row.original.id}`}
               style={{ textDecoration: "none" }}
             >
-              <button type="button" className="btn btn-primary viewBtn">
-              <i className="mdi mdi-eye"></i>{" "}
-              </button>
+              <i className="mdi mdi-eye" style={{ fontSize: "20px", color: 'black' }}></i>{" "}
+              {/* <button type="button" className="btn btn-primary viewBtn">
+             
+              </button> */}
             </Link>
           </div>
         ),
@@ -154,6 +155,14 @@ function MemberList() {
     setEndDate(end);
   };
 
+  const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
+  };
+
   document.title = "GLCL";
 
   return (
@@ -164,7 +173,7 @@ function MemberList() {
           breadcrumbItem="SVARNA STOKAM NIKSEPA SCHEME"
         />
 
-        <Card className="defCard">
+        <Card className="defCard" id="contentToExport">
           <CardBody>
             <CardTitle className="cardTitle">List of Members</CardTitle>
 
@@ -181,6 +190,16 @@ function MemberList() {
                     placeholderText="Select Date Range"
                   />
                 </div>
+              </div>
+              <div className="float-end">
+              <button
+                type="button"
+                className="btn btn-primary exportBtn  me-2"
+                onClick={exportToPDF}
+              >
+                <i className="mdi mdi-upload  "></i>{" "}
+                EXPORT
+              </button>
               </div>
             </div>
             <TableContainer

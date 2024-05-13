@@ -25,7 +25,7 @@ import axios from "axios";
 import * as apiname from "../../../helpers/url_helper";
 import { useParams } from 'react-router-dom';
 import { del, get, post, put } from "../../../helpers/api_helper";
-
+import whiteprint from "../../../assets/images/schemes/white-print-icon.png";
 
 //Import Breadcrumb
 import Breadcrumbs from "../../../components/Common/Breadcrumb";
@@ -83,6 +83,10 @@ const MemberProfileDetails = () => {
                 {/* Yes */}
             </div>
         );
+    };
+
+    const printInvoice = () => {
+        window.print();
     };
 
     const { id } = useParams();
@@ -178,7 +182,19 @@ const MemberProfileDetails = () => {
     }
 
 
-
+    const downloadPDF = (pdfUrl) => {
+        fetch(pdfUrl)
+          .then((response) => response.blob())
+          .then((blob) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'document.pdf','image.png'); // Set the filename for the downloaded file
+            document.body.appendChild(link);
+            link.click();
+          })
+          .catch((error) => console.error('Error downloading PDF:', error));
+      };
 
 
 
@@ -188,6 +204,19 @@ const MemberProfileDetails = () => {
                 <div className="page-content">
                     <Container fluid={true}>
                         <Breadcrumbs title="" breadcrumbItem="MEMBER PROFILE" />
+                        <div className="d-flex justify-content-end mb-3">
+                                                    <Link
+                                                        to="#"
+                                                        onClick={printInvoice}
+                                                        className="btn btn-success printBtn"
+                                                    >
+                                                        <img
+                                                            src={whiteprint}
+                                                            alt=""
+                                                            className="avatar-md whiteprint_icon"
+                                                        />
+                                                    </Link>
+                                                </div>
                         <div className="d-flex gap-3">
                             <div className="col-lg-6 p-0">
                                 <Card className="defCard" style={{ background: 'linear-gradient(to bottom, white 40%, #d1b66a 40%)' }}>
@@ -464,7 +493,7 @@ const MemberProfileDetails = () => {
                                                     MyKad - Front
                                                 </CardSubtitle>
                                                 {datas.f_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
-                                                    <div>
+                                                    <div onClick={() => downloadPDF(datas.f_mykad)}>
                                                         <div className="text-center">
                                                             <img className="ic-img" src={datas.f_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
                                                         </div>
@@ -495,7 +524,7 @@ const MemberProfileDetails = () => {
                                                     MyKad - Back
                                                 </CardSubtitle>
                                                 {datas.b_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
-                                                    <div>
+                                                    <div onClick={() => downloadPDF(datas.b_mykad)}>
                                                         <div className="text-center">
                                                             <img className="ic-img" src={datas.b_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
                                                         </div>                          <Card className="pdfInput">
@@ -523,7 +552,7 @@ const MemberProfileDetails = () => {
                                                     Utility Bill
                                                 </CardSubtitle>
                                                 {datas.utilitybill.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
-                                                    <div>
+                                                    <div onClick={() => downloadPDF(datas.utilitybill)}>
                                                         <img className="ic-img mb-3" src={datas.utilitybill} style={{ display: 'none' }}></img> {/* Hide the image */}
                                                         <Card className="pdfInput">
                                                             <CardBody className="m-3">
