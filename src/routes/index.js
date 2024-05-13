@@ -17,6 +17,7 @@ import MemberProfileList from "../pages/Admin/MembershipManagement/MemberProfile
 import MemberProfile from "../pages/Admin/MembershipManagement/MemberProfileDetails";
 import DatatableTables from "../pages/Admin/MembershipManagement/NewMemberVerification";
 import MemberApproval from "../pages/Admin/MembershipManagement/MemberApproval";
+import UpdateGoldRate from "../pages/Admin/UpdateGoldRate";
 
 import AdminSwarnaTira from "../pages/Admin/Schemes/SwarnaTira/MemberList";
 
@@ -47,6 +48,7 @@ const authProtectedRoutes = [
   { path: "/admin-svarna-roka-agrima/loan-application", component: <AdminSvarnaRokaAgrima /> },
   { path: "/admin-announcement-update", component: <AnouncementUpdate /> },
   { path: "/module-management", component: <ModuleManagement /> },
+  { path: "/update-gold-rate", component: <UpdateGoldRate /> },
   { path: "/profile", component: <UserProfile /> },
   { path: "/tables-datatable", component: <DatatableTables /> },
   { path: "/member-profile-list", component: <MemberProfileList /> },

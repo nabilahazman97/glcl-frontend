@@ -264,6 +264,25 @@ const MemberDetails = () => {
                   <div>
                     <div className="text-center mt-3">
                       <img src={goldBar} alt="" className="avatar-md" />
+                      <div className="text-white mt-2 std_font">Gold Coin Owned</div>
+                      <div className="mt-3" style={{ backgroundColor:"#494441" }}>
+                         <div className="d-flex justify-content-between p-2">
+                            <div className="text-gold">Date Bought</div>
+                            <div className="text-gold">Serial Number</div>
+                         </div>
+                      </div>
+                      <div className="mt-3" style={{ backgroundColor:"#d6b13f", borderRadius:'5px' }}>
+                         <div className="d-flex justify-content-between p-2">
+                            <div className="text-black">12-04-2022</div>
+                            <div className="text-black">V00001-V0002</div>
+                         </div>
+                      </div>
+                      <div className="mt-3" style={{ backgroundColor:"#d6b13f", borderRadius:'5px' }}>
+                         <div className="d-flex justify-content-between p-2">
+                            <div className="text-black">12-04-2022</div>
+                            <div className="text-black">V00001-V0002</div>
+                         </div>
+                      </div>
                     </div>
                   </div>
                 </Card>
