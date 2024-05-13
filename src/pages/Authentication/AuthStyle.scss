@@ -86,12 +86,14 @@
     cursor: pointer!important;
 }
 
-.chgPwdBtn {
+.stdBtn {
     font-family: inter_regular !important;
     border-radius: 80px !important;
-    width: 110px;
+    width: 150px;
     height: 40px;
     padding: 0 !important;
+    border: none !important;
+    white-space: nowrap !important;
   }
 
 .login-textarea{

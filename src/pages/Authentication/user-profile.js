@@ -467,8 +467,8 @@ const UserProfile = () => {
                     </div>
 
                     <div className="text-center mt-3 mb-3">
-                      <Button type="submit" onClick={handleChangePwd} color="primary">
-                        Update Password
+                      <Button type="submit" onClick={handleChangePwd} className="stdBtn" style={{ backgroundColor:'#DDBF6A' }}>
+                        Change Password
                       </Button>
 
 
@@ -616,8 +616,10 @@ const UserProfile = () => {
 
                 //   });
                 // }}
-                color="primary">
-                Update data
+                className="stdBtn"
+                style={{ backgroundColor:"#1A2B88" }}
+                >
+                Update
               </Button>
 
 
