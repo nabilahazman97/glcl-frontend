@@ -16,6 +16,9 @@ import projectsSaga from "./projects/saga";
 import tasksSaga from "./tasks/saga";
 import mailsSaga from "./mails/saga";
 import contactsSaga from "./contacts/saga";
+
+// membershiptier
+import membershiptierSaga from "./membershiptier/saga";
 import dashboardSaga from "./dashboard/saga";
 import dashboardSaasSaga from "./dashboard-saas/saga";
 import dashboardCryptoSaga from "./dashboard-crypto/saga";
@@ -40,6 +43,7 @@ export default function* rootSaga() {
     fork(projectsSaga),
     fork(tasksSaga),
     fork(contactsSaga),
+    fork(membershiptierSaga),
     fork(dashboardSaga),
     fork(dashboardSaasSaga),
     fork(dashboardCryptoSaga),

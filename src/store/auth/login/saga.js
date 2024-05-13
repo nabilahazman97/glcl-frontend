@@ -11,6 +11,7 @@ import {
   postJwtLogin,
   postSocialLogin,
 } from "../../../helpers/fakebackend_helper";
+import React, { useState, useEffect } from 'react';
 
 const fireBaseBackend = getFirebaseBackend();
 
@@ -20,12 +21,17 @@ function* loginUser({ payload: { user, history } }) {
       email_id: user.email,
       password: user.password,
     });
-    console.log(response)
+  
+  
     localStorage.setItem("authUser", JSON.stringify(response));
     localStorage.setItem("accessToken", response.data.accessToken);
+  
+
+
 
     console.log(response.data.accessToken)
     yield put(loginSuccess(response));
+
 
     // if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
     //   const response = yield call(
@@ -60,6 +66,7 @@ function* loginUser({ payload: { user, history } }) {
     //   yield put(loginSuccess(response));
     // }
     history('/dashboard');
+    window.location.reload();
   } catch (error) {
     yield put(apiError(error));
   }

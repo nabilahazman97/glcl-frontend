@@ -94,14 +94,39 @@ export async function post(url, data, config = {}) {
 }
 
 
+// export async function put(url, data, config = {}) {
+//   return axiosApi
+//     .put(url, { ...data }, { ...config })
+//     .then((response) => response.data);
+// }
+
+
 export async function put(url, data, config = {}) {
-  return axiosApi
-    .put(url, { ...data }, { ...config })
-    .then((response) => response.data);
+  try {
+    const response = await axiosApi.put(url, { ...data }, { ...config});
+    return response;
+  } catch (error) {
+    throw error;
+  }
 }
 
+
+
+// export async function del(url, config = {}) {
+//   return await axiosApi
+//     .delete(url, { ...config })
+//     .then((response) => response.data);
+// }
+
+
 export async function del(url, config = {}) {
-  return await axiosApi
-    .delete(url, { ...config })
-    .then((response) => response.data);
+  try {
+    const response = await axiosApi.delete(url, { ...config});
+    return response;
+  } catch (error) {
+    throw error;
+  }
+  // return await axiosApi
+  //   .delete(url, { ...config })
+  //   .then((response) => response.data);
 }

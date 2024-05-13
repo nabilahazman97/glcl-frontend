@@ -153,3 +153,25 @@ export const userScheme ="/api/scheme/schemelist"; //
 export const remainGold ="/api/scheme/remaininggold"; //
 
 export const walletbal ="/api/scheme/getwalletbal"; //
+
+
+export const Goldvaultadd ="/api/goldvault/create"; //
+
+export const Goldvaultlist ="/api/goldvault/list"; //
+
+export const Goldvaultdelete ="/api/goldvault/delete"; //
+
+export const Goldvaultedit ="/api/goldvault/update"; //
+
+
+export const membershipadd ="/api/membership/create"; //
+
+export const membershiplist ="/api/membership/list"; //
+
+export const membershipdelete ="/api/membership/delete"; //
+
+export const membershipedit ="/api/membership/update"; //
+
+
+
+// http://localhost:4200/api/goldvault/delete/2

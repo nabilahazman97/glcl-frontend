@@ -67,6 +67,7 @@ const TableContainer = ({
   isJobListGlobalFilter,
   isAddOptions,
   isAddUserList,
+  isAddtier,
   handleOrderClicks,
   handleUserClick,
   handleCustomerClick,
@@ -167,21 +168,40 @@ const TableContainer = ({
             </div>
           </Col>
         )}
-        {isAddUserList && (
-          <Col sm="7">
+
+        {isAddUserList  && (
+          <Col sm="12">
             <div className="text-sm-end">
               <Button
                 type="button"
                 color="primary"
-                className="btn mb-2 me-2"
+                className="btn mb-2 me-2 btnstyle"
                 onClick={handleUserClick}
               >
                 <i className="mdi mdi-plus-circle-outline me-1" />
-                Create New User
+                Gold Coin
               </Button>
             </div>
           </Col>
-        )}
+          )}
+
+{isAddtier  && (
+          <Col sm="12">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                color="primary"
+                className="btn mb-2 me-2 btnstyle"
+                onClick={handleUserClick}
+              >
+                <i className="mdi mdi-plus-circle-outline me-1" />
+                New Tier
+              </Button>
+            </div>
+          </Col>
+          )}
+
+         
         {isAddCustList && (
           <Col sm="7">
             <div className="text-sm-end">

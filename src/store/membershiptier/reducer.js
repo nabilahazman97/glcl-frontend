@@ -1,16 +1,16 @@
 import {
-  GET_USERS_SUCCESS,
-  GET_USERS_FAIL,
-  ADD_USER_SUCCESS,
-  ADD_USER_FAIL,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_FAIL,
-  DELETE_USER_SUCCESS,
-  DELETE_USER_FAIL,
-  GET_USER_PROFILE_SUCCESS,
-  GET_USER_PROFILE_FAIL,
-  FETCH_GOLDVAULTLIST_SUCCESS,
-  FETCH_GOLDVAULTLIST_FAILURE,
+  GET_USERS_SUCCESS1,
+  GET_USERS_FAIL1,
+  ADD_USER_SUCCESS1,
+  ADD_USER_FAIL1,
+  UPDATE_USER_SUCCESS1,
+  UPDATE_USER_FAIL1,
+  DELETE_USER_SUCCESS1,
+  DELETE_USER_FAIL1,
+  GET_USER_PROFILE_SUCCESS1,
+  GET_USER_PROFILE_FAIL1,
+  FETCH_GOLDVAULTLIST_SUCCESS1,
+  FETCH_GOLDVAULTLIST_FAILURE1,
   // FETCH_GOLDVAULTLIST_REQUEST 
 } from "./actionTypes"
 
@@ -22,13 +22,13 @@ const INIT_STATE = {
 
 const contacts = (state = INIT_STATE, action) => {
   switch (action.type) {
-    case FETCH_GOLDVAULTLIST_SUCCESS:
+    case FETCH_GOLDVAULTLIST_SUCCESS1:
       return {
         ...state,
         users: action.payload,
         error: null
       };
-    case FETCH_GOLDVAULTLIST_FAILURE:
+    case FETCH_GOLDVAULTLIST_FAILURE1:
       return {
         ...state,
         error: action.payload
@@ -40,38 +40,38 @@ const contacts = (state = INIT_STATE, action) => {
       //     error: null
       //   };
 
-    case GET_USERS_SUCCESS:
+    case GET_USERS_SUCCESS1:
       return {
         ...state,
         users: action.payload,
       }
 
-    case GET_USERS_FAIL:
+    case GET_USERS_FAIL1:
       return {
         ...state,
         error: action.payload,
       }
 
-    case ADD_USER_SUCCESS:
+    case ADD_USER_SUCCESS1:
 
       return {
         ...state,
         users: [...state.users, action.payload],
       }
 
-    case ADD_USER_FAIL:
+    case ADD_USER_FAIL1:
       return {
         ...state,
         error: action.payload,
       }
 
-    case GET_USER_PROFILE_SUCCESS:
+    case GET_USER_PROFILE_SUCCESS1:
       return {
         ...state,
         userProfile: action.payload,
       }
 
-      case UPDATE_USER_SUCCESS:
+      case UPDATE_USER_SUCCESS1:
         return {
           
           // ...state,
@@ -85,13 +85,13 @@ const contacts = (state = INIT_STATE, action) => {
         
         }
   
-      case UPDATE_USER_FAIL:
+      case UPDATE_USER_FAIL1:
         return {
           ...state,
           error: action.payload,
         }
   
-      case DELETE_USER_SUCCESS:
+      case DELETE_USER_SUCCESS1:
         return {
           ...state,
           users: state.users.filter(
@@ -99,13 +99,13 @@ const contacts = (state = INIT_STATE, action) => {
           ),
         }
   
-      case DELETE_USER_FAIL:
+      case DELETE_USER_FAIL1:
         return {
           ...state,
           error: action.payload,
         }
 
-    case GET_USER_PROFILE_FAIL:
+    case GET_USER_PROFILE_FAIL1:
       return {
         ...state,
         error: action.payload,

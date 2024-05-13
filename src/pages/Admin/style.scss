@@ -345,3 +345,51 @@ table tbody tr.odd:hover {
   background-color: #0E174D!important; 
   height: 150px!important;
 }
+
+.btnstyle{
+  background: linear-gradient(95.1deg, rgb(221, 191, 106) 0%, rgb(155, 119, 0) 49.76%, rgb(221, 191, 106) 100%);
+  border-radius: 32px!important;
+  border: 2px #fff4f0!important;
+}
+
+.blubg{
+  background-color: #090f2f!important;
+  border-radius: 15px!important;
+  border: 2px #fff4f0!important;
+}
+
+.txtcolor{
+   --bs-text-opacity: 1;
+  color: white;
+}
+.cardbody{
+  width: 200px;
+  height: 130px;
+}
+
+.goldvaultfsize{
+  color: white;
+  font-size: 22px !important;
+}
+.goldbg{
+  background-color: #d2a736 !important;
+  border-radius: 15px!important;
+  border: 2px #fff4f0!important;
+}
+
+.whbg{
+  background-color: white !important;
+  border-radius: 15px!important;
+  border:15px #4fb946!important;
+}
+
+
+// .{
+//   background-color: #090f2f!important;
+//   color: white!important;
+// }
+
+// .txtcolor{
+//   --bs-text-opacity: 1;
+//   color: white;
+// }

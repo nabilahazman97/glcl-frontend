@@ -48,7 +48,7 @@ function MemberList() {
       .then((res) => {
         console.log("res");
         console.log(res);
-        if(res.status==='204'){
+        if(res.status=='204'){
           setUserData('');
         }else{
         let filteredData = res.data.result;
