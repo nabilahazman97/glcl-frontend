@@ -152,7 +152,13 @@ const SidebarContent = props => {
                 <span>{props.t("DASHBOARD")}</span>
               </Link>
             </li>
-  
+            <li>
+              <Link to="/update-gold-rate" >
+                <i className="bx bx-home-circle"></i>
+                <span>{props.t("Update Gold Rate")}</span>
+              </Link>
+            </li>
+
 
             <li>
               <Link to="/#" className="has-arrow d-flex">
@@ -160,13 +166,13 @@ const SidebarContent = props => {
                 <span >{props.t("MEMBERSHIP MANAGEMENT")}</span>
               </Link>
               <ul className="sub-menu">
-              <li  >
+                <li  >
                   <Link to="/tables-datatable">{props.t("NEW MEMBER VERIFICATION")}</Link>
                 </li>
-              <li  >
+                <li  >
                   <Link to="/member-profile-list">{props.t("MEMBER PROFILE")}</Link>
                 </li>
-                
+
                 <li  >
                   <Link to="/admin-announcement-update">{props.t("ANNOUNCEMENT & UPDATE")}</Link>
                 </li>
@@ -191,11 +197,28 @@ const SidebarContent = props => {
               <ul className="sub-menu">
                 <li  >
                   <Link to="/admin-swarna-tira/index">{props.t("SVARNA TIRA SCHEME")}</Link>
+                  {/* <ul className="sub-menu">
+                    <li  >
+                      <Link to="/admin-swarna-tira/index">{props.t("List of Members")}</Link>
+                    </li>
+                    <li  >
+                      <Link to="/admin-swarna-tira/gold-purchase-list">{props.t("Gold Purchase")}</Link>
+                    </li>
+                    <li  >
+                      <Link to="/admin-swarna-tira/gold-selling-list">{props.t("Gold Selling")}</Link>
+                    </li>
+
+                  </ul> */}
                 </li>
-                 <li >
+                <li >
                   <Link to="/admin-swarna-stokam-niksepa/index">{props.t("SVARNA STOKAM NIKSEPA SCHEME")}</Link>
                 </li>
-               {/* <li >
+                <li >
+                  <Link to="/admin-svarna-roka-agrima/loan-application">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
+                </li>
+              </ul>
+
+              {/* <li >
                   <Link to="/#">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
                 </li>
                 <li  >
@@ -204,7 +227,7 @@ const SidebarContent = props => {
                 <li  >
                   <Link to="/#">{props.t("SVARNA RUNA SCHEME")}</Link>
                 </li> */}
-              </ul>
+
             </li>
 
 

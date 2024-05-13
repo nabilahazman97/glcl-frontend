@@ -65,6 +65,12 @@
     color: #D4AF37!important;
 }
 
+.std-input-label {
+    font-weight: 600 !important;
+    font-size: 1.2em !important;
+    font-family: inter_regular!important;
+  }
+
 .signIn_btn{
     border-radius: 15px!important;
     height: 50px!important;
@@ -79,6 +85,16 @@
     background-color: #090F2F!important;
     cursor: pointer!important;
 }
+
+.stdBtn {
+    font-family: inter_regular !important;
+    border-radius: 80px !important;
+    width: 150px;
+    height: 40px;
+    padding: 0 !important;
+    border: none !important;
+    white-space: nowrap !important;
+  }
 
 .login-textarea{
     border-radius: 15px!important;
@@ -148,8 +164,8 @@
 }
 
 .ic-img{
-    height: 102px !important;
-    width: 85px !important;
+    height: 70px !important;
+  width: 60px !important;
 }
 
 .failuremsgicon{
@@ -171,6 +187,10 @@
 }
 
 
+
+
 .whiteBg{
     background-color: #fff;
   }
+
+  

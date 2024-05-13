@@ -8,17 +8,17 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
-import * as apiname from "../../../helpers/url_helper";
-import { get, post } from "../../../helpers/api_helper";
-import Breadcrumbs from "../../../components/Common/Breadcrumb";
-import TableContainer from "../../../components/Common/TableContainer";
+import * as apiname from "../../../../helpers/url_helper";
+import { get, post } from "../../../../helpers/api_helper";
+import Breadcrumbs from "../../../../components/Common/Breadcrumb";
+import TableContainer from "../../../../components/Common/TableContainer";
 import classnames from "classnames";
 import { ToastContainer } from 'react-toastify';
 import html2pdf from 'html2pdf.js';
 
-import "../style.scss";
+import "../../style.scss";
 
-function NewMemberVerification() {
+function LoanApplication() {
   const [data, setUserData] = useState([]);
   const [dataRejected, setRejectedData] = useState([]);
   const [startDate, setStartDate] = useState(null);
@@ -520,4 +520,4 @@ function NewMemberVerification() {
   );
 }
 
-export default NewMemberVerification;
+export default LoanApplication;

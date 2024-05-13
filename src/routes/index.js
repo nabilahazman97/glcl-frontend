@@ -17,14 +17,17 @@ import MemberProfileList from "../pages/Admin/MembershipManagement/MemberProfile
 import MemberProfile from "../pages/Admin/MembershipManagement/MemberProfileDetails";
 import DatatableTables from "../pages/Admin/MembershipManagement/NewMemberVerification";
 import MemberApproval from "../pages/Admin/MembershipManagement/MemberApproval";
+import UpdateGoldRate from "../pages/Admin/UpdateGoldRate";
 
 import AdminSwarnaTira from "../pages/Admin/Schemes/SwarnaTira/MemberList";
 
 
 import AdminSwarnaTiraMemberDetails from "../pages/Admin/Schemes/SwarnaTira/MemberDetails";
-
+import AdminSwarnaTiraGoldPurchaseList from "../pages/Admin/Schemes/SwarnaTira/GoldPurchase";
+import AdminSwarnaTiraGoldSellingList from "../pages/Admin/Schemes/SwarnaTira/GoldSelling";
 import AdminSwarnaStokamNiksepa from "../pages/Admin/Schemes/SwarnaStokamNiksepa/MemberList";
 import AdminSwarnaStokamNiksepaMemberDetails from "../pages/Admin/Schemes/SwarnaStokamNiksepa/MemberDetails";
+import AdminSvarnaRokaAgrima from "../pages/Admin/Schemes/SvarnaRokaAgrima/LoanApplication";
 import AnouncementUpdate from "../pages/Admin/MembershipManagement/AnnouncementUpdate";
 import ModuleManagement from "../pages/Admin/MembershipManagement/ModuleManagement";
 import Goldvault from "../pages/Admin/GoldManagement/Goldvault";
@@ -49,14 +52,14 @@ const authProtectedRoutes = [
 
   { path: "/admin-swarna-tira/index", component: <AdminSwarnaTira /> },
   { path: "/admin-swarna-tira/member-details/:Uid", component: <AdminSwarnaTiraMemberDetails /> },
-
-
-
-
+  { path: "/admin-swarna-tira/gold-purchase-list", component: <AdminSwarnaTiraGoldPurchaseList /> },
+  { path: "/admin-swarna-tira/gold-selling-list", component: <AdminSwarnaTiraGoldSellingList /> },
   { path: "/admin-swarna-stokam-niksepa/index", component: <AdminSwarnaStokamNiksepa /> },
   { path: "/admin-swarna-stokam-niksepa/member-details/:Uid", component: <AdminSwarnaStokamNiksepaMemberDetails /> },
+  { path: "/admin-svarna-roka-agrima/loan-application", component: <AdminSvarnaRokaAgrima /> },
   { path: "/admin-announcement-update", component: <AnouncementUpdate /> },
   { path: "/module-management", component: <ModuleManagement /> },
+  { path: "/update-gold-rate", component: <UpdateGoldRate /> },
   { path: "/profile", component: <UserProfile /> },
   { path: "/tables-datatable", component: <DatatableTables /> },
   { path: "/member-profile-list", component: <MemberProfileList /> },

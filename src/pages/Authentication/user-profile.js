@@ -9,7 +9,7 @@ import {
   Button,
   Label,
   Input,
-  FormFeedback,
+  CardSubtitle,
   Form,
   CardTitle,
 } from "reactstrap";
@@ -33,6 +33,7 @@ import axios from "axios";
 import * as apiname from "../../helpers/url_helper";
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
+import pdfIcon from "../../assets/images/PDF_file_icon.png";
 import { del, get, post, put } from "../../helpers/api_helper";
 
 const UserProfile = () => {
@@ -45,23 +46,23 @@ const UserProfile = () => {
 
     setdata(authUserObject.data.result)
     console.log(authUserObject.data.result.id);
-    var id=authUserObject.data.result.id;
-    
+    var id = authUserObject.data.result.id;
+
     const user = {
-        'id': id
+      'id': id
     };
 
-  // post(apiname.p_userdetails, user)
-  // .then((res) =>setdata(res.result))
-  // .catch(err => console.log(err));
-//   axios.post(apiname.base_url + apiname.p_userdetails, user, {
-//     headers: {
-//         'Authorization': 'Basic ' + apiname.encoded
-//     }
-// })
-//     .then((res) =>setdata(res['data']['result'][0]))
-//     .catch(err => console.log(err));
-  },{});
+    // post(apiname.p_userdetails, user)
+    // .then((res) =>setdata(res.result))
+    // .catch(err => console.log(err));
+    //   axios.post(apiname.base_url + apiname.p_userdetails, user, {
+    //     headers: {
+    //         'Authorization': 'Basic ' + apiname.encoded
+    //     }
+    // })
+    //     .then((res) =>setdata(res['data']['result'][0]))
+    //     .catch(err => console.log(err));
+  }, {});
 
   const textHandler = e => {
     const { name, value } = e.target;
@@ -70,152 +71,154 @@ const UserProfile = () => {
       [name]: value,
     });
   };
-  const initialValues =fres || {};
+  const initialValues = fres || {};
   const [values1, setValues] = useState(initialValues);
 
-  function handleSubmit(e) { 
+  function handleSubmit(e) {
 
-    
-  console.log("df");
-    e.preventDefault(); 
+
+    console.log("df");
+    e.preventDefault();
     console.log("values1");
     console.log(values1);
 
-        var authUserData = localStorage.getItem("authUser");
-        var authUserObject = JSON.parse(authUserData);
-        console.log(authUserObject);
-        var id=authUserObject.data.result.id;
+    var authUserData = localStorage.getItem("authUser");
+    var authUserObject = JSON.parse(authUserData);
+    console.log(authUserObject);
+    var id = authUserObject.data.result.id;
 
-        const formData = new FormData();
+    const formData = new FormData();
 
-        if(values1.username!=undefined){
-        formData.append('username', values1.username);
+    if (values1.username != undefined) {
+      formData.append('username', values1.username);
+    }
+    if (values1.icnumber != undefined) {
+      formData.append('icnumber', values1.icnumber);
+    }
+    if (values1.emailid != undefined) {
+      formData.append('email_id', values1.email_id);
+    }
+    if (values1.phonenum != undefined) {
+      formData.append('phonenum', values1.phonenum);
+    }
+    if (values1.haddress != undefined) {
+      formData.append('haddress', values1.haddress);
+    }
+    formData.append('id', id);
+
+    console.log("formData");
+    console.log(values1.length);
+
+    post(apiname.editProfile, formData)
+      .then(res => {
+        console.log("resupdate");
+        console.log(res);
+        console.log(res.status);
+        if (res.status == 200) {
+          toast.success('Updated!');
+        } else {
+          toast.danger('Failed to Update!');
         }
-        if(values1.icnumber!=undefined){
-        formData.append('icnumber', values1.icnumber);
-        }
-        if(values1.emailid!=undefined){
-          formData.append('email_id', values1.email_id);
-          }
-        if(values1.phonenum!=undefined){
-            formData.append('phonenum', values1.phonenum);
-            }
-        if(values1.haddress!=undefined){
-              formData.append('haddress', values1.haddress);
-              }
-        formData.append('id', id);
+      })
+      .catch(err => console.log(err));
 
-        console.log("formData");  
-        console.log(values1.length);
-       
-        post(apiname.editProfile, formData)
-        .then(res => {
-          console.log("resupdate");
-          console.log(res);
-          console.log(res.status);
-          if (res.status == 200) {
-            toast.success('Updated!'); 
-          } else {
-            toast.danger('Failed to Update!'); 
-          }
-        })
-        .catch(err =>console.log(err));
-      
-        // axios.post(apiname.base_url + apiname.editProfile, formData, {
-        //   headers: {
-        //     'Authorization': 'Basic ' + apiname.encoded
-        //   }
-        // })
-        //   .then(res => {
-        //     if (res['data']['status'] == '1') {
-        //       toast.success('Updated!'); 
-        //     } else {
-        //       toast.danger('Failed to Update!'); 
-        //     }
-        //   })
-        //   .catch(err => console.log(err));
-} 
-
-function handleChangePwd() {
-
-  console.log("function");
-  const oldPwdInput = document.getElementsByName('oldPwd')[0];
-  const newPwdInput = document.getElementsByName('newPwd')[0];
-  const confirmPwdInput = document.getElementsByName('confirmPwd')[0];
-  var authUserData = localStorage.getItem("authUser");
-  var authUserObject = JSON.parse(authUserData);
-  var id=authUserObject.data.result.id;
-  const userId = id;
-
-  const oldPwd = oldPwdInput.value;
-  const newPwd = newPwdInput.value;
-  const confirmPwd = confirmPwdInput.value;
-
-  if (newPwd !== confirmPwd) {
-    toast.warning("Password doesn't match!");
-    return;
+    // axios.post(apiname.base_url + apiname.editProfile, formData, {
+    //   headers: {
+    //     'Authorization': 'Basic ' + apiname.encoded
+    //   }
+    // })
+    //   .then(res => {
+    //     if (res['data']['status'] == '1') {
+    //       toast.success('Updated!'); 
+    //     } else {
+    //       toast.danger('Failed to Update!'); 
+    //     }
+    //   })
+    //   .catch(err => console.log(err));
   }
 
-  var formdata = {
-    'id': userId,
-    'password': oldPwd,
-    'confirmpassword': newPwd,
-    'is_login': '2'
-  };
+  function handleChangePwd() {
+
+    console.log("function");
+    const oldPwdInput = document.getElementsByName('oldPwd')[0];
+    const newPwdInput = document.getElementsByName('newPwd')[0];
+    const confirmPwdInput = document.getElementsByName('confirmPwd')[0];
+    var authUserData = localStorage.getItem("authUser");
+    var authUserObject = JSON.parse(authUserData);
+    var id = authUserObject.data.result.id;
+    const userId = id;
+
+    const oldPwd = oldPwdInput.value;
+    const newPwd = newPwdInput.value;
+    const confirmPwd = confirmPwdInput.value;
+
+    if (newPwd !== confirmPwd) {
+      toast.warning("Password doesn't match!");
+      return;
+    }
+
+    var formdata = {
+      'id': userId,
+      'password': oldPwd,
+      'confirmpassword': newPwd,
+      'is_login': '2'
+    };
 
 
-  // Assuming you have a user ID available, you can fetch it from somewhere or directly use it
-  console.log(formdata)
-  post(apiname.changePwd, formdata)
-  .then(response => {
-    // Handle success response
-  
-    toast.success('Password changed!'); 
-    newPwdInput.value = '';
-    confirmPwdInput.value = '';
-   
-    
-  
-    // window.location.reload();
-   
+    // Assuming you have a user ID available, you can fetch it from somewhere or directly use it
+    console.log(formdata)
+    post(apiname.changePwd, formdata)
+      .then(response => {
+        // Handle success response
 
-  })
-  .catch(error => {
- 
-    console.error('Error occurred:', error);
-    toast.warning('Failed to change password');
-    newPwdInput.value = '';
-    confirmPwdInput.value = '';
-   
-  });
-  // axios.post(apiname.base_url + apiname.changePwd, formdata, {
+        toast.success('Password changed!');
+        oldPwdInput.value = '';
+        newPwdInput.value = '';
+        confirmPwdInput.value = '';
 
-  //   headers: {
-  //     'Authorization': 'Basic ' + apiname.encoded
-  //   }
-  // })
-  //   .then(response => {
-  //     // Handle success response 
-  //     toast.success('Password changed!'); 
-  //     newPwdInput.value = '';
-  //     confirmPwdInput.value = '';
-  //     // window.location.reload();
-  //   })
-  //   .catch(error => {
-  //     console.error('Error occurred:', error);
-  //     toast.warning('Failed to change password');
-  //     newPwdInput.value = '';
-  //     confirmPwdInput.value = '';
-  //   });
-}
+
+
+        // window.location.reload();
+
+
+      })
+      .catch(error => {
+
+        console.error('Error occurred:', error);
+        toast.warning('Failed to change password');
+        oldPwdInput.value = '';
+        newPwdInput.value = '';
+        confirmPwdInput.value = '';
+
+      });
+    // axios.post(apiname.base_url + apiname.changePwd, formdata, {
+
+    //   headers: {
+    //     'Authorization': 'Basic ' + apiname.encoded
+    //   }
+    // })
+    //   .then(response => {
+    //     // Handle success response 
+    //     toast.success('Password changed!'); 
+    //     newPwdInput.value = '';
+    //     confirmPwdInput.value = '';
+    //     // window.location.reload();
+    //   })
+    //   .catch(error => {
+    //     console.error('Error occurred:', error);
+    //     toast.warning('Failed to change password');
+    //     newPwdInput.value = '';
+    //     confirmPwdInput.value = '';
+    //   });
+  }
 
 
   return (
     <React.Fragment>
-      
+
       <div className="page-content">
         <Form
-           onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
           className="form-horizontal"
 
         >
@@ -248,22 +251,24 @@ function handleChangePwd() {
 
                 <Card className="defCard">
                   <CardBody>
-                    <CardTitle>Profile Information</CardTitle>
+                    <CardTitle className="cardTitle">Profile Information</CardTitle>
+                    <CardTitle></CardTitle>
                     <div>
                       <div className="mb-3 mt-3">
-                        <label>Name</label>
+                        <label className="std_input_label">Name</label>
                         <Input
-                        id="username"
+                          id="username"
                           name="username"
                           className="form-control normal-input"
                           type="text"
                           onChange={textHandler}
                           defaultValue={fres.username}
                           required
+
                         />
                       </div>
                       <div className="mb-3">
-                        <label>IC Number</label>
+                        <label className="std_input_label">IC Number</label>
                         <Input
                           id="icnumber"
                           name="icnumber"
@@ -272,53 +277,198 @@ function handleChangePwd() {
                           onChange={textHandler}
                           defaultValue={fres.icnumber}
                           required
-                          maxlength='12'    
+                          maxlength='12'
+
                         />
                       </div>
 
+                      <Row>
+                        <Col lg="6">
+                          <div className="mb-3">
+                            <label className="std_input_label">Phone Number</label>
+                            <Input
+                              name="phonenum"
+                              id="phonenum"
+                              className="form-control normal-input"
+                              type="text"
+                              onChange={textHandler}
+                              defaultValue={fres.phonenum}
+                              required
+                              maxlength="10"
+                            />
+                          </div>
+
+                        </Col>
+
+                        <Col lg="6">
+                          <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
+                            <label className="std_input_label">Mobile Phone 2</label>
+                            <Input
+                              className="form-control normal-input"
+                              type="text"
+                              defaultValue={fres.altnum}
+                            />
+                          </div>
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col lg="4">
+                          <div className="mb-3">
+                            <label className="std_input_label">Ethnic</label>
+                            <Input
+                              className="form-control normal-input"
+                              type="text"
+
+                              defaultValue={fres.ethnic}
+                            />
+                          </div>
+
+                        </Col>
+
+                        <Col lg="4">
+                          <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
+                            <label className="std_input_label">Religion</label>
+                            <Input
+                              className="form-control normal-input"
+                              type="text"
+
+                              defaultValue={fres.religion}
+                            />
+                          </div>
+                        </Col>
+
+                        <Col lg="4">
+                          <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
+                            <label className="std_input_label">Sex</label>
+                            <Input
+                              className="form-control normal-input"
+                              type="text"
+
+                              defaultValue={fres.sex}
+                            />
+                          </div>
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col lg="4">
+                          <div className="mb-3">
+                            <label className="std_input_label">Marital Status</label>
+                            <Input
+                              className="form-control normal-input"
+                              type="text"
+
+                              defaultValue={fres.mstatus}
+                            />
+                          </div>
+
+                        </Col>
+
+                        <Col lg="4">
+                          <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
+                            <label className="std_input_label">Occupation</label>
+                            <Input
+                              className="form-control normal-input"
+                              type="text"
+
+                              defaultValue={fres.occupation}
+                            />
+                          </div>
+                        </Col>
+
+                        <Col lg="4">
+                          <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
+                            <label className="">Service</label>
+                            <Input
+                              className="form-control normal-input"
+                              type="text"
+
+                              defaultValue={fres.service}
+                            />
+                          </div>
+                        </Col>
+                      </Row>
+
                     </div>
+                  </CardBody>
+                </Card>
+
+                <Card className="defCard">
+                  <CardBody>
+                    <CardTitle className="cardTitle">Address Information</CardTitle>
+                    <div className="mb-3">
+                      <label className="std_input_label">Address</label>
+                      <Input
+                        type="textarea"
+                        name="address"
+                        id="textarea"
+                        className="normal-textarea"
+                        maxLength="50"
+                        rows="3"
+                        placeholder="Home Address"
+
+                        defaultValue={fres.haddress}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className="std_input_label">Permanent Address</label>
+                      <Input
+                        type="textarea"
+                        name="address"
+                        id="textarea"
+                        className="normal-textarea"
+                        maxLength="50"
+                        rows="3"
+                        placeholder="Home Address"
+
+                        defaultValue={fres.paddress}
+                      />
+                    </div>
+
                   </CardBody>
                 </Card>
 
               </div>
               <div className="col-lg-6 p-0">
 
-                <Card className="defCard">
+                
+              <Card className="defCard">
                   <CardBody>
-                    <CardTitle>Change Password</CardTitle>
-                    <div className="mb-3" style={{ display: 'none' }}>
-                      <label>Old Password</label>
+                    <CardTitle className="cardTitle">Change Password</CardTitle>
+                    <div className="mb-3">
+                      <label className="std_input_label">Old Password</label>
                       <Input
                         name="oldPwd"
                         className="form-control normal-input"
                         type="password"
-                        value={fres.password}
-                        readOnly
+                        // value={fres.password}
+                        // readOnly
                       />
                     </div>
                     <div className="mb-3 mt-3">
-                      <label>New Password</label>
+                      <label className="std_input_label">New Password</label>
                       <Input
                         name="newPwd"
                         className="form-control normal-input"
                         type="password"
-                       
+
                       />
                     </div>
                     <div className="mb-3 mt-3">
-                      <label>Confirm Password</label>
+                      <label className="std_input_label">Confirm Password</label>
                       <Input
                         name="confirmPwd"
                         className="form-control normal-input"
                         type="password"
-                        
+
 
                       />
                     </div>
 
                     <div className="text-center mt-3 mb-3">
-                      <Button type="submit" onClick={handleChangePwd}  color="primary">
-                        Update Password
+                      <Button type="submit" onClick={handleChangePwd} className="stdBtn" style={{ backgroundColor:'#DDBF6A' }}>
+                        Change Password
                       </Button>
 
 
@@ -328,48 +478,129 @@ function handleChangePwd() {
 
                 <Card className="defCard">
                   <CardBody>
-                    <CardTitle>Contact Information</CardTitle>
+                    <CardTitle className="cardTitle">KYC Documents</CardTitle>
+                    <div className="mt-4  p-3 ">
+                      <div className="mb-3">
+                        <CardSubtitle className="std_input_label mb-2">
+                          MyKad - Front
+                        </CardSubtitle>
+                        {fres.f_mykad?.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
+                          <div>
+                            <div className="text-center">
+                              <img className="ic-img" src={fres.f_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
+                            </div>
+
+                            <Card className="pdfInput">
+                              <CardBody className="m-3">
+                                <div className="text-center">
+                                  <img className="pdfIcon" src={pdfIcon}></img>
+                                </div>
+                              </CardBody>
+                            </Card>
+                          </div>
+                        ) : (
+                          <Card className="pdfInput">
+                            <CardBody className="m-3">
+                              <div className="text-center">
+                                <img className="ic-img mb-3" src={fres.f_mykad} alt="MyKad Front"></img>
+
+                              </div>
+                            </CardBody>
+                          </Card>
+
+
+                        )}
+                      </div>
+                      <div className="mb-3">
+                        <CardSubtitle className="std_input_label mb-2">
+                          MyKad - Back
+                        </CardSubtitle>
+                        {fres.b_mykad?.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
+                          <div>
+                            <div className="text-center">
+                              <img className="ic-img" src={fres.b_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
+                            </div>                          
+                            <Card className="pdfInput">
+                              <CardBody className="m-3">
+                                <div className="text-center">
+                                  <img className="pdfIcon" src={pdfIcon}></img>
+                                </div>
+                              </CardBody>
+                            </Card>
+                          </div>
+                        ) : (
+                          <Card className="pdfInput">
+                            <CardBody className="m-3">
+                              <div className="text-center">
+                                <img className="ic-img mb-3" src={fres.b_mykad} alt="MyKad Front"></img>
+
+                              </div>
+                            </CardBody>
+                          </Card>
+                        )}
+                      </div>
+                      <div className="mb-3">
+
+                        <CardSubtitle className="std_input_label mb-2">
+                          Utility Bill
+                        </CardSubtitle>
+                        {fres.utilitybill?.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
+                          <div>
+                            <img className="ic-img mb-3" src={fres.utilitybill} style={{ display: 'none' }}></img> {/* Hide the image */}
+                            <Card className="pdfInput">
+                              <CardBody className="m-3">
+                                <div className="text-center">
+                                  <img className="pdfIcon" src={pdfIcon}></img>
+                                </div>
+                              </CardBody>
+                            </Card>
+                          </div>
+                        ) : (
+                          <Card className="pdfInput">
+                            <CardBody className="m-3">
+                              <div className="text-center">
+                                <img className="ic-img" src={fres.utilitybill} alt="MyKad Front"></img>
+
+                              </div>
+                            </CardBody>
+                          </Card>
+                        )}                                            
+                        </div>
+
+                    </div>
+                  </CardBody>
+                </Card>
+
+
+                <Card className="defCard">
+                  <CardBody>
+                    <CardTitle className="cardTitle">Membership Information</CardTitle>
                     <div>
                       <div className="mb-3 mt-3">
-                        <label>Email Address</label>
+                        <label className="std_input_label">Email Address</label>
                         <Input
-                          className="form-control normal-input"
-                          type="email"
-                          name="email_id"
-                          id="email_id"
-                          onChange={textHandler}
-                          defaultValue={fres.email_id}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3 mt-3">
-                        <label>Phone Number</label>
-                        <Input
-                         name="phonenum"
-                         id="phonenum"
                           className="form-control normal-input"
                           type="text"
+                          name="name"
                           onChange={textHandler}
-                          defaultValue={fres.phonenum}
-                            required
-                            maxlength="10" 
+                          defaultValue={fres.membership_id}
+                          required
                         />
                       </div>
                       <div className="mb-3 mt-3">
-                        <label>Address</label>
+                        <label className="std_input_label">Role</label>
                         <Input
-                          type="textarea"
-                          name="haddress"
-                          id="haddress"
-                          className="login-textarea mt-3"
-                          maxLength="50"
-                          rows="4"
+                          className="form-control normal-input"
+                          type="text"
+                          name="name"
                           onChange={textHandler}
-                          defaultValue={fres.haddress}
+                          defaultValue={fres.role}
                           required
-
                         />
                       </div>
+
+
+
                     </div>
                   </CardBody>
                 </Card>
@@ -382,11 +613,13 @@ function handleChangePwd() {
                 // onClick={() => {
                 //   // Validate the form
                 //   validation2.validateForm().then(errors => {
-  
+
                 //   });
                 // }}
-                color="primary">
-                Update data
+                className="stdBtn"
+                style={{ backgroundColor:"#1A2B88" }}
+                >
+                Update
               </Button>
 
 
@@ -399,7 +632,7 @@ function handleChangePwd() {
       </div>
     </React.Fragment>
   );
-// })
+  // })
 };
 
 export default withRouter(UserProfile);
