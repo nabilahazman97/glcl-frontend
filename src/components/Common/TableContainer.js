@@ -178,7 +178,7 @@ const TableContainer = ({
                 className="btn mb-2 me-2 btnstyle"
                 onClick={handleUserClick}
               >
-                <i className="mdi mdi-plus-circle-outline me-1" />
+                <i className="mdi mdi-plus me-1" />
                 Gold Coin
               </Button>
             </div>
@@ -194,7 +194,7 @@ const TableContainer = ({
                 className="btn mb-2 me-2 btnstyle"
                 onClick={handleUserClick}
               >
-                <i className="mdi mdi-plus-circle-outline me-1" />
+                <i className="mdi mdi-plus me-1" />
                 New Tier
               </Button>
             </div>

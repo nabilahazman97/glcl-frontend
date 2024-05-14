@@ -239,7 +239,7 @@ const SidebarContent = props => {
 
             <li>
               <Link to="/#" className="has-arrow ">
-                <span>{props.t("GOLDMANAGEMENT")}</span>
+                <span>{props.t("GOLD MANAGEMENT")}</span>
               </Link>
               <ul className="sub-menu">
                 <li  >
@@ -261,7 +261,7 @@ const SidebarContent = props => {
 
             <li>
               <Link to="/#" className="has-arrow ">
-                <span>{props.t("MEMBERSHIPTIER")}</span>
+                <span>{props.t("MEMBERSHIP TIER")}</span>
               </Link>
               <ul className="sub-menu">
                 <li  >

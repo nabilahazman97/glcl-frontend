@@ -39,10 +39,23 @@ function UpdateGoldRate() {
     const [data, setUserData] = useState([]);
     const [modal_transaction_summary, setmodal_transaction_summary] = useState(false);
     const [activeTab, setactiveTab] = useState("1");
-    const [togModalAssignGold, setTogModalAssignGold] = useState(false);
-    const [togModalReasonReject, setTogModalReasonReject] = useState(false);
     const [togModalApproved, setTogModalApproved] = useState(false);
-    const [togModalRejected, setTogModalRejected] = useState(false);
+    const [valueGoldRate, setValueGoldRate] = useState('');  
+    const [editing, setEditing] = useState(false);
+    
+    const handleChange = (event) => {
+        setValueGoldRate(event.target.value);
+    };
+
+    // Function to handle span click and toggle editing state
+    const handleSpanClick = () => {
+        setEditing(true);
+    };
+
+    // Function to handle input blur and update editing state
+    const handleInputBlur = () => {
+        setEditing(false);
+    };
 
 
     const toggle = tab => {
@@ -337,7 +350,25 @@ function UpdateGoldRate() {
                 <Card className="defCard p-3" style={{ minHeight: '180px', backgroundColor:'#d4af37', color:"white" }}>
                     <CardBody>
                         <div className="text-center std_font mb-4">GLCL Gold Rate:</div>
-                        <h1 className="text-center inter_bold">RM <span>___</span> /g</h1>
+                         <h1 className="text-center inter_bold">
+            RM{' '}
+            <span onClick={handleSpanClick}>
+                {editing ? (
+                    <input
+                    className="normal-input"
+                        type="text"
+                        value={valueGoldRate}
+                        onChange={handleChange}
+                        onBlur={handleInputBlur}
+                        autoFocus // Focus the input field when editing starts
+                        style={{ maxWidth:"150px" }}
+                    />
+                ) : (
+                    valueGoldRate || '__'
+                )}
+            </span>{' '}
+            /g
+        </h1>
                     </CardBody>
                 </Card>
                
@@ -356,9 +387,6 @@ function UpdateGoldRate() {
                
 
                 {/* MODALS */}
-
-                {/* SELLING */}
-
                 {/* PURCHASE TRANSACTION SUMMARY */}
                 <Modal
 
@@ -370,20 +398,6 @@ function UpdateGoldRate() {
                     }}
                     centered
                 >
-                    {/* <div className="modal-header">
-                        <h5 className="modal-title mt-0 cardTitle">Transaction Summary</h5>
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setmodal_transaction_summary(false);
-                            }}
-                            className="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                        >
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div> */}
                     <div className="modal-body">
                        
                                 <div className="">
@@ -393,7 +407,7 @@ function UpdateGoldRate() {
                                     <div className="text-center mt-4 modal-reject-icon">
                                             <i className="mdi mdi-alert-outline font-size-16 align-middle me-1 mb-2"></i>{" "}
 
-                                            <h5 className="modal-title mb-5" id="staticBackdropLabel">Are you sure you want to update gold rate for today to RM320/g ?</h5>
+                                            <h5 className="modal-title mb-5" id="staticBackdropLabel">Are you sure you want to update gold rate for today to RM {valueGoldRate} /g ?</h5>
 
                                         </div>
                                 </div>
@@ -434,50 +448,7 @@ function UpdateGoldRate() {
                 </Modal>
                 {/* PURCHASE TRANSACTION SUMMARY */}
 
-                {/* ASSIGN GOLD COIN */}
-                <Modal
-                    isOpen={togModalAssignGold}
-                    toggle={() => {
-                        // tog_toggleModal();
-                        tog_assign_gold();
-                    }}
-                    centered
-                >  <ModalBody>
-                        <div className="d-flex justify-content-between mb-3">
-                            <h5 className="modal-title" id="staticBackdropLabel">Assign Gold Coin</h5>
-                        </div>
-
-                        <label>Serial Number</label>
-                        <Select
-                            name="ethnicity"
-                            // placeholder={"Ethnicity"}
-
-
-                            className="select2-selection text_1"
-                        />
-                    </ModalBody>
-
-                    <div className="text-center mb-3 mt-3">
-                        <Button color="warning" className="modalCancelBtn me-2" outline
-                            onClick={() => {
-                                tog_assign_gold();
-                            }}
-
-                        >Cancel</Button>{' '}
-                        <Button color="primary" className="modalConfirmBtn"
-                            onClick={() => {
-                                tog_approved();
-                            }}
-
-                        >
-                            Submit
-                        </Button>
-
-                    </div>
-
-                </Modal>
-                {/* ASSIGN GOLD COIN */}
-
+            
                 {/* PURCHASE APPROVED */}
                 <Modal
                     isOpen={togModalApproved}
@@ -495,7 +466,7 @@ function UpdateGoldRate() {
                     </div>
                     <ModalBody className="text-center">
 
-                        <p>The gold rate for today has been updated successfully to RM320/g.</p>
+                        <p>The gold rate for today has been updated successfully to RM {valueGoldRate} /g.</p>
                     </ModalBody>
                     <div className="text-center mb-3">
                         <Button color="primary" className="modalConfirmBtn"
@@ -511,95 +482,6 @@ function UpdateGoldRate() {
                     </div>
                 </Modal>
                 {/* PURCHASE APPROVED */}
-
-                {/* REASON REJECT */}
-                <Modal
-                    isOpen={togModalReasonReject}
-                    toggle={() => {
-
-                        tog_reason_reject();
-                    }}
-                    centered
-                >  <ModalBody>
-                        <div className="text-center mt-4 modal-reject-icon">
-                            <i className="mdi mdi-alert-outline font-size-16 align-middle me-1 mb-2"></i>{" "}
-
-                            <h5 className="modal-title" id="staticBackdropLabel">Are you sure you want to reject this purchase? Please state the reason.</h5>
-
-                        </div>
-
-                        <Input
-                            type="textarea"
-                            name=""
-                            id="textarea"
-                            className="login-textarea mt-3"
-                            // onChange={e => {
-                            //   textareachange(e);
-                            // }}
-                            maxLength="50"
-                            rows="4"
-                        // placeholder="Home Address"
-
-                        />
-                    </ModalBody>
-
-                    <div className="text-center mb-3 mt-3">
-                        <Button color="warning" className="modalCancelBtn me-2" outline
-                            onClick={() => {
-                                tog_reason_reject(false);
-                            }}
-
-                        >Cancel</Button>{' '}
-                        <Button color="primary" className="modalConfirmBtn"
-                            onClick={() => {
-                                tog_rejected();
-                            }}
-
-                        >
-                            Yes
-                        </Button>
-
-                    </div>
-
-                </Modal>
-                {/* REASON REJECT */}
-
-                {/* PURCHASE REJECTED */}
-                <Modal
-                    isOpen={togModalRejected}
-                    toggle={() => {
-
-                        tog_rejected()
-                    }}
-                    centered
-                >
-                    <div className="text-center mt-4 modal-rejected-icon">
-                        <i className="mdi mdi-close-circle font-size-16 align-middle me-1 mb-2"></i>{" "}
-
-                        <h5 className="modal-title" id="staticBackdropLabel">The gold coin purchase has been rejected.</h5>
-
-                    </div>
-                    <ModalBody className="text-center">
-
-                        <p>An email will be sent to yusof69@gmail.com to notify them.</p>
-                    </ModalBody>
-                    <div className="text-center mb-3">
-                        <Button color="primary" className="modalConfirmBtn"
-                            data-bs-target="#firstmodal"
-                            onClick={() => {
-                                tog_reason_reject(false);
-                                tog_rejected(false);
-                                setmodal_transaction_summary(false);
-                            }}
-
-                        >
-                            Ok
-                        </Button>
-                    </div>
-                </Modal>
-                {/* PURCHASE REJECTED */}
-
-                {/* SELLING */}
 
                 {/* MODALS */}
 

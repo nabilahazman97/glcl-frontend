@@ -111,6 +111,13 @@ function MemberList() {
   const columns = useMemo(
     () => [
       {
+        Header: "No.",
+        accessor: "",
+        Cell: ({ row, rows }) => {
+          return <span>{rows.findIndex(r => r.id === row.id) + 1}</span>;
+        },
+      },
+      {
         Header: "Name",
         accessor: "username",
       },
