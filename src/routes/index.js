@@ -27,7 +27,9 @@ import AdminSwarnaTiraGoldPurchaseList from "../pages/Admin/Schemes/SwarnaTira/G
 import AdminSwarnaTiraGoldSellingList from "../pages/Admin/Schemes/SwarnaTira/GoldSelling";
 import AdminSwarnaStokamNiksepa from "../pages/Admin/Schemes/SwarnaStokamNiksepa/MemberList";
 import AdminSwarnaStokamNiksepaMemberDetails from "../pages/Admin/Schemes/SwarnaStokamNiksepa/MemberDetails";
-import AdminSvarnaRokaAgrima from "../pages/Admin/Schemes/SvarnaRokaAgrima/LoanApplication";
+import AdminSvarnaRokaAgrima from "../pages/Admin/Schemes/SvarnaRokaAgrima/LoanApplicationList";
+import AdminSvarnaRokaAgrimaLoanApprovedDetails from "../pages/Admin/Schemes/SvarnaRokaAgrima/LoanApprovedDetails";
+import AdminSvarnaRokaAgrimaLoanApplicationDetails from "../pages/Admin/Schemes/SvarnaRokaAgrima/LoanApplicationDetails";
 import AnouncementUpdate from "../pages/Admin/MembershipManagement/AnnouncementUpdate";
 import ModuleManagement from "../pages/Admin/MembershipManagement/ModuleManagement";
 import Goldvault from "../pages/Admin/GoldManagement/Goldvault";
@@ -56,7 +58,9 @@ const authProtectedRoutes = [
   { path: "/admin-swarna-tira/gold-selling-list", component: <AdminSwarnaTiraGoldSellingList /> },
   { path: "/admin-swarna-stokam-niksepa/index", component: <AdminSwarnaStokamNiksepa /> },
   { path: "/admin-swarna-stokam-niksepa/member-details/:Uid", component: <AdminSwarnaStokamNiksepaMemberDetails /> },
-  { path: "/admin-svarna-roka-agrima/loan-application", component: <AdminSvarnaRokaAgrima /> },
+  { path: "/admin-svarna-roka-agrima/loan-application-list", component: <AdminSvarnaRokaAgrima /> },
+  { path: "/admin-svarna-roka-agrima/loan-approved-details", component: <AdminSvarnaRokaAgrimaLoanApprovedDetails /> },
+  { path: "/admin-svarna-roka-agrima/loan-application-details", component: <AdminSvarnaRokaAgrimaLoanApplicationDetails /> },
   { path: "/admin-announcement-update", component: <AnouncementUpdate /> },
   { path: "/module-management", component: <ModuleManagement /> },
   { path: "/update-gold-rate", component: <UpdateGoldRate /> },
