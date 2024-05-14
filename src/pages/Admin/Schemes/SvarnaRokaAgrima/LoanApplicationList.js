@@ -18,7 +18,7 @@ import html2pdf from 'html2pdf.js';
 
 import "../../style.scss";
 
-function LoanApplication() {
+function LoanApplicationList() {
   const [data, setUserData] = useState([]);
   const [dataRejected, setRejectedData] = useState([]);
   const [startDate, setStartDate] = useState(null);
@@ -393,10 +393,10 @@ function LoanApplication() {
   return (
     <div className="page-content picBg">
       <ToastContainer />
-      <Breadcrumbs title="Tables" breadcrumbItem="NEW MEMBER VERIFICATION" />
+      <Breadcrumbs title="Tables" breadcrumbItem="SVARNA ROKA AGRIMA SCHEME" />
       <Card className="defCard" id="contentToExport">
         <CardBody>
-          <CardTitle className="mb-3 cardTitle">List of New Members</CardTitle>
+          <CardTitle className="mb-3 cardTitle">Loan Application</CardTitle>
           <div className="container-fluid">
             <div className="d-flex justify-content-end">
               <button
@@ -424,7 +424,7 @@ function LoanApplication() {
                       handleReset();
                     }}
                   >
-                    Pending Approval
+                    Pending Loan Approval
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -438,7 +438,7 @@ function LoanApplication() {
                       handleReset();
                     }}
                   >
-                    Rejected User
+                    Approved Loan Members
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -520,4 +520,4 @@ function LoanApplication() {
   );
 }
 
-export default LoanApplication;
+export default LoanApplicationList;
