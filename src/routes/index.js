@@ -30,6 +30,9 @@ import AdminSwarnaStokamNiksepaMemberDetails from "../pages/Admin/Schemes/Swarna
 import AdminSvarnaRokaAgrima from "../pages/Admin/Schemes/SvarnaRokaAgrima/LoanApplicationList";
 import AdminSvarnaRokaAgrimaLoanApprovedDetails from "../pages/Admin/Schemes/SvarnaRokaAgrima/LoanApprovedDetails";
 import AdminSvarnaRokaAgrimaLoanApplicationDetails from "../pages/Admin/Schemes/SvarnaRokaAgrima/LoanApplicationDetails";
+import AdminSvarnaAhitaList from "../pages/Admin/Schemes/SvarnaAhita/index";
+import AdminSvarnaAhitaRequestView from "../pages/Admin/Schemes/SvarnaAhita/RequestView";
+import AdminSvarnaAhitaUserView from "../pages/Admin/Schemes/SvarnaAhita/UserView";
 import AnouncementUpdate from "../pages/Admin/MembershipManagement/AnnouncementUpdate";
 import ModuleManagement from "../pages/Admin/MembershipManagement/ModuleManagement";
 import Goldvault from "../pages/Admin/GoldManagement/Goldvault";
@@ -61,6 +64,9 @@ const authProtectedRoutes = [
   { path: "/admin-svarna-roka-agrima/loan-application-list", component: <AdminSvarnaRokaAgrima /> },
   { path: "/admin-svarna-roka-agrima/loan-approved-details", component: <AdminSvarnaRokaAgrimaLoanApprovedDetails /> },
   { path: "/admin-svarna-roka-agrima/loan-application-details", component: <AdminSvarnaRokaAgrimaLoanApplicationDetails /> },
+  { path: "/admin-svarna-ahita/index-list", component: <AdminSvarnaAhitaList /> },
+  { path: "/admin-svarna-ahita/request-view", component: <AdminSvarnaAhitaRequestView /> },
+  { path: "/admin-svarna-ahita/user-view", component: <AdminSvarnaAhitaUserView /> },
   { path: "/admin-announcement-update", component: <AnouncementUpdate /> },
   { path: "/module-management", component: <ModuleManagement /> },
   { path: "/update-gold-rate", component: <UpdateGoldRate /> },

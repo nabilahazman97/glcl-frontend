@@ -147,7 +147,13 @@ const Goldvault = (props) => {
   
   const columns = useMemo(
     () => [
-    
+      {
+        Header: "No.",
+        accessor: "",
+        Cell: ({ row, rows }) => {
+          return <span>{rows.findIndex(r => r.id === row.id) + 1}</span>;
+        },
+      },
       {
         Header: "barcode",
         accessor: "barcode",
@@ -186,7 +192,7 @@ const Goldvault = (props) => {
         Header: "Action",
         Cell: (cellProps) => {
           return (
-            <div className="d-flex gap-3">
+            <div className="d-flex gap-3 justify-content-center">
               <Link
                 to="#"
                 className="text-success"
@@ -334,9 +340,7 @@ const Goldvault = (props) => {
           <Breadcrumbs title="GoldManagement" breadcrumbItem="Gold Vault" />
           <Row>
             <Col lg="12">
-              <Card>
-                <CardBody>
-                  <Row>
+            <Row>
                     <div class="col-md-4">
                       <a class="text-decoration-none" href="">
                         <div class="mini-stats-wid card blubg">
@@ -386,6 +390,9 @@ const Goldvault = (props) => {
                       </a>
                     </div>
                   </Row>
+              <Card>
+                <CardBody>
+                
                   <TableContainer
                     columns={columns}
                     data={users}
