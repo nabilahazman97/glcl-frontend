@@ -151,6 +151,10 @@ const MemberDetails = () => {
       .save('document.pdf');
   };
 
+  const printInvoice = () => {
+    window.print();
+  };
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -275,7 +279,7 @@ const MemberDetails = () => {
                         EXPORT
                       </button>
 
-                      <Link to="#" className="btn btn-success downloadBtn">
+                      <Link to="#" className="btn btn-success downloadBtn" onClick={printInvoice}>
                         <img
                           src={print}
                           alt=""

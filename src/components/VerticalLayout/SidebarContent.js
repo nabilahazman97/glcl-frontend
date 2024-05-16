@@ -222,31 +222,32 @@ const SidebarContent = props => {
                 {/* <li >
                   <Link to="/admin-svarna-roka-agrima/loan-application-details">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
                 </li> */}
+                 {/* <li  >
+                <Link to="/admin-svarna-ahita/user-view">{props.t("SVARNA AHITA SCHEME")}</Link>
+              </li> */}
               </ul>
-
+             
               {/* <li >
-                  <Link to="/#">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
-                </li>
-                <li  >
-                  <Link to="/#">{props.t("SVARNA AHITA SCHEME")}</Link>
-                </li>
-                <li  >
-                  <Link to="/#">{props.t("SVARNA RUNA SCHEME")}</Link>
-                </li> */}
+                <Link to="/#">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
+              </li>
+
+              <li  >
+                <Link to="/#">{props.t("SVARNA RUNA SCHEME")}</Link>
+              </li> */}
 
             </li>
 
 
             <li>
               <Link to="/#" className="has-arrow ">
-                <span>{props.t("GOLDMANAGEMENT")}</span>
+                <span>{props.t("GOLD MANAGEMENT")}</span>
               </Link>
               <ul className="sub-menu">
                 <li  >
                   <Link to="/Goldvault">{props.t("Gold Vault")}</Link>
                 </li>
-                
-               {/* <li >
+
+                {/* <li >
                   <Link to="/#">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
                 </li>
                 <li  >
@@ -261,14 +262,14 @@ const SidebarContent = props => {
 
             <li>
               <Link to="/#" className="has-arrow ">
-                <span>{props.t("MEMBERSHIPTIER")}</span>
+                <span>{props.t("MEMBERSHIP TIER")}</span>
               </Link>
               <ul className="sub-menu">
                 <li  >
                   <Link to="/Membertier">{props.t("Membership tier")}</Link>
                 </li>
-                
-               {/* <li >
+
+                {/* <li >
                   <Link to="/#">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
                 </li>
                 <li  >

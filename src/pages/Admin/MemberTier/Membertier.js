@@ -16,6 +16,7 @@ import {
   UncontrolledTooltip,
   Input,
   Form,
+  CardTitle,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -153,8 +154,15 @@ const Membertier = props => {
     //       </>
     //     ),
     //   },
+    {
+      Header: "No.",
+      accessor: "",
+      Cell: ({ row, rows }) => {
+        return <span>{rows.findIndex(r => r.id === row.id) + 1}</span>;
+      },
+    },
       {
-        Header: "TierName",
+        Header: "Tier Name",
         accessor: "tierName",
         filterable: true,
         // Cell: cellProps => {
@@ -162,7 +170,7 @@ const Membertier = props => {
         // },
       },
       {
-        Header: "TotalGold",
+        Header: "Total Gold Coin (gm)",
         accessor: "totalGold",
         filterable: true,
         // Cell: cellProps => {
@@ -170,7 +178,7 @@ const Membertier = props => {
         // },
       },
       {
-        Header: "DiscountPrice",
+        Header: "Gold Price Discount (%)",
         accessor: "discountPrice",
         filterable: true,
         // Cell: cellProps => {
@@ -194,7 +202,7 @@ const Membertier = props => {
         Header: "Action",
         Cell: cellProps => {
           return (
-            <div className="d-flex gap-3">
+            <div className="d-flex gap-3 justify-content-center">
               <Link
                 to="#"
                 className="text-success"
@@ -322,6 +330,7 @@ const Membertier = props => {
             <Col lg="12">
               <Card>
                 <CardBody>
+                <CardTitle className="mb-3 cardTitle">List of Member Tier</CardTitle>
                   <TableContainer
                     columns={columns}
                     data={users}
