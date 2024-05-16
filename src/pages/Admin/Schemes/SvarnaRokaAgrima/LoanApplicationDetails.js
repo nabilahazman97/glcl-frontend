@@ -223,24 +223,24 @@ const LoanApplicationDetails = () => {
                                                                     </h4>
                                                                 </div>
                                                             </div>
-                                                            <div className="d-flex justify-content-between mt-3">
-                                                                <div className="inter_regular">
-                                                                    <div>Loan Amount</div>
-                                                                    <div>Loan Duration</div>
-                                                                    <div>Interest Rate</div>
-                                                                    <div>Preferred Bank</div>
-                                                                    <div>Bank Number</div>
-                                                                    <div>Name According to Bank</div>
-                                                                    <div>Installment Amount</div>
+                                                            <div className="d-flex justify-content-between mt-4 smFont">
+                                                                <div className="inter_regular col-md-6">
+                                                                    <div className="mb-3">Loan Amount</div>
+                                                                    <div className="mb-3">Loan Duration</div>
+                                                                    <div className="mb-3">Interest Rate</div>
+                                                                    <div className="mb-3">Preferred Bank</div>
+                                                                    <div className="mb-3">Bank Number</div>
+                                                                    <div className="mb-3">Name According to Bank</div>
+                                                                    <div className="mb-3">Installment Amount</div>
                                                                 </div>
-                                                                <div className="inter_regular">
-                                                                    <div>RM 5000.00</div>
-                                                                    <div>15 months</div>
-                                                                    <div>1.2 %</div>
-                                                                    <div>CIMB Clicks</div>
-                                                                    <div>1111111111</div>
-                                                                    <div>Muhammad Yusof</div>
-                                                                    <div>RM 337.33</div>
+                                                                <div className="inter_regular col-md-6 text-end">
+                                                                    <div className="mb-3">RM 5000.00</div>
+                                                                    <div className="mb-3">15 months</div>
+                                                                    <div className="mb-3">1.2 %</div>
+                                                                    <div className="mb-3">CIMB Clicks</div>
+                                                                    <div className="mb-3">1111111111</div>
+                                                                    <div className="mb-3">Muhammad Yusof</div>
+                                                                    <div className="mb-3">RM 337.33</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -272,7 +272,7 @@ const LoanApplicationDetails = () => {
                                         <Col lg={6}>
                                             <Card className="defCard" style={{ background: "linear-gradient(90deg, rgba(212, 175, 55, 0.5) 10.69%, rgba(207, 180, 92, 0.295) 89.61%)", backgroundColor: "white" }}>
                                                 <CardBody className="align-content-center">
-                                                    <div>
+                                                <div>
                                                         <div className="">
                                                             <div className="text-center">
                                                                 <div className="" id="radialchart-1" style={{ borderBottom: "2px solid black" }}>
@@ -286,23 +286,25 @@ const LoanApplicationDetails = () => {
                                                                     />
                                                                 </div>
                                                             </div>
-                                                            <div className="d-flex justify-content-between p-3 gap-3">
-                                                                <Card className="text-center" style={{ background: "none", backgroundColor: "none", width: '150px', border: '1px solid black' }}>                                                            <CardBody className="align-content-center">
-                                                                    <div>0</div>
-                                                                    <div>Overdue Loan</div>
-                                                                </CardBody>
-                                                                </Card>
-                                                                <Card className="text-center" style={{ background: "none", backgroundColor: "none", width: '150px', border: '1px solid black' }}>                                                            <CardBody className="align-content-center">
-                                                                    <div>0</div>
-                                                                    <div>Loan Period Month</div>
-                                                                </CardBody>
-                                                                </Card>
-                                                                <Card className="text-center" style={{ background: "none", backgroundColor: "none", width: '150px', border: '1px solid black' }}>
-                                                                    <CardBody className="align-content-center">
-                                                                        <div>0</div>
-                                                                        <div>Active Loan</div>
-                                                                    </CardBody>
-                                                                </Card>
+                                                            <div className="d-flex justify-content-between align-content-start p-3 gap-3">
+                                                            <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>                                                           
+                                                             <CardBody className="">
+                                                                <div className="lgFont text-dark-gold mb-2">0</div>
+                                                                <div className="std_font inter_bold">Overdue Loan</div>
+                                                            </CardBody>
+                                                            </Card>
+                                                            <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>  
+                                                            <CardBody className="">
+                                                                 <div className="lgFont text-dark-gold mb-2">0</div>
+                                                                <div className="std_font inter_bold">Loan Period Month</div>
+                                                            </CardBody>
+                                                            </Card>
+                                                            <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>
+                                                            <CardBody className="">
+                                                            <div className="lgFont text-dark-gold mb-2">0</div>
+                                                                <div className="std_font inter_bold">Active Loan</div>
+                                                            </CardBody>
+                                                            </Card>
                                                             </div>
 
                                                         </div>

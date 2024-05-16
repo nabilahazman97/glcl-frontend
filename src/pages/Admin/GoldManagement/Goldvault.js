@@ -390,7 +390,7 @@ const Goldvault = (props) => {
                       </a>
                     </div>
                   </Row>
-              <Card>
+              <Card className="defCard">
                 <CardBody>
                 
                   <TableContainer
