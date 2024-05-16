@@ -637,7 +637,7 @@ function GoldSelling() {
               </h5>
             </div>
             <ModalBody className="text-center">
-              <p>The buyer will be notified regarding approval.</p>
+              {/* <p>The buyer will be notified regarding approval.</p> */}
             </ModalBody>
             <div className="text-center mb-3"></div>
           </Modal>
@@ -711,12 +711,12 @@ function GoldSelling() {
             <div className="text-center mt-4 modal-rejected-icon">
               <i className="mdi mdi-close-circle font-size-16 align-middle me-1 mb-2"></i>{" "}
               <h5 className="modal-title" id="staticBackdropLabel">
-                Gold Coin Purchase Rejected
+                Gold Coin selling Rejected
               </h5>
             </div>
             <ModalBody className="text-center">
               <p>
-                The buyer will be notified regarding rejection and it's reason.
+                {/* The buyer will be notified regarding rejection and it's reason. */}
               </p>
             </ModalBody>
             <div className="text-center mb-3">

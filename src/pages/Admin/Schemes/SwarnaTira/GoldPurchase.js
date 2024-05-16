@@ -70,12 +70,11 @@ function GoldPurchase() {
           let filteredData = res.data.result;
           let filteredData1 = res.data.result.filter(
             (item) =>
-              item.status_id === 3 &&
-              item.gold_grams != null &&
-              item.gold_grams != "0" 
-            
-              
-          );
+                item.status_id === 3 &&
+                item.gold_grams != null &&
+                item.gold_grams != "0" &&
+                (item.type_id === 1 || item.type_id === 5)
+        );
           if (startDate && endDate) {
             const startTimestamp = startDate.getTime();
             const endTimestamp = endDate.getTime();
@@ -112,21 +111,20 @@ function GoldPurchase() {
   const toggle = (tab) => {
     if (tab == 1) {
       const filternonapprovedadata = data.filter(
-        (item) => item.status_id === 3 
+        (item) =>  (item.status_id === 3 && item.type_id === 1) || item.type_id === 5
       );
       setUserData1(filternonapprovedadata);
     } else if (tab == 2) {
       const filterapprovedadata = data.filter(
         (item) =>
-          item.status_id === 1 &&
-          item.gold_grams != null &&
-          item.gold_grams != "0" &&
-          item.type_id ===1 || item.type_id ===5
-      );
+            item.status_id === 1 &&
+            item.gold_grams != null &&
+            item.gold_grams != "0" &&
+            (item.type_id === 1 || item.type_id === 5)
+    );
       setUserData1(filterapprovedadata);
     } else if (tab == 3) {
-      const filterapprovedadata = data.filter((item) => item.status_id === 2 &&
-      item.type_id ===1 || item.type_id ===5);
+      const filterapprovedadata = data.filter((item) => item.status_id === 2 && (item.type_id === 1 || item.type_id === 5));
       setUserData1(filterapprovedadata);
     }
 
@@ -650,7 +648,7 @@ function GoldPurchase() {
             </h5>
           </div>
           <ModalBody className="text-center">
-            <p>The buyer will be notified regarding approval.</p>
+            {/* <p>The buyer will be notified regarding approval.</p> */}
           </ModalBody>
           <div className="text-center mb-3"></div>
         </Modal>
@@ -729,7 +727,7 @@ function GoldPurchase() {
           </div>
           <ModalBody className="text-center">
             <p>
-              The buyer will be notified regarding rejection and it's reason.
+              {/* The buyer will be notified regarding rejection and it's reason. */}
             </p>
           </ModalBody>
           <div className="text-center mb-3">

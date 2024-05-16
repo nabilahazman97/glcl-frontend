@@ -113,9 +113,15 @@ const MemberDetails = () => {
             )
         }}>
             
+            {
 
-            {(row.original.type_id === 3 && row.original.reference_id != null) ? "Added selled Amount to the Wallet" :
-    ((row.original.type_id === 4 && row.original.reference_id != null) ? "Deducted amount from wallet" : "Top up done by user")}
+    ((row.original.type_id === 3 && row.original.reference_id != null && row.original.status_id==4)? "rejected purchase amount added to the wallet" :
+    ((row.original.type_id === 3 && row.original.reference_id != null)? "Added selled Amount to the Wallet" :
+    ((row.original.type_id === 4 && row.original.reference_id != null) ? "Deducted amount from wallet" : "Top up done by user")))}
+
+             {/* {(row.original.type_id === 3 && row.original.reference_id != null) ? "Added selled Amount to the Wallet" : 
+            ((row.original.type_id === 3 && row.original.reference_id != null && row.original.status_id==4)? "rejected purchase amount added to the wallet" :
+     ((row.original.type_id === 4 && row.original.reference_id != null) ? "Deducted amount from wallet" : "Top up done by user"))}  */}
            
 
            

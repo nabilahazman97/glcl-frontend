@@ -140,7 +140,8 @@ const MemberDetails = () => {
     (row.original.type_id === 2 ? "Sell - " :
     ((row.original.type_id === 4 && row.original.reference_id != null)? "deducted amount from wallet" :
     (row.original.type_id === 5 ? "Buyed through wallet - " :
-    ((row.original.type_id === 3 && row.original.reference_id != null) ? "Added selled Amount to the Wallet" : "Top up done by user"))))}
+    ((row.original.type_id === 3 && row.original.reference_id != null && row.original.status_id==4)? "rejected purchase amount added to the wallet" :
+    ((row.original.type_id === 3 && row.original.reference_id != null) ? "Added selled Amount to the Wallet" : "Top up done by user")))))}
 
         
 
@@ -150,6 +151,10 @@ const MemberDetails = () => {
         ),
       },
 
+{
+        Header: "Trans_Status",
+        accessor: "status_id",
+      },
       {
         Header: "Amount (RM)",
         accessor: "amount",
