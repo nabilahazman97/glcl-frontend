@@ -197,7 +197,7 @@ const SidebarContent = props => {
               <ul className="sub-menu">
                 <li  >
                   <Link to="/admin-swarna-tira/index">{props.t("SVARNA TIRA SCHEME")}</Link>
-                  {/* <ul className="sub-menu">
+                  <ul className="sub-menu">
                     <li  >
                       <Link to="/admin-swarna-tira/index">{props.t("List of Members")}</Link>
                     </li>
@@ -208,7 +208,7 @@ const SidebarContent = props => {
                       <Link to="/admin-swarna-tira/gold-selling-list">{props.t("Gold Selling")}</Link>
                     </li>
 
-                  </ul> */}
+                  </ul>
                 </li>
                 <li >
                   <Link to="/admin-swarna-stokam-niksepa/index">{props.t("SVARNA STOKAM NIKSEPA SCHEME")}</Link>

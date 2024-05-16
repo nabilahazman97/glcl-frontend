@@ -44,43 +44,49 @@ const MemberDetails = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [walletbal, setwalletbal] = useState([]);
-  const [overallbal, setoverallbal] = useState([]);
+  // const [overallbal, setoverallbal] = useState([]);
   const [username, setusername] = useState([]);
   const [membership_id, setmembership_id] = useState([]);
 
   useEffect(() => {
-    const userScheme = {
-      scheme_id: "2",
-      user_id: Uid,
-    };
-    post(apiname.userScheme, userScheme)
-      .then((res) => {
-        let filteredData = res.data.result;
+    
+    get(`${apiname.translistbyid}/${Uid}`)
+    .then((res) => {
+     
+      if (res.status == '404') {
+      } else {
+        let filteredData = res.data.result.filter(item=>item.type_id===3 || item.type_id===4 );
         if (startDate && endDate) {
-          const startTimestamp = startDate.getTime();
-          const endTimestamp = endDate.getTime();
+          const startOfDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+          const endOfDay = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), 23, 59, 59);
           filteredData = filteredData.filter((item) => {
-            const itemDate = new Date(item.date).getTime();
-            return itemDate >= startTimestamp && itemDate <= endTimestamp;
+            const itemDate = new Date(item.createdAt);
+            return itemDate >= startOfDay && itemDate <= endOfDay;
           });
         }
-        setusername(filteredData[0].username)
-        setmembership_id(filteredData[0].membership_id)
         setUserData(filteredData);
 
-        //to get wallet bal
 
-        const getwalletbal = {
-          user_id: Uid,
-        };
-        post(apiname.walletbal, getwalletbal)
-          // .then((res) => console.log(res.result.type_3_walletbal))
-          .then((res) => {
-            setwalletbal(res.data.result.walletbal);
-            setoverallbal(res.data.result.type_3_walletbal);
-          })
 
-          .catch((err) => console.log(err));
+        setusername(filteredData[0].User.username)
+        setmembership_id(filteredData[0].User.membership_id)
+
+
+      }
+
+      get(`${apiname.walletholdingbyid}/${Uid}`)
+      .then((getwalletbal) => {
+        
+            if (getwalletbal.status == '404') {
+  
+          } else {
+            setwalletbal(getwalletbal.data.result.balance)
+          }
+  
+      })
+      .catch((err) => console.log(err));
+
+     
       })
       .catch((err) => console.log(err));
   }, [startDate, endDate]);
@@ -94,8 +100,32 @@ const MemberDetails = () => {
         // Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
       },
       {
-        Header: "Amount (RM)",
-        accessor: "total",
+        Header: "Amount through",
+        accessor: "reference_id",
+        Cell: ({ row }) => (
+          <span style={{ 
+            color: (
+                row.original.type_id === 1 ? "#4fb946" :
+                (row.original.type_id === 2 ? "red" :
+                (row.original.type_id === 3 ? "blue" :
+                (row.original.type_id === 4 ? "violet" :
+                (row.original.type_id === 5 ? "#4fb946" : "black"))))
+            )
+        }}>
+            
+
+            {(row.original.type_id === 3 && row.original.reference_id != null) ? "Added selled Amount to the Wallet" :
+    ((row.original.type_id === 4 && row.original.reference_id != null) ? "Deducted amount from wallet" : "Top up done by user")}
+           
+
+           
+          </span>
+        ),
+      },
+      {
+        Header: "Amount",
+        accessor: "amount",
+        
       },
 
       {
@@ -173,9 +203,9 @@ const MemberDetails = () => {
                           </div>
                           <div className="text-center">
                             <div className="mt-2">
-                              <h6 className="">Remaining Balance/overall deposited amount</h6>
+                              <h6 className="">Remaining Balance</h6>
                               <h3 className="text-dark inter_bold">
-                                {walletbal}/{overallbal}
+                                {walletbal}
                               </h3>
                             </div>
                           </div>

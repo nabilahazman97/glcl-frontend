@@ -150,18 +150,24 @@ export const schemeList="/api/scheme/list"; //
 
 export const userScheme ="/api/scheme/schemelist"; //
 
+
+
 export const remainGold ="/api/scheme/remaininggold"; //
 
 export const walletbal ="/api/scheme/getwalletbal"; //
 
 
-export const Goldvaultadd ="/api/goldvault/create"; //
+export const Goldvaultadd ="/api/goldvault/createBatch"; //
 
 export const Goldvaultlist ="/api/goldvault/list"; //
 
 export const Goldvaultdelete ="/api/goldvault/delete"; //
 
 export const Goldvaultedit ="/api/goldvault/update"; //
+
+// assign gold coin
+export const assigngoldcoin ="/api/goldvault/assigngoldcoin"; //
+
 
 
 export const membershipadd ="/api/membership/create"; //
@@ -172,6 +178,36 @@ export const membershipdelete ="/api/membership/delete"; //
 
 export const membershipedit ="/api/membership/update"; //
 
+// schemelist
+export const translist ="/api/transaction/list"; //
 
+// schemelist with respect to user id
+export const translistbyid ="/api/transaction/getByUserId"; //
+
+// schemelist with approve
+export const approval ="/api/transaction/approval"; //
+
+// get by translistbyid
+export const getbytransactionid ="/api/transaction/getbytransactionid"; //
+
+
+// ewallet list
+
+export const ewalletlist ="/api/ewallet/list"; //
+
+// goldholdings list
+export const goldholdingslist ="/api/goldholdings/list"; //
+
+// gold holding byid
+
+export const goldholdingbyid ="/api/goldholdings/getByUserId"; //
+
+//gold assigned to user
+
+export const goldassignedtouser="/api/goldvault/getByUserId"; //
+
+// wallet holding byid
+
+export const walletholdingbyid ="/api/ewallet/getByUserId"; //
 
 // http://localhost:4200/api/goldvault/delete/2

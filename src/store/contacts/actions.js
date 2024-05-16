@@ -81,14 +81,33 @@ export const getUsersSuccess = users => ({
   export const addNewUser = (additionalFieldsArray) => {
     return async (dispatch) => {
       try {
-        post(apiname.Goldvaultadd, additionalFieldsArray)
+
+        
+        var convertedArray = {
+          "barcodes": additionalFieldsArray.map(obj => obj.barcodes)
+        };
+        // console.log("convertedArray");
+        // console.log(convertedArray);
+
+        post(apiname.Goldvaultadd, convertedArray)
           .then((reslist) => {
+           
             if (reslist.status == 201) {
-              dispatch(addUserSuccess(reslist.data.result[0]));
+              console.log("reslist.data");
+              console.log(reslist.data.result.length);
+              reslist.data.result.forEach(user => {
+                dispatch(addUserSuccess(user));
+              });
+              // dispatch(addUserSuccess(reslist.data.result[1]));
               toast.success('Gold Gram Added Successfully!');
-            } else {
+            } else if(reslist.status == 200) {
+              dispatch(addUserFail(reslist.data.message));
+              toast.error(reslist.data.message+''+reslist.data.existingBarcodes);
+              
+            }else{
               dispatch(addUserFail('Failed to fetch data'));
               toast.error('Failed to add!');
+
             }
             })
       .catch((err) => console.log(err))

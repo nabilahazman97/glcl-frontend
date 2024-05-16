@@ -49,16 +49,17 @@ const MemberDetails = () => {
   const [remaininggold, setremainggold] = useState([]);
   const [username, setusername] = useState([]);
   const [membership_id, setmembership_id] = useState([]);
+  const [assignedgold,setassignedgold]=useState([]);
 
 
   useEffect(() => {
-    const userScheme = {
-      scheme_id: "1",
-      user_id: Uid
-    };
-    post(apiname.userScheme, userScheme)
+    
+
+    
+    get(`${apiname.translistbyid}/${Uid}`)
       .then((res) => {
-        if (res.status == '204') {
+       
+        if (res.status == '404') {
         } else {
           let filteredData = res.data.result;
           if (startDate && endDate) {
@@ -70,32 +71,48 @@ const MemberDetails = () => {
             });
           }
           setUserData(filteredData);
-          setusername(filteredData[0].username)
-          setmembership_id(filteredData[0].membership_id)
-
-
+          setusername(filteredData[0].User.username)
+          setmembership_id(filteredData[0].User.membership_id)
         }
 
       })
       .catch((err) => console.log(err));
 
     //to get remaining gold
-    const getremaininggoldforuser = {
-      user_id: Uid
-    };
-    post(apiname.remainGold, getremaininggoldforuser)
-      .then(res => {
-        if (res.status == '204') {
+
+    get(`${apiname.goldholdingbyid}/${Uid}`)
+    .then((getremaininggold) => {
+      
+          if (getremaininggold.status == '404') {
 
         } else {
-          setremainggold(res.data.result.remaininggold)
+          setremainggold(getremaininggold.data.result.grams)
         }
 
-      })
-      // .then(res => setremainggold(res.result.remaininggold))
-      .catch(err => console.log(err));
+    })
+    .catch((err) => console.log(err));
+
+    get(`${apiname.goldassignedtouser}/${Uid}`)
+    .then((getgoldassigned) => {
+       
+      
+          if (getgoldassigned.status == '404') {
+
+        } else {
+
+         
+
+          setassignedgold(getgoldassigned.data.result)
+        }
+
+    })
+    .catch((err) => console.log(err));
+
+   
 
   }, [startDate, endDate]);
+
+ 
 
   const comp = "Completed";
   const columns = useMemo(
@@ -104,23 +121,38 @@ const MemberDetails = () => {
         Header: "Date",
         accessor: "createdAt",
         Cell: ({ value }) => moment(value).format("DD/MM/YYYY")
-        // Cell: ({ value }) => format(new Date(value), "dd/mm/yyyy")
+
       },
       {
-        Header: "Purpose",
-        accessor: "gweight",
+        Header: "gold",
+        accessor: "gold_grams",
         Cell: ({ row }) => (
-          <span style={{ color: row.original.type === 1 ? "#4fb946" : (row.original.type === 2 ? "red" : (row.original.type === 4 ? "#4fb946" : "black")) }}>
-            {row.original.type === 1 ? "Buy - " : (row.original.type === 2 ? "Sell - " : (row.original.type === 4 ? "Buyed through wallet - " : ""))}
-            {row.values.gweight}
-            {row.original.type === 1 ? " g" : " g"}
+          <span style={{ 
+            color: (
+                row.original.type_id === 1 ? "#4fb946" :
+                (row.original.type_id === 2 ? "red" :
+                (row.original.type_id === 3 ? "blue" :
+                (row.original.type_id === 4 ? "violet" :
+                (row.original.type_id === 5 ? "#4fb946" : "black"))))
+            )
+        }}>
+          {row.original.type_id === 1 ? "Buy - " :
+    (row.original.type_id === 2 ? "Sell - " :
+    ((row.original.type_id === 4 && row.original.reference_id != null)? "deducted amount from wallet" :
+    (row.original.type_id === 5 ? "Buyed through wallet - " :
+    ((row.original.type_id === 3 && row.original.reference_id != null) ? "Added selled Amount to the Wallet" : "Top up done by user"))))}
+
+        
+
+            {row.values.gold_grams=='0' ?"":row.values.gold_grams}
+            {row.original.type_id === 1 || row.original.type_id === 2 || row.original.type_id === 5 ? " g" : " "}
           </span>
         ),
       },
 
       {
         Header: "Amount (RM)",
-        accessor: "total",
+        accessor: "amount",
       },
 
       {
@@ -150,8 +182,7 @@ const MemberDetails = () => {
     setStartDate(start);
     setEndDate(end);
   };
-  console.log("data");
-  console.log(data);
+
 
   return (
     <React.Fragment>
@@ -271,18 +302,18 @@ const MemberDetails = () => {
                             <div className="text-gold">Serial Number</div>
                          </div>
                       </div>
-                      <div className="mt-3" style={{ backgroundColor:"#d6b13f", borderRadius:'5px' }}>
-                         <div className="d-flex justify-content-between p-2">
-                            <div className="text-black">12-04-2022</div>
-                            <div className="text-black">V00001-V0002</div>
-                         </div>
-                      </div>
-                      <div className="mt-3" style={{ backgroundColor:"#d6b13f", borderRadius:'5px' }}>
-                         <div className="d-flex justify-content-between p-2">
-                            <div className="text-black">12-04-2022</div>
-                            <div className="text-black">V00001-V0002</div>
-                         </div>
-                      </div>
+                       {assignedgold.map((gold, index) => (
+                      <div className="mt-3" style={{ backgroundColor: "#d6b13f", borderRadius: '5px' }}>
+                     
+                          <div key={index} className="d-flex justify-content-between p-2">
+                              <div className="text-black">{moment(gold.updatedAt).format("DD/MM/YYYY")}</div>
+                              <div className="text-black">{gold.barcode}</div>
+                          </div>
+                     
+                  </div>
+                   ))}
+                      
+                      
                     </div>
                   </div>
                 </Card>

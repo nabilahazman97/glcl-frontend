@@ -33,48 +33,39 @@ function MemberList() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+
   useEffect(() => {
     const userScheme = {
-      scheme_id: "2",
+      scheme_id: "1",
     };
-    post(apiname.userScheme, userScheme)
-      .then(async (res) => {
 
-        if (res.status == '204') {
-        } else {
-          let filteredData = res.data.result;
-
-
-          if (startDate && endDate) {
-            const startTimestamp = startDate.getTime();
-            const endTimestamp = endDate.getTime();
-            filteredData = filteredData.filter((item) => {
-              const itemDate = new Date(item.date).getTime();
-              return itemDate >= startTimestamp && itemDate <= endTimestamp;
-            });
-          }
-
-          const ids = filteredData.map(item => item.user_id);
-
-          // Making API calls to get additional information for each item
-          const additionalInfoResults = await Promise.all(ids.map(id => getAdditionalInfo(id)));
-
-          const combinedData = filteredData.map((item, key) => ({
-
-            ...item,
-            key: key,
-            additionalInfo: additionalInfoResults[key]
-          }));
-
-          console.log(combinedData);
-          setUserData(combinedData);
+    get(apiname.ewalletlist)
+      .then((res) => {
+       
+        if(res.status=='404'){
+          setUserData('');
+        }else{
+        let filteredData = res.data.result;
+      
+        if (startDate && endDate) {
+          const startTimestamp = startDate.getTime();
+          const endTimestamp = endDate.getTime();
+          filteredData = filteredData.filter(item => {
+            const itemDate = new Date(item.createdAt).getTime();
+            return itemDate >= startTimestamp && itemDate <= endTimestamp;
+          });
         }
+            setUserData(filteredData);
+      }
+         
 
+       
       })
       .catch((err) => console.log(err));
+  }, [startDate,endDate]);
 
 
-  }, [startDate, endDate]);
+ 
 
 
   function getAdditionalInfo(id) {
@@ -91,8 +82,7 @@ function MemberList() {
 
     return post(apiname.walletbal, getwalletbal)
       .then((res) => {
-        console.log("res.result");
-        console.log(res.data.statusCode);
+     
         if (res.data.result != '') {
           return res.data.result.walletbal;
         } else {
@@ -114,10 +104,7 @@ function MemberList() {
         Header: "Name",
         accessor: "username",
       },
-      {
-        Header: "NRIC No.",
-        accessor: "icnumber",
-      },
+   
       {
         Header: "Email Address",
         accessor: "email_id",
@@ -125,7 +112,7 @@ function MemberList() {
 
       {
         Header: "Wallet",
-        accessor: "additionalInfo",
+        accessor: "balance",
         // Cell: ({ value }) => <span>{value}</span>,
       },
       {
