@@ -49,6 +49,7 @@ function GoldPurchase() {
   const [togModalRejected, setTogModalRejected] = useState(false);
   const [textvalue, setValue] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage1, setErrorMessage1] = useState('');
   const handleChange = (event) => {
     setValue(event.target.value);
   };
@@ -228,21 +229,7 @@ function GoldPurchase() {
     // setTogModal1(false)
     removeBodyCss();
 
-    const approveid = {
-      transactionId: transactionid,
-      action: "approve",
-    };
-
-    post(apiname.approval, approveid)
-      .then((res) => {
-        if (res.status == "204") {
-          setUserData("");
-        } else {
-          let filteredData = res.data.result;
-          setUserData(filteredData);
-        }
-      })
-      .catch((err) => console.log(err));
+    
   }
 
   function tog_reason_reject() {
@@ -265,6 +252,35 @@ function GoldPurchase() {
     function tog_varyingModal() {
       setVaryingModal(!varyingModal);
     }
+
+   
+
+      if (!selectedId) {
+        // If no value is selected, set an error message
+        setErrorMessage1('Please select an option');
+        return;
+    }
+
+    // Reset error message if validation passes
+    setErrorMessage1('');
+
+    //approve
+
+      const approveid1 = {
+      transactionId: transactionid,
+      action: "approve",
+    };
+
+    post(apiname.approval, approveid1)
+      .then((res) => {
+        if (res.status == "204") {
+          setUserData("");
+        } else {
+          let filteredData = res.data.result;
+          setUserData(filteredData);
+        }
+      })
+      .catch((err) => console.log(err));
 
     // gold vault update & serial number allocate
     const approveid = {
@@ -584,6 +600,7 @@ function GoldPurchase() {
             </div>
 
             <label>Serial Number</label>
+            <div>
             <Select
               name="goldsnumber"
               options={options}
@@ -591,6 +608,8 @@ function GoldPurchase() {
               onChange={handleSelectChange}
               className="select2-selection text_1"
             />
+            {errorMessage1 && <div style={{ color: 'red' }}>{errorMessage1}</div>}
+            </div>
           </ModalBody>
           <div className="text-center mb-3 mt-3">
             <Button
