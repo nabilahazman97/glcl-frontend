@@ -111,7 +111,7 @@ function GoldPurchase() {
   const toggle = (tab) => {
     if (tab == 1) {
       const filternonapprovedadata = data.filter(
-        (item) =>  (item.status_id === 3 && item.type_id === 1) || item.type_id === 5
+        (item) =>  item.status_id === 3 && (item.type_id === 1 || item.type_id === 5)
       );
       setUserData1(filternonapprovedadata);
     } else if (tab == 2) {
