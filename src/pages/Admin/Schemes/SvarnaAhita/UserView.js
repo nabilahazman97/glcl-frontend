@@ -209,19 +209,19 @@ const GoldPawnUserView = () => {
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="d-flex justify-content-between mt-3" style={{ borderBottom: "1px solid" }}>
+                                                            <div className="d-flex justify-content-between mt-5 smFont" style={{ borderBottom: "1px solid" }}>
                                                                 <div className="inter_regular">
-                                                                    <div>Gold Coin Pawned</div>
-                                                                    <div>Gold Coin Serial Number</div>
-                                                                    <div>Subtotal</div>
+                                                                    <div className="mb-3">Gold Coin Pawned</div>
+                                                                    <div className="mb-3">Gold Coin Serial Number</div>
+                                                                    <div className="mb-3">Subtotal</div>
                                                                 </div>
-                                                                <div className="inter_regular mb-2">
-                                                                    <div>2 g</div>
-                                                                    <div>GLCL0001-GLCL0002</div>
-                                                                    <div>RM 337.33</div>
+                                                                <div className="inter_regular mb-2 text-end">
+                                                                    <div className="mb-3">2 g</div>
+                                                                    <div className="mb-3">GLCL0001-GLCL0002</div>
+                                                                    <div className="mb-3">RM 337.33</div>
                                                                 </div>
                                                             </div>
-                                                            <div className="d-flex justify-content-between mt-3">
+                                                            <div className="d-flex justify-content-between mt-3 smFont">
                                                                 <div className="inter_regular">
                                                                     <div>Amount Loaned</div>
                                                                 </div>
@@ -251,8 +251,8 @@ const GoldPawnUserView = () => {
                                                                     />
                                                                 </div>
                                                             </div>
-                                                            <div className="row text-gold" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
-                                                                <div className="text-center col-6">
+                                                            <div className="row text-gold p-2 smFont" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
+                                                                <div className="text-center col-6 ">
                                                                     Total Loan Paid
                                                                     <div className="text-white">RM 447.00</div>
                                                                 </div>
@@ -261,19 +261,22 @@ const GoldPawnUserView = () => {
                                                                     <div className="text-white">RM 149.00</div>
                                                                 </div>
                                                             </div>
-                                                            <div className="row text-gold mt-3 p-2" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
+                                                            <div className="row text-gold mt-3 p-2 smFont" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
                                                                 <div className="text-center col-4">
                                                                     <div className="text-white">Current Monthly Payment</div>
-                                                                    RM 100.00
+                                                                    <div className=""> RM 100.00</div>
+                                                                   
                                                                 </div>
                                                                 <div className="text-center col-4">
                                                                 <div className="text-white">Current Monthly Payment</div>
-                                                                    Mon, 28 July <br></br>
+                                                                    Mon, 28 July 
+                                                                    <br></br>
                                                                     In 17 days
                                                                 </div>
                                                                 <div className="text-center col-4">
                                                                 <div className="text-white">Loan Period</div>
-                                                                   Month 4 <br></br>
+                                                                   Month 4 
+                                                                   <br></br>
                                                                    6 months
                                                                 </div>
                                                             </div>
@@ -292,7 +295,7 @@ const GoldPawnUserView = () => {
                     </div>
                     <div className="d-flex justify-content-center gap-3 mb-3">
                         <Link
-                            to="/admin-swarna-stokam-niksepa/index"
+                            to="/admin-svarna-ahita/index-list"
                             style={{ textDecoration: "none" }}
                         >
                             <button className="btn btn-primary backBtn">Back</button>

@@ -231,18 +231,18 @@ const GoldPawnRequestView = () => {
                                         </div>
                                     </div>
 
-                                    <div className="d-flex justify-content-between mt-3">
+                                    <div className="d-flex justify-content-between mt-3 p-3 smFont">
                                         <div>
-                                            <div className="text-gold">Gold Coin Pawned</div>
-                                            <div className="text-gold">Gold Coin Serial Number</div>
-                                            <div className="text-gold">Loan Period</div>
-                                            <div className="text-gold">Subtotal</div>
+                                            <div className="text-gold mb-3">Gold Coin Pawned</div>
+                                            <div className="text-gold mb-3">Gold Coin Serial Number</div>
+                                            <div className="text-gold mb-3">Loan Period</div>
+                                            <div className="text-gold mb-3">Subtotal</div>
                                         </div>
-                                        <div className="mb-3">
-                                            <div className="text-gold">2 g</div>
-                                            <div className="text-gold">GLCL0001-GLCL0002</div>
-                                            <div className="text-gold">RM 596.00</div>
-                                            <div className="text-gold">6 Months</div>
+                                        <div className="mb-3 text-end">
+                                            <div className="text-gold mb-3">2 g</div>
+                                            <div className="text-gold mb-3">GLCL0001-GLCL0002</div>
+                                            <div className="text-gold mb-3">RM 596.00</div>
+                                            <div className="text-gold mb-3">6 Months</div>
                                         </div>
                                     </div>
                                 </div>
@@ -274,7 +274,7 @@ const GoldPawnRequestView = () => {
                                 </CardBody>
                             </Card>
 
-                            <Card className="defCard">
+                            {/* <Card className="defCard">
                                 <CardBody>
                                     <CardTitle className="cardTitle">
                                         Transaction History
@@ -321,12 +321,12 @@ const GoldPawnRequestView = () => {
                                         className="custom-header-css"
                                     />
                                 </CardBody>
-                            </Card>
+                            </Card> */}
                         </div>
                     </div>
                     <div className="d-flex justify-content-center gap-3 mb-3">
                         <Link
-                            to="/admin-swarna-stokam-niksepa/index"
+                            to="/admin-svarna-ahita/index-list"
                             style={{ textDecoration: "none" }}
                         >
                             <button className="btn btn-primary backBtn">Back</button>
