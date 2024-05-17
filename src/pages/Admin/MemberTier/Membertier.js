@@ -328,7 +328,7 @@ const Membertier = props => {
           <Breadcrumbs title="Membershiptier" breadcrumbItem="MEMBER TIER" />
           <Row>
             <Col lg="12">
-              <Card>
+              <Card className="defCard">
                 <CardBody>
                 <CardTitle className="mb-3 cardTitle">List of Member Tier</CardTitle>
                   <TableContainer
