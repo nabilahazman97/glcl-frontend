@@ -52,35 +52,18 @@ const Goldvault = (props) => {
 
   function closemodel(){
     setModal(false);
+    validation.resetForm();
+    window.location.reload();
   }
 
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      // name: (contact && contact.name) || "",
-      // designation: (contact && contact.designation) || "",
-      // tags: (contact && contact.tags) || "",
-      // email: (contact && contact.email) || "",
-      // projects: (contact && contact.projects) || "",
-      // additionalField_1:'',
       additionalFields:[],
       additionalField_0:additionalField0Value,
-
     },
     validationSchema: Yup.object({
-      // name: Yup.string().required("Please Enter Your Name"),
        additionalField_0: Yup.string().required("Please Enter Your Serial number"),
-      //  additionalField_1: Yup.string().required("Please Enter Your Serial number"),
-      //  additionalField_2: Yup.string().required("Please Enter Your Serial number"),
-      //  additionalField_1: Yup.array().required("Please Enter Your Serial number"),
-    
-      // email: Yup.string()
-      //   .matches(
-      //     /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-      //     "Please Enter Valid Email"
-      //   )
-      //   .required("Please Enter Your Email"),
-      // additionalFields: Yup.string().required("Please Enter Your Project"),
     }),
     onSubmit: (values) => {
       var authUserData = localStorage.getItem("authUser");
@@ -88,22 +71,18 @@ const Goldvault = (props) => {
       var user_id=authUserObject.data.result.id;
     
       if (isEdit) {
-        console.log("editval");
-        console.log(values);
+       
         const updateUser = {
           id: contact.id,
           barcode: values.additionalField_0,
-          userId: user_id,
+          // userId: '',
           goldGram:contact.goldGram,
 
         };
         dispatch(onUpdateUser(updateUser));
         setIsEdit(false);
         validation.resetForm();
-
-        
         setAdditionalField0Value('');
-
 
       } else {
         var authUserData = localStorage.getItem("authUser");
@@ -121,13 +100,13 @@ const Goldvault = (props) => {
       // Convert combined fields into an array of objects
       const additionalFieldsArray = allAdditionalFields.map((field, index) => ({
         // [`additionalField_${index}`]: field,
-          [`barcode`]: field,
-          userId:user_id 
+          [`barcodes`]: field,
+          // userId:user_id 
       }));
 
-      console.log("additionalFieldsArray");
-      console.log(additionalFieldsArray);
+      
         dispatch(onAddNewUser(additionalFieldsArray));
+        
         validation.resetForm();
       }
       toggle();
@@ -138,8 +117,7 @@ const Goldvault = (props) => {
     users: state.contacts.users,
   }));
 
-  console.log("users");
-  console.log(users);
+
 
   const [modal, setModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -158,35 +136,19 @@ const Goldvault = (props) => {
         Header: "barcode",
         accessor: "barcode",
         filterable: true,
-        // Cell: (cellProps) => {
-        //   return <Tags {...cellProps} />;
-        // },
+
       },
       {
         Header: "goldGram",
         accessor: "goldGram",
         filterable: true,
-        // Cell: (cellProps) => {
-        //   return (
-        //     <>
-        //       {" "}
-        //       <Projects {...cellProps} />{" "}
-        //     </>
-        //   );
-        // },
+
       },
       {
         Header: "userID",
         accessor: "userId",
         filterable: true,
-        // Cell: (cellProps) => {
-        //   return (
-        //     <>
-        //       {" "}
-        //       <Projects {...cellProps} />{" "}
-        //     </>
-        //   );
-        // },
+
       },
       {
         Header: "Action",

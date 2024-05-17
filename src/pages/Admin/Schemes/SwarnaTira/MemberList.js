@@ -50,10 +50,9 @@ function MemberList() {
       scheme_id: "1",
     };
 
-    post(apiname.userScheme, userScheme)
+    get(apiname.goldholdingslist)
       .then((res) => {
-        console.log("res");
-        console.log(res);
+        
         if(res.status=='204'){
           setUserData('');
         }else{
@@ -91,10 +90,7 @@ function MemberList() {
         Header: "Name",
         accessor: "username",
       },
-      {
-        Header: "NRIC No.",
-        accessor: "icnumber",
-      },
+
       {
         Header: "Email Address",
         accessor: "email_id",
@@ -102,7 +98,7 @@ function MemberList() {
 
       {
         Header: "Gold Coin",
-        accessor: "remaininggold",
+        accessor: "grams",
         Cell: ({ value }) => <span>{value} g</span>,
       },
       {
