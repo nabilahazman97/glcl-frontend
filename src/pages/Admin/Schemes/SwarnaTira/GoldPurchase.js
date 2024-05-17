@@ -237,8 +237,10 @@ function GoldPurchase() {
   }
 
   const handleSelectChange = (selectedOption) => {
+    console.log("selectedOption");
+    console.log(selectedOption);
     if (selectedOption) {
-      setSelectedId(selectedOption.value);
+      setSelectedId(selectedOption);
     } else {
       setSelectedId(null);
     }
@@ -251,18 +253,27 @@ function GoldPurchase() {
       setVaryingModal(!varyingModal);
     }
 
-   
+    console.log("selectedId");
+    console.log(selectedId.length);
 
-      if (!selectedId) {
-        // If no value is selected, set an error message
-        setErrorMessage1('Please select an option');
-        return;
-    }
+    //   if (!selectedId) {
+    //     // If no value is selected, set an error message
+    //     setErrorMessage1('Please select an option');
+    //     return;
+    // }
+
+    if (selectedId.length === 0) {
+      setErrorMessage1("Please select at least one option");
+      return;
+    } 
 
     // Reset error message if validation passes
     setErrorMessage1('');
+    // selectedOptions.length
 
-    //approve
+   
+
+    // approve
 
       const approveid1 = {
       transactionId: transactionid,
@@ -289,9 +300,11 @@ function GoldPurchase() {
 
     post(apiname.assigngoldcoin, approveid)
       .then((updateres) => {
+        
 
         if (updateres.status == "200") {
-          //   setUserData('');
+
+         
           setTogModalApproved(!togModalApproved);
           setTimeout(() => {
             setTogModalApproved(togModalApproved);
@@ -605,6 +618,7 @@ function GoldPurchase() {
               // placeholder={"Ethnicity"}
               onChange={handleSelectChange}
               className="select2-selection text_1"
+              isMulti
             />
             {errorMessage1 && <div style={{ color: 'red' }}>{errorMessage1}</div>}
             </div>
