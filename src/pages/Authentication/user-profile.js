@@ -39,6 +39,7 @@ import { del, get, post, put } from "../../helpers/api_helper";
 const UserProfile = () => {
   document.title = "GLCL";
   // const [fres, setdata] = useState([]);
+  const [userData, setUserData] = useState([]);
   const [fres, setdata] = useState({});
   useEffect(() => {
     var authUserData = localStorage.getItem("authUser");
@@ -51,6 +52,23 @@ const UserProfile = () => {
     const user = {
       'id': id
     };
+
+    post(apiname.p_userdetails, { id: id })
+      .then((res) => {
+        console.log("res");
+        console.log(res);
+        if (res.status === '204') {
+          // setUserData(0);
+        } else {
+          let filteredData = res.data.result[0];
+
+          console.log("filteredData");
+          console.log(filteredData);
+          setUserData(filteredData);
+        }
+
+      })
+      .catch((err) => console.log(err));
 
     // post(apiname.p_userdetails, user)
     // .then((res) =>setdata(res.result))
@@ -101,9 +119,34 @@ const UserProfile = () => {
     if (values1.phonenum != undefined) {
       formData.append('phonenum', values1.phonenum);
     }
+    if (values1.altnum != undefined) {
+      formData.append('altnum', values1.altnum);
+    }
+    if (values1.ethnic != undefined) {
+      formData.append('ethnic', values1.ethnic);
+    }
     if (values1.haddress != undefined) {
       formData.append('haddress', values1.haddress);
     }
+    if (values1.religion != undefined) {
+      formData.append('religion', values1.religion);
+    }
+    if (values1.sex != undefined) {
+      formData.append('sex', values1.sex);
+    }
+    if (values1.mstatus != undefined) {
+      formData.append('mstatus', values1.mstatus);
+    }
+    if (values1.occupation != undefined) {
+      formData.append('occupation', values1.occupation);
+    }
+    if (values1.service != undefined) {
+      formData.append('service', values1.service);
+    }
+    if (values1.paddress != undefined) {
+      formData.append('paddress', values1.paddress);
+    }
+
     formData.append('id', id);
 
     console.log("formData");
@@ -119,6 +162,11 @@ const UserProfile = () => {
         } else {
           toast.danger('Failed to Update!');
         }
+        setTimeout(() => {
+          // Redirect to the dashboard page
+          window.location.href = '/profile';
+        }, 500);
+
       })
       .catch(err => console.log(err));
 
@@ -225,7 +273,7 @@ const UserProfile = () => {
           <ToastContainer />
           <Container fluid>
             {/* Render Breadcrumb */}
-            <Breadcrumb title="glcl" breadcrumbItem="Profile" />
+            <Breadcrumb title="GLCL" breadcrumbItem="Profile" />
 
             <div className="d-flex gap-3">
               <div className="col-lg-6 p-0">
@@ -240,7 +288,7 @@ const UserProfile = () => {
                             className="avatar-md rounded-circle img-thumbnail"
                           />
                           <div className="mt-2">
-                            <h3 className="text-white">{fres.username}</h3>
+                            <h3 className="text-white">{userData.username}</h3>
                           </div>
 
                         </div>
@@ -262,7 +310,7 @@ const UserProfile = () => {
                           className="form-control normal-input"
                           type="text"
                           onChange={textHandler}
-                          defaultValue={fres.username}
+                          defaultValue={userData.username}
                           required
 
                         />
@@ -275,7 +323,7 @@ const UserProfile = () => {
                           className="form-control normal-input"
                           type="text"
                           onChange={textHandler}
-                          defaultValue={fres.icnumber}
+                          defaultValue={userData.icnumber}
                           required
                           maxlength='12'
 
@@ -292,7 +340,7 @@ const UserProfile = () => {
                               className="form-control normal-input"
                               type="text"
                               onChange={textHandler}
-                              defaultValue={fres.phonenum}
+                              defaultValue={userData.phonenum}
                               required
                               maxlength="10"
                             />
@@ -304,9 +352,11 @@ const UserProfile = () => {
                           <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
                             <label className="std_input_label">Mobile Phone 2</label>
                             <Input
+                              name="altnum"
+                              onChange={textHandler}
                               className="form-control normal-input"
                               type="text"
-                              defaultValue={fres.altnum}
+                              defaultValue={userData.altnum}
                             />
                           </div>
                         </Col>
@@ -317,10 +367,11 @@ const UserProfile = () => {
                           <div className="mb-3">
                             <label className="std_input_label">Ethnic</label>
                             <Input
+                             name="ethnic"
+                             onChange={textHandler}
                               className="form-control normal-input"
                               type="text"
-
-                              defaultValue={fres.ethnic}
+                              defaultValue={userData.ethnic}
                             />
                           </div>
 
@@ -330,10 +381,11 @@ const UserProfile = () => {
                           <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
                             <label className="std_input_label">Religion</label>
                             <Input
+                             name="religion"
+                             onChange={textHandler}
                               className="form-control normal-input"
                               type="text"
-
-                              defaultValue={fres.religion}
+                              defaultValue={userData.religion}
                             />
                           </div>
                         </Col>
@@ -342,10 +394,11 @@ const UserProfile = () => {
                           <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
                             <label className="std_input_label">Sex</label>
                             <Input
+                             name="sex"
+                             onChange={textHandler}
                               className="form-control normal-input"
                               type="text"
-
-                              defaultValue={fres.sex}
+                              defaultValue={userData.sex}
                             />
                           </div>
                         </Col>
@@ -356,10 +409,11 @@ const UserProfile = () => {
                           <div className="mb-3">
                             <label className="std_input_label">Marital Status</label>
                             <Input
+                             name="mstatus"
+                             onChange={textHandler}
                               className="form-control normal-input"
                               type="text"
-
-                              defaultValue={fres.mstatus}
+                              defaultValue={userData.mstatus}
                             />
                           </div>
 
@@ -369,10 +423,11 @@ const UserProfile = () => {
                           <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
                             <label className="std_input_label">Occupation</label>
                             <Input
+                             name="occupation"
+                             onChange={textHandler}
                               className="form-control normal-input"
                               type="text"
-
-                              defaultValue={fres.occupation}
+                              defaultValue={userData.occupation}
                             />
                           </div>
                         </Col>
@@ -381,10 +436,11 @@ const UserProfile = () => {
                           <div className="mb-3 ajax-select mt-3 mt-lg-0 select2-container">
                             <label className="">Service</label>
                             <Input
+                             name="service"
+                             onChange={textHandler}
                               className="form-control normal-input"
                               type="text"
-
-                              defaultValue={fres.service}
+                              defaultValue={userData.service}
                             />
                           </div>
                         </Col>
@@ -401,28 +457,28 @@ const UserProfile = () => {
                       <label className="std_input_label">Address</label>
                       <Input
                         type="textarea"
-                        name="address"
+                        name="haddress"
                         id="textarea"
                         className="normal-textarea"
                         maxLength="50"
                         rows="3"
                         placeholder="Home Address"
-
-                        defaultValue={fres.haddress}
+                        onChange={textHandler}
+                        defaultValue={userData.haddress}
                       />
                     </div>
                     <div className="mb-3">
                       <label className="std_input_label">Permanent Address</label>
                       <Input
                         type="textarea"
-                        name="address"
+                        name="paddress"
                         id="textarea"
                         className="normal-textarea"
                         maxLength="50"
                         rows="3"
                         placeholder="Home Address"
-
-                        defaultValue={fres.paddress}
+                        onChange={textHandler}
+                        defaultValue={userData.paddress}
                       />
                     </div>
 
