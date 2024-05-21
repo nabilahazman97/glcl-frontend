@@ -213,15 +213,15 @@ const SidebarContent = props => {
                 <li >
                   <Link to="/admin-swarna-stokam-niksepa/index">{props.t("SVARNA STOKAM NIKSEPA SCHEME")}</Link>
                 </li>
-                {/* <li >
+                <li >
                   <Link to="/admin-svarna-roka-agrima/loan-application-list">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
-                </li> */}
-                {/* <li >
+                </li>
+                <li >
                   <Link to="/admin-svarna-roka-agrima/loan-approved-details">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
-                </li> */}
-                {/* <li >
+                </li>
+                <li >
                   <Link to="/admin-svarna-roka-agrima/loan-application-details">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
-                </li> */}
+                </li>
                  {/* <li  >
                 <Link to="/admin-svarna-ahita/index-list">{props.t("SVARNA AHITA SCHEME")}</Link>
               </li> */}
