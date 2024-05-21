@@ -7,14 +7,14 @@ import {
     Col,
     Card,
     CardBody,
-    FormGroup,
+    Modal,
     Button,
     CardTitle,
     CardSubtitle,
     Label,
     Input,
     Container,
-    Progress,
+    ModalBody,
     Form,
 } from "reactstrap";
 // Formik validation
@@ -49,6 +49,9 @@ const LoanApplicationDetails = () => {
     const [overallbal, setoverallbal] = useState([]);
     const [username, setusername] = useState([]);
     const [membership_id, setmembership_id] = useState([]);
+    const [modal_approved, setModal_approved] = useState(false);
+    const [modal_reason_reject, setModal_reason_reject] = useState(false);
+    const [modal_rejected, setModal_rejected] = useState(false);
 
     const seriesData = [80];
     const options = {
@@ -155,19 +158,25 @@ const LoanApplicationDetails = () => {
         []
     );
 
-    const handleDateChange = (dates) => {
-        const [start, end] = dates;
-        setStartDate(start);
-        setEndDate(end);
-    };
+  
 
-    const exportToPDF = () => {
-        const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+    function tog_approved() {
+        setModal_approved(!modal_approved);
+        removeBodyCss();
+      }
+    function tog_reason_reject() {
+        setModal_reason_reject(!modal_reason_reject);
+        removeBodyCss();
+      }
+    function tog_rejected() {
+        setModal_rejected(!modal_rejected);
+        removeBodyCss();
+      }
 
-        html2pdf()
-            .from(element)
-            .save('document.pdf');
-    };
+      function removeBodyCss() {
+        document.body.classList.add("no_padding");
+      }
+    
 
     return (
         <React.Fragment>
@@ -248,7 +257,9 @@ const LoanApplicationDetails = () => {
                                                             <button
                                                                 style={{ marginRight: "5px" }}
                                                                 type="button"
-
+                                                                onClick={() => {
+                                                                    tog_approved();
+                                                                  }}
                                                                 className="btn btn-success approveBtn statusApproved mr-1"
 
                                                             >
@@ -257,7 +268,9 @@ const LoanApplicationDetails = () => {
                                                             </button>
                                                             <button
                                                                 type="button"
-
+                                                                onClick={() => {
+                                                                    tog_reason_reject();
+                                                                  }}
                                                                 className="btn btn-danger rejectBtn statusRejected ml-2"
 
                                                             >
@@ -317,7 +330,7 @@ const LoanApplicationDetails = () => {
                                 </CardBody>
                             </Card>
 
-                            <Card className="defCard">
+                            {/* <Card className="defCard">
                                 <CardBody>
                                     <CardTitle className="cardTitle">
                                         Transaction History
@@ -364,7 +377,7 @@ const LoanApplicationDetails = () => {
                                         className="custom-header-css"
                                     />
                                 </CardBody>
-                            </Card>
+                            </Card> */}
                         </div>
                     </div>
                     <div className="d-flex justify-content-center gap-3 mb-3">
@@ -376,6 +389,123 @@ const LoanApplicationDetails = () => {
                         </Link>
                     </div>
                 </Container>
+                <Modal
+                      isOpen={modal_approved}
+                      toggle={() => {
+                        tog_approved();
+                      }}
+                      centered
+                    >
+                      <div className="text-center mt-4 modal-approved-icon">
+            <i className="bx bxs-check-circle font-size-16 align-middle me-1 mb-2"></i>{" "}
+            <h5 className="modal-title" id="staticBackdropLabel">
+              Approved Successfully !
+            </h5>
+          </div>
+          <ModalBody className="text-center">
+             <p>The loan has been approved. An email will be sent to yusof89@gmail.com to notify them.</p>
+          </ModalBody>
+          <div className="text-center mb-3">
+             <Button
+                color="primary"
+                className="modalConfirmBtn"
+                data-bs-target="#firstmodal"
+                onClick={() => {
+                    tog_approved();(false);
+                }}
+              >
+                Ok
+              </Button>
+          </div>
+                    </Modal>
+
+                    <Modal
+            isOpen={modal_reason_reject}
+            toggle={() => {
+              tog_reason_reject();
+            }}
+            centered
+          >
+            {" "}
+            <ModalBody>
+              <div className="text-center mt-4 modal-reject-icon">
+                {/* <i className="mdi mdi-alert-outline font-size-16 align-middle me-1 mb-2"></i>{" "} */}
+                <h5 className="modal-title" id="staticBackdropLabel">
+                  Are you sure you want to reject this purchase? Please state the
+                  reason.
+                </h5>
+              </div>
+              <div>
+              <Input
+                type="textarea"
+                name=""
+                id="textarea"
+                className="login-textarea mt-3"
+                // value={textvalue}
+                // onChange={handleChange}
+                maxLength="50"
+                rows="4"
+  
+                // placeholder="Home Address"
+              />
+              {/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
+              </div>
+            </ModalBody>
+            <div className="text-center mb-3 mt-3">
+              <Button
+                color="warning"
+                className="modalCancelBtn me-2"
+                outline
+                onClick={() => {
+                  tog_reason_reject(false);
+                }}
+              >
+                Cancel
+              </Button>{" "}
+              <Button
+                color="primary"
+                className="modalConfirmBtn"
+                onClick={() => {
+                  tog_rejected();
+                  tog_reason_reject(false);
+                }}
+              >
+                Submit
+              </Button>
+            </div>
+          </Modal>
+
+          <Modal
+            isOpen={modal_rejected}
+            toggle={() => {
+              tog_rejected();
+            }}
+            centered
+          >
+            <div className="text-center mt-4 modal-rejected-icon">
+              <i className="mdi mdi-close-circle font-size-16 align-middle me-1 mb-2"></i>{" "}
+              <h5 className="modal-title" id="staticBackdropLabel">
+                Rejected
+              </h5>
+            </div>
+            <ModalBody className="text-center">
+              <p>
+              The loan has been rejected. An email will be sent to yusof69@gmail.com to notify them.
+              </p>
+            </ModalBody>
+            <div className="text-center mb-3">
+            <Button
+                color="primary"
+                className="modalConfirmBtn"
+                data-bs-target="#firstmodal"
+                onClick={() => {
+                    tog_rejected();(false);
+                }}
+              >
+                Ok
+              </Button>
+            </div>
+          </Modal>
             </div>
         </React.Fragment>
     );

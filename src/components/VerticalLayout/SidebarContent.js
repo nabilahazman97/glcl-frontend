@@ -215,11 +215,11 @@ const SidebarContent = props => {
                 </li>
                 {/* <li >
                   <Link to="/admin-svarna-roka-agrima/loan-application-list">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
-                </li> */}
-                {/* <li >
+                </li>
+                <li >
                   <Link to="/admin-svarna-roka-agrima/loan-approved-details">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
-                </li> */}
-                {/* <li >
+                </li>
+                <li >
                   <Link to="/admin-svarna-roka-agrima/loan-application-details">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
                 </li> */}
                  {/* <li  >
@@ -231,12 +231,13 @@ const SidebarContent = props => {
                  {/* <li  >
                 <Link to="/admin-svarna-ahita/request-view">{props.t("SVARNA AHITA SCHEME")}</Link>
               </li> */}
+                <li  >
+                <Link to="/admin-svarna-runa/index">{props.t("SVARNA RUNA SCHEME")}</Link>
+              </li>
               </ul>
              
-              {/* 
-              <li  >
-                <Link to="/#">{props.t("SVARNA RUNA SCHEME")}</Link>
-              </li> */}
+              
+            
 
             </li>
 
