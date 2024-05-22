@@ -387,7 +387,7 @@ function GoldSelling() {
                 </NavItem>
                 <NavItem>
                   <NavLink
-                    className={classnames("Nav-link", {
+                    className={classnames("Nav-link me-3", {
                       active: activeTab === "2",
                       inactive: activeTab !== "2", // Add a class for inactive tabs
                     })}
