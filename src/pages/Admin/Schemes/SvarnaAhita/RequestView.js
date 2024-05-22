@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import {
     Row,
-    Col,
+    Modal,
     Card,
     CardBody,
     FormGroup,
@@ -14,7 +14,7 @@ import {
     Label,
     Input,
     Container,
-    Progress,
+    ModalBody,
     Form,
 } from "reactstrap";
 // Formik validation
@@ -50,6 +50,10 @@ const GoldPawnRequestView = () => {
     const [overallbal, setoverallbal] = useState([]);
     const [username, setusername] = useState([]);
     const [membership_id, setmembership_id] = useState([]);
+    const [modal_amount_loan, setmodal_amount_loan] = useState(false);
+    const [modal_approved, setModal_approved] = useState(false);
+    const [modal_reason_reject, setModal_reason_reject] = useState(false);
+    const [modal_rejected, setModal_rejected] = useState(false); 
 
     const seriesData = [80];
     const options = {
@@ -170,6 +174,28 @@ const GoldPawnRequestView = () => {
             .save('document.pdf');
     };
 
+    function tog_amount_loan() {
+        setmodal_amount_loan(!modal_amount_loan);
+        removeBodyCss();
+      }
+      function tog_approved() {
+        setModal_approved(!modal_approved);
+        removeBodyCss();
+      }
+
+      function tog_reason_reject() {
+        setModal_reason_reject(!modal_reason_reject);
+        removeBodyCss();
+      }
+    function tog_rejected() {
+        setModal_rejected(!modal_rejected);
+        removeBodyCss();
+      }
+
+      function removeBodyCss() {
+        document.body.classList.add("no_padding");
+      }
+
     return (
         <React.Fragment>
             <div className="page-content">
@@ -252,6 +278,9 @@ const GoldPawnRequestView = () => {
                                     style={{ marginRight: "5px" }}
                                     type="button"
                                     className="btn btn-success approveBtn statusApproved mr-1"
+                                    onClick={() => {
+                                        tog_amount_loan();
+                                      }}
 
                                 >
                                     {/* <i className="bx bxs-check-circle font-size-16 align-middle me-1"></i>{" "} */}
@@ -260,6 +289,9 @@ const GoldPawnRequestView = () => {
                                 <button
                                     type="button"
                                     className="btn btn-danger rejectBtn statusRejected ml-2"
+                                    onClick={() => {
+                                        tog_reason_reject();
+                                      }}
                                 >
                                     {/* <i className="mdi mdi-close-circle font-size-16 align-middle me-1"></i>{" "} */}
                                     Reject
@@ -333,6 +365,180 @@ const GoldPawnRequestView = () => {
                         </Link>
                     </div>
                 </Container>
+
+                <Modal
+            isOpen={modal_amount_loan}
+            toggle={() => {
+                tog_amount_loan();
+            }}
+            centered
+          >
+            {" "}
+            <ModalBody>
+              <div className="text-center mt-4 modal-approved-icon">
+              <i className="bx bxs-check-circle font-size-16 align-middle me-1 mb-2"></i>{" "}
+                <h5 className="modal-title" id="staticBackdropLabel">
+                  Approval of Gold Coin Pawn. <br></br>
+                  Please insert the Amount of Loan to be given.
+                </h5>
+              </div>
+              <div>
+              <Input
+                          id="name"
+                          name="name"
+                          className="form-control normal-input mt-3"
+                          type="text"
+                          required
+
+                        />
+              {/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
+              </div>
+            </ModalBody>
+            <div className="text-center mb-3 mt-3">
+              <Button
+                color="warning"
+                className="modalCancelBtn me-2"
+                outline
+                onClick={() => {
+                    tog_amount_loan(false);
+                }}
+                
+              >
+                Cancel
+              </Button>{" "}
+              <Button
+                color="primary"
+                className="modalConfirmBtn"
+                onClick={() => {
+                    tog_approved();
+                    tog_amount_loan(false);
+                }}
+              >
+                Submit
+              </Button>
+            </div>
+          </Modal>
+
+          <Modal
+                      isOpen={modal_approved}
+                      toggle={() => {
+                        tog_approved();
+                      }}
+                      centered
+                    >
+                      <div className="text-center mt-4 modal-approved-icon">
+            <i className="bx bxs-check-circle font-size-16 align-middle me-1 mb-2"></i>{" "}
+            <h5 className="modal-title" id="staticBackdropLabel">
+              Approved Successfully !
+            </h5>
+          </div>
+          <ModalBody className="text-center">
+             <p>The loan quotation has been approved. <br></br> 
+             An email will be sent to yusof89@gmail.com to notify them.</p>
+          </ModalBody>
+          <div className="text-center mb-3">
+             <Button
+                color="primary"
+                className="modalConfirmBtn"
+                data-bs-target="#firstmodal"
+                onClick={() => {
+                    tog_approved();(false);
+                }}
+              >
+                Ok
+              </Button>
+          </div>
+                    </Modal>
+
+                    <Modal
+            isOpen={modal_reason_reject}
+            toggle={() => {
+              tog_reason_reject();
+            }}
+            centered
+          >
+            {" "}
+            <ModalBody>
+              <div className="text-center mt-4 modal-reject-icon">
+                <i className="mdi mdi-alert-outline font-size-16 align-middle me-1 mb-2"></i>{" "}
+                <h5 className="modal-title" id="staticBackdropLabel">
+                  Are you sure you want to reject this Gold Coin Pawn? <br></br>
+                  If yes, please state a reason.
+                </h5>
+              </div>
+              <div>
+              <Input
+                type="textarea"
+                name=""
+                id="textarea"
+                className="login-textarea mt-3"
+                // value={textvalue}
+                // onChange={handleChange}
+                maxLength="50"
+                rows="4"
+  
+                // placeholder="Home Address"
+              />
+              {/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
+              </div>
+            </ModalBody>
+            <div className="text-center mb-3 mt-3">
+              <Button
+                color="warning"
+                className="modalCancelBtn me-2"
+                outline
+                onClick={() => {
+                  tog_reason_reject(false);
+                }}
+              >
+                Cancel
+              </Button>{" "}
+              <Button
+                color="primary"
+                className="modalConfirmBtn"
+                onClick={() => {
+                  tog_rejected();
+                  tog_reason_reject(false);
+                }}
+              >
+                Submit
+              </Button>
+            </div>
+          </Modal>
+
+          <Modal
+            isOpen={modal_rejected}
+            toggle={() => {
+              tog_rejected();
+            }}
+            centered
+          >
+            <div className="text-center mt-4 modal-rejected-icon">
+              <i className="mdi mdi-close-circle font-size-16 align-middle me-1 mb-2"></i>{" "}
+              <h5 className="modal-title" id="staticBackdropLabel">
+                Rejected!
+              </h5>
+            </div>
+            <ModalBody className="text-center">
+              <p>
+              
+              An email will be sent to yusof69@gmail.com to notify them.
+              </p>
+            </ModalBody>
+            <div className="text-center mb-3">
+            <Button
+                color="primary"
+                className="modalConfirmBtn"
+                data-bs-target="#firstmodal"
+                onClick={() => {
+                    tog_rejected();(false);
+                }}
+              >
+                Ok
+              </Button>
+            </div>
+          </Modal>
+
             </div>
         </React.Fragment>
     );
