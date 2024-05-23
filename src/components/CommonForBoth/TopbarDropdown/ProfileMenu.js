@@ -13,14 +13,17 @@ import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import withRouter from "components/Common/withRouter";
-
+import { del, get, post, put } from "../../../helpers/api_helper";
+import axios from "axios";
+import * as apiname from "../../../helpers/url_helper";
 // users
 import user1 from "../../../assets/images/users/avatar-1.jpg";
 
 const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false);
-
+  const [userData, setUserData] = useState([]);
+  const [Uid, setUid] = useState([]);
   const [name, setname] = useState("");
 
   useEffect(() => {
@@ -30,8 +33,12 @@ const ProfileMenu = props => {
     var authUserObject = JSON.parse(authUserData);
     console.log("authUserData");
     console.log(authUserObject);
+    setUid(authUserObject.data.result.id);
     var username = setname(authUserObject.data.result.username);
-
+    var id = authUserObject.data.result.id;
+    const user = {
+      'id': id
+    };
     // console.log(localStorage.getItem("authUser"))
     // if (localStorage.getItem("authUser")) {
     //   if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
@@ -45,6 +52,24 @@ const ProfileMenu = props => {
     //     setusername(obj.username);
     //   }
     // }
+
+    post(apiname.p_userdetails, { id: id })
+      .then((res) => {
+        console.log("res");
+        console.log(res);
+        if (res.status === '204') {
+          // setUserData(0);
+        } else {
+          let filteredData = res.data.result[0];
+
+          console.log("filteredData");
+          console.log(filteredData);
+          setUserData(filteredData.username);
+        }
+
+      })
+      .catch((err) => console.log(err));
+
   }, [props.success]);
 
   return (
@@ -64,7 +89,7 @@ const ProfileMenu = props => {
             src={user1}
             alt="Header Avatar"
           />
-          <span className="d-none d-xl-inline-block ms-2 me-1">{name}</span>
+          <span className="d-none d-xl-inline-block ms-2 me-1">{userData}</span>
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
