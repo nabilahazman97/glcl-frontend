@@ -32,7 +32,7 @@ import classnames from "classnames";
 import goldBar from "../../../../assets/images/users/gold_bars.png";
 import Select from "react-select";
 
-function LoanApplicationList() {
+function PawnApprovedList() {
   const [data, setUserData] = useState([]);
   const [data1, setUserData1] = useState([]);
   const [options, setOptions] = useState([]);
@@ -70,7 +70,7 @@ function LoanApplicationList() {
           let filteredData = res.data.result;
           let filteredData1 = res.data.result.filter(
             (item) =>
-                item.status_id === 3 && item.loan_type===6
+                item.status_id === 1 && item.loan_type===7
         );
           if (startDate && endDate) {
             const startTimestamp = startDate.getTime();
@@ -108,27 +108,27 @@ function LoanApplicationList() {
       .catch((err) => console.log(err));
   }, [startDate, endDate]);
 
-  const toggle = (tab) => {
-    if (tab == 1) {
-      const filternonapprovedadata = data.filter(
-        (item) =>  item.status_id === 3 && item.loan_type===6
-      );
-      setUserData1(filternonapprovedadata);
-    } else if (tab == 2) {
-      const filterapprovedadata = data.filter(
-        (item) =>
-            item.status_id === 1 && item.loan_type===6
-    );
-      setUserData1(filterapprovedadata);
-    } else if (tab == 3) {
-      const filterapprovedadata = data.filter((item) => item.status_id === 2 && item.loan_type===6);
-      setUserData1(filterapprovedadata);
-    }
+//   const toggle = (tab) => {
+//     if (tab == 1) {
+//       const filternonapprovedadata = data.filter(
+//         (item) =>  item.status_id === 3
+//       );
+//       setUserData1(filternonapprovedadata);
+//     } else if (tab == 2) {
+//       const filterapprovedadata = data.filter(
+//         (item) =>
+//             item.status_id === 1 
+//     );
+//       setUserData1(filterapprovedadata);
+//     } else if (tab == 3) {
+//       const filterapprovedadata = data.filter((item) => item.status_id === 2);
+//       setUserData1(filterapprovedadata);
+//     }
 
-    if (activeTab !== tab) {
-      setactiveTab(tab);
-    }
-  };
+//     if (activeTab !== tab) {
+//       setactiveTab(tab);
+//     }
+//   };
 
   const columns = useMemo(
     () => [
@@ -153,39 +153,19 @@ function LoanApplicationList() {
         accessor: "id",
         Cell: ({ row }) => (
           <div className="d-flex flex-wrap gap-2 justify-content-center">
-            {row.original.status_id !== 3 ? (
-  <Link to="">
-    <button
-      type="button"
-      className="btn btn-primary"
-      disabled
-    >
-      ACTION
-    </button>
-  </Link>
-) : (
-  <Link to={`/admin-svarna-roka-agrima/loan-application-details/${row.original.id}`} disabled>
-    <button
-      type="button"
-      className="btn btn-primary"
-      
-    >
-      ACTION
-    </button>
-  </Link>
-)}
-            {/* <Link to={`/admin-svarna-roka-agrima/loan-application-details/${row.original.id}`}>
+         
+            <Link to={`/admin-svarna-ahita/user-view/${row.original.id}`}>
             <button
               type="button"
               className="btn btn-primary "
               // onClick={() => {
               //   tog_transaction_summary(row.original.id);
               // }}
-              disabled={row.original.status_id !== 3}
+            //   disabled={row.original.status_id !== 3}
             >
               ACTION
             </button>
-            </Link> */}
+            </Link>
           </div>
         ),
       },
@@ -384,11 +364,11 @@ function LoanApplicationList() {
   return (
     <div className="page-content">
       <div className="container-fluid">
-        <Breadcrumbs title="Tables" breadcrumbItem="SVARNA ROKA AGRIMA SCHEME" />
+        <Breadcrumbs title="Tables" breadcrumbItem="SVARNA AHITA SCHEME" />
 
         <Card className="defCard" style={{ minHeight: "250px" }}>
           <CardBody>
-            <CardTitle className="cardTitle">Loan Request List</CardTitle>
+            <CardTitle className="cardTitle">Pawn Approved Loan List</CardTitle>
             <div></div>
             <div className="d-print-none mt-4 d-flex justify-content-between">
               <div className="filterDate">
@@ -412,51 +392,10 @@ function LoanApplicationList() {
             </div>
           </CardBody>
           <div className="p-3">
-            <Nav tabs>
-              <NavItem className="me-3">
-                <NavLink
-                  className={classnames("ms-3 Nav-link", {
-                    active: activeTab === "1",
-                    inactive: activeTab !== "1", // Add a class for inactive tabs
-                  })}
-                  onClick={() => {
-                    toggle("1");
-                  }}
-                >
-                  pending loan request 
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  className={classnames("Nav-link", {
-                    active: activeTab === "2",
-                    inactive: activeTab !== "2", // Add a class for inactive tabs
-                  })}
-                  onClick={() => {
-                    toggle("2");
-                  }}
-                >
-                  Approved loan request
-                </NavLink>
-              </NavItem>
+           
 
-              <NavItem>
-                <NavLink
-                  className={classnames("Nav-link", {
-                    active: activeTab === "3",
-                    inactive: activeTab !== "3", // Add a class for inactive tabs
-                  })}
-                  onClick={() => {
-                    toggle("3");
-                  }}
-                >
-                  Rejected loan request
-                </NavLink>
-              </NavItem>
-            </Nav>
-
-            <TabContent activeTab={activeTab} className="p-3 text-muted">
-              <TabPane tabId="1">
+           
+             
                 <Row>
                   <Col sm="12">
                     <TableContainer
@@ -469,32 +408,10 @@ function LoanApplicationList() {
                     />
                   </Col>
                 </Row>
-              </TabPane>
-              <TabPane tabId="2">
-                <Row>
-                  <TableContainer
-                    columns={columns}
-                    data={data1}
-                    // isGlobalFilter={true}
-                    isAddOptions={false}
-                    customPageSize={10}
-                    className="custom-header-css"
-                  />
-                </Row>
-              </TabPane>
-              <TabPane tabId="3">
-                <Row>
-                  <TableContainer
-                    columns={columns}
-                    data={data1}
-                    // isGlobalFilter={true}
-                    isAddOptions={false}
-                    customPageSize={10}
-                    className="custom-header-css"
-                  />
-                </Row>
-              </TabPane>
-            </TabContent>
+          
+              
+              
+         
           </div>
         </Card>
 
@@ -791,7 +708,7 @@ function LoanApplicationList() {
     </div>
   );
 }
-LoanApplicationList.propTypes = {
+PawnApprovedList.propTypes = {
   preGlobalFilteredRows: PropTypes.any,
 };
-export default LoanApplicationList;
+export default PawnApprovedList;

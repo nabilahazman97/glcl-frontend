@@ -213,21 +213,60 @@ const SidebarContent = props => {
                 <li >
                   <Link to="/admin-swarna-stokam-niksepa/index">{props.t("SVARNA STOKAM NIKSEPA SCHEME")}</Link>
                 </li>
-                <li >
+                <li>
                   <Link to="/admin-svarna-roka-agrima/loan-application-list">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
+                  <ul className="sub-menu">
+                    <li>
+                    <Link to="/admin-svarna-roka-agrima/loan-application-list/">{props.t("Loan Request List")}</Link>
+                    </li>
+
+                    <li>
+                    <Link to="/admin-svarna-roka-agrima/LoanApprovedList/">{props.t("Loan Approved List")}</Link>
+                    </li>
+                    
+
+                  </ul>
                 </li>
-                <li >
+
+                <li>
+                  <Link to="//admin-svarna-ahita/index-list">{props.t("SVARNA AHITA SCHEME")}</Link>
+                  <ul className="sub-menu">
+                    {/* <li>
+                    <Link to="/admin-svarna-ahita/user-view">{props.t("Loan Request List")}</Link>
+                    </li> */}
+
+                    <li>
+                    <Link to="/admin-svarna-ahita/index-list">{props.t("Loan Request List")}</Link>
+                      
+                    {/* <Link to="/admin-svarna-roka-agrima/LoanApprovedList/">{props.t("Loan Approved List")}</Link> */}
+                    </li>
+                    <li>
+                    <Link to="/admin-svarna-ahita/PawnApprovedList/">{props.t("Loan Approved List")}</Link>
+                    </li>
+                    
+
+                  </ul>
+                </li>
+
+
+                {/* <li >
                   <Link to="/admin-svarna-roka-agrima/loan-approved-details">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
-                </li>
-                <li >
+                </li> */}
+                {/* <li >
                   <Link to="/admin-svarna-roka-agrima/loan-application-details">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
-                </li>
-                 {/* <li  >
+                </li> */}
+                  {/* <li>
                 <Link to="/admin-svarna-ahita/index-list">{props.t("SVARNA AHITA SCHEME")}</Link>
               </li> */}
-                 <li  >
+                 {/* <li>
                 <Link to="/admin-svarna-ahita/user-view">{props.t("SVARNA AHITA SCHEME")}</Link>
               </li>
+              <li>
+                <Link to="/admin-svarna-ahita/index-list">{props.t("SVARNA AHITA SCHEME")}</Link>
+              </li> */}
+              {/* <li>
+                <Link to="/admin-svarna-ahita/request-view">{props.t("SVARNA AHITA SCHEME")}</Link>
+              </li> */}
                  {/* <li  >
                 <Link to="/admin-svarna-ahita/request-view">{props.t("SVARNA AHITA SCHEME")}</Link>
               </li> */}

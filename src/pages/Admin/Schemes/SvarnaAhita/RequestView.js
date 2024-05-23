@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import {
     Row,
-    Col,
+    Modal,
     Card,
     CardBody,
     FormGroup,
@@ -14,7 +14,7 @@ import {
     Label,
     Input,
     Container,
-    Progress,
+    ModalBody,
     Form,
 } from "reactstrap";
 // Formik validation
@@ -22,7 +22,8 @@ import {
 import { Link } from "react-router-dom";
 
 import * as apiname from "../../../../helpers/url_helper";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
+
 
 import TableContainer from "../../../../components/Common/TableContainer";
 import avatar from "../../../../assets/images/users/avatar-1.jpg";
@@ -40,135 +41,241 @@ import { text } from "@fortawesome/fontawesome-svg-core";
 import goldBar from "../../../../assets/images/users/gold_bars.png";
 
 const GoldPawnRequestView = () => {
-    document.title = "GLCL";
-    const { Uid } = useParams();
+  document.title = "GLCL";
+  const { id } = useParams();
+  console.log("lid");
+  console.log(id);
 
-    const [data, setUserData] = useState([]);
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [walletbal, setwalletbal] = useState([]);
-    const [overallbal, setoverallbal] = useState([]);
-    const [username, setusername] = useState([]);
-    const [membership_id, setmembership_id] = useState([]);
+  const navigate = useNavigate();
 
-    const seriesData = [80];
-    const options = {
-        chart: {
-            type: 'radialBar',
-            height: 300,
-            width: 300,
-            toolbar: {
-                show: false
-            }
-        },
-        plotOptions: {
-            radialBar: {
-                hollow: {
-                    size: '50%'
-                },
-                dataLabels: {
-                    name: {
-                        show: false
-                    },
-                    value: {
-                        show: true,
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        fontFamily: 'Arial, sans-serif',
-                        offsetY: 10,
 
-                    },
-                    total: {
-                        show: true,
-                        label: 'Total',
-                        fontSize: '12px',
-                        fontWeight: 'normal',
-                        fontFamily: 'Arial, sans-serif',
-                        color: 'black',
-                        formatter: function (val) {
-                            return `-`;
-                        }
-                    },
 
-                }
-            }
-        },
-        colors: ['#d4a437',],
-        labels: ['Series 1']
+  const [username, setusername] = useState([]);
+  const [membership_id, setmembership_id] = useState([]);
+  const [modal_approved, setModal_approved] = useState(false);
+  const [modal_reason_reject, setModal_reason_reject] = useState(false);
+  const [modal_rejected, setModal_rejected] = useState(false);
+  const [loandetails, setloandetails] = useState([]);
+  const [textvalue, setValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
+  const [modal_amount_loan, setmodal_amount_loan] = useState(false);
+  const handleChange = (event) => {
+      setValue(event.target.value);
     };
 
-    useEffect(() => {
-        const userScheme = {
-            scheme_id: "2",
-            user_id: Uid,
+
+   // loaniddetails
+
+   get(`${apiname.loaniddetails}/${id}`)
+   .then((updatereslist) => {
+      if (updatereslist.status == "404") {
+          setloandetails("");
+      }else{
+       console.log("updatereslist");
+       console.log(updatereslist.data.result);
+       setloandetails(updatereslist.data.result);
+      }
+   
+     })
+.catch((err) => console.log(err))
+
+
+
+  const seriesData = [80];
+  const options = {
+      chart: {
+          type: 'radialBar',
+          height: 300,
+          width: 300,
+          toolbar: {
+              show: false
+          }
+      },
+      plotOptions: {
+          radialBar: {
+              hollow: {
+                  size: '50%'
+              },
+              dataLabels: {
+                  name: {
+                      show: false
+                  },
+                  value: {
+                      show: true,
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                      fontFamily: 'Arial, sans-serif',
+                      offsetY: 10,
+
+                  },
+                  total: {
+                      show: true,
+                      label: 'Total',
+                      fontSize: '12px',
+                      fontWeight: 'normal',
+                      fontFamily: 'Arial, sans-serif',
+                      color: 'black',
+                      formatter: function (val) {
+                          return `-`;
+                      }
+                  },
+
+              }
+          }
+      },
+      colors: ['#d4a437',],
+      labels: ['Series 1']
+  };
+
+ 
+  const comp = "Completed";
+  const columns = useMemo(
+      () => [
+          {
+              Header: "Date",
+              accessor: "createdAt",
+              Cell: ({ value }) => moment(value).format("DD/MM/YYYY")
+              // Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
+          },
+          {
+              Header: "Amount (RM)",
+              accessor: "total",
+          },
+
+          {
+              Header: "Status",
+              accessor: "pay_status",
+              Cell: ({ value }) => comp
+          },
+      ],
+      []
+  );
+
+  function tog_amount_loan() {
+    setmodal_amount_loan(!modal_amount_loan);
+    removeBodyCss();
+  }
+
+  function tog_approved() {
+
+      const approveid = {
+               loanId:id,
+              action : "approve",
+              comments : textvalue
         };
-        post(apiname.userScheme, userScheme)
-            .then((res) => {
-                let filteredData = res.data.result;
-                if (startDate && endDate) {
-                    const startTimestamp = startDate.getTime();
-                    const endTimestamp = endDate.getTime();
-                    filteredData = filteredData.filter((item) => {
-                        const itemDate = new Date(item.date).getTime();
-                        return itemDate >= startTimestamp && itemDate <= endTimestamp;
-                    });
-                }
-                setusername(filteredData[0].username)
-                setmembership_id(filteredData[0].membership_id)
-                setUserData(filteredData);
 
-                //to get wallet bal
+        
+   if (!textvalue.trim()) {
+    // Set error message
+    setErrorMessage('Reason for rejection is required.');
+    // You can return, throw an error, or handle it as per your requirement
+    return;
+} 
+setErrorMessage('');
 
-                const getwalletbal = {
-                    user_id: Uid,
-                };
-                post(apiname.walletbal, getwalletbal)
-                    // .then((res) => console.log(res.result.type_3_walletbal))
-                    .then((res) => {
-                        setwalletbal(res.data.result.walletbal);
-                        setoverallbal(res.data.result.type_3_walletbal);
-                    })
+      post(apiname.loanapproval, approveid)
+      .then((updateres) => {
+        
 
-                    .catch((err) => console.log(err));
-            })
-            .catch((err) => console.log(err));
-    }, [startDate, endDate]);
-    const comp = "Completed";
-    const columns = useMemo(
-        () => [
-            {
-                Header: "Date",
-                accessor: "createdAt",
-                Cell: ({ value }) => moment(value).format("DD/MM/YYYY")
-                // Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
-            },
-            {
-                Header: "Amount (RM)",
-                accessor: "total",
-            },
+        if (updateres.status == "200") {
 
-            {
-                Header: "Status",
-                accessor: "pay_status",
-                Cell: ({ value }) => comp
-            },
-        ],
-        []
-    );
+         
+          setModal_approved(!modal_approved);
+          setTimeout(() => {
+              setModal_approved(modal_approved);
+              navigate("/admin-svarna-ahita/index-list");
+          //   window.location.reload();
+          //   window.location.href = "admin-svarna-roka-agrima/loan-application-list";
+          }, 8000);
+        } else {
+        }
+      })
+      .catch((err) => console.log(err));
 
-    const handleDateChange = (dates) => {
-        const [start, end] = dates;
-        setStartDate(start);
-        setEndDate(end);
-    };
+      
+    
+      removeBodyCss();
+    }
+  function tog_reason_reject() {
 
-    const exportToPDF = () => {
-        const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+      setModal_reason_reject(!modal_reason_reject);
+//         const approveid = {
+//             loanId:lid,
+//            action : "reject",
+//            comments :textvalue
+//      };
 
-        html2pdf()
-            .from(element)
-            .save('document.pdf');
-    };
+//      if (!textvalue.trim()) {
+//         // Set error message
+//         setErrorMessage('Reason for rejection is required.');
+//         // You can return, throw an error, or handle it as per your requirement
+//         return;
+//     } else {
+//         setErrorMessage(''); // Clear error message if textvalue is not empty
+//     }
+
+//    post(apiname.loanapproval, approveid)
+//    .then((updateres) => {
+   
+
+//      if (updateres.status == "200") {
+
+    
+//         setModal_reason_reject(!modal_reason_reject);
+//        setTimeout(() => {
+//         setModal_reason_reject(modal_reason_reject);
+//          window.location.reload();
+//        }, 8000);
+//      } else {
+//      }
+//    })
+//    .catch((err) => console.log(err));
+
+
+
+  
+      removeBodyCss();
+    }
+  function tog_rejected() {
+      // setModal_rejected(!modal_rejected);
+
+  const approveid = {
+          loanId:id,
+         action : "reject",
+         comments :textvalue
+   };
+   
+
+   if (!textvalue.trim()) {
+      // Set error message
+      setErrorMessage('Reason for rejection is required.');
+      // You can return, throw an error, or handle it as per your requirement
+      return;
+  } 
+  setErrorMessage('');
+ post(apiname.loanapproval, approveid)
+ .then((updateres) => {
+   
+
+   if (updateres.status == "200") {
+
+    
+      setModal_rejected(!modal_rejected);
+     setTimeout(() => {
+      setModal_rejected(modal_rejected);
+      //  window.location.reload();
+       navigate("/admin-svarna-roka-agrima/loan-application-list");
+     }, 8000);
+   } else {
+   }
+ })
+ .catch((err) => console.log(err));
+      removeBodyCss();
+    }
+
+    function removeBodyCss() {
+      document.body.classList.add("no_padding");
+    }
 
     return (
         <React.Fragment>
@@ -226,7 +333,7 @@ const GoldPawnRequestView = () => {
                                         <div className="text-center">
                                             <div className="mt-2">
                                                 <h4 className="text-white">Gold Weight</h4>
-                                                <h4 className="text-gold"> 5<span className="">g</span></h4>
+                                                <h4 className="text-gold"> {loandetails.gold_grams}<span className="">g</span></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -234,15 +341,15 @@ const GoldPawnRequestView = () => {
                                     <div className="d-flex justify-content-between mt-3 p-3 smFont">
                                         <div>
                                             <div className="text-gold mb-3">Gold Coin Pawned</div>
-                                            <div className="text-gold mb-3">Gold Coin Serial Number</div>
+                                            {/* <div className="text-gold mb-3">Gold Coin Serial Number</div> */}
                                             <div className="text-gold mb-3">Loan Period</div>
                                             <div className="text-gold mb-3">Subtotal</div>
                                         </div>
                                         <div className="mb-3 text-end">
-                                            <div className="text-gold mb-3">2 g</div>
-                                            <div className="text-gold mb-3">GLCL0001-GLCL0002</div>
-                                            <div className="text-gold mb-3">RM 596.00</div>
-                                            <div className="text-gold mb-3">6 Months</div>
+                                            <div className="text-gold mb-3">{loandetails.gold_grams} g</div>
+                                            {/* <div className="text-gold mb-3">GLCL0001-GLCL0002</div> */}
+                                            <div className="text-gold mb-3">{loandetails.amount}</div>
+                                            <div className="text-gold mb-3">{loandetails.installement_months} &nbsp; Months</div>
                                         </div>
                                     </div>
                                 </div>
@@ -252,6 +359,9 @@ const GoldPawnRequestView = () => {
                                     style={{ marginRight: "5px" }}
                                     type="button"
                                     className="btn btn-success approveBtn statusApproved mr-1"
+                                    onClick={() => {
+                                        tog_amount_loan();
+                                      }}
 
                                 >
                                     {/* <i className="bx bxs-check-circle font-size-16 align-middle me-1"></i>{" "} */}
@@ -260,6 +370,9 @@ const GoldPawnRequestView = () => {
                                 <button
                                     type="button"
                                     className="btn btn-danger rejectBtn statusRejected ml-2"
+                                    onClick={() => {
+                                        tog_reason_reject();
+                                      }}
                                 >
                                     {/* <i className="mdi mdi-close-circle font-size-16 align-middle me-1"></i>{" "} */}
                                     Reject
@@ -333,6 +446,182 @@ const GoldPawnRequestView = () => {
                         </Link>
                     </div>
                 </Container>
+
+                <Modal
+            isOpen={modal_amount_loan}
+            toggle={() => {
+                tog_amount_loan();
+            }}
+            centered
+          >
+            {" "}
+            <ModalBody>
+              <div className="text-center mt-4 modal-approved-icon">
+              <i className="bx bxs-check-circle font-size-16 align-middle me-1 mb-2"></i>{" "}
+                <h5 className="modal-title" id="staticBackdropLabel">
+                  Approval of Gold Coin Pawn. <br></br>
+                  Please insert the Amount of Loan to be given.
+                </h5>
+              </div>
+              <div>
+              <Input
+                          id="name"
+                          name="name"
+                          className="form-control normal-input mt-3"
+                          type="text"
+                          value={textvalue}
+                          onChange={handleChange}
+                          required
+
+                        />
+              {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+              </div>
+            </ModalBody>
+            <div className="text-center mb-3 mt-3">
+              <Button
+                color="warning"
+                className="modalCancelBtn me-2"
+                outline
+                onClick={() => {
+                    tog_amount_loan(false);
+                }}
+                
+              >
+                Cancel
+              </Button>{" "}
+              <Button
+                color="primary"
+                className="modalConfirmBtn"
+                onClick={() => {
+                    tog_approved();
+                    tog_amount_loan(false);
+                }}
+              >
+                Submit
+              </Button>
+            </div>
+          </Modal>
+
+          <Modal
+                      isOpen={modal_approved}
+                      toggle={() => {
+                        tog_approved();
+                      }}
+                      centered
+                    >
+                      <div className="text-center mt-4 modal-approved-icon">
+            <i className="bx bxs-check-circle font-size-16 align-middle me-1 mb-2"></i>{" "}
+            <h5 className="modal-title" id="staticBackdropLabel">
+              Approved Successfully !
+            </h5>
+          </div>
+          <ModalBody className="text-center">
+             <p>The loan quotation has been approved. <br></br> 
+             An email will be sent to yusof89@gmail.com to notify them.</p>
+          </ModalBody>
+          <div className="text-center mb-3">
+             <Button
+                color="primary"
+                className="modalConfirmBtn"
+                data-bs-target="#firstmodal"
+                onClick={() => {
+                    tog_approved();(false);
+                }}
+              >
+                Ok
+              </Button>
+          </div>
+                    </Modal>
+
+                    <Modal
+            isOpen={modal_reason_reject}
+            toggle={() => {
+              tog_reason_reject();
+            }}
+            centered
+          >
+            {" "}
+            <ModalBody>
+              <div className="text-center mt-4 modal-reject-icon">
+                <i className="mdi mdi-alert-outline font-size-16 align-middle me-1 mb-2"></i>{" "}
+                <h5 className="modal-title" id="staticBackdropLabel">
+                  Are you sure you want to reject this Gold Coin Pawn? <br></br>
+                  If yes, please state a reason.
+                </h5>
+              </div>
+              <div>
+              <Input
+                type="textarea"
+                name=""
+                id="textarea"
+                className="login-textarea mt-3"
+                value={textvalue}
+                onChange={handleChange}
+                maxLength="50"
+                rows="4"
+  
+                // placeholder="Home Address"
+              />
+              {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+              </div>
+            </ModalBody>
+            <div className="text-center mb-3 mt-3">
+              <Button
+                color="warning"
+                className="modalCancelBtn me-2"
+                outline
+                onClick={() => {
+                  tog_reason_reject(false);
+                }}
+              >
+                Cancel
+              </Button>{" "}
+              <Button
+                color="primary"
+                className="modalConfirmBtn"
+                onClick={() => {
+                  tog_rejected();
+                  tog_reason_reject(false);
+                }}
+              >
+                Submit
+              </Button>
+            </div>
+          </Modal>
+
+          <Modal
+            isOpen={modal_rejected}
+            toggle={() => {
+              tog_rejected();
+            }}
+            centered
+          >
+            <div className="text-center mt-4 modal-rejected-icon">
+              <i className="mdi mdi-close-circle font-size-16 align-middle me-1 mb-2"></i>{" "}
+              <h5 className="modal-title" id="staticBackdropLabel">
+                Rejected!
+              </h5>
+            </div>
+            <ModalBody className="text-center">
+              <p>
+              
+              An email will be sent to yusof69@gmail.com to notify them.
+              </p>
+            </ModalBody>
+            <div className="text-center mb-3">
+            <Button
+                color="primary"
+                className="modalConfirmBtn"
+                data-bs-target="#firstmodal"
+                onClick={() => {
+                    tog_rejected();(false);
+                }}
+              >
+                Ok
+              </Button>
+            </div>
+          </Modal>
+
             </div>
         </React.Fragment>
     );

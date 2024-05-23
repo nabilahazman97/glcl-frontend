@@ -40,7 +40,11 @@ import { text } from "@fortawesome/fontawesome-svg-core";
 
 const LoanApprovedDetails = () => {
     document.title = "GLCL";
-    const { Uid } = useParams();
+    // const { Uid } = useParams();
+
+    const { id } = useParams();
+    console.log("lid");
+    console.log(id);
 
     const [data, setUserData] = useState([]);
     const [startDate, setStartDate] = useState(null);
@@ -49,6 +53,23 @@ const LoanApprovedDetails = () => {
     const [overallbal, setoverallbal] = useState([]);
     const [username, setusername] = useState([]);
     const [membership_id, setmembership_id] = useState([]);
+    const [loandetails, setloandetails] = useState([]);
+
+    get(`${apiname.loaniddetails}/${id}`)
+    .then((updatereslist) => {
+       if (updatereslist.status == "404") {
+           setloandetails("");
+       }else{
+        // console.log("updatereslist");
+        // console.log(updatereslist.data.result);
+        setloandetails(updatereslist.data.result);
+        setUserData(updatereslist.data.result.LoanTransactions)
+       }
+    
+      })
+.catch((err) => console.log(err))
+
+
 
     const seriesData = [80];
     const options = {
@@ -99,7 +120,7 @@ const LoanApprovedDetails = () => {
     useEffect(() => {
         const userScheme = {
             scheme_id: "2",
-            user_id: Uid,
+            // user_id: Uid,
         };
         post(apiname.userScheme, userScheme)
             .then((res) => {
@@ -137,19 +158,21 @@ const LoanApprovedDetails = () => {
         () => [
             {
                 Header: "Date",
-                accessor: "createdAt",
+                accessor: "payment_due_date",
                 Cell: ({ value }) => moment(value).format("DD/MM/YYYY")
                 // Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
             },
             {
                 Header: "Amount (RM)",
-                accessor: "total",
+                accessor: "total_amount",
             },
 
             {
                 Header: "Status",
-                accessor: "pay_status",
-                Cell: ({ value }) => comp
+                accessor: "transaction_id",
+                Cell: ({ value }) => {
+                    return value === null || value === "" ? "Not Paid" : "Paid";
+                  }
             },
         ],
         []
@@ -234,9 +257,9 @@ const LoanApprovedDetails = () => {
                                                                     <div className="mb-3">Installment Amount</div>
                                                                 </div>
                                                                 <div className="inter_regular col-md-6 text-end">
-                                                                    <div className="mb-3">RM 5000.00</div>
-                                                                    <div className="mb-3">15 months</div>
-                                                                    <div className="mb-3">1.2 %</div>
+                                                                <div className="mb-3">{loandetails.amount}</div>
+                                                                    <div className="mb-3">{loandetails.installement_months}&nbsp;months</div>
+                                                                    <div className="mb-3">{loandetails.interest_rate}&nbsp; %</div>
                                                                     <div className="mb-3">CIMB Clicks</div>
                                                                     <div className="mb-3">1111111111</div>
                                                                     <div className="mb-3">Muhammad Yusof</div>
@@ -348,7 +371,7 @@ const LoanApprovedDetails = () => {
                     </div>
                     <div className="d-flex justify-content-center gap-3 mb-3">
                         <Link
-                            to="/admin-swarna-stokam-niksepa/index"
+                            to="../../admin-svarna-roka-agrima/LoanApprovedList"
                             style={{ textDecoration: "none" }}
                         >
                             <button className="btn btn-primary backBtn">Back</button>

@@ -41,7 +41,7 @@ import goldBar from "../../../../assets/images/users/gold_bars.png";
 
 const GoldPawnUserView = () => {
     document.title = "GLCL";
-    const { Uid } = useParams();
+    const { id } = useParams();
 
     const [data, setUserData] = useState([]);
     const [startDate, setStartDate] = useState(null);
@@ -50,6 +50,22 @@ const GoldPawnUserView = () => {
     const [overallbal, setoverallbal] = useState([]);
     const [username, setusername] = useState([]);
     const [membership_id, setmembership_id] = useState([]);
+
+    const [loandetails, setloandetails] = useState([]);
+
+    get(`${apiname.loaniddetails}/${id}`)
+    .then((updatereslist) => {
+       if (updatereslist.status == "404") {
+           setloandetails("");
+       }else{
+        // console.log("updatereslist");
+        // console.log(updatereslist.data.result);
+        setloandetails(updatereslist.data.result);
+        setUserData(updatereslist.data.result.LoanTransactions)
+       }
+    
+      })
+.catch((err) => console.log(err))
 
     const seriesData = [80];
     const options = {
@@ -97,43 +113,7 @@ const GoldPawnUserView = () => {
         labels: ['Series 1']
     };
 
-    useEffect(() => {
-        const userScheme = {
-            scheme_id: "2",
-            user_id: Uid,
-        };
-        post(apiname.userScheme, userScheme)
-            .then((res) => {
-                let filteredData = res.data.result;
-                if (startDate && endDate) {
-                    const startTimestamp = startDate.getTime();
-                    const endTimestamp = endDate.getTime();
-                    filteredData = filteredData.filter((item) => {
-                        const itemDate = new Date(item.date).getTime();
-                        return itemDate >= startTimestamp && itemDate <= endTimestamp;
-                    });
-                }
-                setusername(filteredData[0].username)
-                setmembership_id(filteredData[0].membership_id)
-                setUserData(filteredData);
-
-                //to get wallet bal
-
-                const getwalletbal = {
-                    user_id: Uid,
-                };
-                post(apiname.walletbal, getwalletbal)
-                    // .then((res) => console.log(res.result.type_3_walletbal))
-                    .then((res) => {
-                        setwalletbal(res.data.result.walletbal);
-                        setoverallbal(res.data.result.type_3_walletbal);
-                    })
-
-                    .catch((err) => console.log(err));
-            })
-            .catch((err) => console.log(err));
-    }, [startDate, endDate]);
-    const comp = "Completed";
+    
  
 
    
@@ -205,7 +185,7 @@ const GoldPawnUserView = () => {
                                                                 <div className="text-center">
                                                                     <div className="mt-2">
                                                                         <h4 className="">Gold Weight</h4>
-                                                                        <h4 className="text-white"> 5<span className="">g</span></h4>
+                                                                        <h4 className="text-white"> {loandetails.gold_grams}<span className="">g</span></h4>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -216,9 +196,9 @@ const GoldPawnUserView = () => {
                                                                     <div className="mb-3">Subtotal</div>
                                                                 </div>
                                                                 <div className="inter_regular mb-2 text-end">
-                                                                    <div className="mb-3">2 g</div>
-                                                                    <div className="mb-3">GLCL0001-GLCL0002</div>
-                                                                    <div className="mb-3">RM 337.33</div>
+                                                                    <div className="mb-3">{loandetails.gold_grams} g</div>
+                                                                    {/* <div className="mb-3">GLCL0001-GLCL0002</div> */}
+                                                                    <div className="mb-3">{loandetails.amount} </div>
                                                                 </div>
                                                             </div>
                                                             <div className="d-flex justify-content-between mt-3 smFont">
@@ -226,7 +206,7 @@ const GoldPawnUserView = () => {
                                                                     <div>Amount Loaned</div>
                                                                 </div>
                                                                 <div className="inter_regular mb-2 text-end">
-                                                                    <div>RM 337.33</div>
+                                                                    <div>{loandetails.amount} </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -275,9 +255,9 @@ const GoldPawnUserView = () => {
                                                                 </div>
                                                                 <div className="text-center col-4">
                                                                 <div className="text-white">Loan Period</div>
-                                                                   Month 4 
+                                                                  
                                                                    <br></br>
-                                                                   6 months
+                                                                   {loandetails.installement_months} months
                                                                 </div>
                                                             </div>
                                                          
