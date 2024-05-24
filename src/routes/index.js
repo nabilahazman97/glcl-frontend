@@ -33,6 +33,7 @@ import AdminSvarnaRokaAgrimaLoanApplicationDetails from "../pages/Admin/Schemes/
 import AdminSvarnaAhitaList from "../pages/Admin/Schemes/SvarnaAhita/index";
 import AdminSvarnaAhitaRequestView from "../pages/Admin/Schemes/SvarnaAhita/RequestView";
 import AdminSvarnaAhitaUserView from "../pages/Admin/Schemes/SvarnaAhita/UserView";
+import AdminSvarnaRunaIndex from "../pages/Admin/Schemes/SvarnaRuna/index";
 import AnouncementUpdate from "../pages/Admin/MembershipManagement/AnnouncementUpdate";
 import ModuleManagement from "../pages/Admin/MembershipManagement/ModuleManagement";
 import Goldvault from "../pages/Admin/GoldManagement/Goldvault";
@@ -67,6 +68,7 @@ const authProtectedRoutes = [
   { path: "/admin-svarna-ahita/index-list", component: <AdminSvarnaAhitaList /> },
   { path: "/admin-svarna-ahita/request-view", component: <AdminSvarnaAhitaRequestView /> },
   { path: "/admin-svarna-ahita/user-view", component: <AdminSvarnaAhitaUserView /> },
+  { path: "/admin-svarna-runa/index", component: <AdminSvarnaRunaIndex /> },
   { path: "/admin-announcement-update", component: <AnouncementUpdate /> },
   { path: "/module-management", component: <ModuleManagement /> },
   { path: "/update-gold-rate", component: <UpdateGoldRate /> },
