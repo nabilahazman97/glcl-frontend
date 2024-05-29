@@ -55,6 +55,7 @@ const LoanApplicationDetails = () => {
     const [modal_reason_reject, setModal_reason_reject] = useState(false);
     const [modal_rejected, setModal_rejected] = useState(false);
     const [loandetails, setloandetails] = useState([]);
+    const [profile, setprofiledetails] = useState([]);
     const [textvalue, setValue] = useState("");
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -71,8 +72,10 @@ const LoanApplicationDetails = () => {
             setloandetails("");
         }else{
          console.log("updatereslist");
-         console.log(updatereslist.data.result);
+         console.log(updatereslist.data.result.Profile);
+        
          setloandetails(updatereslist.data.result);
+         setprofiledetails(updatereslist.data.result.Profile);
         }
      
        })
@@ -332,10 +335,10 @@ const LoanApplicationDetails = () => {
                                                                     <div className="mb-3">{loandetails.amount}</div>
                                                                     <div className="mb-3">{loandetails.installement_months}&nbsp;months</div>
                                                                     <div className="mb-3">{loandetails.interest_rate}&nbsp; %</div>
-                                                                    <div className="mb-3">CIMB Clicks</div>
-                                                                    <div className="mb-3">1111111111</div>
-                                                                    <div className="mb-3">Muhammad Yusof</div>
-                                                                    <div className="mb-3">RM 337.33</div>
+                                                                    <div className="mb-3">{profile.bankName}</div>
+                                                                    <div className="mb-3">{profile.accountNumber}</div>
+                                                                    <div className="mb-3">{profile.accountHolderName}</div>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>

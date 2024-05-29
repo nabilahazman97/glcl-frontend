@@ -41,7 +41,10 @@ import goldBar from "../../../../assets/images/users/gold_bars.png";
 
 const GoldPawnUserView = () => {
     document.title = "GLCL";
+   
     const { id } = useParams();
+    console.log("lid");
+    console.log(id);
 
     const [data, setUserData] = useState([]);
     const [startDate, setStartDate] = useState(null);
@@ -50,72 +53,194 @@ const GoldPawnUserView = () => {
     const [overallbal, setoverallbal] = useState([]);
     const [username, setusername] = useState([]);
     const [membership_id, setmembership_id] = useState([]);
-
     const [loandetails, setloandetails] = useState([]);
+    const [profile, setprofiledetails] = useState([]);
+    const [totalpaid, settotalpaid] = useState([]);
+    const [totalOutstanding, settotalpending] = useState([]);
+    const [overallamount, setoverallamount] = useState([]);
+    const [curmpayamount, setcurrentMonthPayAmount] = useState([]);
+    const [paymentstatus,setdaysLeftToPay]= useState([]);
+    const [duedate,setdueDate]= useState([]);
+    
+
 
     get(`${apiname.loaniddetails}/${id}`)
     .then((updatereslist) => {
+
+       
        if (updatereslist.status == "404") {
            setloandetails("");
+           setUserData('')
        }else{
-        // console.log("updatereslist");
-        // console.log(updatereslist.data.result);
+       
         setloandetails(updatereslist.data.result);
-        setUserData(updatereslist.data.result.LoanTransactions)
+
+      let  loanTransactions=updatereslist.data.result.LoanTransactions;
+let totalPaid = 0;
+let totalOutstanding = 0;
+let overallamount=0;
+
+for (const transaction of loanTransactions) {
+    overallamount += parseFloat(transaction.total_amount);
+
+    setoverallamount(overallamount);
+    if (transaction.transaction_id) {
+        totalPaid += parseFloat(transaction.total_amount);
+        settotalpaid(totalPaid.toFixed(2));
+    } else {
+        totalOutstanding += parseFloat(transaction.total_amount);
+        settotalpending(totalOutstanding.toFixed(2));
+    }
+}
+
+const currentMonth1 = new Date().getMonth() + 1; // Get the current month (1-based index)
+const currentYear1 = new Date().getFullYear(); // Get the current year
+
+const currentMonthTransactions = loanTransactions.filter(transaction => {
+    const dueDate = new Date(transaction.payment_due_date);
+    return dueDate.getMonth() + 1 === currentMonth1 && dueDate.getFullYear() === currentYear1;
+});
+
+let currentMonthPayAmount = 0;
+for (const transaction of currentMonthTransactions) {
+    currentMonthPayAmount += parseFloat(transaction.total_amount);
+    setcurrentMonthPayAmount(currentMonthPayAmount);
+}
+
+let daysLeftToPay = null;
+let status = '';
+
+if (currentMonthTransactions.some(transaction => !transaction.transaction_id)) {
+    // Calculate days left until payment due date
+    const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
+    const currentDate = new Date();
+    daysLeftToPay = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
+    setdaysLeftToPay(daysLeftToPay);
+    setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+} else {
+    daysLeftToPay = 'Paid';
+    const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
+    setdaysLeftToPay(daysLeftToPay);
+    setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+}
+
+
+        if(updatereslist.data.result.LoanTransactions.length>0){
+            setUserData(updatereslist.data.result.LoanTransactions)
+            setprofiledetails(updatereslist.data.result.Profile);
+        }else{
+            setUserData("");
+            setprofiledetails("");
+        }
+      
        }
     
       })
 .catch((err) => console.log(err))
 
-    const seriesData = [80];
-    const options = {
-        chart: {
-            type: 'radialBar',
-            height: 300,
-            width: 300,
-            toolbar: {
-                show: false
-            }
-        },
-        plotOptions: {
-            radialBar: {
-                hollow: {
-                    size: '50%'
-                },
-                dataLabels: {
-                    name: {
-                        show: false
-                    },
-                    value: {
-                        show: true,
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        fontFamily: 'Arial, sans-serif',
-                        offsetY: 10,
 
-                    },
-                    total: {
-                        show: true,
-                        label: 'Total',
-                        fontSize: '12px',
-                        fontWeight: 'normal',
-                        fontFamily: 'Arial, sans-serif',
-                        color: 'black',
-                        formatter: function (val) {
-                            return `MYR 667.00`;
-                        }
-                    },
 
-                }
-            }
-        },
-        colors: ['#d4a437',],
-        labels: ['Series 1']
-    };
 
+
+
+
+
+const percentage = ((totalpaid / overallamount) * 100).toFixed(2);
+
+const seriesData = [percentage,totalpaid];
+
+
+const options = {
     
- 
+    chart: {
+        type: 'radialBar',
+        height: 300,
+        width: 300,
+        toolbar: {
+            show: false
+        }
+    },
+    plotOptions: {
+        radialBar: {
+            hollow: {
+                size: '50%'
+            },
+            dataLabels: {
+                name: {
+                    show: false
+                },
+                value: {
+                    show: true,
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    fontFamily: 'Arial, sans-serif',
+                    offsetY: 10,
+                },
+                total: {
+                    show: true,
+                    label: 'Total',
+                    fontSize: '12px',
+                    fontWeight: 'normal',
+                    fontFamily: 'Arial, sans-serif',
+                    color: 'black',
+                    formatter: function (val) {
+                        return `${totalpaid}`; // Print totalpaid here
+                    }
+                },
+            }
+        }
+    },
+    colors: ['#d4a437'],
+    labels: ['percentage','totalpaid']
+};
 
+
+
+
+
+const handleDateChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+};
+
+const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+
+    html2pdf()
+        .from(element)
+        .save('document.pdf');
+};
+
+
+
+ 
+       
+        
+    const comp = "Completed";
+    const columns = useMemo(
+        () => [
+            {
+                Header: "Date",
+                accessor: "payment_due_date",
+                Cell: ({ value }) => moment(value).format("DD/MM/YYYY")
+                // Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
+            },
+            {
+                Header: "Amount (RM)",
+                accessor: "total_amount",
+            },
+
+            {
+                Header: "Status",
+                accessor: "transaction_id",
+                Cell: ({ value }) => {
+                    return value === null || value === "" ? "Not Paid" : "Paid";
+                  }
+            },
+        ],
+        []
+    );
    
 
     
@@ -126,7 +251,7 @@ const GoldPawnUserView = () => {
                 <Container fluid={true}>
                     <Breadcrumbs
                         title="Forms"
-                        breadcrumbItem="SVARNA ROKA AGRIMA SCHEME"
+                        breadcrumbItem="SVARNA AHITA SCHEME"
                     />
                     <div className="d-flex gap-3" id="contentToExport">
                         <div className="col-lg-12 p-0">
@@ -234,29 +359,29 @@ const GoldPawnUserView = () => {
                                                             <div className="row text-gold p-2 smFont" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
                                                                 <div className="text-center col-6 ">
                                                                     Total Loan Paid
-                                                                    <div className="text-white">RM 447.00</div>
+                                                                    <div className="text-white">{totalpaid}</div>
                                                                 </div>
                                                                 <div className="text-center col-6">
                                                                     Loan Unpaid
-                                                                    <div className="text-white">RM 149.00</div>
+                                                                    <div className="text-white">{totalOutstanding}</div>
                                                                 </div>
                                                             </div>
                                                             <div className="row text-gold mt-3 p-2 smFont" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
                                                                 <div className="text-center col-4">
                                                                     <div className="text-white">Current Monthly Payment</div>
-                                                                    <div className=""> RM 100.00</div>
+                                                                    <div className=""> {curmpayamount}</div>
                                                                    
                                                                 </div>
                                                                 <div className="text-center col-4">
                                                                 <div className="text-white">Current Monthly Payment</div>
-                                                                    Mon, 28 July 
+                                                                {duedate}
                                                                     <br></br>
-                                                                    In 17 days
+                                                                    In {paymentstatus} days
                                                                 </div>
                                                                 <div className="text-center col-4">
                                                                 <div className="text-white">Loan Period</div>
                                                                   
-                                                                   <br></br>
+                                                                <br></br>
                                                                    {loandetails.installement_months} months
                                                                 </div>
                                                             </div>
@@ -269,6 +394,54 @@ const GoldPawnUserView = () => {
                                         </Col>
                                     </Row>
 
+                                </CardBody>
+                            </Card>
+                            <Card className="defCard">
+                                <CardBody>
+                                    <CardTitle className="cardTitle">
+                                        Transaction History
+                                    </CardTitle>
+                                    <div className="d-print-none mt-4">
+                                        <div className="float-start ">
+                                            <div style={{ position: "relative" }}>
+                                                <DatePicker
+                                                    className="form-control filterInput"
+                                                    selected={startDate}
+                                                    onChange={handleDateChange}
+                                                    startDate={startDate}
+                                                    endDate={endDate}
+                                                    selectsRange
+                                                    placeholderText="Select Date Range"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="float-end ">
+
+                                            <button
+                                                type="button"
+                                                className="btn btn-primary exportBtn  me-2"
+                                                onClick={exportToPDF}
+                                            >
+                                                <i className="mdi mdi-upload  "></i>{" "}
+                                                EXPORT
+                                            </button>
+
+                                            <Link to="#" className="btn btn-success downloadBtn">
+                                                <img
+                                                    src={print}
+                                                    alt=""
+                                                    className="avatar-md print_icon"
+                                                />
+                                            </Link>
+                                        </div>
+                                    </div>
+                                    <TableContainer
+                                        columns={columns}
+                                        data={data}
+                                        isAddOptions={false}
+                                        customPageSize={10}
+                                        className="custom-header-css"
+                                    />
                                 </CardBody>
                             </Card>
                         </div>

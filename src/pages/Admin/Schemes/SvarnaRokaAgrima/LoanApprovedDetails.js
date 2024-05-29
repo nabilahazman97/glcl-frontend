@@ -54,16 +54,85 @@ const LoanApprovedDetails = () => {
     const [username, setusername] = useState([]);
     const [membership_id, setmembership_id] = useState([]);
     const [loandetails, setloandetails] = useState([]);
+    const [profile, setprofiledetails] = useState([]);
+    const [totalpaid, settotalpaid] = useState([]);
+    const [totalOutstanding, settotalpending] = useState([]);
+    const [overallamount, setoverallamount] = useState([]);
+    const [curmpayamount, setcurrentMonthPayAmount] = useState([]);
+    const [paymentstatus,setdaysLeftToPay]= useState([]);
+    const [duedate,setdueDate]= useState([]);
+    
+
 
     get(`${apiname.loaniddetails}/${id}`)
     .then((updatereslist) => {
+
+       
        if (updatereslist.status == "404") {
            setloandetails("");
+           setUserData('')
        }else{
-        // console.log("updatereslist");
-        // console.log(updatereslist.data.result);
+       
         setloandetails(updatereslist.data.result);
-        setUserData(updatereslist.data.result.LoanTransactions)
+
+      let  loanTransactions=updatereslist.data.result.LoanTransactions;
+let totalPaid = 0;
+let totalOutstanding = 0;
+let overallamount=0;
+
+for (const transaction of loanTransactions) {
+    overallamount += parseFloat(transaction.total_amount);
+
+    setoverallamount(overallamount);
+    if (transaction.transaction_id) {
+        totalPaid += parseFloat(transaction.total_amount);
+        settotalpaid(totalPaid.toFixed(2));
+    } else {
+        totalOutstanding += parseFloat(transaction.total_amount);
+        settotalpending(totalOutstanding.toFixed(2));
+    }
+}
+
+const currentMonth1 = new Date().getMonth() + 1; // Get the current month (1-based index)
+const currentYear1 = new Date().getFullYear(); // Get the current year
+
+const currentMonthTransactions = loanTransactions.filter(transaction => {
+    const dueDate = new Date(transaction.payment_due_date);
+    return dueDate.getMonth() + 1 === currentMonth1 && dueDate.getFullYear() === currentYear1;
+});
+
+let currentMonthPayAmount = 0;
+for (const transaction of currentMonthTransactions) {
+    currentMonthPayAmount += parseFloat(transaction.total_amount);
+    setcurrentMonthPayAmount(currentMonthPayAmount);
+}
+
+let daysLeftToPay = null;
+let status = '';
+
+if (currentMonthTransactions.some(transaction => !transaction.transaction_id)) {
+    // Calculate days left until payment due date
+    const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
+    const currentDate = new Date();
+    daysLeftToPay = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
+    setdaysLeftToPay(daysLeftToPay);
+    setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+} else {
+    daysLeftToPay = 'Paid';
+    const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
+    setdaysLeftToPay(daysLeftToPay);
+    setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+}
+
+
+        if(updatereslist.data.result.LoanTransactions.length>0){
+            setUserData(updatereslist.data.result.LoanTransactions)
+            setprofiledetails(updatereslist.data.result.Profile);
+        }else{
+            setUserData("");
+            setprofiledetails("");
+        }
+      
        }
     
       })
@@ -71,88 +140,70 @@ const LoanApprovedDetails = () => {
 
 
 
-    const seriesData = [80];
-    const options = {
-        chart: {
-            type: 'radialBar',
-            height: 300,
-            width: 300,
-            toolbar: {
-                show: false
-            }
-        },
-        plotOptions: {
-            radialBar: {
-                hollow: {
-                    size: '50%'
+
+
+
+
+
+const percentage = ((totalpaid / overallamount) * 100).toFixed(2);
+
+const seriesData = [percentage,totalpaid];
+
+
+const options = {
+    
+    chart: {
+        type: 'radialBar',
+        height: 300,
+        width: 300,
+        toolbar: {
+            show: false
+        }
+    },
+    plotOptions: {
+        radialBar: {
+            hollow: {
+                size: '50%'
+            },
+            dataLabels: {
+                name: {
+                    show: false
                 },
-                dataLabels: {
-                    name: {
-                        show: false
-                    },
-                    value: {
-                        show: true,
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        fontFamily: 'Arial, sans-serif',
-                        offsetY: 10,
-                
-                    },
-                    total: {
-                        show: true,
-                        label: 'Total',
-                        fontSize: '12px',
-                        fontWeight: 'normal',
-                        fontFamily: 'Arial, sans-serif',
-                        color: 'black',
-                        formatter: function (val) {
-                            return `MYR 667.00`;
-                        }
-                    },
-                    
-                }
+                value: {
+                    show: true,
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    fontFamily: 'Arial, sans-serif',
+                    offsetY: 10,
+                },
+                total: {
+                    show: true,
+                    label: 'Total',
+                    fontSize: '12px',
+                    fontWeight: 'normal',
+                    fontFamily: 'Arial, sans-serif',
+                    color: 'black',
+                    formatter: function (val) {
+                        return `${totalpaid}`; // Print totalpaid here
+                    }
+                },
             }
-        },
-        colors: [ '#d4a437',],
-        labels: ['Series 1']
-    };
+        }
+    },
+    colors: ['#d4a437'],
+    labels: ['percentage','totalpaid']
+};
 
-    useEffect(() => {
-        const userScheme = {
-            scheme_id: "2",
-            // user_id: Uid,
-        };
-        post(apiname.userScheme, userScheme)
-            .then((res) => {
-                let filteredData = res.data.result;
-                if (startDate && endDate) {
-                    const startTimestamp = startDate.getTime();
-                    const endTimestamp = endDate.getTime();
-                    filteredData = filteredData.filter((item) => {
-                        const itemDate = new Date(item.date).getTime();
-                        return itemDate >= startTimestamp && itemDate <= endTimestamp;
-                    });
-                }
-                setusername(filteredData[0].username)
-                setmembership_id(filteredData[0].membership_id)
-                setUserData(filteredData);
 
-                //to get wallet bal
 
-                const getwalletbal = {
-                    user_id: Uid,
-                };
-                post(apiname.walletbal, getwalletbal)
-                    // .then((res) => console.log(res.result.type_3_walletbal))
-                    .then((res) => {
-                        setwalletbal(res.data.result.walletbal);
-                        setoverallbal(res.data.result.type_3_walletbal);
-                    })
 
-                    .catch((err) => console.log(err));
-            })
-            .catch((err) => console.log(err));
-    }, [startDate, endDate]);
+
+
+
+
+ 
+       
+        
     const comp = "Completed";
     const columns = useMemo(
         () => [
@@ -260,10 +311,10 @@ const LoanApprovedDetails = () => {
                                                                 <div className="mb-3">{loandetails.amount}</div>
                                                                     <div className="mb-3">{loandetails.installement_months}&nbsp;months</div>
                                                                     <div className="mb-3">{loandetails.interest_rate}&nbsp; %</div>
-                                                                    <div className="mb-3">CIMB Clicks</div>
-                                                                    <div className="mb-3">1111111111</div>
-                                                                    <div className="mb-3">Muhammad Yusof</div>
-                                                                    <div className="mb-3">RM 337.33</div>
+                                                                    <div className="mb-3">{profile.bankName}</div>
+                                                                    <div className="mb-3">{profile.accountNumber}</div>
+                                                                    <div className="mb-3">{profile.accountHolderName}</div>
+                                                                    {/* <div className="mb-3">RM 337.33</div> */}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -277,7 +328,7 @@ const LoanApprovedDetails = () => {
                                                     <div>
                                                         <div className="">
                                                             <div className="text-center">
-                                                                <div className="" id="radialchart-1" style={{ borderBottom: "2px solid black" }}>
+                                                                <div className="" id="radialchart-1" >
                                                                     <ReactApexChart
                                                                         options={options}
                                                                         series={seriesData}
@@ -288,8 +339,37 @@ const LoanApprovedDetails = () => {
                                                                     />
                                                                 </div>
                                                             </div>
-                                                            <div className="d-flex justify-content-between align-content-start p-3 gap-3">
-                                                            <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>                                                           
+                                                            {/* <div className="d-flex justify-content-between align-content-start p-3 gap-3"> */}
+                                                            <div className="row text-gold p-2 smFont" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
+                                                                <div className="text-center col-6 ">
+                                                                    Total Loan Paid
+                                                                    <div className="text-white">{totalpaid}</div>
+                                                                </div>
+                                                                <div className="text-center col-6">
+                                                                    Loan Unpaid
+                                                                    <div className="text-white">{totalOutstanding}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="row text-gold mt-3 p-2 smFont" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
+                                                                <div className="text-center col-4">
+                                                                    <div className="text-white">Current Monthly Payment</div>
+                                                                    <div className=""> {curmpayamount}</div>
+                                                                   
+                                                                </div>
+                                                                <div className="text-center col-4">
+                                                                <div className="text-white">Current Monthly Payment</div>
+                                                                {duedate}
+                                                                    <br></br>
+                                                                    In {paymentstatus} days
+                                                                </div>
+                                                                <div className="text-center col-4">
+                                                                <div className="text-white">Loan Period</div>
+                                                                  
+                                                                   <br></br>
+                                                                   {loandetails.installement_months} months
+                                                                </div>
+                                                            </div>
+                                                            {/* <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>                                                           
                                                              <CardBody className="">
                                                                 <div className="lgFont text-dark-gold mb-2">0</div>
                                                                 <div className="std_font inter_bold">Overdue Loan</div>
@@ -306,8 +386,8 @@ const LoanApprovedDetails = () => {
                                                             <div className="lgFont text-dark-gold mb-2">1</div>
                                                                 <div className="std_font inter_bold">Active Loan</div>
                                                             </CardBody>
-                                                            </Card>
-                                                            </div>
+                                                            </Card> */}
+                                                            {/* </div> */}
 
                                                         </div>
                                                     </div>
