@@ -46,21 +46,7 @@ const GoldPawnRequestView = () => {
   console.log("lid");
   console.log(id);
 
-<<<<<<< HEAD
   const navigate = useNavigate();
-=======
-    const [data, setUserData] = useState([]);
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [walletbal, setwalletbal] = useState([]);
-    const [overallbal, setoverallbal] = useState([]);
-    const [username, setusername] = useState([]);
-    const [membership_id, setmembership_id] = useState([]);
-    const [modal_amount_loan, setmodal_amount_loan] = useState(false);
-    const [modal_approved, setModal_approved] = useState(false);
-    const [modal_reason_reject, setModal_reason_reject] = useState(false);
-    const [modal_rejected, setModal_rejected] = useState(false); 
->>>>>>> c8277073f1c227c225c38b96db0a84a03d52dec5
 
 
 
