@@ -237,8 +237,8 @@ function LoanApprovedList() {
   }
 
   const handleSelectChange = (selectedOption) => {
-    console.log("selectedOption");
-    console.log(selectedOption);
+    // console.log("selectedOption");
+    // console.log(selectedOption);
     if (selectedOption) {
       setSelectedId(selectedOption);
     } else {
@@ -253,8 +253,8 @@ function LoanApprovedList() {
       setVaryingModal(!varyingModal);
     }
 
-    console.log("selectedId");
-    console.log(selectedId.length);
+    // console.log("selectedId");
+    // console.log(selectedId.length);
 
     //   if (!selectedId) {
     //     // If no value is selected, set an error message

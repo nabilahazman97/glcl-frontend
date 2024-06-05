@@ -108,8 +108,8 @@ const Dashboard = props => {
       //     })
       //     .catch(err => console.log(err));
   }, []);
-  console.log("data schemes");
-  console.log(dataSchemes);
+  // console.log("data schemes");
+  // console.log(dataSchemes);
 
 
   const userSchemeIds = [
@@ -124,8 +124,8 @@ const [data2, setdata2] = useState([]);
 const [reports, setReports] = useState([]);
 
 useEffect(() => {
-    console.log(apiname.base_url);
-    console.log(apiname.userScheme);
+    // console.log(apiname.base_url);
+    // console.log(apiname.userScheme);
     // Fetch data for each scheme ID
     // Promise.all(
     //     userSchemeIds.map(userSchemeid => axios.post(apiname.base_url + apiname.userScheme, userSchemeid, {
@@ -136,8 +136,8 @@ useEffect(() => {
     Promise.all(
         userSchemeIds.map(userSchemeid => post(apiname.userScheme, userSchemeid))
     ).then(responses => {
-      console.log("responses");
-      console.log(responses);
+      // console.log("responses");
+      // console.log(responses);
         // Update reports for each scheme ID
         const updatedReports = userSchemeIds.map((userSchemeid, index) => {
             let title = '';
@@ -168,10 +168,10 @@ useEffect(() => {
     }).catch(err => console.log(err));
 }, []);
 
-console.log("User Scheme");
-console.log(data2);
-console.log("Reports");
-console.log(reports);
+// console.log("User Scheme");
+// console.log(data2);
+// console.log("Reports");
+// console.log(reports);
 
 
 const user = {
@@ -181,9 +181,9 @@ const user = {
 
 const [data, setdata] = useState([]);
 useEffect(() => {
-  console.log(apiname.base_url);
-  console.log(apiname.p_userdetails);
-  console.log(user);
+  // console.log(apiname.base_url);
+  // console.log(apiname.p_userdetails);
+  // console.log(user);
   post(apiname.p_userdetails, user)
   .then(res => setdata(res.data.result))
   .catch(err => console.log(err));
@@ -196,8 +196,8 @@ useEffect(() => {
   //     .then(res => setdata(res['data']['result']))
   //     .catch(err => console.log(err));
 }, []);
-console.log("User Data");
-console.log(data[0]);
+// console.log("User Data");
+// console.log(data[0]);
 
 const [Uid, setUid] = useState(0);
 const [SchemeIdAll, setSchemeIdAll] = useState(1,2);
@@ -215,9 +215,9 @@ const userSchemeid5 = {
 
 const [data5, setdata5] = useState([]);
 useEffect(() => {
-  console.log(apiname.base_url);
-  console.log(apiname.userScheme);
-  console.log(user);
+  // console.log(apiname.base_url);
+  // console.log(apiname.userScheme);
+  // console.log(user);
   // axios.post(apiname.base_url + apiname.userScheme, userSchemeid5, {
   //     headers: {
   //         'Authorization': 'Basic ' + apiname.encoded
@@ -228,8 +228,8 @@ useEffect(() => {
       .then(res => setdata5(res.result))
       .catch(err => console.log(err));
 }, []);
-console.log("data5");
-console.log(data5);
+// console.log("data5");
+// console.log(data5);
 
 
 const columns = useMemo(

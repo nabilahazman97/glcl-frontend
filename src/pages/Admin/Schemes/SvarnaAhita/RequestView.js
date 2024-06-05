@@ -59,6 +59,8 @@ const GoldPawnRequestView = () => {
   const [textvalue, setValue] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
   const [modal_amount_loan, setmodal_amount_loan] = useState(false);
+  const [activeloan, setactiveloan] = useState([]);
+  const [overdueloan, setoverdueloan] = useState([]);
   const handleChange = (event) => {
       setValue(event.target.value);
     };
@@ -79,53 +81,62 @@ const GoldPawnRequestView = () => {
      })
 .catch((err) => console.log(err))
 
+//  get loan details
 
+get(`${apiname.loandetail_userid}/${id}`)
+.then((updatereslist) => {
+   if (updatereslist.status == "200") {
+    setactiveloan(updatereslist.data.result.active_loan_count)
+    setoverdueloan(updatereslist.data.result.overdue_loan_count)
+   }
+  })
+.catch((err) => console.log(err))
 
-  const seriesData = [80];
-  const options = {
-      chart: {
-          type: 'radialBar',
-          height: 300,
-          width: 300,
-          toolbar: {
-              show: false
-          }
-      },
-      plotOptions: {
-          radialBar: {
-              hollow: {
-                  size: '50%'
-              },
-              dataLabels: {
-                  name: {
-                      show: false
-                  },
-                  value: {
-                      show: true,
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      fontFamily: 'Arial, sans-serif',
-                      offsetY: 10,
+const seriesData = [80];
+const options = {
+    chart: {
+        type: 'radialBar',
+        height: 300,
+        width: 300,
+        toolbar: {
+            show: false
+        }
+    },
+    plotOptions: {
+        radialBar: {
+            hollow: {
+                size: '50%'
+            },
+            dataLabels: {
+                name: {
+                    show: false
+                },
+                value: {
+                    show: true,
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    fontFamily: 'Arial, sans-serif',
+                    offsetY: 10,
 
-                  },
-                  total: {
-                      show: true,
-                      label: 'Total',
-                      fontSize: '12px',
-                      fontWeight: 'normal',
-                      fontFamily: 'Arial, sans-serif',
-                      color: 'black',
-                      formatter: function (val) {
-                          return `-`;
-                      }
-                  },
+                },
+                total: {
+                    show: true,
+                    label: 'Total',
+                    fontSize: '12px',
+                    fontWeight: 'normal',
+                    fontFamily: 'Arial, sans-serif',
+                    color: 'black',
+                    formatter: function (val) {
+                        return `-`;
+                    }
+                },
 
-              }
-          }
-      },
-      colors: ['#d4a437',],
-      labels: ['Series 1']
-  };
+            }
+        }
+    },
+    colors: ['#d4a437',],
+    labels: ['Series 1']
+};
 
  
   const comp = "Completed";
@@ -336,7 +347,48 @@ setErrorMessage('');
                                     </div>
                                 </CardBody>
                             </Card>
-                            <Card className="mt-3" style={{ backgroundColor: "#090f2f" }}>
+                            <Card className="mt-3 col-lg-6" style={{float:"right" }}>
+                            <CardBody className="align-content-center">
+                                                <div>
+                                                        <div className="">
+                                                            <div className="text-center">
+                                                                <div className="" id="radialchart-1" style={{ borderBottom: "2px solid black" }}>
+                                                                    <ReactApexChart
+                                                                        options={options}
+                                                                        series={seriesData}
+                                                                        type="radialBar"
+                                                                        height={200}
+                                                                        width={200}
+                                                                        className="apex-charts"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div className="d-flex justify-content-between align-content-start p-3 gap-3">
+                                                            <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>                                                          
+                                                             <CardBody className="">
+                                                                <div className="lgFont text-dark-gold mb-2">{overdueloan}</div>
+                                                                <div className="std_font inter_bold">Overdue Loan</div>
+                                                            </CardBody>
+                                                            </Card>
+                                                            {/* <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>  
+                                                            <CardBody className="">
+                                                                 <div className="lgFont text-dark-gold mb-2">0</div>
+                                                                <div className="std_font inter_bold">Loan Period Month</div>
+                                                            </CardBody>
+                                                            </Card> */}
+                                                            <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>
+                                                            <CardBody className="">
+                                                            <div className="lgFont text-dark-gold mb-2">{activeloan}</div>
+                                                                <div className="std_font inter_bold">Active Loan</div>
+                                                            </CardBody>
+                                                            </Card>
+                                                            </div>
+ 
+                                                        </div>
+                                                    </div>
+                                                </CardBody>
+                              </Card>
+                            <Card className="mt-3 col-lg-6" style={{ backgroundColor: "#090f2f" }}>
 
                                 <CardBody>
 
@@ -408,6 +460,10 @@ setErrorMessage('');
 
                                 </CardBody>
                             </Card>
+                            {/* <Card className="mt-3 col-lg-6" style={{ backgroundColor: "#090f2f" }}>
+                              hyg
+                            </Card> */}
+
 
                             {/* <Card className="defCard">
                                 <CardBody>

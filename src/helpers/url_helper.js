@@ -220,3 +220,7 @@ export const loaniddetails ="/api/loan/getById"; //
 // /approval
 
 export const loanapproval ="/api/loan/approval"; //
+
+// get loan details by userid
+
+export const loandetail_userid ="/api/loan/loanDetailsByUserId"; //

@@ -164,7 +164,7 @@ function LoanApplicationList() {
     </button>
   </Link>
 ) : (
-  <Link to={`/admin-svarna-roka-agrima/loan-application-details/${row.original.id}`} disabled>
+  <Link to={`/admin-svarna-roka-agrima/loan-application-details/${row.original.user_id}`} disabled>
     <button
       type="button"
       className="btn btn-primary"
@@ -257,8 +257,8 @@ function LoanApplicationList() {
   }
 
   const handleSelectChange = (selectedOption) => {
-    console.log("selectedOption");
-    console.log(selectedOption);
+    // console.log("selectedOption");
+    // console.log(selectedOption);
     if (selectedOption) {
       setSelectedId(selectedOption);
     } else {

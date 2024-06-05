@@ -27,12 +27,12 @@ const ProfileMenu = props => {
   const [name, setname] = useState("");
 
   useEffect(() => {
-    console.log("header name")
+    // console.log("header name")
     var authUserData = localStorage.getItem("authUser");
    
     var authUserObject = JSON.parse(authUserData);
-    console.log("authUserData");
-    console.log(authUserObject);
+    // console.log("authUserData");
+    // console.log(authUserObject);
     setUid(authUserObject.data.result.id);
     var username = setname(authUserObject.data.result.username);
     var id = authUserObject.data.result.id;
@@ -55,15 +55,15 @@ const ProfileMenu = props => {
 
     post(apiname.p_userdetails, { id: id })
       .then((res) => {
-        console.log("res");
-        console.log(res);
+        // console.log("res");
+        // console.log(res);
         if (res.status === '204') {
           // setUserData(0);
         } else {
           let filteredData = res.data.result[0];
 
-          console.log("filteredData");
-          console.log(filteredData);
+          // console.log("filteredData");
+          // console.log(filteredData);
           setUserData(filteredData.username);
         }
 

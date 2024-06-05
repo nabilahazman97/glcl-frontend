@@ -50,6 +50,8 @@ function GoldPurchase() {
   const [textvalue, setValue] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
   const [errorMessage1, setErrorMessage1] = useState('');
+  const [errorMessage2, setErrorMessage2] = useState('');
+  // setErrorMessage2
   const handleChange = (event) => {
     setValue(event.target.value);
   };
@@ -222,9 +224,33 @@ function GoldPurchase() {
       .catch((err) => console.log(err));
   }
 
-  function tog_assign_gold(transactionid) {
-    setTogModalAssignGold(!togModalAssignGold);
-    // setTogModal1(false)
+  function tog_assign_gold(transaction) {
+
+    // approve
+
+    const approveid1 = {
+      transactionId: transaction.id,
+      action: "approve",
+    };
+
+    console.log("approveid1");
+    console.log(approveid1);
+
+    post(apiname.approval, approveid1)
+      .then((res) => {
+        if (res.status == "204") {
+          setUserData("");
+          setTogModalAssignGold(!togModalAssignGold);
+
+        }else if(res.status == "200"){
+          setErrorMessage2("Insufficient Gold Vault Count to Approve");
+        } else {
+          let filteredData = res.data.result;
+          setUserData(filteredData);
+          setTogModalAssignGold(!togModalAssignGold);
+        }
+      })
+      .catch((err) => console.log(err));
     removeBodyCss();
 
     
@@ -237,8 +263,8 @@ function GoldPurchase() {
   }
 
   const handleSelectChange = (selectedOption) => {
-    console.log("selectedOption");
-    console.log(selectedOption);
+    // console.log("selectedOption");
+    // console.log(selectedOption);
     if (selectedOption) {
       setSelectedId(selectedOption);
     } else {
@@ -246,15 +272,27 @@ function GoldPurchase() {
     }
   };
 
-  function tog_approved(transactionid, userId) {
+  function tog_reject_gold(){
+    // console.log("reject");
+    // setTogModalApproved(!togModalApproved);
+    // setTogModalApproved(false);
+    setTogModalAssignGold(false);
+          setTimeout(() => {
+          //   setTogModalApproved(togModalApproved);
+            window.location.reload();
+          }, 3000);
+  }
+
+  function tog_approved(transaction) {
     // setTogModal(false)
     removeBodyCss();
     function tog_varyingModal() {
       setVaryingModal(!varyingModal);
     }
 
-    console.log("selectedId");
-    console.log(selectedId.length);
+    // console.log("selectedId");
+    // console.log(selectedId.length);
+    // console.log(transaction.gold_grams);
 
     //   if (!selectedId) {
     //     // If no value is selected, set an error message
@@ -262,10 +300,21 @@ function GoldPurchase() {
     //     return;
     // }
 
+
+    if (selectedId === null) {
+      setErrorMessage1("Please select at least one option");
+      return;
+    } 
     if (selectedId.length === 0) {
       setErrorMessage1("Please select at least one option");
       return;
     } 
+
+   
+    if (selectedId.length !== transaction.gold_grams) {
+      setErrorMessage1("Please select exactly " + transaction.gold_grams + " options");
+      return;
+    }
 
     // Reset error message if validation passes
     setErrorMessage1('');
@@ -276,12 +325,13 @@ function GoldPurchase() {
     // approve
 
       const approveid1 = {
-      transactionId: transactionid,
+      transactionId: transaction.id,
       action: "approve",
     };
 
     post(apiname.approval, approveid1)
       .then((res) => {
+        
         if (res.status == "204") {
           setUserData("");
         } else {
@@ -293,9 +343,11 @@ function GoldPurchase() {
 
     // gold vault update & serial number allocate
     const approveid = {
-      transactionId: transactionid,
+      transactionId: transaction.id,
       goldvault_id: selectedId,
-      userId: userId,
+      userId: transiddata.user_id,
+      purchasePrice:transiddata.amount/transiddata.gold_grams
+      
     };
 
     post(apiname.assigngoldcoin, approveid)
@@ -569,7 +621,7 @@ function GoldPurchase() {
                   type="button"
                   className="btn btn-success approveBtn statusApproved mr-1"
                   onClick={() => {
-                    tog_assign_gold(transiddata.id);
+                    tog_assign_gold(transiddata);
                   }}
                 >
                   Approve
@@ -587,6 +639,7 @@ function GoldPurchase() {
                 {/* REJECT MODAL */}
 
                 {/* REJECT MODAL */}
+                {errorMessage2 && <div style={{ color: 'red' }}>{errorMessage2}</div>}
               </div>
             </Row>
           </div>
@@ -629,7 +682,7 @@ function GoldPurchase() {
               className="modalCancelBtn me-2"
               outline
               onClick={() => {
-                tog_assign_gold();
+                tog_reject_gold();
               }}
             >
               Cancel
@@ -638,11 +691,13 @@ function GoldPurchase() {
               color="primary"
               className="modalConfirmBtn"
               onClick={() => {
-                tog_approved(transiddata.id, transiddata.user_id);
+                tog_approved(transiddata);
+                // tog_approved(transiddata.id, transiddata.user_id);
               }}
             >
               Submit
             </Button>
+           
           </div>
         </Modal>
         {/* ASSIGN GOLD COIN */}

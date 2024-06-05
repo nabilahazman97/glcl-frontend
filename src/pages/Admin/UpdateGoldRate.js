@@ -86,13 +86,13 @@ function UpdateGoldRate() {
                 post(apiname.userScheme, userScheme)
                     .then(res => {
                         const userSchemeData = res.result;
-                        console.log("userSchemeData")
-                        console.log(userSchemeData)
+                        // console.log("userSchemeData")
+                        // console.log(userSchemeData)
                         // Merge data based on matching id and user_id values
                         const mergedData = mergeData(userListData, userSchemeData);
                         setUserData(mergedData);
-                        console.log("user")
-                        console.log(mergedData)
+                        // console.log("user")
+                        // console.log(mergedData)
                     })
                     .catch(err => console.log(err));
             })
@@ -118,8 +118,8 @@ function UpdateGoldRate() {
 
     const [data4, setdata4] = useState([]);
     useEffect(() => {
-        console.log(apiname.base_url);
-        console.log(apiname.userScheme);
+        // console.log(apiname.base_url);
+        // console.log(apiname.userScheme);
         // console.log(user);
         post(apiname.remainGold, userSchemeid)
             .then(res => setdata4(res))
@@ -133,8 +133,8 @@ function UpdateGoldRate() {
         //     .then(res => setdata4(res['data']))
         //     .catch(err => console.log(err));
     }, []);
-    console.log("Data 4");
-    console.log(data4);
+    // console.log("Data 4");
+    // console.log(data4);
 
     const mergeData = (userListData, userSchemeData) => {
         const mergedData = [];
@@ -146,7 +146,7 @@ function UpdateGoldRate() {
                 }
             }
 
-            console.log(mergedData)
+            // console.log(mergedData)
         });
         return mergedData;
 

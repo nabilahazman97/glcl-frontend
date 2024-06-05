@@ -164,7 +164,7 @@ function GoldCoinPawnList() {
     </button>
   </Link>
 ) : (
-  <Link to={`/admin-svarna-ahita/request-view/${row.original.id}`} disabled>
+  <Link to={`/admin-svarna-ahita/request-view/${row.original.user_id}`} disabled>
     <button
       type="button"
       className="btn btn-primary"
@@ -257,8 +257,8 @@ function GoldCoinPawnList() {
   }
 
   const handleSelectChange = (selectedOption) => {
-    console.log("selectedOption");
-    console.log(selectedOption);
+    // console.log("selectedOption");
+    // console.log(selectedOption);
     if (selectedOption) {
       setSelectedId(selectedOption);
     } else {
@@ -273,8 +273,8 @@ function GoldCoinPawnList() {
       setVaryingModal(!varyingModal);
     }
 
-    console.log("selectedId");
-    console.log(selectedId.length);
+    // console.log("selectedId");
+    // console.log(selectedId.length);
 
     //   if (!selectedId) {
     //     // If no value is selected, set an error message

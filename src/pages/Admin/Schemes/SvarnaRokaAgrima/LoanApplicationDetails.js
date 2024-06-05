@@ -56,6 +56,8 @@ const LoanApplicationDetails = () => {
     const [modal_rejected, setModal_rejected] = useState(false);
     const [loandetails, setloandetails] = useState([]);
     const [profile, setprofiledetails] = useState([]);
+    const [activeloan, setactiveloan] = useState([]);
+    const [overdueloan, setoverdueloan] = useState([]);
     const [textvalue, setValue] = useState("");
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -79,7 +81,20 @@ const LoanApplicationDetails = () => {
         }
      
        })
+
  .catch((err) => console.log(err))
+
+
+//  get loan details
+
+get(`${apiname.loandetail_userid}/${lid}`)
+.then((updatereslist) => {
+   if (updatereslist.status == "200") {
+    setactiveloan(updatereslist.data.result.active_loan_count)
+    setoverdueloan(updatereslist.data.result.overdue_loan_count)
+   }
+  })
+.catch((err) => console.log(err))
 
 
  
@@ -391,19 +406,19 @@ const LoanApplicationDetails = () => {
                                                             <div className="d-flex justify-content-between align-content-start p-3 gap-3">
                                                             <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>                                                          
                                                              <CardBody className="">
-                                                                <div className="lgFont text-dark-gold mb-2">0</div>
+                                                                <div className="lgFont text-dark-gold mb-2">{overdueloan}</div>
                                                                 <div className="std_font inter_bold">Overdue Loan</div>
                                                             </CardBody>
                                                             </Card>
-                                                            <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>  
+                                                            {/* <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>  
                                                             <CardBody className="">
                                                                  <div className="lgFont text-dark-gold mb-2">0</div>
                                                                 <div className="std_font inter_bold">Loan Period Month</div>
                                                             </CardBody>
-                                                            </Card>
+                                                            </Card> */}
                                                             <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>
                                                             <CardBody className="">
-                                                            <div className="lgFont text-dark-gold mb-2">0</div>
+                                                            <div className="lgFont text-dark-gold mb-2">{activeloan}</div>
                                                                 <div className="std_font inter_bold">Active Loan</div>
                                                             </CardBody>
                                                             </Card>

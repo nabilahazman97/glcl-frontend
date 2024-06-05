@@ -237,8 +237,8 @@ function PawnApprovedList() {
   }
 
   const handleSelectChange = (selectedOption) => {
-    console.log("selectedOption");
-    console.log(selectedOption);
+    // console.log("selectedOption");
+    // console.log(selectedOption);
     if (selectedOption) {
       setSelectedId(selectedOption);
     } else {
