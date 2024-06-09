@@ -54,8 +54,8 @@ export const fetchGoldvaultlist1 = () => {
       get(apiname.membershiplist)
         .then((reslist) => {
 
-          console.log("list");
-          console.log(reslist);
+          // console.log("list");
+          // console.log(reslist);
           if (reslist.status == 200) {
             dispatch(fetchGoldvaultlistSuccess1(reslist.data.result));
            

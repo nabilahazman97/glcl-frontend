@@ -32,9 +32,7 @@ import classnames from "classnames";
 import goldBar from "../../../../assets/images/users/gold_bars.png";
 import Select from "react-select";
 
-//  import './style';
-
-function GoldPurchase() {
+function LoanApprovedList() {
   const [data, setUserData] = useState([]);
   const [data1, setUserData1] = useState([]);
   const [options, setOptions] = useState([]);
@@ -50,8 +48,6 @@ function GoldPurchase() {
   const [textvalue, setValue] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
   const [errorMessage1, setErrorMessage1] = useState('');
-  const [errorMessage2, setErrorMessage2] = useState('');
-  // setErrorMessage2
   const handleChange = (event) => {
     setValue(event.target.value);
   };
@@ -64,18 +60,17 @@ function GoldPurchase() {
   };
 
   useEffect(() => {
-    get(apiname.translist)
+
+
+    get(apiname.loanlist)
       .then((res) => {
         if (res.status == "404") {
           setUserData("");
-        } else {
+        } else if(res.status == "200") {
           let filteredData = res.data.result;
           let filteredData1 = res.data.result.filter(
             (item) =>
-                item.status_id === 3 &&
-                item.gold_grams != null &&
-                item.gold_grams != "0" &&
-                (item.type_id === 1 || item.type_id === 5)
+                item.status_id === 1 && item.loan_type===6
         );
           if (startDate && endDate) {
             const startTimestamp = startDate.getTime();
@@ -88,6 +83,9 @@ function GoldPurchase() {
 
           setUserData(filteredData);
           setUserData1(filteredData1);
+          // console.log("filteredData");
+          // console.log(filteredData);
+          // console.log(filteredData1);
         }
       })
       .catch((err) => console.log(err));
@@ -110,47 +108,44 @@ function GoldPurchase() {
       .catch((err) => console.log(err));
   }, [startDate, endDate]);
 
-  const toggle = (tab) => {
-    if (tab == 1) {
-      const filternonapprovedadata = data.filter(
-        (item) =>  item.status_id === 3 && (item.type_id === 1 || item.type_id === 5)
-      );
-      setUserData1(filternonapprovedadata);
-    } else if (tab == 2) {
-      const filterapprovedadata = data.filter(
-        (item) =>
-            item.status_id === 1 &&
-            item.gold_grams != null &&
-            item.gold_grams != "0" &&
-            (item.type_id === 1 || item.type_id === 5)
-    );
-      setUserData1(filterapprovedadata);
-    } else if (tab == 3) {
-      const filterapprovedadata = data.filter((item) => item.status_id === 2 && (item.type_id === 1 || item.type_id === 5));
-      setUserData1(filterapprovedadata);
-    }
+//   const toggle = (tab) => {
+//     if (tab == 1) {
+//       const filternonapprovedadata = data.filter(
+//         (item) =>  item.status_id === 3
+//       );
+//       setUserData1(filternonapprovedadata);
+//     } else if (tab == 2) {
+//       const filterapprovedadata = data.filter(
+//         (item) =>
+//             item.status_id === 1 
+//     );
+//       setUserData1(filterapprovedadata);
+//     } else if (tab == 3) {
+//       const filterapprovedadata = data.filter((item) => item.status_id === 2);
+//       setUserData1(filterapprovedadata);
+//     }
 
-    if (activeTab !== tab) {
-      setactiveTab(tab);
-    }
-  };
+//     if (activeTab !== tab) {
+//       setactiveTab(tab);
+//     }
+//   };
 
   const columns = useMemo(
     () => [
       {
         Header: "Name",
-        accessor: "username",
+        accessor: "User.username",
       },
 
       {
         Header: "Email Address",
-        accessor: "email_id",
+        accessor: "User.email_id",
       },
 
       {
-        Header: "Gold Coin",
-        accessor: "gold_grams",
-        Cell: ({ value }) => <span>{value} g</span>,
+        Header: "Amount",
+        accessor: "amount",
+        Cell: ({ value }) => <span>{value} </span>,
       },
 
       {
@@ -158,16 +153,19 @@ function GoldPurchase() {
         accessor: "id",
         Cell: ({ row }) => (
           <div className="d-flex flex-wrap gap-2 justify-content-center">
+         
+            <Link to={`/admin-svarna-roka-agrima/loan-approved-details/${row.original.id}`}>
             <button
               type="button"
               className="btn btn-primary "
-              onClick={() => {
-                tog_transaction_summary(row.original.id);
-              }}
-              disabled={row.original.status_id !== 3}
+              // onClick={() => {
+              //   tog_transaction_summary(row.original.id);
+              // }}
+            //   disabled={row.original.status_id !== 3}
             >
               ACTION
             </button>
+            </Link>
           </div>
         ),
       },
@@ -224,33 +222,9 @@ function GoldPurchase() {
       .catch((err) => console.log(err));
   }
 
-  function tog_assign_gold(transaction) {
-
-    // approve
-
-    const approveid1 = {
-      transactionId: transaction.id,
-      action: "approve",
-    };
-
-    console.log("approveid1");
-    console.log(approveid1);
-
-    post(apiname.approval, approveid1)
-      .then((res) => {
-        if (res.status == "204") {
-          setUserData("");
-          setTogModalAssignGold(!togModalAssignGold);
-
-        }else if(res.status == "200"){
-          setErrorMessage2("Insufficient Gold Vault Count to Approve");
-        } else {
-          let filteredData = res.data.result;
-          setUserData(filteredData);
-          setTogModalAssignGold(!togModalAssignGold);
-        }
-      })
-      .catch((err) => console.log(err));
+  function tog_assign_gold(transactionid) {
+    setTogModalAssignGold(!togModalAssignGold);
+    // setTogModal1(false)
     removeBodyCss();
 
     
@@ -272,18 +246,7 @@ function GoldPurchase() {
     }
   };
 
-  function tog_reject_gold(){
-    // console.log("reject");
-    // setTogModalApproved(!togModalApproved);
-    // setTogModalApproved(false);
-    setTogModalAssignGold(false);
-          setTimeout(() => {
-          //   setTogModalApproved(togModalApproved);
-            window.location.reload();
-          }, 3000);
-  }
-
-  function tog_approved(transaction) {
+  function tog_approved(transactionid, userId) {
     // setTogModal(false)
     removeBodyCss();
     function tog_varyingModal() {
@@ -292,7 +255,6 @@ function GoldPurchase() {
 
     // console.log("selectedId");
     // console.log(selectedId.length);
-    // console.log(transaction.gold_grams);
 
     //   if (!selectedId) {
     //     // If no value is selected, set an error message
@@ -300,21 +262,10 @@ function GoldPurchase() {
     //     return;
     // }
 
-
-    if (selectedId === null) {
-      setErrorMessage1("Please select at least one option");
-      return;
-    } 
     if (selectedId.length === 0) {
       setErrorMessage1("Please select at least one option");
       return;
     } 
-
-   
-    if (selectedId.length !== transaction.gold_grams) {
-      setErrorMessage1("Please select exactly " + transaction.gold_grams + " options");
-      return;
-    }
 
     // Reset error message if validation passes
     setErrorMessage1('');
@@ -325,13 +276,12 @@ function GoldPurchase() {
     // approve
 
       const approveid1 = {
-      transactionId: transaction.id,
+      transactionId: transactionid,
       action: "approve",
     };
 
     post(apiname.approval, approveid1)
       .then((res) => {
-        
         if (res.status == "204") {
           setUserData("");
         } else {
@@ -343,11 +293,9 @@ function GoldPurchase() {
 
     // gold vault update & serial number allocate
     const approveid = {
-      transactionId: transaction.id,
+      transactionId: transactionid,
       goldvault_id: selectedId,
-      userId: transiddata.user_id,
-      purchasePrice:transiddata.amount/transiddata.gold_grams
-      
+      userId: userId,
     };
 
     post(apiname.assigngoldcoin, approveid)
@@ -416,11 +364,11 @@ function GoldPurchase() {
   return (
     <div className="page-content">
       <div className="container-fluid">
-        <Breadcrumbs title="Tables" breadcrumbItem="SVARNA TIRA SCHEME" />
+        <Breadcrumbs title="Tables" breadcrumbItem="SVARNA ROKA AGRIMA SCHEME" />
 
         <Card className="defCard" style={{ minHeight: "250px" }}>
           <CardBody>
-            <CardTitle className="cardTitle">Gold Purchase</CardTitle>
+            <CardTitle className="cardTitle">Loan Approved List</CardTitle>
             <div></div>
             <div className="d-print-none mt-4 d-flex justify-content-between">
               <div className="filterDate">
@@ -444,51 +392,10 @@ function GoldPurchase() {
             </div>
           </CardBody>
           <div className="p-3">
-            <Nav tabs>
-              <NavItem className="me-3">
-                <NavLink
-                  className={classnames("ms-3 Nav-link", {
-                    active: activeTab === "1",
-                    inactive: activeTab !== "1", // Add a class for inactive tabs
-                  })}
-                  onClick={() => {
-                    toggle("1");
-                  }}
-                >
-                  Pending Gold Purchase
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  className={classnames("Nav-link me-3", {
-                    active: activeTab === "2",
-                    inactive: activeTab !== "2", // Add a class for inactive tabs
-                  })}
-                  onClick={() => {
-                    toggle("2");
-                  }}
-                >
-                  Approved Gold Purchase
-                </NavLink>
-              </NavItem>
+           
 
-              <NavItem>
-                <NavLink
-                  className={classnames("Nav-link", {
-                    active: activeTab === "3",
-                    inactive: activeTab !== "3", // Add a class for inactive tabs
-                  })}
-                  onClick={() => {
-                    toggle("3");
-                  }}
-                >
-                  Rejected Gold Purchase
-                </NavLink>
-              </NavItem>
-            </Nav>
-
-            <TabContent activeTab={activeTab} className="p-3 text-muted">
-              <TabPane tabId="1">
+           
+             
                 <Row>
                   <Col sm="12">
                     <TableContainer
@@ -501,32 +408,10 @@ function GoldPurchase() {
                     />
                   </Col>
                 </Row>
-              </TabPane>
-              <TabPane tabId="2">
-                <Row>
-                  <TableContainer
-                    columns={columns}
-                    data={data1}
-                    // isGlobalFilter={true}
-                    isAddOptions={false}
-                    customPageSize={10}
-                    className="custom-header-css"
-                  />
-                </Row>
-              </TabPane>
-              <TabPane tabId="3">
-                <Row>
-                  <TableContainer
-                    columns={columns}
-                    data={data1}
-                    // isGlobalFilter={true}
-                    isAddOptions={false}
-                    customPageSize={10}
-                    className="custom-header-css"
-                  />
-                </Row>
-              </TabPane>
-            </TabContent>
+          
+              
+              
+         
           </div>
         </Card>
 
@@ -621,7 +506,7 @@ function GoldPurchase() {
                   type="button"
                   className="btn btn-success approveBtn statusApproved mr-1"
                   onClick={() => {
-                    tog_assign_gold(transiddata);
+                    tog_assign_gold(transiddata.id);
                   }}
                 >
                   Approve
@@ -639,7 +524,6 @@ function GoldPurchase() {
                 {/* REJECT MODAL */}
 
                 {/* REJECT MODAL */}
-                {errorMessage2 && <div style={{ color: 'red' }}>{errorMessage2}</div>}
               </div>
             </Row>
           </div>
@@ -682,7 +566,7 @@ function GoldPurchase() {
               className="modalCancelBtn me-2"
               outline
               onClick={() => {
-                tog_reject_gold();
+                tog_assign_gold();
               }}
             >
               Cancel
@@ -691,13 +575,11 @@ function GoldPurchase() {
               color="primary"
               className="modalConfirmBtn"
               onClick={() => {
-                tog_approved(transiddata);
-                // tog_approved(transiddata.id, transiddata.user_id);
+                tog_approved(transiddata.id, transiddata.user_id);
               }}
             >
               Submit
             </Button>
-           
           </div>
         </Modal>
         {/* ASSIGN GOLD COIN */}
@@ -826,8 +708,7 @@ function GoldPurchase() {
     </div>
   );
 }
-GoldPurchase.propTypes = {
+LoanApprovedList.propTypes = {
   preGlobalFilteredRows: PropTypes.any,
 };
-
-export default GoldPurchase;
+export default LoanApprovedList;

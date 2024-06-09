@@ -55,15 +55,15 @@ const UserProfile = () => {
 
     post(apiname.p_userdetails, { id: id })
       .then((res) => {
-        console.log("res");
-        console.log(res);
+        // console.log("res");
+        // console.log(res);
         if (res.status === '204') {
           // setUserData(0);
         } else {
           let filteredData = res.data.result[0];
 
-          console.log("filteredData");
-          console.log(filteredData);
+          // console.log("filteredData");
+          // console.log(filteredData);
           setUserData(filteredData);
         }
 
@@ -95,14 +95,14 @@ const UserProfile = () => {
   function handleSubmit(e) {
 
 
-    console.log("df");
+    // console.log("df");
     e.preventDefault();
-    console.log("values1");
-    console.log(values1);
+    // console.log("values1");
+    // console.log(values1);
 
     var authUserData = localStorage.getItem("authUser");
     var authUserObject = JSON.parse(authUserData);
-    console.log(authUserObject);
+    // console.log(authUserObject);
     var id = authUserObject.data.result.id;
 
     const formData = new FormData();
@@ -149,14 +149,14 @@ const UserProfile = () => {
 
     formData.append('id', id);
 
-    console.log("formData");
-    console.log(values1.length);
+    // console.log("formData");
+    // console.log(values1.length);
 
     post(apiname.editProfile, formData)
       .then(res => {
-        console.log("resupdate");
-        console.log(res);
-        console.log(res.status);
+        // console.log("resupdate");
+        // console.log(res);
+        // console.log(res.status);
         if (res.status == 200) {
           toast.success('Updated!');
         } else {

@@ -18,12 +18,13 @@ import {
     Form,
 } from "reactstrap";
 // Formik validation
-
+ 
 import { Link } from "react-router-dom";
-
+ 
 import * as apiname from "../../../../helpers/url_helper";
-import { useParams } from "react-router-dom";
-
+import { useParams,useNavigate } from "react-router-dom";
+// import {  } from "react-router-dom";
+ 
 import TableContainer from "../../../../components/Common/TableContainer";
 import avatar from "../../../../assets/images/users/avatar-1.jpg";
 import coins from "../../../../assets/images/schemes/single-coin.png";
@@ -37,22 +38,66 @@ import Breadcrumbs from "../../../../components/Common/Breadcrumb";
 // import '../../style.scss';
 import ReactApexChart from "react-apexcharts";
 import { text } from "@fortawesome/fontawesome-svg-core";
-
+ 
 const LoanApplicationDetails = () => {
     document.title = "GLCL";
-    const { Uid } = useParams();
+    const { lid } = useParams();
+    console.log("lid");
+    console.log(lid);
 
-    const [data, setUserData] = useState([]);
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [walletbal, setwalletbal] = useState([]);
-    const [overallbal, setoverallbal] = useState([]);
+    const navigate = useNavigate();
+
+
+ 
     const [username, setusername] = useState([]);
     const [membership_id, setmembership_id] = useState([]);
     const [modal_approved, setModal_approved] = useState(false);
     const [modal_reason_reject, setModal_reason_reject] = useState(false);
     const [modal_rejected, setModal_rejected] = useState(false);
+    const [loandetails, setloandetails] = useState([]);
+    const [profile, setprofiledetails] = useState([]);
+    const [activeloan, setactiveloan] = useState([]);
+    const [overdueloan, setoverdueloan] = useState([]);
+    const [textvalue, setValue] = useState("");
+    const [errorMessage, setErrorMessage] = useState('');
 
+    const handleChange = (event) => {
+        setValue(event.target.value);
+      };
+
+
+     // loaniddetails
+
+     get(`${apiname.loaniddetails}/${lid}`)
+     .then((updatereslist) => {
+        if (updatereslist.status == "404") {
+            setloandetails("");
+        }else{
+         console.log("updatereslist");
+         console.log(updatereslist.data.result.Profile);
+        
+         setloandetails(updatereslist.data.result);
+         setprofiledetails(updatereslist.data.result.Profile);
+        }
+     
+       })
+
+ .catch((err) => console.log(err))
+
+
+//  get loan details
+
+get(`${apiname.loandetail_userid}/${lid}`)
+.then((updatereslist) => {
+   if (updatereslist.status == "200") {
+    setactiveloan(updatereslist.data.result.active_loan_count)
+    setoverdueloan(updatereslist.data.result.overdue_loan_count)
+   }
+  })
+.catch((err) => console.log(err))
+
+
+ 
     const seriesData = [80];
     const options = {
         chart: {
@@ -78,7 +123,7 @@ const LoanApplicationDetails = () => {
                         fontWeight: 'bold',
                         fontFamily: 'Arial, sans-serif',
                         offsetY: 10,
-
+ 
                     },
                     total: {
                         show: true,
@@ -91,50 +136,15 @@ const LoanApplicationDetails = () => {
                             return `-`;
                         }
                     },
-
+ 
                 }
             }
         },
         colors: ['#d4a437',],
         labels: ['Series 1']
     };
-
-    useEffect(() => {
-        const userScheme = {
-            scheme_id: "2",
-            user_id: Uid,
-        };
-        post(apiname.userScheme, userScheme)
-            .then((res) => {
-                let filteredData = res.data.result;
-                if (startDate && endDate) {
-                    const startTimestamp = startDate.getTime();
-                    const endTimestamp = endDate.getTime();
-                    filteredData = filteredData.filter((item) => {
-                        const itemDate = new Date(item.date).getTime();
-                        return itemDate >= startTimestamp && itemDate <= endTimestamp;
-                    });
-                }
-                setusername(filteredData[0].username)
-                setmembership_id(filteredData[0].membership_id)
-                setUserData(filteredData);
-
-                //to get wallet bal
-
-                const getwalletbal = {
-                    user_id: Uid,
-                };
-                post(apiname.walletbal, getwalletbal)
-                    // .then((res) => console.log(res.result.type_3_walletbal))
-                    .then((res) => {
-                        setwalletbal(res.data.result.walletbal);
-                        setoverallbal(res.data.result.type_3_walletbal);
-                    })
-
-                    .catch((err) => console.log(err));
-            })
-            .catch((err) => console.log(err));
-    }, [startDate, endDate]);
+ 
+   
     const comp = "Completed";
     const columns = useMemo(
         () => [
@@ -148,7 +158,7 @@ const LoanApplicationDetails = () => {
                 Header: "Amount (RM)",
                 accessor: "total",
             },
-
+ 
             {
                 Header: "Status",
                 accessor: "pay_status",
@@ -157,27 +167,121 @@ const LoanApplicationDetails = () => {
         ],
         []
     );
-
-  
-
+ 
+ 
+ 
     function tog_approved() {
-        setModal_approved(!modal_approved);
+
+        const approveid = {
+                 loanId:lid,
+                action : "approve",
+                comments : ""
+          };
+
+        post(apiname.loanapproval, approveid)
+        .then((updateres) => {
+          
+  
+          if (updateres.status == "200") {
+  
+           
+            setModal_approved(!modal_approved);
+            setTimeout(() => {
+                setModal_approved(modal_approved);
+                navigate("/admin-svarna-roka-agrima/loan-application-list");
+            //   window.location.reload();
+            //   window.location.href = "admin-svarna-roka-agrima/loan-application-list";
+            }, 8000);
+          } else {
+          }
+        })
+        .catch((err) => console.log(err));
+
+        
+      
         removeBodyCss();
       }
     function tog_reason_reject() {
+
         setModal_reason_reject(!modal_reason_reject);
+//         const approveid = {
+//             loanId:lid,
+//            action : "reject",
+//            comments :textvalue
+//      };
+
+//      if (!textvalue.trim()) {
+//         // Set error message
+//         setErrorMessage('Reason for rejection is required.');
+//         // You can return, throw an error, or handle it as per your requirement
+//         return;
+//     } else {
+//         setErrorMessage(''); // Clear error message if textvalue is not empty
+//     }
+
+//    post(apiname.loanapproval, approveid)
+//    .then((updateres) => {
+     
+
+//      if (updateres.status == "200") {
+
+      
+//         setModal_reason_reject(!modal_reason_reject);
+//        setTimeout(() => {
+//         setModal_reason_reject(modal_reason_reject);
+//          window.location.reload();
+//        }, 8000);
+//      } else {
+//      }
+//    })
+//    .catch((err) => console.log(err));
+
+
+
+    
         removeBodyCss();
       }
     function tog_rejected() {
+        // setModal_rejected(!modal_rejected);
+
+    const approveid = {
+            loanId:lid,
+           action : "reject",
+           comments :textvalue
+     };
+
+     if (!textvalue.trim()) {
+        // Set error message
+        setErrorMessage('Reason for rejection is required.');
+        // You can return, throw an error, or handle it as per your requirement
+        return;
+    } 
+    setErrorMessage('');
+   post(apiname.loanapproval, approveid)
+   .then((updateres) => {
+     
+
+     if (updateres.status == "200") {
+
+      
         setModal_rejected(!modal_rejected);
+       setTimeout(() => {
+        setModal_rejected(modal_rejected);
+        //  window.location.reload();
+         navigate("/admin-svarna-roka-agrima/loan-application-list");
+       }, 8000);
+     } else {
+     }
+   })
+   .catch((err) => console.log(err));
         removeBodyCss();
       }
-
+ 
       function removeBodyCss() {
         document.body.classList.add("no_padding");
       }
-    
-
+   
+ 
     return (
         <React.Fragment>
             <div className="page-content">
@@ -189,7 +293,7 @@ const LoanApplicationDetails = () => {
                     <div className="d-flex gap-3" id="contentToExport">
                         <div className="col-lg-12 p-0">
                             <Card
-
+ 
                                 className="m-0"
                                 style={{
                                     background:
@@ -216,9 +320,9 @@ const LoanApplicationDetails = () => {
                                 </CardBody>
                             </Card>
                             <Card className="" style={{ backgroundColor: "#090f2f" }}>
-
+ 
                                 <CardBody>
-
+ 
                                     <Row>
                                         <Col lg={6}>
                                             <Card className="defCard" style={{ background: "linear-gradient(90deg, rgba(212, 175, 55, 0.5) 10.69%, rgba(207, 180, 92, 0.295) 89.61%)", backgroundColor: "white" }}>
@@ -243,13 +347,13 @@ const LoanApplicationDetails = () => {
                                                                     <div className="mb-3">Installment Amount</div>
                                                                 </div>
                                                                 <div className="inter_regular col-md-6 text-end">
-                                                                    <div className="mb-3">RM 5000.00</div>
-                                                                    <div className="mb-3">15 months</div>
-                                                                    <div className="mb-3">1.2 %</div>
-                                                                    <div className="mb-3">CIMB Clicks</div>
-                                                                    <div className="mb-3">1111111111</div>
-                                                                    <div className="mb-3">Muhammad Yusof</div>
-                                                                    <div className="mb-3">RM 337.33</div>
+                                                                    <div className="mb-3">{loandetails.amount}</div>
+                                                                    <div className="mb-3">{loandetails.installement_months}&nbsp;months</div>
+                                                                    <div className="mb-3">{loandetails.interest_rate}&nbsp; %</div>
+                                                                    <div className="mb-3">{profile.bankName}</div>
+                                                                    <div className="mb-3">{profile.accountNumber}</div>
+                                                                    <div className="mb-3">{profile.accountHolderName}</div>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -261,7 +365,7 @@ const LoanApplicationDetails = () => {
                                                                     tog_approved();
                                                                   }}
                                                                 className="btn btn-success approveBtn statusApproved mr-1"
-
+ 
                                                             >
                                                                 <i className="bx bxs-check-circle font-size-16 align-middle me-1"></i>{" "}
                                                                 Approve
@@ -272,7 +376,7 @@ const LoanApplicationDetails = () => {
                                                                     tog_reason_reject();
                                                                   }}
                                                                 className="btn btn-danger rejectBtn statusRejected ml-2"
-
+ 
                                                             >
                                                                 <i className="mdi mdi-close-circle font-size-16 align-middle me-1"></i>{" "}
                                                                 Reject
@@ -300,36 +404,36 @@ const LoanApplicationDetails = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="d-flex justify-content-between align-content-start p-3 gap-3">
-                                                            <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>                                                           
+                                                            <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>                                                          
                                                              <CardBody className="">
-                                                                <div className="lgFont text-dark-gold mb-2">0</div>
+                                                                <div className="lgFont text-dark-gold mb-2">{overdueloan}</div>
                                                                 <div className="std_font inter_bold">Overdue Loan</div>
                                                             </CardBody>
                                                             </Card>
-                                                            <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>  
+                                                            {/* <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>  
                                                             <CardBody className="">
                                                                  <div className="lgFont text-dark-gold mb-2">0</div>
                                                                 <div className="std_font inter_bold">Loan Period Month</div>
                                                             </CardBody>
-                                                            </Card>
+                                                            </Card> */}
                                                             <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>
                                                             <CardBody className="">
-                                                            <div className="lgFont text-dark-gold mb-2">0</div>
+                                                            <div className="lgFont text-dark-gold mb-2">{activeloan}</div>
                                                                 <div className="std_font inter_bold">Active Loan</div>
                                                             </CardBody>
                                                             </Card>
                                                             </div>
-
+ 
                                                         </div>
                                                     </div>
                                                 </CardBody>
                                             </Card>
                                         </Col>
                                     </Row>
-
+ 
                                 </CardBody>
                             </Card>
-
+ 
                             {/* <Card className="defCard">
                                 <CardBody>
                                     <CardTitle className="cardTitle">
@@ -350,7 +454,7 @@ const LoanApplicationDetails = () => {
                                             </div>
                                         </div>
                                         <div className="float-end ">
-
+ 
                                             <button
                                                 type="button"
                                                 className="btn btn-primary exportBtn  me-2"
@@ -359,7 +463,7 @@ const LoanApplicationDetails = () => {
                                                 <i className="mdi mdi-upload  "></i>{" "}
                                                 EXPORT
                                             </button>
-
+ 
                                             <Link to="#" className="btn btn-success downloadBtn">
                                                 <img
                                                     src={print}
@@ -382,7 +486,7 @@ const LoanApplicationDetails = () => {
                     </div>
                     <div className="d-flex justify-content-center gap-3 mb-3">
                         <Link
-                            to="/admin-swarna-stokam-niksepa/index"
+                            to="../../../admin-svarna-roka-agrima/loan-application-list/"
                             style={{ textDecoration: "none" }}
                         >
                             <button className="btn btn-primary backBtn">Back</button>
@@ -418,7 +522,7 @@ const LoanApplicationDetails = () => {
               </Button>
           </div>
                     </Modal>
-
+ 
                     <Modal
             isOpen={modal_reason_reject}
             toggle={() => {
@@ -441,14 +545,14 @@ const LoanApplicationDetails = () => {
                 name=""
                 id="textarea"
                 className="login-textarea mt-3"
-                // value={textvalue}
-                // onChange={handleChange}
+                value={textvalue}
+                onChange={handleChange}
                 maxLength="50"
                 rows="4"
-  
+ 
                 // placeholder="Home Address"
               />
-              {/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
+              {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
               </div>
             </ModalBody>
             <div className="text-center mb-3 mt-3">
@@ -474,7 +578,7 @@ const LoanApplicationDetails = () => {
               </Button>
             </div>
           </Modal>
-
+ 
           <Modal
             isOpen={modal_rejected}
             toggle={() => {
@@ -490,11 +594,11 @@ const LoanApplicationDetails = () => {
             </div>
             <ModalBody className="text-center">
               <p>
-              The loan has been rejected. An email will be sent to yusof69@gmail.com to notify them.
+              The loan has been rejected
               </p>
             </ModalBody>
             <div className="text-center mb-3">
-            <Button
+            {/* <Button
                 color="primary"
                 className="modalConfirmBtn"
                 data-bs-target="#firstmodal"
@@ -503,12 +607,12 @@ const LoanApplicationDetails = () => {
                 }}
               >
                 Ok
-              </Button>
+              </Button> */}
             </div>
           </Modal>
             </div>
         </React.Fragment>
     );
 };
-
+ 
 export default LoanApplicationDetails;

@@ -210,4 +210,17 @@ export const goldassignedtouser="/api/goldvault/getByUserId"; //
 
 export const walletholdingbyid ="/api/ewallet/getByUserId"; //
 
-// http://localhost:4200/api/goldvault/delete/2
+
+//Loan List
+export const loanlist ="/api/loan/list"; //
+
+// get by loan id
+export const loaniddetails ="/api/loan/getById"; //
+
+// /approval
+
+export const loanapproval ="/api/loan/approval"; //
+
+// get loan details by userid
+
+export const loandetail_userid ="/api/loan/loanDetailsByUserId"; //

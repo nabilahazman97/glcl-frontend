@@ -45,7 +45,24 @@ const Goldvault = (props) => {
   //meta title
   document.title = "Gold Vault List | Skote - React Admin & Dashboard Template";
   const [additionalField0Value, setAdditionalField0Value] = useState('');
+  const [selectedId, setselectedId] = useState('');
+  
+  const [yourOptions, setoptions] = useState('');
 
+  // USER_LIST
+  get(apiname.USER_LIST)
+  .then(res => {
+      // const userListData = res.result;
+      if(res.status==200){
+       const  userListData = res.data.result;
+         setoptions(userListData)
+      }else{
+        setoptions('')
+      }
+      // console.log("userListData");
+      // console.log(res);
+  })
+  .catch(err => console.log(err));
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -60,10 +77,13 @@ const Goldvault = (props) => {
     enableReinitialize: true,
     initialValues: {
       additionalFields:[],
-      additionalField_0:additionalField0Value,
+      additionalField_0:'',
+      
+      
     },
     validationSchema: Yup.object({
        additionalField_0: Yup.string().required("Please Enter Your Serial number"),
+ 
     }),
     onSubmit: (values) => {
       var authUserData = localStorage.getItem("authUser");
@@ -71,11 +91,15 @@ const Goldvault = (props) => {
       var user_id=authUserObject.data.result.id;
     
       if (isEdit) {
+        
+
+        // console.log("isedit");
+        // console.log(values);
        
         const updateUser = {
           id: contact.id,
           barcode: values.additionalField_0,
-          // userId: '',
+          userId: values.selectedField,
           goldGram:contact.goldGram,
 
         };
@@ -88,6 +112,7 @@ const Goldvault = (props) => {
         var authUserData = localStorage.getItem("authUser");
         var authUserObject = JSON.parse(authUserData);
         var user_id=authUserObject.data.result.id;
+        setAdditionalField0Value('');
   
         const allAdditionalFields = [
           ...values.additionalFields, 
@@ -106,9 +131,11 @@ const Goldvault = (props) => {
 
       
         dispatch(onAddNewUser(additionalFieldsArray));
+    }
         
         validation.resetForm();
-      }
+       
+      
       toggle();
     },
   });
@@ -224,6 +251,8 @@ const Goldvault = (props) => {
 
   const toggle = () => {
     setModal(!modal);
+    
+   
   };
 
   const handleUserClick = (arg) => {
@@ -232,10 +261,13 @@ const Goldvault = (props) => {
       id: user.id,
       additionalField_0: user.barcode,
       goldGram:user.goldGram,
-      userId:user.userId,
+      selectedField:user.userId,
     });
     setIsEdit(true);
+    setNumberOfRows(1);
     setAdditionalField0Value(user.barcode);
+   
+    setselectedId(user.userId);
     toggle();
   };
 
@@ -279,7 +311,11 @@ const Goldvault = (props) => {
 
   const addRow = () => {
     setNumberOfRows((prev) => prev + 1);
+
+   
   };
+
+  
 
   const deleteRow = () => {
     if (numberOfRows > 1) {
@@ -368,101 +404,122 @@ const Goldvault = (props) => {
                  
               
                
-                
+                 <Modal isOpen={modal} toggle={toggle}>
+  <ModalHeader toggle={toggle} tag="h4">
+    {!!isEdit ? "Edit Gold Coin" : "Add New Gold Coin"}
+  </ModalHeader>
+  <ModalBody>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault();
+        validation.handleSubmit();
+        return false;
+      }}
+    >
+      <Row>
+        <Col xs={9}>
+          {[...Array(numberOfRows)].map((_, index) => (
+            <Row key={index} className="align-items-center">
+              <Col xs={9}>
+                <div>
+                  <Label className="form-label">
+                    {/* Gold Coin{index + 1} */}
+                  </Label>
+                  {!!isEdit && index === 0 ? (
+                    <>
+                    <Input
+                      type="select"
+                      name="selectedField"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.selectedField || selectedId}
+                      invalid={validation.touched.selectedField && validation.errors.selectedField}
+                    >
+                      {/* Populate dropdown options here */}
+                      <option value="">Select user Name</option>
+                      {yourOptions.map((option) => (
+                        <option key={option.id} value={option.id}>
+                          {option.username}
+                        </option>
+                      ))}
+                    </Input>
+                    <br></br>
+                    <Input
+          name={`additionalField_${index}`}
+          type="text"
+          placeholder={`Enter Serial Number ${index + 1}`}
+          onChange={validation.handleChange}
+          onBlur={validation.handleBlur}
+          
+          value={validation.values[`additionalField_${index}`] || additionalField0Value}
+          invalid={
+            validation.touched[`additionalField_${index}`] &&
+            validation.errors[`additionalField_${index}`]
+          }
+        />
+                    </>
+                  ) : (
+                    <Input
+                      name={`additionalField_${index}`}
+                      type="text"
+                      placeholder={`Enter Serial Number ${index + 1}`}
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values[`additionalField_${index}`] || ""}
+                      invalid={
+                        validation.touched[`additionalField_${index}`] &&
+                        validation.errors[`additionalField_${index}`]
+                      }
+                    />
+                  )}
+                  {validation.touched[`additionalField_${index}`] &&
+                    validation.errors[`additionalField_${index}`] && (
+                      <FormFeedback type="invalid">
+                        {validation.errors[`additionalField_${index}`]}
+                      </FormFeedback>
+                    )}
+                </div>
+              </Col>
+              {index !== 0 && (
+                <Col xs={3}>
+                  <button className="btn btn-danger goldbuttondesign" onClick={deleteRow}>
+                    <i className="fas fa-minus"></i>
+                  </button>
+                </Col>
+              )}
+            </Row>
+          ))}
+        </Col>
+        {!isEdit && (
+          <Col xs={3}>
+            <div className="mt-3">
+              <button type="button" className="btn btn-primary goldbuttondesign btnmove" onClick={addRow}>
+                <i className="fas fa-plus"></i>
+              </button>
+            </div>
+          </Col>
+        )}
+      </Row>
+      <br />
+      <Row>
+        <Col>
+          <div className="text-button">
+            <button type="submit" className="btn btn-success save-user savebustyle">
+              Save
+            </button>
+            &nbsp;&nbsp;
+            <button type="button" className="btn btn-secondary bu_yle" onClick={closemodel}>
+              Cancel
+            </button>
+          </div>
+        </Col>
+      </Row>
+    </Form>
+  </ModalBody>
+</Modal>
 
-                  <Modal isOpen={modal} toggle={toggle}>
-                    <ModalHeader toggle={toggle} tag="h4">
-                      {!!isEdit ? "Edit Gold Coin" : "Add New Gold Coin"}
-                    </ModalHeader>
-                    <ModalBody>
-                      <Form
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          validation.handleSubmit();
-                          return false;
-                        }}
-                      >
-                        <Row>
 
-                          
-                          <Col xs={9}>
-                                    {[...Array(numberOfRows)].map((_, index) => (
-                                      <Row key={index} className="align-items-center">
-                                        <Col xs={9}>
-                                          <div>
-                                            <Label className="form-label">
-                                           
-                                              {/* Gold Coin{index + 1} */}
-                                            </Label>
-                                            <Input
-                                              name={`additionalField_${index}`}
-                                              type="text"
-                                              placeholder={`Enter Serial Number ${index + 1}`}
-                                              onChange={validation.handleChange}
-                                              onBlur={validation.handleBlur}
-                                              value={validation.values[`additionalField_${index}`] || ""}
-                                              invalid={
-                                                validation.touched[`additionalField_${index}`] &&
-                                                validation.errors[`additionalField_${index}`]
-                                              }
-                                            />
-                                            {validation.touched[`additionalField_${index}`] &&
-                                            validation.errors[`additionalField_${index}`] && (
-                                              <FormFeedback type="invalid">
-                                                {validation.errors[`additionalField_${index}`]}
-                                              </FormFeedback>
-                                            )}
-                                          </div>
-                                        </Col>
-                                        {index !== 0 && (
-                                          <Col xs={3}>
-                                            <button
-                                              className="btn btn-danger goldbuttondesign"
-                                              onClick={deleteRow}
-                                            >
-                                              <i className="fas fa-minus"></i>
-                                            </button>
-                                          </Col>
-                                        )}
-                                      </Row>
-                                    ))}
-                                    
-                                  </Col>
-                                  {!isEdit && (
-                          <Col xs={3}>
-                            <div className="mt-3">
-                              <button
-                                type="button"
-                                className="btn btn-primary goldbuttondesign btnmove"
-                                onClick={addRow}
-                              >
-                                <i className="fas fa-plus"></i>
-                              </button>
-                            </div>
-                          </Col>
-                                  )}
-
-                        </Row>
-                        <br></br>
-                        <Row>
-                         
-                          <Col>
-                            <div className="text-button">
-                              <button
-                                type="submit"
-                                className="btn btn-success save-user savebustyle"
-                              >
-                                Save
-                              </button>
-                              &nbsp;&nbsp;
-                              <button type="button" class="btn btn-secondary bu_yle"  onClick={closemodel}>Cancel</button>
-                              
-                            </div>
-                          </Col>
-                        </Row>
-                      </Form>
-                    </ModalBody>
-                  </Modal>
+                  
                 </CardBody>
               </Card>
             </Col>

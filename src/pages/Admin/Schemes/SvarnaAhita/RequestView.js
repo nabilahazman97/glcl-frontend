@@ -22,7 +22,8 @@ import {
 import { Link } from "react-router-dom";
 
 import * as apiname from "../../../../helpers/url_helper";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
+
 
 import TableContainer from "../../../../components/Common/TableContainer";
 import avatar from "../../../../assets/images/users/avatar-1.jpg";
@@ -40,139 +41,252 @@ import { text } from "@fortawesome/fontawesome-svg-core";
 import goldBar from "../../../../assets/images/users/gold_bars.png";
 
 const GoldPawnRequestView = () => {
-    document.title = "GLCL";
-    const { Uid } = useParams();
+  document.title = "GLCL";
+  const { id } = useParams();
+  console.log("lid");
+  console.log(id);
 
-    const [data, setUserData] = useState([]);
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [walletbal, setwalletbal] = useState([]);
-    const [overallbal, setoverallbal] = useState([]);
-    const [username, setusername] = useState([]);
-    const [membership_id, setmembership_id] = useState([]);
-    const [modal_amount_loan, setmodal_amount_loan] = useState(false);
-    const [modal_approved, setModal_approved] = useState(false);
-    const [modal_reason_reject, setModal_reason_reject] = useState(false);
-    const [modal_rejected, setModal_rejected] = useState(false); 
+  const navigate = useNavigate();
 
-    const seriesData = [80];
-    const options = {
-        chart: {
-            type: 'radialBar',
-            height: 300,
-            width: 300,
-            toolbar: {
-                show: false
-            }
-        },
-        plotOptions: {
-            radialBar: {
-                hollow: {
-                    size: '50%'
+
+
+  const [username, setusername] = useState([]);
+  const [membership_id, setmembership_id] = useState([]);
+  const [modal_approved, setModal_approved] = useState(false);
+  const [modal_reason_reject, setModal_reason_reject] = useState(false);
+  const [modal_rejected, setModal_rejected] = useState(false);
+  const [loandetails, setloandetails] = useState([]);
+  const [textvalue, setValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
+  const [modal_amount_loan, setmodal_amount_loan] = useState(false);
+  const [activeloan, setactiveloan] = useState([]);
+  const [overdueloan, setoverdueloan] = useState([]);
+  const handleChange = (event) => {
+      setValue(event.target.value);
+    };
+
+
+   // loaniddetails
+
+   get(`${apiname.loaniddetails}/${id}`)
+   .then((updatereslist) => {
+      if (updatereslist.status == "404") {
+          setloandetails("");
+      }else{
+       console.log("updatereslist");
+       console.log(updatereslist.data.result);
+       setloandetails(updatereslist.data.result);
+      }
+   
+     })
+.catch((err) => console.log(err))
+
+//  get loan details
+
+get(`${apiname.loandetail_userid}/${id}`)
+.then((updatereslist) => {
+   if (updatereslist.status == "200") {
+    setactiveloan(updatereslist.data.result.active_loan_count)
+    setoverdueloan(updatereslist.data.result.overdue_loan_count)
+   }
+  })
+.catch((err) => console.log(err))
+
+const seriesData = [80];
+const options = {
+    chart: {
+        type: 'radialBar',
+        height: 300,
+        width: 300,
+        toolbar: {
+            show: false
+        }
+    },
+    plotOptions: {
+        radialBar: {
+            hollow: {
+                size: '50%'
+            },
+            dataLabels: {
+                name: {
+                    show: false
                 },
-                dataLabels: {
-                    name: {
-                        show: false
-                    },
-                    value: {
-                        show: true,
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        fontFamily: 'Arial, sans-serif',
-                        offsetY: 10,
+                value: {
+                    show: true,
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    fontFamily: 'Arial, sans-serif',
+                    offsetY: 10,
 
-                    },
-                    total: {
-                        show: true,
-                        label: 'Total',
-                        fontSize: '12px',
-                        fontWeight: 'normal',
-                        fontFamily: 'Arial, sans-serif',
-                        color: 'black',
-                        formatter: function (val) {
-                            return `-`;
-                        }
-                    },
+                },
+                total: {
+                    show: true,
+                    label: 'Total',
+                    fontSize: '12px',
+                    fontWeight: 'normal',
+                    fontFamily: 'Arial, sans-serif',
+                    color: 'black',
+                    formatter: function (val) {
+                        return `-`;
+                    }
+                },
 
-                }
             }
-        },
-        colors: ['#d4a437',],
-        labels: ['Series 1']
-    };
+        }
+    },
+    colors: ['#d4a437',],
+    labels: ['Series 1']
+};
 
-    useEffect(() => {
-        const userScheme = {
-            scheme_id: "2",
-            user_id: Uid,
+ 
+  const comp = "Completed";
+  const columns = useMemo(
+      () => [
+          {
+              Header: "Date",
+              accessor: "createdAt",
+              Cell: ({ value }) => moment(value).format("DD/MM/YYYY")
+              // Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
+          },
+          {
+              Header: "Amount (RM)",
+              accessor: "total",
+          },
+
+          {
+              Header: "Status",
+              accessor: "pay_status",
+              Cell: ({ value }) => comp
+          },
+      ],
+      []
+  );
+
+  function tog_amount_loan() {
+    setmodal_amount_loan(!modal_amount_loan);
+    removeBodyCss();
+  }
+
+  function tog_approved() {
+
+      const approveid = {
+               loanId:id,
+              action : "approve",
+              comments : textvalue
         };
-        post(apiname.userScheme, userScheme)
-            .then((res) => {
-                let filteredData = res.data.result;
-                if (startDate && endDate) {
-                    const startTimestamp = startDate.getTime();
-                    const endTimestamp = endDate.getTime();
-                    filteredData = filteredData.filter((item) => {
-                        const itemDate = new Date(item.date).getTime();
-                        return itemDate >= startTimestamp && itemDate <= endTimestamp;
-                    });
-                }
-                setusername(filteredData[0].username)
-                setmembership_id(filteredData[0].membership_id)
-                setUserData(filteredData);
 
-                //to get wallet bal
+        
+   if (!textvalue.trim()) {
+    // Set error message
+    setErrorMessage('Reason for rejection is required.');
+    // You can return, throw an error, or handle it as per your requirement
+    return;
+} 
+setErrorMessage('');
 
-                const getwalletbal = {
-                    user_id: Uid,
-                };
-                post(apiname.walletbal, getwalletbal)
-                    // .then((res) => console.log(res.result.type_3_walletbal))
-                    .then((res) => {
-                        setwalletbal(res.data.result.walletbal);
-                        setoverallbal(res.data.result.type_3_walletbal);
-                    })
+      post(apiname.loanapproval, approveid)
+      .then((updateres) => {
+        
 
-                    .catch((err) => console.log(err));
-            })
-            .catch((err) => console.log(err));
-    }, [startDate, endDate]);
-    const comp = "Completed";
-    const columns = useMemo(
-        () => [
-            {
-                Header: "Date",
-                accessor: "createdAt",
-                Cell: ({ value }) => moment(value).format("DD/MM/YYYY")
-                // Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy')
-            },
-            {
-                Header: "Amount (RM)",
-                accessor: "total",
-            },
+        if (updateres.status == "200") {
 
-            {
-                Header: "Status",
-                accessor: "pay_status",
-                Cell: ({ value }) => comp
-            },
-        ],
-        []
-    );
+         
+          setModal_approved(!modal_approved);
+          setTimeout(() => {
+              setModal_approved(modal_approved);
+              navigate("/admin-svarna-ahita/index-list");
+          //   window.location.reload();
+          //   window.location.href = "admin-svarna-roka-agrima/loan-application-list";
+          }, 8000);
+        } else {
+        }
+      })
+      .catch((err) => console.log(err));
 
-    const handleDateChange = (dates) => {
-        const [start, end] = dates;
-        setStartDate(start);
-        setEndDate(end);
-    };
+      
+    
+      removeBodyCss();
+    }
+  function tog_reason_reject() {
 
-    const exportToPDF = () => {
-        const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+      setModal_reason_reject(!modal_reason_reject);
+//         const approveid = {
+//             loanId:lid,
+//            action : "reject",
+//            comments :textvalue
+//      };
 
-        html2pdf()
-            .from(element)
-            .save('document.pdf');
-    };
+//      if (!textvalue.trim()) {
+//         // Set error message
+//         setErrorMessage('Reason for rejection is required.');
+//         // You can return, throw an error, or handle it as per your requirement
+//         return;
+//     } else {
+//         setErrorMessage(''); // Clear error message if textvalue is not empty
+//     }
+
+//    post(apiname.loanapproval, approveid)
+//    .then((updateres) => {
+   
+
+//      if (updateres.status == "200") {
+
+    
+//         setModal_reason_reject(!modal_reason_reject);
+//        setTimeout(() => {
+//         setModal_reason_reject(modal_reason_reject);
+//          window.location.reload();
+//        }, 8000);
+//      } else {
+//      }
+//    })
+//    .catch((err) => console.log(err));
+
+
+
+  
+      removeBodyCss();
+    }
+  function tog_rejected() {
+      // setModal_rejected(!modal_rejected);
+
+  const approveid = {
+          loanId:id,
+         action : "reject",
+         comments :textvalue
+   };
+   
+
+   if (!textvalue.trim()) {
+      // Set error message
+      setErrorMessage('Reason for rejection is required.');
+      // You can return, throw an error, or handle it as per your requirement
+      return;
+  } 
+  setErrorMessage('');
+ post(apiname.loanapproval, approveid)
+ .then((updateres) => {
+   
+
+   if (updateres.status == "200") {
+
+    
+      setModal_rejected(!modal_rejected);
+     setTimeout(() => {
+      setModal_rejected(modal_rejected);
+      //  window.location.reload();
+       navigate("/admin-svarna-roka-agrima/loan-application-list");
+     }, 8000);
+   } else {
+   }
+ })
+ .catch((err) => console.log(err));
+      removeBodyCss();
+    }
+
+    function removeBodyCss() {
+      document.body.classList.add("no_padding");
+    }
 
     function tog_amount_loan() {
         setmodal_amount_loan(!modal_amount_loan);
@@ -233,7 +347,48 @@ const GoldPawnRequestView = () => {
                                     </div>
                                 </CardBody>
                             </Card>
-                            <Card className="mt-3" style={{ backgroundColor: "#090f2f" }}>
+                            <Card className="mt-3 col-lg-6" style={{float:"right" }}>
+                            <CardBody className="align-content-center">
+                                                <div>
+                                                        <div className="">
+                                                            <div className="text-center">
+                                                                <div className="" id="radialchart-1" style={{ borderBottom: "2px solid black" }}>
+                                                                    <ReactApexChart
+                                                                        options={options}
+                                                                        series={seriesData}
+                                                                        type="radialBar"
+                                                                        height={200}
+                                                                        width={200}
+                                                                        className="apex-charts"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div className="d-flex justify-content-between align-content-start p-3 gap-3">
+                                                            <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>                                                          
+                                                             <CardBody className="">
+                                                                <div className="lgFont text-dark-gold mb-2">{overdueloan}</div>
+                                                                <div className="std_font inter_bold">Overdue Loan</div>
+                                                            </CardBody>
+                                                            </Card>
+                                                            {/* <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>  
+                                                            <CardBody className="">
+                                                                 <div className="lgFont text-dark-gold mb-2">0</div>
+                                                                <div className="std_font inter_bold">Loan Period Month</div>
+                                                            </CardBody>
+                                                            </Card> */}
+                                                            <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>
+                                                            <CardBody className="">
+                                                            <div className="lgFont text-dark-gold mb-2">{activeloan}</div>
+                                                                <div className="std_font inter_bold">Active Loan</div>
+                                                            </CardBody>
+                                                            </Card>
+                                                            </div>
+ 
+                                                        </div>
+                                                    </div>
+                                                </CardBody>
+                              </Card>
+                            <Card className="mt-3 col-lg-6" style={{ backgroundColor: "#090f2f" }}>
 
                                 <CardBody>
 
@@ -252,7 +407,7 @@ const GoldPawnRequestView = () => {
                                         <div className="text-center">
                                             <div className="mt-2">
                                                 <h4 className="text-white">Gold Weight</h4>
-                                                <h4 className="text-gold"> 5<span className="">g</span></h4>
+                                                <h4 className="text-gold"> {loandetails.gold_grams}<span className="">g</span></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -260,15 +415,15 @@ const GoldPawnRequestView = () => {
                                     <div className="d-flex justify-content-between mt-3 p-3 smFont">
                                         <div>
                                             <div className="text-gold mb-3">Gold Coin Pawned</div>
-                                            <div className="text-gold mb-3">Gold Coin Serial Number</div>
+                                            {/* <div className="text-gold mb-3">Gold Coin Serial Number</div> */}
                                             <div className="text-gold mb-3">Loan Period</div>
                                             <div className="text-gold mb-3">Subtotal</div>
                                         </div>
                                         <div className="mb-3 text-end">
-                                            <div className="text-gold mb-3">2 g</div>
-                                            <div className="text-gold mb-3">GLCL0001-GLCL0002</div>
-                                            <div className="text-gold mb-3">RM 596.00</div>
-                                            <div className="text-gold mb-3">6 Months</div>
+                                            <div className="text-gold mb-3">{loandetails.gold_grams} g</div>
+                                            {/* <div className="text-gold mb-3">GLCL0001-GLCL0002</div> */}
+                                            <div className="text-gold mb-3">{loandetails.amount}</div>
+                                            <div className="text-gold mb-3">{loandetails.installement_months} &nbsp; Months</div>
                                         </div>
                                     </div>
                                 </div>
@@ -305,6 +460,10 @@ const GoldPawnRequestView = () => {
 
                                 </CardBody>
                             </Card>
+                            {/* <Card className="mt-3 col-lg-6" style={{ backgroundColor: "#090f2f" }}>
+                              hyg
+                            </Card> */}
+
 
                             {/* <Card className="defCard">
                                 <CardBody>
@@ -388,10 +547,12 @@ const GoldPawnRequestView = () => {
                           name="name"
                           className="form-control normal-input mt-3"
                           type="text"
+                          value={textvalue}
+                          onChange={handleChange}
                           required
 
                         />
-              {/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
+              {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
               </div>
             </ModalBody>
             <div className="text-center mb-3 mt-3">
@@ -472,14 +633,14 @@ const GoldPawnRequestView = () => {
                 name=""
                 id="textarea"
                 className="login-textarea mt-3"
-                // value={textvalue}
-                // onChange={handleChange}
+                value={textvalue}
+                onChange={handleChange}
                 maxLength="50"
                 rows="4"
   
                 // placeholder="Home Address"
               />
-              {/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
+              {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
               </div>
             </ModalBody>
             <div className="text-center mb-3 mt-3">

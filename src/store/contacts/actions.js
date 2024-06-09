@@ -93,8 +93,8 @@ export const getUsersSuccess = users => ({
           .then((reslist) => {
            
             if (reslist.status == 201) {
-              console.log("reslist.data");
-              console.log(reslist.data.result.length);
+              // console.log("reslist.data");
+              // console.log(reslist.data.result.length);
               reslist.data.result.forEach(user => {
                 dispatch(addUserSuccess(user));
               });

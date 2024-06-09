@@ -97,9 +97,9 @@ const AnnouncementUpdate = () => {
 
     const [data, setdata] = useState([]);
     useEffect(() => {
-        console.log(apiname.base_url);
-        console.log(apiname.p_userdetails);
-        console.log(user);
+        // console.log(apiname.base_url);
+        // console.log(apiname.p_userdetails);
+        // console.log(user);
         post(apiname.p_userdetails, user)
         .then(res => setdata(res.result))
         .catch(err => console.log(err));
