@@ -123,7 +123,7 @@ export const USER_LIST = "/api/user/getAllUser"
 
 export const LOG_IN = "/api/auth/logincheck"
 
-export const base_url = process.env.BACKEND_API
+export const base_url = "https://glcl-backend.onrender.com"
 
 export const USERNAME = "glcl"
 export const PASSWORD = "glcl@567"
