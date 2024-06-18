@@ -119,15 +119,19 @@ export const ON_ADD_REPLY = "/comments-product-add-reply"
 
 export const ON_ADD_COMMENT = "/comments-product-add-comment"
 
-export const USER_LIST = "/api/user/getAllUser"
+
 
 export const LOG_IN = "/api/auth/logincheck"
 
-export const base_url = process.env.BACKEND_API
+export const BACKEND_API='http://localhost:4200';
+
+export const base_url = BACKEND_API;
 
 export const USERNAME = "glcl"
 export const PASSWORD = "glcl@567"
 export const encoded = Buffer.from(USERNAME + ":" + PASSWORD).toString("base64")
+
+export const USER_LIST = "/api/user/getAllUser"
 
 export const forgotpassword = "/api/auth/forgotpassword"
 

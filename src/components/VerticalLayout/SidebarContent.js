@@ -155,7 +155,7 @@ const SidebarContent = props => {
             <li>
               <Link to="/update-gold-rate" >
                 {/* <i className="bx bx-home-circle"></i> */}
-                <span>{props.t("Update Gold Rate")}</span>
+                <span>{props.t("UPDATE GOLD RATE")}</span>
               </Link>
             </li>
 

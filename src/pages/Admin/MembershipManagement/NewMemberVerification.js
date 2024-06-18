@@ -97,6 +97,9 @@ function NewMemberVerification() {
   useEffect(() => {
     get(apiname.USER_LIST)
       .then((res) => {
+
+        console.log("res");
+        console.log(res);
         if (res.status === "204") {
           // setUserData(0);
         } else {

@@ -10,6 +10,8 @@ console.log(token)
 //apply base url for axios
 const API_URL = url.base_url
 
+console.log(API_URL);
+
 const axiosApi = axios.create({
   baseURL: API_URL,
 });
