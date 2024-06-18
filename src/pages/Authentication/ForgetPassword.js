@@ -37,7 +37,7 @@ const ForgetPassword = () => {
         onSubmit: (values) => {
 
             var newobj={
-                emailid:values.email
+                email_id:values.email
             };
            sendemail(newobj);
   
@@ -49,23 +49,22 @@ const ForgetPassword = () => {
     function sendemail(values){
         post(apiname.forgotpassword,values)
         .then(res => {
-            if(res.status == '1'){
+            if(res.status == '200'){
             setmodal_center(!modal_center);
         setTimeout(() => {
             setmodal_center(modal_center);
             window.location.reload();
           }, 3000);
-          }else{
-            setmodal_centerfailure(!modal_centerfailure);
+        }
+        })
+        .catch(err => {
+          console.error(err);
+          setmodal_centerfailure(!modal_centerfailure);
             // alert("Failed to send Mail");
             setTimeout(() => {
                 setmodal_centerfailure(modal_centerfailure);
                 window.location.reload();
               }, 8000);
-          }
-        })
-        .catch(err => {
-          console.error(err);
         });
 
         // axios.post(apiname.base_url+apiname.forgotpassword,values,{
