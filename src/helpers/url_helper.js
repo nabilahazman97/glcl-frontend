@@ -220,3 +220,10 @@ export const loanapproval = "/api/loan/approval" //
 // get loan details by userid
 
 export const loandetail_userid = "/api/loan/loanDetailsByUserId" //
+
+//update gold rate
+export const updategoldrate = "api/goldrate/update" //
+
+//get current gold rate
+
+export const getcurrentgoldrate = "api/goldrate/create" //
