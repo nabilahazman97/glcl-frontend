@@ -40,7 +40,10 @@ function UpdateGoldRate() {
     const [modal_transaction_summary, setmodal_transaction_summary] = useState(false);
     const [activeTab, setactiveTab] = useState("1");
     const [togModalApproved, setTogModalApproved] = useState(false);
+    const [togModalRejected, setTogModalRejected] = useState(false);
     const [valueGoldRate, setValueGoldRate] = useState('');  
+    const [currentgoldrate, setcurrentmarketrate] = useState('');  
+    
     const [editing, setEditing] = useState(false);
     
     const handleChange = (event) => {
@@ -280,13 +283,62 @@ function UpdateGoldRate() {
         removeBodyCss();
     }
 
-    function tog_approved() {
-        setTogModalApproved(!togModalApproved);
-        // setTogModal(false)
-        removeBodyCss();
-        function tog_varyingModal() {
-            setVaryingModal(!varyingModal);
+    // get current gold rate
+
+    
+    get(apiname.getcurrentgoldrate)
+    .then((getres) => {
+       
+        if (getres.status == "201") {
+            setValueGoldRate(getres.data.data.custom_rate_916)
+            setcurrentmarketrate(getres.data.data.rate_916)
+        }else{
+            console.log("failed to get data");
+            setValueGoldRate('')
+            setcurrentmarketrate('')
         }
+
+    })
+    .catch((err) => console.log(err));
+
+
+    function tog_approved() {
+
+        let obj={
+            "custom_rate_916":valueGoldRate,
+            "custom_rate_999": 351.19
+        };
+
+        post(apiname.updategoldrate,obj)
+        .then((res) => {
+      
+           
+            if (res.status == "201") {
+                setTogModalApproved(!togModalApproved);
+                    setTimeout(() => {
+                        setTogModalApproved(togModalApproved);
+                        window.location.reload();
+                    }, 8000);
+
+
+               
+            }else{
+                setTogModalRejected(!togModalRejected);
+                setTimeout(() => {
+                    setTogModalRejected(togModalRejected);
+                    window.location.reload();
+                }, 8000);
+            }
+        })
+        .catch((err) => console.log(err));
+
+
+        // setTogModalApproved(!togModalApproved);
+        // // setTogModal(false)
+        // removeBodyCss();
+        // function tog_varyingModal() {
+        //     setVaryingModal(!varyingModal);
+        // }
 
     }
     function tog_rejected() {
@@ -329,7 +381,9 @@ function UpdateGoldRate() {
                 <Breadcrumbs title="Tables" breadcrumbItem="Update Gold Rate" />
                  <div className="d-flex justify-content-end mb-3">
                           <div style={{ position: "relative" }}>
-                            <DatePicker
+
+                           <span className="tecolor">Current Gold Rate:</span> RM {currentgoldrate}
+                            {/* <DatePicker
                               className="form-control filterInput"
                               selected={startDate}
                               onChange={handleDateChange}
@@ -337,13 +391,13 @@ function UpdateGoldRate() {
                               endDate={endDate}
                               selectsRange
                               placeholderText="Select Date Range"
-                            />
+                            /> */}
                           </div>
                         </div>
                 <Card className="defCard p-3" style={{ minHeight: '180px', backgroundColor:'#090f2f', color:"white" }}>
                     <CardBody>
                         <div className="text-center std_font mb-4">Market Gold Rate:</div>
-                        <h1 className="text-center inter_bold">RM <span> 312</span> /g</h1>
+                        <h1 className="text-center inter_bold"><span> 916</span> /g</h1>
 
                     </CardBody>
                 </Card>
@@ -367,7 +421,7 @@ function UpdateGoldRate() {
                     valueGoldRate || '__'
                 )}
             </span>{' '}
-            /g
+            
         </h1>
                     </CardBody>
                 </Card>
@@ -482,6 +536,31 @@ function UpdateGoldRate() {
                     </div>
                 </Modal>
                 {/* PURCHASE APPROVED */}
+
+                 {/* PURCHASE REJECTED */}
+        <Modal
+          isOpen={togModalRejected}
+          toggle={() => {
+            tog_rejected();
+          }}
+          centered
+        >
+          <div className="text-center mt-4 modal-rejected-icon">
+            <i className="mdi mdi-close-circle font-size-16 align-middle me-1 mb-2"></i>{" "}
+            <h5 className="modal-title" id="staticBackdropLabel">
+              Failed to update Gold coin Rate
+            </h5>
+          </div>
+          <ModalBody className="text-center">
+            <p>
+              {/* The buyer will be notified regarding rejection and it's reason. */}
+            </p>
+          </ModalBody>
+          <div className="text-center mb-3">
+            
+          </div>
+        </Modal>
+        {/* PURCHASE REJECTED */}
 
                 {/* MODALS */}
 
