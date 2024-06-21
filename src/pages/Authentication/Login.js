@@ -80,6 +80,8 @@ useEffect(() => {
   const { error } = useSelector(state => ({
     error: state.Login.error,
   }));
+  console.log("err");
+  console.log(error);
 
   return (
     <React.Fragment>
@@ -117,7 +119,7 @@ useEffect(() => {
                         return false;
                       }}
                     >
-                      {error ? <Alert color="danger">{error}</Alert> : null}
+                      {error ? <Alert color="danger">Invalid Username and password </Alert> : null}
 
                           <div className="text-center mb-3">
                             <p className="login_title mb-4">SIGN IN</p>

@@ -423,10 +423,10 @@ function LoanApplicationList() {
                     toggle("1");
                   }}
                 >
-                  pending loan request 
+                  Pending loan request 
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem className="me-3">
                 <NavLink
                   className={classnames("Nav-link", {
                     active: activeTab === "2",

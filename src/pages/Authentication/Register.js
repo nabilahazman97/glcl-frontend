@@ -58,6 +58,10 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [errorMessage3, setErrorMessage3] = useState('');
   const [errorMessage4, setErrorMessage4] = useState('');
+  const [errorMessage5, setErrorMessage5] = useState('');
+  const [errorMessage6, setErrorMessage6] = useState('');
+  const [errorMessage7, setErrorMessage7] = useState('');
+  const [errorMessage8, setErrorMessage8] = useState('');
   
   const [icExists, setIcExists] = useState(false);
 
@@ -189,74 +193,7 @@ const Register = () => {
       values.declareAgree = document.getElementById("defaultCheck1").checked;
 
 
-      // const checkIcNumber = async (icNumber) => {
-      //   try {
-      //     const icnumber = {
-      //       icnumber: icNumber
-      //     };
-      //     const response = await post(apiname.icnumberCheck, icnumber);
-      //     if (response.status === 208) {
-      //       return true;
-      //     } else if (response.status === 200) {
-      //       return false;
-      //     } else {
-      //       console.error("Unexpected status code:", response.status);
-      //       return false;
-      //     }
-      //   } catch (error) {
-      //     console.error("Error checking IC number:", error);
-      //     return false;
-      //   }
-      // };
-    
-      // const checkEmail = async (email) => {
-      //   try {
-      //     const email_id = {
-      //       email_id: email
-      //     };
-      //     const response = await post(apiname.emailCheck, email_id);
-      //     if (response.status === 208) {
-      //       return true;
-      //     } else if (response.status === 200) {
-      //       return false;
-      //     } else {
-      //       console.error("Unexpected status code:", response.status);
-      //       return false;
-      //     }
-      //   } catch (error) {
-      //     console.error("Error checking email:", error);
-      //     return false;
-      //   }
-      // };
-    
-      // useEffect(() => {
-        // const handleIcNumberChange = async (icNumber) => {
-          
-        //   if (icNumber.trim() !== "") {
-        //     const exists = await checkIcNumber(icNumber);
-        //     setIcExists(exists);
-        //   } else {
-        //     setIcExists(false);
-        //   }
-        // };
-    
-        // const handleEmailChange = async (email) => {
-        //   if (email.trim() !== "") {
-        //     const exists = await checkEmail(email);
-        //     setEmailExists(exists);
-        //   } else {
-        //     setEmailExists(false);
-        //   }
-        // };
-    
-        // handleIcNumberChange(formData.icnumber);
-        // handleEmailChange(formData.email_id);
-      // }, [formData.icnumber, formData.email_id]); 
-
-
-
-      // useEffect(() => {
-      // console.log("hi");
+     
       post(apiname.register, formData)
       .then(res => {
         console.log(res);
@@ -278,66 +215,200 @@ const Register = () => {
       })
       .catch(err => console.log(err));
 
-      // axios.post(apiname.base_url + apiname.register, formData, {
-      //   headers: {
-      //     'Authorization': 'Basic ' + apiname.encoded
-      //   }
-      // })
-      //   // .then(res =>console.log(res['data']['result']))
-      //   .then(res => {
-
-      //     if (res['data']['status'] == '1') {
-      //       toggleTab(activeTab + 2);
-      //       console.log("success");
-      //       //redirect to success page
-
-
-      //     } else {
-      //       toggleTab(activeTab + 1);
-      //       console.log("failure");
-      //       ///redirect to error page 
-
-      //     }
-      //   })
-      //   .catch(err => console.log(err));
-      // }, []);
+      
 
     }
   });
 
   function handleAcceptedFiles(files, field) {
+    // Function to format bytes into a human-readable format
+    function formatBytes(bytes, decimals = 2) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const dm = decimals < 0 ? 0 : decimals;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+  
+    // Arrays to collect oversized files for each field
+    const oversizedFMyKad = [];
+    const oversizedBMyKad = [];
+    const oversizedUtilityBill = [];
+    const oversizedNomNric = [];
+  
     files.forEach(file => {
-      Object.assign(file, {
-        preview: URL.createObjectURL(file),
-        formattedSize: formatBytes(file.size),
-      });
+      // Check file size before assigning preview and formatted size
+      if (file.size <= 5 * 1024 * 1024) { // 5MB limit
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+          formattedSize: formatBytes(file.size),
+        });
+      } else {
+        // Add file to respective oversized array based on field
+        switch (field) {
+          case "f_mykad":
+            oversizedFMyKad.push(file);
+            break;
+          case "b_mykad":
+            oversizedBMyKad.push(file);
+            break;
+          case "utilitybill":
+            oversizedUtilityBill.push(file);
+            break;
+          case "nomnric":
+            oversizedNomNric.push(file);
+            break;
+          default:
+            break;
+        }
+      }
     });
+  
+    // Set error messages for each field if there are oversized files
+    if (oversizedFMyKad.length > 0) {
+      setErrorMessage5(`Files for f_mykad (${oversizedFMyKad.length}) exceed the 5MB size limit.`);
+    }else{
 
-    if (field === "f_mykad") {
-      setSelectedFiles1(files);
-      validation.setFieldValue("f_mykad", files[0]);
-    } else if (field === "b_mykad") {
-      setSelectedFiles2(files);
-      validation.setFieldValue("b_mykad", files[0]);
-    } else if (field === "utilitybill") {
-      setSelectedFiles3(files);
-      validation.setFieldValue("utilitybill", files[0]);
-    } else if (field === "nomnric") {
-      setSelectedFiles4(files);
-      validation.setFieldValue("nomnric", files[0]);
+      setErrorMessage5('');
+    }
+    if (oversizedBMyKad.length > 0) {
+      setErrorMessage6(`Files for b_mykad (${oversizedBMyKad.length}) exceed the 5MB size limit.`);
+    }else{
+      setErrorMessage6('');
+    }
+    if (oversizedUtilityBill.length > 0) {
+      setErrorMessage7(`Files for utilitybill (${oversizedUtilityBill.length}) exceed the 5MB size limit.`);
+    }else{
+      setErrorMessage7('');
+    }
+    if (oversizedNomNric.length > 0) {
+      setErrorMessage8(`Files for nomnric (${oversizedNomNric.length}) exceed the 5MB size limit.`);
+    }else{
+      setErrorMessage8('');
+    }
+
+    
+    // Update state or perform actions based on the field parameter
+    switch (field) {
+      case "f_mykad":
+        setSelectedFiles1(files);
+        if (files.length > 0) {
+          validation.setFieldValue("f_mykad", files[0]);
+        }
+        break;
+      case "b_mykad":
+        setSelectedFiles2(files);
+        if (files.length > 0) {
+          validation.setFieldValue("b_mykad", files[0]);
+        }
+        break;
+      case "utilitybill":
+        setSelectedFiles3(files);
+        if (files.length > 0) {
+          validation.setFieldValue("utilitybill", files[0]);
+        }
+        break;
+      case "nomnric":
+        setSelectedFiles4(files);
+        if (files.length > 0) {
+          validation.setFieldValue("nomnric", files[0]);
+        }
+        break;
+      default:
+        // Handle default case or additional fields here
+        break;
     }
   }
+  
+
+  // function handleAcceptedFiles(files, field) {
+  //   // Function to format bytes into a human-readable format
+  //   function formatBytes(bytes, decimals = 2) {
+  //     if (bytes === 0) return '0 Bytes';
+  //     const k = 1024;
+  //     const dm = decimals < 0 ? 0 : decimals;
+  //     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  //     const i = Math.floor(Math.log(bytes) / Math.log(k));
+  //     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  //   }
+  
+  //   files.forEach(file => {
+  //     // Check file size before assigning preview and formatted size
+  //     console.log("file.size");
+  //     console.log(file.size);
+  //     if (file.size <= 5 * 1024 * 1024) { // 5MB limit
+  //       Object.assign(file, {
+  //         preview: URL.createObjectURL(file),
+  //         formattedSize: formatBytes(file.size),
+  //       });
+  //     } else {
+  //       // Handle case where file size exceeds limit (optional)
+  //       console.log(`File ${file.name} exceeds the 5MB size limit and was not processed.`);
+  //       setErrorMessage5(`File ${file.name} exceeds the 5MB size limit and was not processed.`);
+  //       // You can optionally handle this case with an error message or other logic
+  //       // Example: alert(`File ${file.name} exceeds the 5MB size limit and was not processed.`);
+  //     }
+  //   });
+  
+  //   // Update state or perform actions based on the field parameter
+  //   if (field === "f_mykad") {
+  //     setSelectedFiles1(files);
+  //     if (files.length > 0) {
+  //       validation.setFieldValue("f_mykad", files[0]);
+  //     }
+  //   } else if (field === "b_mykad") {
+  //     setSelectedFiles2(files);
+  //     if (files.length > 0) {
+  //       validation.setFieldValue("b_mykad", files[0]);
+  //     }
+  //   } else if (field === "utilitybill") {
+  //     setSelectedFiles3(files);
+  //     if (files.length > 0) {
+  //       validation.setFieldValue("utilitybill", files[0]);
+  //     }
+  //   } else if (field === "nomnric") {
+  //     setSelectedFiles4(files);
+  //     if (files.length > 0) {
+  //       validation.setFieldValue("nomnric", files[0]);
+  //     }
+  //   }
+  // }
+
+  
+  // function handleAcceptedFiles(files, field) {
+  //   files.forEach(file => {
+  //     Object.assign(file, {
+  //       preview: URL.createObjectURL(file),
+  //       formattedSize: formatBytes(file.size),
+  //     });
+  //   });
+
+  //   if (field === "f_mykad") {
+  //     setSelectedFiles1(files);
+  //     validation.setFieldValue("f_mykad", files[0]);
+  //   } else if (field === "b_mykad") {
+  //     setSelectedFiles2(files);
+  //     validation.setFieldValue("b_mykad", files[0]);
+  //   } else if (field === "utilitybill") {
+  //     setSelectedFiles3(files);
+  //     validation.setFieldValue("utilitybill", files[0]);
+  //   } else if (field === "nomnric") {
+  //     setSelectedFiles4(files);
+  //     validation.setFieldValue("nomnric", files[0]);
+  //   }
+  // }
 
 
-  function formatBytes(bytes, decimals = 2) {
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  // function formatBytes(bytes, decimals = 2) {
+  //   if (bytes === 0) return "0 Bytes";
+  //   const k = 1024;
+  //   const dm = decimals < 0 ? 0 : decimals;
+  //   const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
-  }
+  //   const i = Math.floor(Math.log(bytes) / Math.log(k));
+  //   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+  // }
 
 
   const [activeTab, setactiveTab] = useState(1)
@@ -451,6 +522,9 @@ const Register = () => {
   const handleChangePhone = (event) => {
     const formattedPhoneNumber = formatPhoneNumber(event.target.value);
     validation.setFieldValue('mob_phone1', formattedPhoneNumber);
+    // const phoneNumber = event.target.value;
+    // const formattedPhoneNumber = phoneNumber.replace(/-/g, ''); // Remove dashes
+    // validation.setFieldValue('mob_phone1', formattedPhoneNumber);
   };
 
   const handleEthnicChange = selectedEthnicOption => {
@@ -558,25 +632,7 @@ const Register = () => {
     }
 
 
-    // const userScheme = {
-    //   emailid: email,
-    // };
-
-    // try {
-    //   // const response = await axios.post(apiname.base_url + apiname.emailCheck, userScheme, {
-    //   //   headers: {
-    //   //     'Authorization': 'Basic ' + apiname.encoded
-    //   //   }
-    //   // });
-    //   const response = await post(apiname.emailCheck, userScheme);
-    //   if (response.status === "1") {
-    //     setErrorMessage("Email ID has taken");
-    //   } else if( response.status === "2"){
-    //     setErrorMessage('');
-    //   }
-    // } catch (error) {
-    //   console.error('Error:', error);
-    // }
+    
   }
 
   const handleIcNumberChange = async (e) => {
@@ -657,63 +713,7 @@ const Register = () => {
                           </div>
 
                           <div className="wizard clearfix">
-                            {/* <div className="steps clearfix">
-                              <ul>
-                                <NavItem
-                                  className={classnames({ current: activeTab === 1 })}
-                                >
-                                  <NavLink
-                                    className={classnames({ current: activeTab === 1 })}
-                                    onClick={() => {
-                                      setactiveTab(1)
-                                    }}
-                                    disabled={!(passedSteps || []).includes(1)}
-                                  >
-                                    <span className="number">1.</span> Basic Details
-                                  </NavLink>
-                                </NavItem>
-                                <NavItem
-                                  className={classnames({ current: activeTab === 2 })}
-                                >
-                                  <NavLink
-                                    className={classnames({ active: activeTab === 2 })}
-                                    onClick={() => {
-                                      setactiveTab(2)
-                                    }}
-                                    disabled={!(passedSteps || []).includes(2)}
-                                  >
-                                    <span className="number">2.</span> Upload
-                                    Document
-                                  </NavLink>
-                                </NavItem>
-                                <NavItem
-                                  className={classnames({ current: activeTab === 3 })}
-                                >
-                                  <NavLink
-                                    className={classnames({ active: activeTab === 3 })}
-                                    onClick={() => {
-                                      setactiveTab(3)
-                                    }}
-                                    disabled={!(passedSteps || []).includes(3)}
-                                  >
-                                    <span className="number">3.</span> Nominee Details
-                                  </NavLink>
-                                </NavItem>
-                                <NavItem
-                                  className={classnames({ current: activeTab === 4 })}
-                                >
-                                  <NavLink
-                                    className={classnames({ active: activeTab === 4 })}
-                                    onClick={() => {
-                                      setactiveTab(4)
-                                    }}
-                                    disabled={!(passedSteps || []).includes(4)}
-                                  >
-                                    <span className="number">4.</span> Confirm Detail
-                                  </NavLink>
-                                </NavItem>
-                              </ul>
-                            </div> */}
+                           
                             <div className="content clearfix">
                               <TabContent activeTab={activeTab} className="body">
                                 <TabPane tabId={1}>
@@ -1120,6 +1120,10 @@ const Register = () => {
                                         <div className="required-indicator">{validation.errors.f_mykad}</div>
                                       )}
 
+{errorMessage5 && (
+  <div className="error-message">{errorMessage5}</div>
+)}
+
                                     </div>
 
 
@@ -1178,6 +1182,9 @@ const Register = () => {
                                       {validation.errors.b_mykad && (
                                         <div className="required-indicator">{validation.errors.b_mykad}</div>
                                       )}
+                                      {errorMessage6 && (
+  <div className="error-message">{errorMessage6}</div>
+)}
 
                                     </div>
 
@@ -1237,6 +1244,9 @@ const Register = () => {
                                         <div className="required-indicator">{validation.errors.utilitybill}</div>
                                       )}
                                     </div>
+                                    {errorMessage7 && (
+  <div className="error-message">{errorMessage7}</div>
+)}
 
 
                                   </div>
@@ -1360,6 +1370,10 @@ const Register = () => {
                                           {validation.errors.nomnric && (
                                             <div className="required-indicator">{validation.errors.nomnric}</div>
                                           )}
+                                                               {errorMessage8 && (
+  <div className="error-message">{errorMessage8}</div>
+)}
+
                                         </div>
 
 
@@ -1402,9 +1416,7 @@ const Register = () => {
                                         </div>
                                         <div>
                                           <h5>Registration Failed! </h5>
-                                          {/* <p className="text-muted mt-3">
-                                            Your registration details have been submitted for review. Once your document is verified, you will receive an email notification confirming your account activation.
-                                          </p> */}
+                                          
                                         </div>
                                       </div>
                                     </Col>
@@ -1445,25 +1457,14 @@ const Register = () => {
 
 
 
-                                {/* <li className={activeTab === 3 ? "next d-none" : "next" }>
-                                <Button
-                                    type="button"
-                                    onClick={() => {
-                                      toggleTab(activeTab + 1);
-                                    }}
-                                    disabled={icExists || emailExists}
-                                  >
-                                    Next
-                                  </Button>
-                                  
-                                </li> */}
+                                
                                 <li className={(activeTab === 3 || activeTab === 4 || activeTab === 5) ? "next d-none" : "next"}>
                                 <Button
                                     type="button"
                                     onClick={() => {
                                         toggleTab(activeTab + 1);
                                     }}
-                                    disabled={icExists || emailExists}
+                                    disabled={icExists || emailExists || errorMessage5 || errorMessage6 || errorMessage7 || errorMessage8}
                                 >
                                     Next
                                 </Button>
@@ -1515,15 +1516,7 @@ const Register = () => {
                       </div>
                     </div>
 
-                    {/* <div className="mt-4 mt-md-5 text-center">
-                      <p className="mb-0">
-                        ©{" "}
-                        {new Date().getFullYear()}
-                        Skote. Crafted with{" "}
-                        <i className="mdi mdi-heart text-danger"></i> by
-                        Themesbrand
-                      </p>
-                    </div> */}
+                    
                   </div>
                 </div>
               </div>

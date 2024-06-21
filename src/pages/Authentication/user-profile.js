@@ -92,6 +92,23 @@ const UserProfile = () => {
   const initialValues = fres || {};
   const [values1, setValues] = useState(initialValues);
 
+  console.log("fres");
+  console.log(fres.b_mykad);
+
+  const downloadPDF = (pdfUrl) => {
+    fetch(pdfUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'document.pdf','image.png'); // Set the filename for the downloaded file
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((error) => console.error('Error downloading PDF:', error));
+  };
+
   function handleSubmit(e) {
 
 
@@ -537,35 +554,35 @@ const UserProfile = () => {
                     <CardTitle className="cardTitle">KYC Documents</CardTitle>
                     <div className="mt-4  p-3 ">
                       <div className="mb-3">
-                        <CardSubtitle className="std_input_label mb-2">
-                          MyKad - Front
-                        </CardSubtitle>
-                        {fres.f_mykad?.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
-                          <div>
-                            <div className="text-center">
-                              <img className="ic-img" src={fres.f_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
-                            </div>
+                      <CardSubtitle className="std_input_label mb-2">
+                                                    MyKad - Front
+                                                </CardSubtitle>
+                                                {fres.f_mykad?.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
+                                                    <div onClick={() => downloadPDF(fres.f_mykad)}>
+                                                        <div className="text-center">
+                                                            <img className="ic-img" src={fres.f_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
+                                                        </div>
 
-                            <Card className="pdfInput">
-                              <CardBody className="m-3">
-                                <div className="text-center">
-                                  <img className="pdfIcon" src={pdfIcon}></img>
-                                </div>
-                              </CardBody>
-                            </Card>
-                          </div>
-                        ) : (
-                          <Card className="pdfInput">
-                            <CardBody className="m-3">
-                              <div className="text-center">
-                                <img className="ic-img mb-3" src={fres.f_mykad} alt="MyKad Front"></img>
+                                                        <Card className="pdfInput">
+                                                            <CardBody className="m-3">
+                                                                <div className="text-center">
+                                                                    <img className="pdfIcon" src={pdfIcon}></img>
+                                                                </div>
+                                                            </CardBody>
+                                                        </Card>
+                                                    </div>
+                                                ) : (
+                                                    <Card className="pdfInput">
+                                                        <CardBody className="m-3">
+                                                            <div className="text-center">
+                                                                <img className="ic-img mb-3" src={apiname.base_url+`/uploads/`+fres.f_mykad} alt="MyKad Front"></img>
 
-                              </div>
-                            </CardBody>
-                          </Card>
+                                                            </div>
+                                                        </CardBody>
+                                                    </Card>
 
 
-                        )}
+                                                )}
                       </div>
                       <div className="mb-3">
                         <CardSubtitle className="std_input_label mb-2">
@@ -588,7 +605,7 @@ const UserProfile = () => {
                           <Card className="pdfInput">
                             <CardBody className="m-3">
                               <div className="text-center">
-                                <img className="ic-img mb-3" src={fres.b_mykad} alt="MyKad Front"></img>
+                                <img className="ic-img mb-3" src={apiname.base_url+`/uploads/`+fres.b_mykad} alt="MyKad Front"></img>
 
                               </div>
                             </CardBody>
@@ -615,7 +632,7 @@ const UserProfile = () => {
                           <Card className="pdfInput">
                             <CardBody className="m-3">
                               <div className="text-center">
-                                <img className="ic-img" src={fres.utilitybill} alt="MyKad Front"></img>
+                                <img className="ic-img" src={apiname.base_url+`/uploads/`+fres.utilitybill} alt="MyKad Front"></img>
 
                               </div>
                             </CardBody>
