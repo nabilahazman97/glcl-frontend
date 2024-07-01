@@ -164,7 +164,7 @@ function LoanApplicationList() {
     </button>
   </Link>
 ) : (
-  <Link to={`/admin-svarna-roka-agrima/loan-application-details/${row.original.user_id}`} disabled>
+  <Link to={`/admin-svarna-roka-agrima/loan-application-details/${row.original.id}/${row.original.user_id}`} disabled>
     <button
       type="button"
       className="btn btn-primary"

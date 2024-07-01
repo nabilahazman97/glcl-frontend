@@ -72,8 +72,9 @@ const LoanApprovedDetails = () => {
            setloandetails("");
            setUserData('')
        }else{
-       
+        
         setloandetails(updatereslist.data.result);
+        
 
       let  loanTransactions=updatereslist.data.result.LoanTransactions;
 let totalPaid = 0;
@@ -100,7 +101,9 @@ const currentMonthTransactions = loanTransactions.filter(transaction => {
     const dueDate = new Date(transaction.payment_due_date);
     return dueDate.getMonth() + 1 === currentMonth1 && dueDate.getFullYear() === currentYear1;
 });
-
+// console.log("currentMonthTransactions");
+// console.log(currentMonthTransactions);
+if(!(currentMonthTransactions)){
 let currentMonthPayAmount = 0;
 for (const transaction of currentMonthTransactions) {
     currentMonthPayAmount += parseFloat(transaction.total_amount);
@@ -122,6 +125,7 @@ if (currentMonthTransactions.some(transaction => !transaction.transaction_id)) {
     const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
     setdaysLeftToPay(daysLeftToPay);
     setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+}
 }
 
 

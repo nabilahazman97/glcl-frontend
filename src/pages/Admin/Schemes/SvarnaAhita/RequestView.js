@@ -43,8 +43,9 @@ import goldBar from "../../../../assets/images/users/gold_bars.png";
 const GoldPawnRequestView = () => {
   document.title = "GLCL";
   const { id } = useParams();
+  const { userid } = useParams();
   console.log("lid");
-  console.log(id);
+  console.log(userid);
 
   const navigate = useNavigate();
 
@@ -83,7 +84,9 @@ const GoldPawnRequestView = () => {
 
 //  get loan details
 
-get(`${apiname.loandetail_userid}/${id}`)
+
+
+get(`${apiname.loandetail_userid}/${userid}`)
 .then((updatereslist) => {
    if (updatereslist.status == "200") {
     setactiveloan(updatereslist.data.result.active_loan_count)
@@ -163,6 +166,8 @@ const options = {
   );
 
   function tog_amount_loan() {
+    // console.log("approveidfgg");
+    // console.log(approveid);
     setmodal_amount_loan(!modal_amount_loan);
     removeBodyCss();
   }
@@ -174,6 +179,8 @@ const options = {
               action : "approve",
               comments : textvalue
         };
+        console.log("approveid");
+        console.log(approveid);
 
         
    if (!textvalue.trim()) {
@@ -186,8 +193,7 @@ setErrorMessage('');
 
       post(apiname.loanapproval, approveid)
       .then((updateres) => {
-        
-
+      
         if (updateres.status == "200") {
 
          
@@ -257,6 +263,8 @@ setErrorMessage('');
    };
    
 
+   console.log(approveid);
+
    if (!textvalue.trim()) {
       // Set error message
       setErrorMessage('Reason for rejection is required.');
@@ -292,19 +300,19 @@ setErrorMessage('');
         setmodal_amount_loan(!modal_amount_loan);
         removeBodyCss();
       }
-      function tog_approved() {
-        setModal_approved(!modal_approved);
-        removeBodyCss();
-      }
+      // function tog_approved() {
+      //   setModal_approved(!modal_approved);
+      //   removeBodyCss();
+      // }
 
       function tog_reason_reject() {
         setModal_reason_reject(!modal_reason_reject);
         removeBodyCss();
       }
-    function tog_rejected() {
-        setModal_rejected(!modal_rejected);
-        removeBodyCss();
-      }
+    // function tog_rejected() {
+    //     setModal_rejected(!modal_rejected);
+    //     removeBodyCss();
+    //   }
 
       function removeBodyCss() {
         document.body.classList.add("no_padding");
@@ -439,7 +447,7 @@ setErrorMessage('');
 
                                 >
                                     {/* <i className="bx bxs-check-circle font-size-16 align-middle me-1"></i>{" "} */}
-                                    Approve
+                                    Approve 22
                                 </button>
                                 <button
                                     type="button"
@@ -449,7 +457,7 @@ setErrorMessage('');
                                       }}
                                 >
                                     {/* <i className="mdi mdi-close-circle font-size-16 align-middle me-1"></i>{" "} */}
-                                    Reject
+                                    Reject 34
                                 </button>
                               
 
@@ -565,17 +573,17 @@ setErrorMessage('');
                 }}
                 
               >
-                Cancel
+                Cancel 12
               </Button>{" "}
               <Button
                 color="primary"
                 className="modalConfirmBtn"
                 onClick={() => {
                     tog_approved();
-                    tog_amount_loan(false);
+                    // tog_amount_loan(false);
                 }}
               >
-                Submit
+                Submit 12
               </Button>
             </div>
           </Modal>

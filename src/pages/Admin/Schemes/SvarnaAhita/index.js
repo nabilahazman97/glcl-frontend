@@ -164,7 +164,7 @@ function GoldCoinPawnList() {
     </button>
   </Link>
 ) : (
-  <Link to={`/admin-svarna-ahita/request-view/${row.original.user_id}`} disabled>
+  <Link to={`/admin-svarna-ahita/request-view/${row.original.id}/${row.original.user_id}`} disabled>
     <button
       type="button"
       className="btn btn-primary"

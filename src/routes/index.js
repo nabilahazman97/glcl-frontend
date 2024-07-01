@@ -74,9 +74,9 @@ const authProtectedRoutes = [
   { path: "/admin-svarna-roka-agrima/LoanApprovedList", component: <AdminSvarnaRokaAgrimaapprovedlist /> },
 
   { path: "/admin-svarna-roka-agrima/loan-approved-details/:id", component: <AdminSvarnaRokaAgrimaLoanApprovedDetails /> },
-  { path: "/admin-svarna-roka-agrima/loan-application-details/:lid", component: <AdminSvarnaRokaAgrimaLoanApplicationDetails /> },
+  { path: "/admin-svarna-roka-agrima/loan-application-details/:lid/:userid", component: <AdminSvarnaRokaAgrimaLoanApplicationDetails /> },
   { path: "/admin-svarna-ahita/index-list", component: <AdminSvarnaAhitaList /> },
-  { path: "/admin-svarna-ahita/request-view/:id", component: <AdminSvarnaAhitaRequestView /> },
+  { path: "/admin-svarna-ahita/request-view/:id/:userid", component: <AdminSvarnaAhitaRequestView /> },
   { path: "/admin-svarna-ahita/user-view/:id", component: <AdminSvarnaAhitaUserView /> },
 
   

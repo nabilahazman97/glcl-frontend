@@ -41,9 +41,11 @@ import { text } from "@fortawesome/fontawesome-svg-core";
  
 const LoanApplicationDetails = () => {
     document.title = "GLCL";
+    const { userid } = useParams();
     const { lid } = useParams();
-    console.log("lid");
-    console.log(lid);
+    console.log("userid");
+
+    console.log(userid);
 
     const navigate = useNavigate();
 
@@ -60,6 +62,7 @@ const LoanApplicationDetails = () => {
     const [overdueloan, setoverdueloan] = useState([]);
     const [textvalue, setValue] = useState("");
     const [errorMessage, setErrorMessage] = useState('');
+   
 
     const handleChange = (event) => {
         setValue(event.target.value);
@@ -78,6 +81,7 @@ const LoanApplicationDetails = () => {
         
          setloandetails(updatereslist.data.result);
          setprofiledetails(updatereslist.data.result.Profile);
+
         }
      
        })
@@ -87,7 +91,7 @@ const LoanApplicationDetails = () => {
 
 //  get loan details
 
-get(`${apiname.loandetail_userid}/${lid}`)
+get(`${apiname.loandetail_userid}/${userid}`)
 .then((updatereslist) => {
    if (updatereslist.status == "200") {
     setactiveloan(updatereslist.data.result.active_loan_count)
