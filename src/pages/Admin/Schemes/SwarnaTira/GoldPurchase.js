@@ -51,6 +51,7 @@ function GoldPurchase() {
   const [errorMessage, setErrorMessage] = useState('');
   const [errorMessage1, setErrorMessage1] = useState('');
   const [errorMessage2, setErrorMessage2] = useState('');
+  const [buyedgoldtype,Setgoldtype]= useState('');
   // setErrorMessage2
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -66,6 +67,8 @@ function GoldPurchase() {
   useEffect(() => {
     get(apiname.translist)
       .then((res) => {
+
+    
         if (res.status == "404") {
           setUserData("");
         } else {
@@ -92,22 +95,7 @@ function GoldPurchase() {
       })
       .catch((err) => console.log(err));
 
-    get(apiname.Goldvaultlist)
-      .then((reslist) => {
-        if (reslist.status == 200) {
-          let getdropdown = reslist.data.result.filter(
-            (item) => item.userId == null
-          );
-          const dropdownOptions = getdropdown.map((item) => ({
-            value: item.id,
-            label: item.barcode,
-          }));
-          setOptions(dropdownOptions);
-        } else {
-          setOptions("");
-        }
-      })
-      .catch((err) => console.log(err));
+  
   }, [startDate, endDate]);
 
   const toggle = (tab) => {
@@ -154,6 +142,12 @@ function GoldPurchase() {
       },
 
       {
+        Header: "Gold Type",
+        accessor: "gold_type",
+       
+      },
+
+      {
         Header: "Actions",
         accessor: "id",
         Cell: ({ row }) => (
@@ -162,7 +156,7 @@ function GoldPurchase() {
               type="button"
               className="btn btn-primary "
               onClick={() => {
-                tog_transaction_summary(row.original.id);
+                tog_transaction_summary(row.original.id,row.original.gold_type);
               }}
               disabled={row.original.status_id !== 3}
             >
@@ -209,7 +203,9 @@ function GoldPurchase() {
     setIsOpen(false);
   };
 
-  function tog_transaction_summary(id) {
+  function tog_transaction_summary(id,gold_type) {
+    console.log("summ");
+    console.log(gold_type);
     setmodal_transaction_summary(!modal_transaction_summary);
     removeBodyCss();
     get(`${apiname.getbytransactionid}/${id}`)
@@ -217,7 +213,18 @@ function GoldPurchase() {
         if (res.status == "204") {
           setTransidData("");
         } else {
+
+          // gold_type
+
           let filteredData = res.data.result;
+          Setgoldtype(gold_type);
+
+        //   let filteredData = res.data.result.filter(
+        //     (item) =>
+        //         item.gold_type === gold_type 
+        // );
+
+
           setTransidData(filteredData);
         }
       })
@@ -226,6 +233,10 @@ function GoldPurchase() {
 
   function tog_assign_gold(transaction) {
 
+    
+
+
+
     // approve
 
     const approveid1 = {
@@ -233,8 +244,10 @@ function GoldPurchase() {
       action: "approve",
     };
 
+    // 
+
     console.log("approveid1");
-    console.log(approveid1);
+    console.log(transaction);
 
     post(apiname.approval, approveid1)
       .then((res) => {
@@ -251,6 +264,41 @@ function GoldPurchase() {
         }
       })
       .catch((err) => console.log(err));
+
+
+      get(apiname.Goldvaultlist)
+    .then((reslist) => {
+      console.log("reslist");
+      console.log(reslist);
+      console.log(buyedgoldtype);
+
+
+      if (reslist.status == 200) {
+        let getdropdown = reslist.data.result.filter(
+          (item) => item.userId == null 
+          &&
+          item.gold_type==buyedgoldtype
+        );
+        console.log("dropdownOptions");
+        console.log(getdropdown);
+
+        // buyedgoldtype
+
+        const dropdownOptions = getdropdown.map((item) => ({
+          value: item.id,
+          label: item.barcode,
+          gram:item.goldGram,
+        }));
+
+        
+        setOptions(dropdownOptions);
+      } else {
+        setOptions("");
+      }
+    })
+    .catch((err) => console.log(err));
+
+
     removeBodyCss();
 
     
@@ -263,8 +311,8 @@ function GoldPurchase() {
   }
 
   const handleSelectChange = (selectedOption) => {
-    // console.log("selectedOption");
-    // console.log(selectedOption);
+    console.log("selectedOption");
+    console.log(selectedOption);
     if (selectedOption) {
       setSelectedId(selectedOption);
     } else {
@@ -300,6 +348,18 @@ function GoldPurchase() {
     //     return;
     // }
 
+console.log(transaction.gold_grams);
+console.log(selectedId);
+
+let sum = 0;
+
+// Iterate through the array
+for (let i = 0; i < selectedId.length; i++) {
+  // Convert gram to a number and add to sum
+  sum += parseFloat(selectedId[i].gram);
+}
+
+console.log("Sum of grams:", sum);
 
     if (selectedId === null) {
       setErrorMessage1("Please select at least one option");
@@ -311,7 +371,8 @@ function GoldPurchase() {
     } 
 
    
-    if (selectedId.length !== transaction.gold_grams) {
+    if (sum != transaction.gold_grams) {
+      
       setErrorMessage1("Please select exactly " + transaction.gold_grams + " options");
       return;
     }
@@ -393,7 +454,10 @@ function GoldPurchase() {
 
     post(apiname.approval, approveid)
       .then((updateres1) => {
-        if (updateres1.status == "200") {
+
+        console.log("rejected");
+        console.log(updateres1);
+        if (updateres1.status == "201") {
           //   setUserData('');
           //   setTogModalApproved(!togModalApproved);
           setTogModalRejected(!togModalRejected);

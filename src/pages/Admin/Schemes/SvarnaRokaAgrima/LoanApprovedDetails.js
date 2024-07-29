@@ -68,6 +68,8 @@ const LoanApprovedDetails = () => {
     .then((updatereslist) => {
 
        
+        console.log("df");
+        console.log(updatereslist);
        if (updatereslist.status == "404") {
            setloandetails("");
            setUserData('')
@@ -224,7 +226,7 @@ const options = {
 
             {
                 Header: "Status",
-                accessor: "transaction_id",
+                accessor: "status_id",
                 Cell: ({ value }) => {
                     return value === null || value === "" ? "Not Paid" : "Paid";
                   }

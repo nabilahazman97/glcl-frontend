@@ -45,6 +45,10 @@ const Goldvault = (props) => {
   //meta title
   document.title = "Gold Vault List | Skote - React Admin & Dashboard Template";
   const [additionalField0Value, setAdditionalField0Value] = useState('');
+  const [goldGram, setgramvalue] = useState('');
+  
+
+  // goldGram
   const [selectedId, setselectedId] = useState('');
   
   const [yourOptions, setoptions] = useState('');
@@ -77,12 +81,15 @@ const Goldvault = (props) => {
     enableReinitialize: true,
     initialValues: {
       additionalFields:[],
-      additionalField_0:'',
-      
+      goldgram:[],
+      goldtype:[],
+      // additionalField_0:'',
+      // goldgram_0:"",
       
     },
     validationSchema: Yup.object({
-       additionalField_0: Yup.string().required("Please Enter Your Serial number"),
+      //  additionalField_0: Yup.string().required("Please Enter Your Serial number"),
+      //  goldgram_0: Yup.string().required("Please Enter Your Serial numbe vgr"),
  
     }),
     onSubmit: (values) => {
@@ -93,20 +100,24 @@ const Goldvault = (props) => {
       if (isEdit) {
         
 
-        // console.log("isedit");
-        // console.log(values);
+      
        
         const updateUser = {
           id: contact.id,
-          barcode: values.additionalField_0,
+          barcode: additionalField0Value,
           userId: values.selectedField,
-          goldGram:contact.goldGram,
+          goldGram:goldGram,
 
         };
+
+        // console.log("isedit");
+        // console.log(updateUser);
+        // console.log(additionalField0Value);
+        // console.log(goldGram);
         dispatch(onUpdateUser(updateUser));
         setIsEdit(false);
         validation.resetForm();
-        setAdditionalField0Value('');
+        // setAdditionalField0Value('');
 
       } else {
         var authUserData = localStorage.getItem("authUser");
@@ -121,6 +132,32 @@ const Goldvault = (props) => {
               .map(key => values[key])
               .filter(value => value)
       ];
+
+      const goldgram = [
+        ...values.goldgram, 
+        ...Object.keys(values)
+            .filter(key => key.startsWith('goldgram_')) 
+            .map(key => values[key])
+            .filter(value => value)
+    ];
+
+    const goldtype = [
+      ...values.goldtype, 
+      ...Object.keys(values)
+          .filter(key => key.startsWith('goldtype_')) 
+          .map(key => values[key])
+          .filter(value => value)
+  ];
+
+
+  console.log(allAdditionalFields);
+  console.log(goldgram);
+  console.log(goldtype);
+
+    const goldgramArray = goldgram.map((field, index) => ({
+      [`goldgram`]: field,
+  }));
+      // goldgram
   
       // Convert combined fields into an array of objects
       const additionalFieldsArray = allAdditionalFields.map((field, index) => ({
@@ -129,8 +166,19 @@ const Goldvault = (props) => {
           // userId:user_id 
       }));
 
+
+      const goldtypearray = goldtype.map((field, index) => ({
+        // [`additionalField_${index}`]: field,
+          [`gold_type`]: field,
+          // userId:user_id 
+      }));
+
+      const combinedArray = [...additionalFieldsArray, ...goldgramArray,...goldtypearray];
+      console.log("combinedArray");
+
+ 
       
-        dispatch(onAddNewUser(additionalFieldsArray));
+        dispatch(onAddNewUser(additionalFieldsArray,goldgramArray,goldtypearray));
     }
         
         validation.resetForm();
@@ -142,7 +190,10 @@ const Goldvault = (props) => {
 
   const { users } = useSelector((state) => ({
     users: state.contacts.users,
+
+  
   }));
+
 
 
 
@@ -172,8 +223,14 @@ const Goldvault = (props) => {
 
       },
       {
-        Header: "userID",
+        Header: "MemberID",
         accessor: "userId",
+        filterable: true,
+
+      },
+      {
+        Header: "goldtype",
+        accessor: "gold_type",
         filterable: true,
 
       },
@@ -266,6 +323,7 @@ const Goldvault = (props) => {
     setIsEdit(true);
     setNumberOfRows(1);
     setAdditionalField0Value(user.barcode);
+    setgramvalue(user.goldGram);
    
     setselectedId(user.userId);
     toggle();
@@ -443,7 +501,7 @@ const Goldvault = (props) => {
                         </option>
                       ))}
                     </Input>
-                    <br></br>
+                   
                     <Input
           name={`additionalField_${index}`}
           type="text"
@@ -457,8 +515,23 @@ const Goldvault = (props) => {
             validation.errors[`additionalField_${index}`]
           }
         />
+        <Input
+          name={`goldgram${index}`}
+          type="text"
+          placeholder={`Enter goldgram ${index + 1}`}
+          onChange={validation.handleChange}
+          onBlur={validation.handleBlur}
+          
+          value={validation.values[`goldgram_${index}`] || goldGram}
+          invalid={
+            validation.touched[`goldgram_${index}`] &&
+            validation.errors[`goldgram_${index}`]
+          }
+        />
+        
                     </>
                   ) : (
+                    <>
                     <Input
                       name={`additionalField_${index}`}
                       type="text"
@@ -471,11 +544,39 @@ const Goldvault = (props) => {
                         validation.errors[`additionalField_${index}`]
                       }
                     />
+                    <Input
+                      name={`goldgram_${index}`}
+                      type="text"
+                      placeholder={`Enter Gold Gram ${index + 1}`}
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values[`goldgram_${index}`] || ""}
+                      invalid={
+                        validation.touched[`goldgram_${index}`] &&
+                        validation.errors[`goldgram_${index}`]
+                      }
+                    />
+
+                     <Input
+                      name={`goldtype_${index}`}
+                      type="text"
+                      placeholder={`Enter goldtype ${index + 1}`}
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values[`goldtype_${index}`] || ""}
+                      invalid={
+                        validation.touched[`goldtype_${index}`] &&
+                        validation.errors[`goldtype_${index}`]
+                      }
+                    />
+
+
+                    </>
                   )}
-                  {validation.touched[`additionalField_${index}`] &&
-                    validation.errors[`additionalField_${index}`] && (
+                  {validation.touched[`goldgram_${index}`] &&
+                    validation.errors[`goldgram_${index}`] && (
                       <FormFeedback type="invalid">
-                        {validation.errors[`additionalField_${index}`]}
+                        {validation.errors[`goldgram_${index}`]}
                       </FormFeedback>
                     )}
                 </div>
