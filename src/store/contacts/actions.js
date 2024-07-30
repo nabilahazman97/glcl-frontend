@@ -78,17 +78,22 @@ export const getUsersSuccess = users => ({
 })
 
 
-  export const addNewUser = (additionalFieldsArray) => {
+  export const addNewUser = (additionalFieldsArray,goldgramArray,goldtypearray) => {
     return async (dispatch) => {
       try {
 
         
         var convertedArray = {
-          "barcodes": additionalFieldsArray.map(obj => obj.barcodes)
+          "barcodes": additionalFieldsArray.map(obj => obj.barcodes),
+          "goldGram": goldgramArray.map(obj => obj.goldgram),
+          "gold_type": goldtypearray.map(obj => obj.gold_type),
+          // "goldgram": additionalFieldsArray.map(obj => obj.goldgram)
         };
-        // console.log("convertedArray");
-        // console.log(convertedArray);
 
+       
+        console.log("convertedArray");
+        console.log(convertedArray);
+        // console.log(c1);
         post(apiname.Goldvaultadd, convertedArray)
           .then((reslist) => {
            
@@ -118,6 +123,8 @@ export const getUsersSuccess = users => ({
 
   
 };
+
+// export const addUserSuccess = user => (console.log(user))
 
 export const addUserSuccess = user => ({
   type: ADD_USER_SUCCESS,
@@ -156,6 +163,9 @@ export const getUserProfileFail = error => ({
 export const updateUser = (user) => {
    return async (dispatch) => {
     try {
+      console.log("euser");
+      console.log(user);
+      
       put(`${apiname.Goldvaultedit}/${user.id}`,user)
         .then((updatereslist) => {
           if (updatereslist.status == 200) {

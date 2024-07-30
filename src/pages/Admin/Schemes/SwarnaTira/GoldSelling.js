@@ -150,7 +150,11 @@ function GoldSelling() {
           accessor: "gold_grams",
           Cell: ({ value }) => <span>{value} g</span>,
         },
-  
+        {
+          Header: "Gold Type",
+          accessor: "gold_type",
+         
+        },
         {
           Header: "Actions",
           accessor: "id",
@@ -320,7 +324,7 @@ function GoldSelling() {
   
       post(apiname.approval, approveid)
         .then((updateres1) => {
-          if (updateres1.status == "200") {
+          if (updateres1.status == "201") {
             //   setUserData('');
             //   setTogModalApproved(!togModalApproved);
             setTogModalRejected(!togModalRejected);

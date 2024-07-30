@@ -53,6 +53,8 @@ function MemberList() {
     get(apiname.goldholdingslist)
       .then((res) => {
         
+        console.log("goldholdinglist");
+        console.log(res);
         if(res.status=='204'){
           setUserData('');
         }else{
@@ -100,6 +102,11 @@ function MemberList() {
         Header: "Gold Coin",
         accessor: "grams",
         Cell: ({ value }) => <span>{value} g</span>,
+      },
+      {
+        Header: "Gold Type",
+        accessor: "gold_type",
+       
       },
       {
         Header: "Actions",
