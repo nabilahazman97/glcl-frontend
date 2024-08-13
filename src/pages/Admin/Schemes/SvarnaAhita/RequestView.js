@@ -430,8 +430,8 @@ setErrorMessage('');
                                         <div className="mb-3 text-end">
                                             <div className="text-gold mb-3">{loandetails.gold_grams} g</div>
                                             {/* <div className="text-gold mb-3">GLCL0001-GLCL0002</div> */}
-                                            <div className="text-gold mb-3">{loandetails.amount}</div>
-                                            <div className="text-gold mb-3">{loandetails.installement_months} &nbsp; Months</div>
+                                            <div className="text-gold mb-3">{loandetails.installement_months}</div>
+                                            <div className="text-gold mb-3">{loandetails.amount} &nbsp; Months</div>
                                         </div>
                                     </div>
                                 </div>
@@ -447,7 +447,7 @@ setErrorMessage('');
 
                                 >
                                     {/* <i className="bx bxs-check-circle font-size-16 align-middle me-1"></i>{" "} */}
-                                    Approve 22
+                                    Approve
                                 </button>
                                 <button
                                     type="button"
@@ -457,7 +457,7 @@ setErrorMessage('');
                                       }}
                                 >
                                     {/* <i className="mdi mdi-close-circle font-size-16 align-middle me-1"></i>{" "} */}
-                                    Reject 34
+                                    Reject
                                 </button>
                               
 
@@ -573,7 +573,7 @@ setErrorMessage('');
                 }}
                 
               >
-                Cancel 12
+                Cancel
               </Button>{" "}
               <Button
                 color="primary"
@@ -583,7 +583,7 @@ setErrorMessage('');
                     // tog_amount_loan(false);
                 }}
               >
-                Submit 12
+                Submit
               </Button>
             </div>
           </Modal>
@@ -602,8 +602,8 @@ setErrorMessage('');
             </h5>
           </div>
           <ModalBody className="text-center">
-             <p>The loan quotation has been approved. <br></br> 
-             An email will be sent to yusof89@gmail.com to notify them.</p>
+             <p>The loan has been approved. <br></br> 
+            </p>
           </ModalBody>
           <div className="text-center mb-3">
              <Button

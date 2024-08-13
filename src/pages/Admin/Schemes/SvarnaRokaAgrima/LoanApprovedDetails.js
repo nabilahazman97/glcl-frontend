@@ -55,7 +55,7 @@ const LoanApprovedDetails = () => {
     const [membership_id, setmembership_id] = useState([]);
     const [loandetails, setloandetails] = useState([]);
     const [profile, setprofiledetails] = useState([]);
-    const [totalpaid, settotalpaid] = useState([]);
+    const [totalpaid, SetTotalpaid] = useState([]);
     const [totalOutstanding, settotalpending] = useState([]);
     const [overallamount, setoverallamount] = useState([]);
     const [curmpayamount, setcurrentMonthPayAmount] = useState([]);
@@ -79,56 +79,66 @@ const LoanApprovedDetails = () => {
         
 
       let  loanTransactions=updatereslist.data.result.LoanTransactions;
+
+      console.log("ltrans");
+      console.log(loanTransactions);
 let totalPaid = 0;
 let totalOutstanding = 0;
 let overallamount=0;
 
 for (const transaction of loanTransactions) {
     overallamount += parseFloat(transaction.total_amount);
-
     setoverallamount(overallamount);
-    if (transaction.transaction_id) {
+    // if (transaction.transaction_id) {
+        if (transaction.status_id === 7) {
         totalPaid += parseFloat(transaction.total_amount);
-        settotalpaid(totalPaid.toFixed(2));
-    } else {
+        SetTotalpaid(totalPaid.toFixed(2));
+        }
+    // } else {
+        if (transaction.status_id === 6) {
         totalOutstanding += parseFloat(transaction.total_amount);
         settotalpending(totalOutstanding.toFixed(2));
-    }
+        }
+    // }
 }
 
-const currentMonth1 = new Date().getMonth() + 1; // Get the current month (1-based index)
-const currentYear1 = new Date().getFullYear(); // Get the current year
+// const currentMonth1 = new Date().getMonth() + 1; // Get the current month (1-based index)
+// const currentYear1 = new Date().getFullYear(); // Get the current year
 
-const currentMonthTransactions = loanTransactions.filter(transaction => {
-    const dueDate = new Date(transaction.payment_due_date);
-    return dueDate.getMonth() + 1 === currentMonth1 && dueDate.getFullYear() === currentYear1;
-});
-// console.log("currentMonthTransactions");
-// console.log(currentMonthTransactions);
-if(!(currentMonthTransactions)){
-let currentMonthPayAmount = 0;
-for (const transaction of currentMonthTransactions) {
-    currentMonthPayAmount += parseFloat(transaction.total_amount);
-    setcurrentMonthPayAmount(currentMonthPayAmount);
-}
+// const currentMonthTransactions = loanTransactions.filter(transaction => {
+//     const dueDate = new Date(transaction.payment_due_date);
 
-let daysLeftToPay = null;
-let status = '';
+//     console.log("dueDate");
+// console.log(currentMonth1 );
 
-if (currentMonthTransactions.some(transaction => !transaction.transaction_id)) {
-    // Calculate days left until payment due date
-    const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
-    const currentDate = new Date();
-    daysLeftToPay = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
-    setdaysLeftToPay(daysLeftToPay);
-    setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
-} else {
-    daysLeftToPay = 'Paid';
-    const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
-    setdaysLeftToPay(daysLeftToPay);
-    setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
-}
-}
+
+//     return dueDate.getMonth() + 1 === currentMonth1 && dueDate.getFullYear() === currentYear1;
+// });
+
+// if(!(currentMonthTransactions)){
+// let currentMonthPayAmount = 0;
+// for (const transaction of currentMonthTransactions) {
+//     currentMonthPayAmount += parseFloat(transaction.total_amount);
+//     setcurrentMonthPayAmount(currentMonthPayAmount);
+// }
+
+// let daysLeftToPay = null;
+// let status = '';
+
+// if (currentMonthTransactions.some(transaction => !transaction.transaction_id)) {
+//     // Calculate days left until payment due date
+//     const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
+//     const currentDate = new Date();
+//     daysLeftToPay = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
+//     setdaysLeftToPay(daysLeftToPay);
+//     setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+// } else {
+//     daysLeftToPay = 'Paid';
+//     const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
+//     setdaysLeftToPay(daysLeftToPay);
+//     setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+// }
+// }
 
 
         if(updatereslist.data.result.LoanTransactions.length>0){
@@ -228,7 +238,7 @@ const options = {
                 Header: "Status",
                 accessor: "status_id",
                 Cell: ({ value }) => {
-                    return value === null || value === "" ? "Not Paid" : "Paid";
+                    return value === 7 ? "Paid" : "Not Paid";
                   }
             },
         ],
