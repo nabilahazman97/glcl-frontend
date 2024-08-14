@@ -67,6 +67,7 @@ const TableContainer = ({
   isJobListGlobalFilter,
   isAddOptions,
   isAddUserList,
+  isAddtier,
   handleOrderClicks,
   handleUserClick,
   handleCustomerClick,
@@ -131,9 +132,9 @@ const TableContainer = ({
   return (
     <Fragment>
       <Row className="mb-2">
-        <Col md={customPageSizeOptions ? 2 : 1}>
+        <Col md={customPageSizeOptions ? 2 : 2}>
           <select
-            className="form-select"
+            className="form-select filterInput"
             value={pageSize}
             onChange={onChangeInSelect}
           >
@@ -167,21 +168,40 @@ const TableContainer = ({
             </div>
           </Col>
         )}
-        {isAddUserList && (
-          <Col sm="7">
+
+        {isAddUserList  && (
+          <Col sm="12">
             <div className="text-sm-end">
               <Button
                 type="button"
                 color="primary"
-                className="btn mb-2 me-2"
+                className="btn mb-2 me-2 btnstyle"
                 onClick={handleUserClick}
               >
-                <i className="mdi mdi-plus-circle-outline me-1" />
-                Create New User
+                <i className="mdi mdi-plus me-1" />
+                Gold Coin
               </Button>
             </div>
           </Col>
-        )}
+          )}
+
+{isAddtier  && (
+          <Col sm="12">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                color="primary"
+                className="btn mb-2 me-2 btnstyle"
+                onClick={handleUserClick}
+              >
+                <i className="mdi mdi-plus me-1" />
+                New Tier
+              </Button>
+            </div>
+          </Col>
+          )}
+
+         
         {isAddCustList && (
           <Col sm="7">
             <div className="text-sm-end">
@@ -200,17 +220,17 @@ const TableContainer = ({
       </Row>
 
       <div className="table-responsive react-table">
-        <Table bordered hover {...getTableProps()} className={className}>
-          <thead className="table-light table-nowrap text-center">
+        <Table bordered hover {...getTableProps()} className="table table-striped">
+          <thead className=" table-nowrap text-center">
             {headerGroups.map(headerGroup => (
               <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
-                  <th key={column.id}>
-                    <div className="mb-2" {...column.getSortByToggleProps()}>
+                  <th key={column.id}  style={{ backgroundColor:"#fff", color:'#000' }}>
+                    <div className="" {...column.getSortByToggleProps()}>
                       {column.render("Header")}
                       {generateSortingIndicator(column)}
                     </div>
-                    <Filter column={column} />
+                    {/* <Filter column={column} /> */}
                   </th>
                 ))}
               </tr>
@@ -218,11 +238,11 @@ const TableContainer = ({
           </thead>
 
           <tbody {...getTableBodyProps()}>
-            {page.map(row => {
+            {page.map((row, rowIndex) => {
               prepareRow(row);
               return (
                 <Fragment key={row.getRowProps().key}>
-                  <tr>
+                  <tr className={rowIndex % 2 === 0 ? 'even' : 'odd'}>
                     {row.cells.map(cell => {
                       return (
                         <td key={cell.id} {...cell.getCellProps()}>
@@ -238,25 +258,18 @@ const TableContainer = ({
         </Table>
       </div>
 
-      <Row className="justify-content-md-end justify-content-center align-items-center">
+      <Row className="justify-content-md-end justify-content-center align-items-center mt-4 mb-2">
         <Col className="col-md-auto">
-          <div className="d-flex gap-1">
+          <div className="d-flex gap-1  ">
             <Button
               color="primary"
-              style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"40px" }}
+              style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"41px" }}
               onClick={() => gotoPage(0)}
-              disabled={!canPreviousPage}
+              // disabled={!canPreviousPage}
             >
               {"<<"}
             </Button>
-            <Button
-              color="primary"
-              style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"40px" }}
-              onClick={previousPage}
-              disabled={!canPreviousPage}
-            >
-              {"<"}
-            </Button>
+            
           </div>
         </Col>
         <Col className="col-md-auto d-none d-md-block">
@@ -278,13 +291,11 @@ const TableContainer = ({
 
         <Col className="col-md-auto">
           <div className="d-flex gap-1">
-            <Button color="primary" style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"40px" }} onClick={nextPage} disabled={!canNextPage}>
-              {">"}
-            </Button>
+            
             <Button
-             style={{ backgroundColor:"#0e174d", borderRadius:"50%", width:"40px" }}
+             style={{ backgroundColor:"#0e174d",borderRadius:"50%", width:"41px"  }}
               onClick={() => gotoPage(pageCount - 1)}
-              disabled={!canNextPage}
+              // disabled={!canNextPage}
             >
               {">>"}
             </Button>

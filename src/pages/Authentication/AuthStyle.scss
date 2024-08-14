@@ -1,0 +1,199 @@
+//TEXT TEXT//
+.std_font{
+    font-size: 1.3em !important;
+    font-family: inter_regular !important;
+}
+.std_font_bold{
+    font-size: 1.2em !important;
+    font-family: inter_bold !important;
+}
+
+.font12{
+    font-size: 12px !important;
+    font-family: inter_regular !important;
+}
+
+.font20{
+    font-size: 20px !important;
+    font-family: inter_bold !important;
+    color: black !important;
+}
+
+
+//FONT TEXT//
+
+.login_title{
+    font-size: 2.0em !important;
+    font-weight: 700!important;
+    font-family: inter_regular !important;
+    border-bottom: 5px solid #D4AF37!important; /* Thicken the underline */
+    display: inline-block!important;
+    color: #000000 !important;
+}
+
+.login-input{
+    border-radius: 15px !important;
+    height: 50px!important;
+    font-size: 1.3em!important;
+    border: 1px solid #dfdcdc!important;
+    box-shadow: inset 0 3px 0px #bfbfbf!important;
+    font-family: inter_regular!important;
+}
+
+
+
+.file-selected-box{
+    // border-radius: 15px;
+    border: 1px solid #dfdcdc!important;
+    box-shadow: inset 0 3px 0px #bfbfbf !important;
+    font-family: inter_regular!important;
+}
+
+.eye-outline-span{
+    border-radius: 15px!important;
+    height: 50px!important;
+    border: 1px solid #dfdcdc!important;
+}
+
+.form-check input{
+    border: 1px solid #bfbfbf!important;
+    font-size: 1.2em!important;
+    font-family: inter_regular!important;
+}
+
+.text-gold{
+    color: #D4AF37!important;
+}
+.text-dark-gold{
+    color: #9b7700!important;
+}
+
+.std-input-label {
+    font-weight: 600 !important;
+    font-size: 1.2em !important;
+    font-family: inter_regular!important;
+  }
+
+.signIn_btn{
+    border-radius: 15px!important;
+    height: 50px!important;
+    background-color: #0E174D!important;
+    font-size: 1.5em!important;
+    font-family: inter_regular!important;
+    width: 100%!important;
+}
+
+.signIn_btn:hover{
+    color: #ffffff!important;
+    background-color: #090F2F!important;
+    cursor: pointer!important;
+}
+
+.stdBtn {
+    font-family: inter_regular !important;
+    border-radius: 80px !important;
+    width: 150px;
+    height: 40px;
+    padding: 0 !important;
+    border: none !important;
+    white-space: nowrap !important;
+  }
+
+.login-textarea{
+    border-radius: 15px!important;
+    border: 1px solid #dfdcdc!important;
+    box-shadow: inset 0 3px 0px #bfbfbf!important;
+    font-size: 1.2em!important;
+    font-family: inter_regular!important;
+}
+
+.css-13cymwt-control, .css-t3ipsp-control{
+    background-color: #ffffff !important;
+    border-radius: 15px !important;
+    height: 50px !important;
+    border: 1px solid #dfdcdc !important ;
+    box-shadow: inset 0 3px 0px #bfbfbf !important;
+    font-size: 1.2em !important;
+    font-family: inter_regular !important;
+}
+
+.css-1nmdiq5-menu {
+    background-color: white !important;
+    z-index: 5 !important;
+    font-size: 1.2em !important;
+    font-family: inter_regular !important;
+}
+
+.login-dropdown{
+    border-radius: 15px !important;
+    height: 50px !important;
+    border: 1px solid #dfdcdc !important;
+    box-shadow: inset 0 3px 0px #bfbfbf !important;
+}
+
+.required-indicator, .invalid-feedback {
+    color: red !important;
+    font-size: 1em !important;
+    margin-left: 3px;
+  }
+
+.upload-file-btn{
+    background-color: #0E174D !important;
+    color: #ffffff !important;
+    font-family: inter_bold !important;
+}
+.upload-file-btn:hover{
+    background-color: #0E174D !important;
+    color: #ffffff !important;
+    font-family: inter_bold !important;
+    border: 1px solid !important;
+    outline-offset: 15px !important;
+    cursor: pointer !important;
+}
+
+
+.success-modal{
+    background-color: #cdecd3 !important;
+    opacity: 5 !important;
+}
+
+.payment-opt{
+    border-radius: 15px !important;
+    height: 50px !important;
+    border: 1px solid #dfdcdc !important;
+    // box-shadow: inset 0 3px 0px #bfbfbf;
+    background-image: linear-gradient(to bottom, #FBE39A 0%, #CAAF63 100%) !important;
+
+}
+
+.ic-img{
+    height: 70px !important;
+  width: 60px !important;
+}
+
+.failuremsgicon{
+    color: red !important;
+}
+
+.css-tj5bde-Svg{
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 12px solid black;
+    transform: rotate(180deg);
+    margin-right: 5px;
+}
+
+.css-1u9des2-indicatorSeparator{
+    display: none !important;
+}
+
+
+
+
+.whiteBg{
+    background-color: #fff;
+  }
+
+  

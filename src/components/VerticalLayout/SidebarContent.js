@@ -148,57 +148,179 @@ const SidebarContent = props => {
             <li className="menu-title">{props.t("Menu")} </li>
             <li>
               <Link to="/dashboard" >
-                <i className="bx bx-home-circle"></i>
+                {/* <i className="bx bx-home-circle"></i> */}
                 <span>{props.t("DASHBOARD")}</span>
               </Link>
             </li>
-  
+            <li>
+              <Link to="/update-gold-rate" >
+                {/* <i className="bx bx-home-circle"></i> */}
+                <span>{props.t("UPDATE GOLD RATE")}</span>
+              </Link>
+            </li>
+
 
             <li>
-              <Link to="/#" className="has-arrow d-flex">
-                <i className="bx bx-user"></i>
+              <Link to="/#" className="has-arrow">
+                {/* <i className="bx bx-user"></i> */}
                 <span >{props.t("MEMBERSHIP MANAGEMENT")}</span>
               </Link>
               <ul className="sub-menu">
-                <li style={{ whiteSpace: "nowrap" }}>
-                  <Link to="/tables-datatable">{props.t("MEMBER REGISTRATION LIST")}</Link>
+                <li  >
+                  <Link to="/tables-datatable">{props.t("NEW MEMBER VERIFICATION")}</Link>
                 </li>
-                <li style={{ whiteSpace: "nowrap" }}>
+                <li  >
                   <Link to="/member-profile-list">{props.t("MEMBER PROFILE")}</Link>
+                </li>
+
+                <li  >
+                  <Link to="/admin-announcement-update">{props.t("ANNOUNCEMENT & UPDATE")}</Link>
+                </li>
+                <li  >
+                  <Link to="/module-management">{props.t("MODULE MANAGEMENT")}</Link>
                 </li>
               </ul>
             </li>
 
-            <li>
-              <Link to="/#" >
-                <i className="fas fa-coins"></i>
-                <span>{props.t("PAYMENT MANAGEMENT")}</span>
-              </Link>
-            </li>
+            
 
             <li>
               <Link to="/#" className="has-arrow ">
-                <i className="bx bx-file"></i>
+                {/* <i className="bx bx-file"></i> */}
                 <span>{props.t("SCHEMES")}</span>
               </Link>
               <ul className="sub-menu">
-                <li style={{ whiteSpace: "nowrap" }}>
-                  <Link to="/#">{props.t("SVARNA TIRA SCHEME")}</Link>
+                <li>
+                  <Link to="//admin-swarna-tira/index">{props.t("SVARNA TIRA SCHEME")}</Link>
+                  <ul className="sub-menu">
+                  
+                    <li  >
+                      <Link to="/admin-swarna-tira/index">{props.t("List of Members")}</Link>
+                    </li>
+                    <li  >
+                      <Link to="/admin-swarna-tira/gold-purchase-list">{props.t("Gold Purchase")}</Link>
+                    </li>
+                    <li  >
+                      <Link to="/admin-swarna-tira/gold-selling-list">{props.t("Gold Selling")}</Link>
+                    </li>
+
+                  </ul>
                 </li>
                 <li >
-                  <Link to="/#">{props.t("SVARNA STOKAM NIKSEPA SCHEME")}</Link>
+                  <Link to="/admin-swarna-stokam-niksepa/index">{props.t("SVARNA STOKAM NIKSEPA SCHEME")}</Link>
+                </li>
+                <li>
+                  <Link to="/admin-svarna-roka-agrima/loan-application-list">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
+                  <ul className="sub-menu">
+                    <li>
+                    <Link to="/admin-svarna-roka-agrima/loan-application-list/">{props.t("Loan Request List")}</Link>
+                    </li>
+
+                    <li>
+                    <Link to="/admin-svarna-roka-agrima/LoanApprovedList/">{props.t("Loan Approved List")}</Link>
+                    </li>
+                    
+
+                  </ul>
+                </li>
+
+                <li>
+                  <Link to="//admin-svarna-ahita/index-list">{props.t("SVARNA AHITA SCHEME")}</Link>
+                  <ul className="sub-menu">
+                    {/* <li>
+                    <Link to="/admin-svarna-ahita/user-view">{props.t("Loan Request List")}</Link>
+                    </li> */}
+
+                    <li>
+                    <Link to="/admin-svarna-ahita/index-list">{props.t("Loan Request List")}</Link>
+                      
+                    {/* <Link to="/admin-svarna-roka-agrima/LoanApprovedList/">{props.t("Loan Approved List")}</Link> */}
+                    </li>
+                    <li>
+                    <Link to="/admin-svarna-ahita/PawnApprovedList/">{props.t("Loan Approved List")}</Link>
+                    </li>
+                    
+
+                  </ul>
+                </li>
+
+
+                {/* <li >
+                  <Link to="/admin-svarna-roka-agrima/loan-approved-details">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
                 </li>
                 <li >
+                  <Link to="/admin-svarna-roka-agrima/loan-application-details">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
+                </li> */}
+                  {/* <li>
+                <Link to="/admin-svarna-ahita/index-list">{props.t("SVARNA AHITA SCHEME")}</Link>
+              </li> */}
+                 {/* <li>
+                <Link to="/admin-svarna-ahita/user-view">{props.t("SVARNA AHITA SCHEME")}</Link>
+              </li>
+              <li>
+                <Link to="/admin-svarna-ahita/index-list">{props.t("SVARNA AHITA SCHEME")}</Link>
+              </li> */}
+              {/* <li>
+                <Link to="/admin-svarna-ahita/request-view">{props.t("SVARNA AHITA SCHEME")}</Link>
+              </li> */}
+                 {/* <li  >
+                <Link to="/admin-svarna-ahita/request-view">{props.t("SVARNA AHITA SCHEME")}</Link>
+              </li> */}
+              {/*   <li  >
+                <Link to="/admin-svarna-runa/index">{props.t("SVARNA RUNA SCHEME")}</Link>
+              </li>*/}
+              </ul>
+             
+              
+            
+
+            </li>
+
+
+            <li>
+              <Link to="/#" className="has-arrow ">
+                <span>{props.t("GOLD MANAGEMENT")}</span>
+              </Link>
+              <ul className="sub-menu">
+                <li  >
+                  <Link to="/Goldvault">{props.t("Gold Vault")}</Link>
+                </li>
+
+                {/* <li >
                   <Link to="/#">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
                 </li>
-                <li style={{ whiteSpace: "nowrap" }}>
+                <li  >
                   <Link to="/#">{props.t("SVARNA AHITA SCHEME")}</Link>
                 </li>
-                <li style={{ whiteSpace: "nowrap" }}>
+                <li  >
                   <Link to="/#">{props.t("SVARNA RUNA SCHEME")}</Link>
-                </li>
+                </li> */}
               </ul>
             </li>
+
+
+            <li>
+              <Link to="/#" className="has-arrow ">
+                <span>{props.t("MEMBERSHIP TIER")}</span>
+              </Link>
+              <ul className="sub-menu">
+                <li  >
+                  <Link to="/Membertier">{props.t("Membership tier")}</Link>
+                </li>
+
+                {/* <li >
+                  <Link to="/#">{props.t("SVARNA ROKA AGRIMA SCHEME")}</Link>
+                </li>
+                <li  >
+                  <Link to="/#">{props.t("SVARNA AHITA SCHEME")}</Link>
+                </li>
+                <li  >
+                  <Link to="/#">{props.t("SVARNA RUNA SCHEME")}</Link>
+                </li> */}
+              </ul>
+            </li>
+
+
 
 
           </ul>

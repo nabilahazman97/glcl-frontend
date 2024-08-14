@@ -9,6 +9,9 @@ import {
   DELETE_USER_FAIL,
   GET_USER_PROFILE_SUCCESS,
   GET_USER_PROFILE_FAIL,
+  FETCH_GOLDVAULTLIST_SUCCESS,
+  FETCH_GOLDVAULTLIST_FAILURE,
+  // FETCH_GOLDVAULTLIST_REQUEST 
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -19,6 +22,24 @@ const INIT_STATE = {
 
 const contacts = (state = INIT_STATE, action) => {
   switch (action.type) {
+    case FETCH_GOLDVAULTLIST_SUCCESS:
+      return {
+        ...state,
+        users: action.payload,
+        error: null
+      };
+    case FETCH_GOLDVAULTLIST_FAILURE:
+      return {
+        ...state,
+        error: action.payload
+      };
+      // case FETCH_GOLDVAULTLIST_REQUEST:
+      //   return {
+      //     ...state,
+      //     loading: true,
+      //     error: null
+      //   };
+
     case GET_USERS_SUCCESS:
       return {
         ...state,
@@ -52,12 +73,16 @@ const contacts = (state = INIT_STATE, action) => {
 
       case UPDATE_USER_SUCCESS:
         return {
-          ...state,
+          
+          // ...state,
           users: state.users.map(user =>
+            // console.log("testreducer" +action.payload.id+"userid"+user.id)
+           
             user.id.toString() === action.payload.id.toString()
               ? { user, ...action.payload }
               : user
           ),
+        
         }
   
       case UPDATE_USER_FAIL:

@@ -36,6 +36,9 @@ import tasks from "./tasks/reducer";
 //contacts
 import contacts from "./contacts/reducer";
 
+// membershiptier
+import  membershiptier from "./membershiptier/reducer";
+
 //mails
 import mails from "./mails/reducer";
 
@@ -75,7 +78,8 @@ const rootReducer = combineReducers({
   DashboardSaas,
   DashboardCrypto,
   DashboardBlog,
-  DashboardJob
+  DashboardJob,
+  membershiptier
 });
 
 export default rootReducer;

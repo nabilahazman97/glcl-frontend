@@ -11,43 +11,62 @@ import {
   postJwtLogin,
   postSocialLogin,
 } from "../../../helpers/fakebackend_helper";
+import React, { useState, useEffect } from 'react';
 
 const fireBaseBackend = getFirebaseBackend();
 
 function* loginUser({ payload: { user, history } }) {
   try {
-    if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-      const response = yield call(
-        fireBaseBackend.loginUser,
-        user.email,
-        user.password
-      );
-      yield put(loginSuccess(response));
-    } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-      const response = yield call(postJwtLogin, {
-        email: user.email,
-        password: user.password,
-      });
-      localStorage.setItem("authUser", JSON.stringify(response));
-      yield put(loginSuccess(response));
-    } else if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
-      const response = yield call(postFakeLogin, {
-        email: user.email,
-        password: user.password,
-      });
-      localStorage.setItem("authUser", JSON.stringify(response));
-      yield put(loginSuccess(response));
-    }else if(process.env.REACT_APP_DEFAULTAUTH === "login"){
+    const response = yield call(postJwtLogin, {
+      email_id: user.email,
+      password: user.password,
+    });
+  
+  
+    localStorage.setItem("authUser", JSON.stringify(response));
+    localStorage.setItem("accessToken", response.data.accessToken);
+  
 
-      console.log("saga");
-      const response = yield call(postFakeLogin, {
-        email: user.email,
-        password: user.password,
-      });
-      localStorage.setItem("authUser", JSON.stringify(response));
-      yield put(loginSuccess(response));
-    }
+
+
+    console.log(response.data.accessToken)
+    yield put(loginSuccess(response));
+
+
+    // if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
+    //   const response = yield call(
+    //     fireBaseBackend.loginUser,
+    //     user.email,
+    //     user.password
+    //   );
+    //   yield put(loginSuccess(response));
+    // } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
+    //   const response = yield call(postJwtLogin, {
+    //     email_id: user.email,
+    //     password: user.password,
+    //   });
+    //   localStorage.setItem("authUser", JSON.stringify(response));
+    //   localStorage.setItem("accessToken", response.accessToken);
+    //   yield put(loginSuccess(response));
+    // } else if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
+    //   const response = yield call(postFakeLogin, {
+    //     email: user.email,
+    //     password: user.password,
+    //   });
+    //   localStorage.setItem("authUser", JSON.stringify(response));
+    //   yield put(loginSuccess(response));
+    // }else if(process.env.REACT_APP_DEFAULTAUTH === "login"){
+    //   const response = yield call(postFakeLogin, {
+    //     email_id: user.email,
+    //     password: user.password,
+    //   });
+    //   localStorage.setItem("authUser", JSON.stringify(response));
+    //   console.log("setitems");
+    //   console.log(JSON.stringify(response));
+    //   yield put(loginSuccess(response));
+    // }
     history('/dashboard');
+    window.location.reload();
   } catch (error) {
     yield put(apiError(error));
   }

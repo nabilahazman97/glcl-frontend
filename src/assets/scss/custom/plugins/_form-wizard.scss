@@ -6,6 +6,7 @@
 .form-wizard-wrapper {
   label {
     font-size: 14px;
+
     text-align: right;
   }
 }
@@ -56,7 +57,8 @@
       width: 38px;
       height: 38px;
       line-height: 34px;
-      border: 2px solid $primary;
+       border: 2px solid $primary;
+      // border: 2px solid wheat;
       color: $primary;
       text-align: center;
       border-radius: 50%;
@@ -67,7 +69,11 @@
       a, a:active, a:hover {
         background-color: rgba($primary, 0.2);
         color: var(--#{$prefix}gray-700);
+        // background-color: #090F2F;
+        // color: wheat;
         .number {
+          // background-color: wheat;
+  // color: #090F2F;
           background-color: $primary;
           color: $white;
         }
@@ -90,7 +96,9 @@
       width: 100%;
       height: 100%;
       padding: 14px 0 0;
-      position: static
+      position: static;
+      font-family: inter_regular;
+      // color: #d4af37;
     }
   }
 
@@ -112,7 +120,9 @@
           }
       }
       a, a:active, a:hover {
-        background-color: $primary;
+        // background-color:#090F2F;
+        // color: wheat;
+        background-color: #0e174d;
         border-radius: 4px;
         padding: 8px 15px;
         color: $white;
@@ -121,8 +131,10 @@
       .disabled {
         a, a:active, a:hover {
           opacity: .65;
-          background-color: $primary;
+          background-color: #0e174d;
           color: $white;
+          // background-color:#090F2F;
+          // color: wheat;
           cursor: not-allowed;
         }
       }
