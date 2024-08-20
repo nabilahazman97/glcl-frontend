@@ -76,6 +76,8 @@ const GoldPawnUserView = () => {
         setloandetails(updatereslist.data.result);
 
       let  loanTransactions=updatereslist.data.result.LoanTransactions;
+
+      console.log(loanTransactions);
 let totalPaid = 0;
 let totalOutstanding = 0;
 let overallamount=0;
@@ -93,36 +95,36 @@ for (const transaction of loanTransactions) {
     }
 }
 
-const currentMonth1 = new Date().getMonth() + 1; // Get the current month (1-based index)
-const currentYear1 = new Date().getFullYear(); // Get the current year
+// const currentMonth1 = new Date().getMonth() + 1; // Get the current month (1-based index)
+// const currentYear1 = new Date().getFullYear(); // Get the current year
 
-const currentMonthTransactions = loanTransactions.filter(transaction => {
-    const dueDate = new Date(transaction.payment_due_date);
-    return dueDate.getMonth() + 1 === currentMonth1 && dueDate.getFullYear() === currentYear1;
-});
+// const currentMonthTransactions = loanTransactions.filter(transaction => {
+//     const dueDate = new Date(transaction.payment_due_date);
+//     return dueDate.getMonth() + 1 === currentMonth1 && dueDate.getFullYear() === currentYear1;
+// });
 
-let currentMonthPayAmount = 0;
-for (const transaction of currentMonthTransactions) {
-    currentMonthPayAmount += parseFloat(transaction.total_amount);
-    setcurrentMonthPayAmount(currentMonthPayAmount);
-}
+// let currentMonthPayAmount = 0;
+// for (const transaction of currentMonthTransactions) {
+//     currentMonthPayAmount += parseFloat(transaction.total_amount);
+//     setcurrentMonthPayAmount(currentMonthPayAmount);
+// }
 
-let daysLeftToPay = null;
-let status = '';
+// let daysLeftToPay = null;
+// let status = '';
 
-if (currentMonthTransactions.some(transaction => !transaction.transaction_id)) {
-    // Calculate days left until payment due date
-    const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
-    const currentDate = new Date();
-    daysLeftToPay = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
-    setdaysLeftToPay(daysLeftToPay);
-    setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
-} else {
-    daysLeftToPay = 'Paid';
-    const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
-    setdaysLeftToPay(daysLeftToPay);
-    setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
-}
+// if (currentMonthTransactions.some(transaction => !transaction.transaction_id)) {
+//     // Calculate days left until payment due date
+//     const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
+//     const currentDate = new Date();
+//     daysLeftToPay = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
+//     setdaysLeftToPay(daysLeftToPay);
+//     setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+// } else {
+//     daysLeftToPay = 'Paid';
+//     // const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
+//     setdaysLeftToPay(daysLeftToPay);
+//     setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+// }
 
 
         if(updatereslist.data.result.LoanTransactions.length>0){
@@ -233,9 +235,9 @@ const exportToPDF = () => {
 
             {
                 Header: "Status",
-                accessor: "transaction_id",
+                accessor: "status_id",
                 Cell: ({ value }) => {
-                    return value === null || value === "" ? "Not Paid" : "Paid";
+                    return value === 7 ? "Paid" : "Not Paid";
                   }
             },
         ],

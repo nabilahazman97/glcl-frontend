@@ -100,21 +100,21 @@ function MemberList() {
 
       {
         Header: "Gold Coin",
-        accessor: "grams",
+        accessor: "total_grams",
         Cell: ({ value }) => <span>{value} g</span>,
       },
-      {
-        Header: "Gold Type",
-        accessor: "gold_type",
+      // {
+      //   Header: "Gold Type",
+      //   accessor: "gold_type",
        
-      },
+      // },
       {
         Header: "Actions",
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="d-flex flex-wrap gap-2 justify-content-center">
             <Link
-              to={`/admin-swarna-tira/member-details/${row.original.id}`}
+              to={`/admin-swarna-tira/member-details/${row.original.user_id}`}
               style={{ textDecoration: "none" }}
             >
                             <i className="mdi mdi-eye" style={{ fontSize: "20px", color: 'black' }}></i>{" "}
