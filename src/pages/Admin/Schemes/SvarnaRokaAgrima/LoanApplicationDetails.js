@@ -511,7 +511,7 @@ get(`${apiname.loandetail_userid}/${userid}`)
             </h5>
           </div>
           <ModalBody className="text-center">
-             <p>The loan has been approved. An email will be sent to yusof89@gmail.com to notify them.</p>
+             <p>The loan has been approved</p>
           </ModalBody>
           <div className="text-center mb-3">
              <Button

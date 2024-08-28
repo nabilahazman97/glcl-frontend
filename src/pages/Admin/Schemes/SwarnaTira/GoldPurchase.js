@@ -234,36 +234,36 @@ function GoldPurchase() {
   function tog_assign_gold(transaction) {
 
     
-
+    setTogModalAssignGold(!togModalAssignGold);
 
 
     // approve
 
-    const approveid1 = {
-      transactionId: transaction.id,
-      action: "approve",
-    };
+    // const approveid1 = {
+    //   transactionId: transaction.id,
+    //   action: "approve",
+    // };
 
-    // 
+    // // 
 
-    console.log("approveid1");
-    console.log(transaction);
+    // console.log("approveid1");
+    // console.log(transaction);
 
-    post(apiname.approval, approveid1)
-      .then((res) => {
-        if (res.status == "204") {
-          setUserData("");
-          setTogModalAssignGold(!togModalAssignGold);
+    // post(apiname.approval, approveid1)
+    //   .then((res) => {
+    //     if (res.status == "204") {
+    //       setUserData("");
+    //       setTogModalAssignGold(!togModalAssignGold);
 
-        }else if(res.status == "200"){
-          setErrorMessage2("Insufficient Gold Vault Count to Approve");
-        } else {
-          let filteredData = res.data.result;
-          setUserData(filteredData);
-          setTogModalAssignGold(!togModalAssignGold);
-        }
-      })
-      .catch((err) => console.log(err));
+    //     }else if(res.status == "200"){
+    //       setErrorMessage2("Insufficient Gold Vault Count to Approve");
+    //     } else {
+    //       let filteredData = res.data.result;
+    //       setUserData(filteredData);
+    //       setTogModalAssignGold(!togModalAssignGold);
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
 
 
       get(apiname.Goldvaultlist)
@@ -385,22 +385,22 @@ console.log("Sum of grams:", sum);
 
     // approve
 
-      const approveid1 = {
-      transactionId: transaction.id,
-      action: "approve",
-    };
+    //   const approveid1 = {
+    //   transactionId: transaction.id,
+    //   action: "approve",
+    // };
 
-    post(apiname.approval, approveid1)
-      .then((res) => {
+    // post(apiname.approval, approveid1)
+    //   .then((res) => {
         
-        if (res.status == "204") {
-          setUserData("");
-        } else {
-          let filteredData = res.data.result;
-          setUserData(filteredData);
-        }
-      })
-      .catch((err) => console.log(err));
+    //     if (res.status == "204") {
+    //       setUserData("");
+    //     } else {
+    //       let filteredData = res.data.result;
+    //       setUserData(filteredData);
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
 
     // gold vault update & serial number allocate
     const approveid = {
@@ -416,6 +416,31 @@ console.log("Sum of grams:", sum);
         
 
         if (updateres.status == "200") {
+           const approveid1 = {
+      transactionId: transaction.id,
+      action: "approve",
+    };
+
+    // 
+
+    console.log("approveid1");
+    console.log(transaction);
+
+    post(apiname.approval, approveid1)
+      .then((res) => {
+        if (res.status == "204") {
+          setUserData("");
+          // setTogModalAssignGold(!togModalAssignGold);
+
+        }else if(res.status == "200"){
+          setErrorMessage2("Insufficient Gold Vault Count to Approve");
+        } else {
+          let filteredData = res.data.result;
+          setUserData(filteredData);
+          // setTogModalAssignGold(!togModalAssignGold);
+        }
+      })
+      .catch((err) => console.log(err));
 
          
           setTogModalApproved(!togModalApproved);

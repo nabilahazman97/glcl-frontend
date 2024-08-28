@@ -431,7 +431,7 @@ setErrorMessage('');
                                             <div className="text-gold mb-3">{loandetails.gold_grams} g</div>
                                             {/* <div className="text-gold mb-3">GLCL0001-GLCL0002</div> */}
                                             <div className="text-gold mb-3">{loandetails.installement_months}</div>
-                                            <div className="text-gold mb-3">{loandetails.amount} &nbsp; Months</div>
+                                            <div className="text-gold mb-3">{loandetails.amount} &nbsp; </div>
                                         </div>
                                     </div>
                                 </div>
