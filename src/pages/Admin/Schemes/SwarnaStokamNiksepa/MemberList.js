@@ -128,7 +128,7 @@ function MemberList() {
         Cell: ({ row }) => (
           <div className="d-flex flex-wrap gap-2 justify-content-center">
             <Link
-              to={`/admin-swarna-stokam-niksepa/member-details/${row.original.id}`}
+              to={`/admin-swarna-stokam-niksepa/member-details/${row.original.user_id}`}
               style={{ textDecoration: "none" }}
             >
               <i className="mdi mdi-eye" style={{ fontSize: "20px", color: 'black' }}></i>{" "}
