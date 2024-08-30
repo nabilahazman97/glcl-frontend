@@ -40,12 +40,24 @@ import ReactApexChart from "react-apexcharts";
 import { text } from "@fortawesome/fontawesome-svg-core";
 import goldBar from "../../../../assets/images/users/gold_bars.png";
 
+import "../../../../assets/scss/LoanDurationSlider.css";
 const GoldPawnRequestView = () => {
+
+  const [value, setValue1] = useState(0); // Initial value for the slider
+  const [tooltipPosition, setTooltipPosition] = useState(0);
+
+  const handleChange1 = (e) => {
+    const newValue = e.target.value;
+    setValue1(newValue);
+    // Calculate tooltip position
+    setTooltipPosition(e.target.offsetWidth * (newValue - e.target.min) / (e.target.max - e.target.min));
+  };
+
   document.title = "GLCL";
   const { id } = useParams();
   const { userid } = useParams();
-  console.log("lid");
-  console.log(userid);
+  // console.log("lid");
+  // console.log(userid);
 
   const navigate = useNavigate();
 
@@ -74,8 +86,8 @@ const GoldPawnRequestView = () => {
       if (updatereslist.status == "404") {
           setloandetails("");
       }else{
-       console.log("updatereslist");
-       console.log(updatereslist.data.result);
+      //  console.log("updatereslist");
+      //  console.log(updatereslist.data.result);
        setloandetails(updatereslist.data.result);
       }
    
@@ -177,10 +189,11 @@ const options = {
       const approveid = {
                loanId:id,
               action : "approve",
-              comments : textvalue
+              comments : textvalue,
+              approvedmonth:value
         };
-        console.log("approveid");
-        console.log(approveid);
+        // console.log("approveid");
+        // console.log(approveid);
 
         
    if (!textvalue.trim()) {
@@ -193,7 +206,9 @@ setErrorMessage('');
 
       post(apiname.loanapproval, approveid)
       .then((updateres) => {
-      
+
+        // console.log("updateresfdff");
+        // console.log(updateres);
         if (updateres.status == "200") {
 
          
@@ -263,7 +278,7 @@ setErrorMessage('');
    };
    
 
-   console.log(approveid);
+  //  console.log(approveid);
 
    if (!textvalue.trim()) {
       // Set error message
@@ -550,6 +565,63 @@ setErrorMessage('');
                 </h5>
               </div>
               <div>
+              <br></br>              
+              <div style={{ textAlign:'left' }}>loan durations</div>
+
+              <div style={{ padding: '20px', position: 'relative', width: '100%' }}>
+   <div class="slider-container">
+   
+      <input
+        type="range"
+        min="0"
+        max="36"
+        value={value}
+        onChange={handleChange1}
+        style={{ width: '100%' }}
+      />
+      </div>
+      <div
+        style={{
+          position: 'relative',
+          top: '-50px',
+          left: `${tooltipPosition}px`,
+          // left: '400.92px',
+          transform: 'translateX(-50%)',
+          backgroundColor: '#333',
+          color: '#fff',
+          marginTop: '-12px',
+          marginLeft:' 28px',
+          // padding: '5px',
+          borderRadius: '3px',
+          fontSize: '12px',
+          whiteSpace: 'nowrap',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 10,
+          width: '65px',
+         
+        }}
+      >
+        {value} months
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '-10px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 0,
+            height: 0,
+            borderLeft: '5px solid transparent',
+            borderRight: '5px solid transparent',
+            borderTop: '10px solid #333',
+          }}
+        />
+      </div>
+      {/* <p>Value: {value}</p> */}
+    </div>
+    <br></br>
+    <div style={{ textAlign:'left' }}> Approved Loan Amount</div>
               <Input
                           id="name"
                           name="name"

@@ -286,7 +286,7 @@ function GoldPurchase() {
 
         const dropdownOptions = getdropdown.map((item) => ({
           value: item.id,
-          label: item.barcode,
+          label: item.barcode+ '-'+item.goldGram+'gm',
           gram:item.goldGram,
         }));
 

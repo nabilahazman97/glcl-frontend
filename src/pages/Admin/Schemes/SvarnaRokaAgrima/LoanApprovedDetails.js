@@ -357,34 +357,41 @@ const options = {
                                                             </div>
                                                             {/* <div className="d-flex justify-content-between align-content-start p-3 gap-3"> */}
                                                             <div className="row text-gold p-2 smFont" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
-                                                                <div className="text-center col-6 ">
+                                                                <div className="text-center col-4 ">
                                                                     Total Loan Paid
                                                                     <div className="text-white">{totalpaid}</div>
                                                                 </div>
-                                                                <div className="text-center col-6">
+                                                                <div className="text-center col-4">
                                                                     Loan Unpaid
                                                                     <div className="text-white">{totalOutstanding}</div>
                                                                 </div>
-                                                            </div>
-                                                            <div className="row text-gold mt-3 p-2 smFont" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
+
                                                                 <div className="text-center col-4">
-                                                                    <div className="text-white">Current Monthly Payment</div>
-                                                                    <div className=""> {curmpayamount}</div>
-                                                                   
+                                                                Loan Period
+                                                                    <div className="text-white">{loandetails.installement_months} months</div>
                                                                 </div>
-                                                                <div className="text-center col-4">
-                                                                <div className="text-white">Current Monthly Payment</div>
+
+
+                                                            </div>
+                                                            {/* <div className="row text-gold mt-3 p-2 smFont" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
+                                                                <div className="text-center col-4"> */}
+                                                                    {/* <div className="text-white">Current Monthly Payment</div>
+                                                                    <div className=""> {curmpayamount}</div> */}
+                                                                   
+                                                                {/* </div>
+                                                                <div className="text-center col-4"> */}
+                                                                {/* <div className="text-white">Current Monthly Payment</div>
                                                                 {duedate}
                                                                     <br></br>
-                                                                    In {paymentstatus} days
-                                                                </div>
+                                                                    In {paymentstatus} days */}
+                                                                {/* </div>
                                                                 <div className="text-center col-4">
                                                                 <div className="text-white">Loan Period</div>
                                                                   
                                                                    <br></br>
                                                                    {loandetails.installement_months} months
                                                                 </div>
-                                                            </div>
+                                                            </div> */}
                                                             {/* <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>                                                           
                                                              <CardBody className="">
                                                                 <div className="lgFont text-dark-gold mb-2">0</div>

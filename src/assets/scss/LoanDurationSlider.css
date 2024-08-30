@@ -1,0 +1,98 @@
+/* Slider Container */
+.slider-container {
+  width: 100%;
+  padding: 20px;
+}
+
+/* Hide the default range slider appearance */
+input[type="range"] {
+  -webkit-appearance: none; /* Remove default appearance in WebKit browsers */
+  width: 100%;
+  height: 8px; /* Slider height */
+  background: #ddd; /* Background color of the track */
+  border-radius: 5px; /* Rounded corners for the track */
+  outline: none; /* Remove outline */
+}
+
+/* Custom style for the slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Remove default thumb appearance in WebKit browsers */
+  width: 16px; /* Width of the thumb */
+  height: 16px; /* Height of the thumb */
+  background: #333; /* Thumb color (shade of black) */
+  border-radius: 50%; /* Make the thumb circular */
+  cursor: pointer; /* Change cursor on hover */
+  border: 2px solid #fff; /* Optional: white border around the thumb */
+}
+
+/* Custom style for Firefox */
+input[type="range"]::-moz-range-thumb {
+  width: 16px; /* Width of the thumb */
+  height: 16px; /* Height of the thumb */
+  background: #333; /* Thumb color (shade of black) */
+  border-radius: 50%; /* Make the thumb circular */
+  cursor: pointer; /* Change cursor on hover */
+  border: 2px solid #fff; /* Optional: white border around the thumb */
+}
+
+/* Custom style for other browsers */
+input[type="range"]::-ms-thumb {
+  width: 16px; /* Width of the thumb */
+  height: 16px; /* Height of the thumb */
+  background: #333; /* Thumb color (shade of black) */
+  border-radius: 50%; /* Make the thumb circular */
+  cursor: pointer; /* Change cursor on hover */
+  border: 2px solid #fff; /* Optional: white border around the thumb */
+}
+
+/* Style for the track when the slider is not active */
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  background: #ddd; /* Track color */
+  border-radius: 5px;
+}
+
+/* Style for the track in Firefox */
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  background: #ddd; /* Track color */
+  border-radius: 5px;
+}
+
+/* Style for the track in other browsers */
+input[type="range"]::-ms-track {
+  width: 100%;
+  height: 8px;
+  background: transparent; /* Necessary to avoid track styles */
+  border-color: transparent; /* Necessary to avoid track styles */
+  color: transparent; /* Necessary to avoid track styles */
+}
+
+/* Style for the filled part of the track in WebKit browsers (Chrome, Safari) */
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #ddd; /* Default background */
+}
+
+input[type="range"]::-webkit-slider-runnable-track:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 8px;
+  background: #FF0000; /* Red color for the active part */
+  border-radius: 5px;
+  z-index: 1;
+  width: var(--thumb-position, 0%);
+}
+
+/* Style for the filled part of the track in Firefox */
+input[type="range"]::-moz-range-progress {
+  background: #FF0000; /* Red color for the active part */
+}
+
+/* Style for the filled part of the track in Internet Explorer and Edge */
+input[type="range"]::-ms-fill-lower {
+  background: #FF0000; /* Red color for the active part */
+}
