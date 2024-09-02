@@ -309,7 +309,7 @@ const columns = useMemo(
                             <p className="text-muted fw-medium scheme_title">
                               {report.title}
                             </p>
-                            <p className="mb-0 std_font">{report.total}<span className=""> members</span></p>
+                            {/* <p className="mb-0 std_font">{report.total}<span className=""> members</span></p> */}
                           </div>
                           <div className="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
                             <span className="avatar-title rounded-circle bg-primary">

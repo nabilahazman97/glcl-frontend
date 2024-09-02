@@ -348,7 +348,7 @@ get(`${apiname.loandetail_userid}/${userid}`)
                                                                     <div className="mb-3">Preferred Bank</div>
                                                                     <div className="mb-3">Bank Number</div>
                                                                     <div className="mb-3">Name According to Bank</div>
-                                                                    <div className="mb-3">Installment Amount</div>
+                                                                    {/* <div className="mb-3">Installment Amount</div> */}
                                                                 </div>
                                                                 <div className="inter_regular col-md-6 text-end">
                                                                     <div className="mb-3">{loandetails.amount}</div>

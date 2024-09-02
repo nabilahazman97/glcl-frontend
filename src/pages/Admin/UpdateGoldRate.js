@@ -200,7 +200,7 @@ function UpdateGoldRate() {
 
             <div className="col-lg-6 mb-4">
               <p style={{ color: "#090f2f" }}>
-                <strong>999 (24 karat)</strong>
+                
               </p>
               <Card
                 className="defCard p-3"
@@ -213,6 +213,8 @@ function UpdateGoldRate() {
                 <CardBody>
                   <div className="text-center std_font mb-4">
                     Market Gold Rate:
+                    <br></br>
+                    <h6>999 (24 karat)</h6>
                   </div>
                   <h1 className="text-center inter_bold">
                     <span>RM 312</span> /g
@@ -224,7 +226,7 @@ function UpdateGoldRate() {
             {/* Right Column */}
             <div className="col-lg-6 mb-4">
               <p style={{ color: "#090f2f" }}>
-                <strong>916 (22 karat)</strong>
+                
               </p>
               <Card
                 className="defCard p-3"
@@ -237,6 +239,8 @@ function UpdateGoldRate() {
                 <CardBody>
                   <div className="text-center std_font mb-4">
                     Market Gold Rate:
+                    <br></br>
+                    <h6>916 (22 karat)</h6>
                   </div>
                   <h1 className="text-center inter_bold">
                     <span>RM 312</span> /g
