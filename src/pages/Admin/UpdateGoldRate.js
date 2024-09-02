@@ -188,17 +188,25 @@ function UpdateGoldRate() {
       <div className="container-fluid">
         <Breadcrumbs title="Tables" breadcrumbItem="Update Gold Rate" />
         <div className="d-flex justify-content-end mb-3">
-          <div style={{ position: "relative" }}>
+          {/* <div style={{ position: "relative" }}>
             <span className="tecolor">Current Gold Rate:</span> RM{" "}
             {currentgoldrate}
-          </div>
+          </div> */}
         </div>
 
         <div className="col-12">
+       
           <div className="row">
             {/* Left Column */}
 
-            <div className="col-lg-6 mb-4">
+           
+               
+            
+         
+
+            <div className="col-lg-5 mb-4" style={{backgroundColor: "#e0dcdc",marginTop: "12px"}}>
+            <div className="col-lg-5 mb-4"  style={{backgroundColor: "#e0dcdc",marginTop: "-44px",marginLeft: "-11px",paddingLeft: "5px",width: "106%",color:"#090f2f",padding: '5px '}}><h6>999 (24 karat)</h6></div>
+            &nbsp;&nbsp;&nbsp;
               <p style={{ color: "#090f2f" }}>
                 
               </p>
@@ -214,7 +222,7 @@ function UpdateGoldRate() {
                   <div className="text-center std_font mb-4">
                     Market Gold Rate:
                     <br></br>
-                    <h6>999 (24 karat)</h6>
+                    
                   </div>
                   <h1 className="text-center inter_bold">
                     <span>RM 312</span> /g
@@ -223,8 +231,12 @@ function UpdateGoldRate() {
               </Card>
             </div>
 
+            
+
             {/* Right Column */}
-            <div className="col-lg-6 mb-4">
+            <div className="col-lg-5 mb-4" style={{backgroundColor: "#e0dcdc",marginLeft: '64px',marginTop: "12px"}}>
+
+            <div className="col-lg-5 mb-4"  style={{backgroundColor: "#e0dcdc",marginTop: "-44px",marginLeft: "-11px",paddingLeft: "5px",width: "106%",color:"#090f2f",padding: '5px '}}><h6>916 (22 karat)</h6></div>
               <p style={{ color: "#090f2f" }}>
                 
               </p>
@@ -234,13 +246,14 @@ function UpdateGoldRate() {
                   minHeight: "180px",
                   backgroundColor: "#090f2f",
                   color: "white",
+                  marginTop: "58px",
                 }}
               >
                 <CardBody>
                   <div className="text-center std_font mb-4">
                     Market Gold Rate:
                     <br></br>
-                    <h6>916 (22 karat)</h6>
+                    
                   </div>
                   <h1 className="text-center inter_bold">
                     <span>RM 312</span> /g
@@ -253,7 +266,11 @@ function UpdateGoldRate() {
           {/* 2 nd row */}
           <div className="row">
             {/* Left Column */}
-            <div className="col-lg-6 mb-4">
+
+            
+
+
+            <div className="col-lg-5 mb-4" style={{backgroundColor: "#e0dcdc",marginTop: '-25px'}}>
               <Card
                 className="defCard p-3"
                 style={{
@@ -291,7 +308,7 @@ function UpdateGoldRate() {
             </div>
 
             {/* Right Column */}
-            <div className="col-lg-6 mb-4">
+            <div className="col-lg-5 mb-4" style={{backgroundColor: "#e0dcdc",marginTop: '-25px',marginLeft: '64px'}}>
               <Card
                 className="defCard p-3"
                 style={{
