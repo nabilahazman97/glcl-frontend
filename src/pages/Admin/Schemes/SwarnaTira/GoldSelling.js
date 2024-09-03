@@ -3,6 +3,7 @@ import React, { useMemo, useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import html2pdf from 'html2pdf.js';
 import "react-datepicker/dist/react-datepicker.css";
 import {
   Modal,
@@ -60,6 +61,17 @@ function GoldSelling() {
       setStartDate(start);
       setEndDate(end);
     };
+
+
+    const exportToPDF = () => {
+      console.log("test");
+      const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+  console.log(element);
+      html2pdf()
+        .from(element)
+        .save('document.pdf');
+    };
+
   
     useEffect(() => {
       get(apiname.translist)
@@ -349,7 +361,7 @@ function GoldSelling() {
         <div className="container-fluid">
           <Breadcrumbs title="Tables" breadcrumbItem="SVARNA TIRA SCHEME" />
   
-          <Card className="defCard" style={{ minHeight: "250px" }}>
+          <Card className="defCard" style={{ minHeight: "250px" }} id="contentToExport">
             <CardBody>
               <CardTitle className="cardTitle">Gold selling</CardTitle>
               <div></div>
@@ -368,9 +380,14 @@ function GoldSelling() {
                   </div>
                 </div>
                 <div className="">
-                  <button type="button" className="btn btn-primary exportBtn  ">
-                    <i className="mdi mdi-upload  "></i> EXPORT
-                  </button>
+                <button
+                type="button"
+                className="btn btn-primary exportBtn  me-2"
+                onClick={exportToPDF}
+              >
+                <i className="mdi mdi-upload  "></i>{" "}
+                EXPORT
+              </button>
                 </div>
               </div>
             </CardBody>

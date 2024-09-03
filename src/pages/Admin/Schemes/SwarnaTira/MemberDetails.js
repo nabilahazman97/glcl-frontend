@@ -84,11 +84,12 @@ const MemberDetails = () => {
 
     get(`${apiname.goldholdingbyid}/${Uid}`)
     .then((getremaininggold) => {
+      // console.log(getremaininggold);
       
           if (getremaininggold.status == '404') {
 
         } else {
-          setremainggold(getremaininggold.data.result.grams)
+          setremainggold(getremaininggold.data.result.totalGram)
         }
 
     })
@@ -311,6 +312,7 @@ const MemberDetails = () => {
                          <div className="d-flex justify-content-between p-2">
                             <div className="text-gold">Date Bought</div>
                             <div className="text-gold">Serial Number</div>
+                            <div className="text-gold">Total Grams</div>
                          </div>
                       </div>
                        {/* {assignedgold.map((gold, index) => (

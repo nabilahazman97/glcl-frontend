@@ -31,6 +31,7 @@ import { del, get, post, put } from "../../../../helpers/api_helper";
 import classnames from "classnames";
 import goldBar from "../../../../assets/images/users/gold_bars.png";
 import Select from "react-select";
+import html2pdf from 'html2pdf.js';
 
 function PawnApprovedList() {
   const [data, setUserData] = useState([]);
@@ -48,6 +49,7 @@ function PawnApprovedList() {
   const [textvalue, setValue] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
   const [errorMessage1, setErrorMessage1] = useState('');
+  
   const handleChange = (event) => {
     setValue(event.target.value);
   };
@@ -57,6 +59,14 @@ function PawnApprovedList() {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+  };
+
+  const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
   };
 
   useEffect(() => {
@@ -154,7 +164,7 @@ function PawnApprovedList() {
         Cell: ({ row }) => (
           <div className="d-flex flex-wrap gap-2 justify-content-center">
          
-            <Link to={`/admin-svarna-ahita/user-view/${row.original.id}`}>
+            <Link to={`/admin-svarna-ahita/user-view/${row.original.id}/${row.original.user_id}`}>
             <button
               type="button"
               className="btn btn-primary "
@@ -366,7 +376,7 @@ function PawnApprovedList() {
       <div className="container-fluid">
         <Breadcrumbs title="Tables" breadcrumbItem="SVARNA AHITA SCHEME" />
 
-        <Card className="defCard" style={{ minHeight: "250px" }}>
+        <Card className="defCard" style={{ minHeight: "250px" }} id="contentToExport">
           <CardBody>
             <CardTitle className="cardTitle">Pawn Approved Loan List</CardTitle>
             <div></div>
@@ -385,9 +395,14 @@ function PawnApprovedList() {
                 </div>
               </div>
               <div className="">
-                <button type="button" className="btn btn-primary exportBtn  ">
-                  <i className="mdi mdi-upload  "></i> EXPORT
-                </button>
+              <button
+                          type="button"
+                          className="btn btn-primary exportBtn  me-2"
+                          onClick={exportToPDF}
+                        >
+                          <i className="mdi mdi-upload  "></i>{" "}
+                          EXPORT
+                        </button>
               </div>
             </div>
           </CardBody>

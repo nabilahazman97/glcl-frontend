@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
+// import html2pdf from 'html2pdf.js';
 import {
     Row,
     Col,
@@ -43,6 +44,7 @@ const LoanApprovedDetails = () => {
     // const { Uid } = useParams();
 
     const { id } = useParams();
+    const { userid } = useParams();
     console.log("lid");
     console.log(id);
 
@@ -63,13 +65,29 @@ const LoanApprovedDetails = () => {
     const [duedate,setdueDate]= useState([]);
     
 
+    post(apiname.p_userdetails, { id: userid })
+    .then((res) => {
+     
+      if (res.status === '204') {
+          setusername('');
+        setmembership_id('');
+      } else {
+        let filteredData = res.data.result[0];
+        setusername(filteredData.username);
+        setmembership_id(filteredData.membership_id);
+
+     
+      }
+
+    })
+    .catch((err) => console.log(err));
+
 
     get(`${apiname.loaniddetails}/${id}`)
     .then((updatereslist) => {
 
        
-        console.log("df");
-        console.log(updatereslist);
+       
        if (updatereslist.status == "404") {
            setloandetails("");
            setUserData('')
@@ -80,8 +98,7 @@ const LoanApprovedDetails = () => {
 
       let  loanTransactions=updatereslist.data.result.LoanTransactions;
 
-      console.log("ltrans");
-      console.log(loanTransactions);
+   
 let totalPaid = 0;
 let totalOutstanding = 0;
 let overallamount=0;
@@ -142,8 +159,11 @@ for (const transaction of loanTransactions) {
 
 
         if(updatereslist.data.result.LoanTransactions.length>0){
+            console.log("updatereslist");
+            console.log(updatereslist.data.profile);
+
             setUserData(updatereslist.data.result.LoanTransactions)
-            setprofiledetails(updatereslist.data.result.Profile);
+            setprofiledetails(updatereslist.data.profile);
         }else{
             setUserData("");
             setprofiledetails("");
@@ -155,7 +175,13 @@ for (const transaction of loanTransactions) {
 .catch((err) => console.log(err))
 
 
+const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
 
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
+  };
 
 
 
@@ -251,13 +277,7 @@ const options = {
         setEndDate(end);
     };
 
-    const exportToPDF = () => {
-        const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
-
-        html2pdf()
-            .from(element)
-            .save('document.pdf');
-    };
+  
 
     return (
         <React.Fragment>
@@ -321,7 +341,7 @@ const options = {
                                                                     <div className="mb-3">Preferred Bank</div>
                                                                     <div className="mb-3">Bank Number</div>
                                                                     <div className="mb-3">Name According to Bank</div>
-                                                                    <div className="mb-3">Installment Amount</div>
+                                                                    {/* <div className="mb-3">Installment Amount</div> */}
                                                                 </div>
                                                                 <div className="inter_regular col-md-6 text-end">
                                                                 <div className="mb-3">{loandetails.amount}</div>
@@ -449,7 +469,7 @@ const options = {
                                                 onClick={exportToPDF}
                                             >
                                                 <i className="mdi mdi-upload  "></i>{" "}
-                                                EXPORT
+                                                EXPORT 
                                             </button>
 
                                             <Link to="#" className="btn btn-success downloadBtn">

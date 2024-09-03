@@ -168,6 +168,7 @@ function UpdateGoldRate() {
       })
       .catch((err) => console.log(err));
   }
+
   function tog_rejected() {
     setTogModalRejected(!togModalRejected);
     // setTogModal(false)
@@ -176,6 +177,7 @@ function UpdateGoldRate() {
       setVaryingModal(!varyingModal);
     }
   }
+  
   function removeBodyCss() {
     document.body.classList.add("no_padding");
   }

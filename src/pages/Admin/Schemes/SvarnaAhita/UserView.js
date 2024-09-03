@@ -43,6 +43,7 @@ const GoldPawnUserView = () => {
     document.title = "GLCL";
    
     const { id } = useParams();
+    const { userid } = useParams();
     console.log("lid");
     console.log(id);
 
@@ -62,6 +63,22 @@ const GoldPawnUserView = () => {
     const [paymentstatus,setdaysLeftToPay]= useState([]);
     const [duedate,setdueDate]= useState([]);
     
+    post(apiname.p_userdetails, { id: userid })
+    .then((res) => {
+     
+      if (res.status === '204') {
+          setusername('');
+        setmembership_id('');
+      } else {
+        let filteredData = res.data.result[0];
+        setusername(filteredData.username);
+        setmembership_id(filteredData.membership_id);
+
+     
+      }
+
+    })
+    .catch((err) => console.log(err));
 
 
     get(`${apiname.loaniddetails}/${id}`)
@@ -319,7 +336,7 @@ const exportToPDF = () => {
                                                             <div className="d-flex justify-content-between mt-5 smFont" style={{ borderBottom: "1px solid" }}>
                                                                 <div className="inter_regular">
                                                                     <div className="mb-3">Gold Coin Pawned</div>
-                                                                    <div className="mb-3">Gold Coin Serial Number</div>
+                                                                    {/* <div className="mb-3">Gold Coin Serial Number</div> */}
                                                                     <div className="mb-3">Subtotal</div>
                                                                 </div>
                                                                 <div className="inter_regular mb-2 text-end">
@@ -450,7 +467,7 @@ const exportToPDF = () => {
                     </div>
                     <div className="d-flex justify-content-center gap-3 mb-3">
                         <Link
-                            to="/admin-svarna-ahita/index-list"
+                            to="/admin-svarna-ahita/PawnApprovedList"
                             style={{ textDecoration: "none" }}
                         >
                             <button className="btn btn-primary backBtn">Back</button>

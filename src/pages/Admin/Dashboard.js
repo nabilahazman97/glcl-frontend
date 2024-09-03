@@ -292,12 +292,13 @@ const columns = useMemo(
           {/* Render Breadcrumb */}
           <Breadcrumbs
             title={props.t("")}
-            breadcrumbItem={props.t("Dashboard")}
+            breadcrumbItem={props.t("NOTE:22K-GOLD TYPE:1 | 24K-GOLD TYPE:2")}
           />
 
           <Row>
             <Col xl="12">
               <Row>
+                
                 {/* Reports Render */}
                 {reports.map((report, key) => (
                   <Col md="4" key={"_col_" + key}>
