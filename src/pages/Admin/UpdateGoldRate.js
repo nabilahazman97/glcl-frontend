@@ -46,6 +46,8 @@ function UpdateGoldRate() {
   const [valueGoldRate2, setValueGoldRate2] = useState("");
   const [valueGoldRate3, setValueGoldRate3] = useState("");
   const [currentgoldrate, setcurrentmarketrate] = useState("");
+  const [currentgoldrate1, setcurrentmarketrate1] = useState("");
+  
 
   const [editing, setEditing] = useState(false);
   const [editing1, setEditing1] = useState(false);
@@ -134,7 +136,8 @@ function UpdateGoldRate() {
           setValueGoldRate2(getres.data.data.custom_rate_999);
           setValueGoldRate3(getres.data.data.custom_rate_916);
         }
-        setcurrentmarketrate(getres.data.data.rate_916);
+        setcurrentmarketrate(getres.data.data.rate_999);
+        setcurrentmarketrate1(getres.data.data.rate_916);
       } else {
         console.log("failed to get data");
         // setValueGoldRate('')
@@ -149,6 +152,8 @@ function UpdateGoldRate() {
       custom_rate_916: valueGoldRate1 ? valueGoldRate1 : valueGoldRate3,
       custom_rate_999: valueGoldRate ? valueGoldRate : valueGoldRate2,
     };
+
+    // console.log(obj);
 
     post(apiname.updategoldrate, obj)
       .then((res) => {
@@ -227,7 +232,7 @@ function UpdateGoldRate() {
                     
                   </div>
                   <h1 className="text-center inter_bold">
-                    <span>RM 312</span> /g
+                    <span>RM {currentgoldrate}</span> /g
                   </h1>
                 </CardBody>
               </Card>
@@ -258,7 +263,7 @@ function UpdateGoldRate() {
                     
                   </div>
                   <h1 className="text-center inter_bold">
-                    <span>RM 312</span> /g
+                    <span>RM {currentgoldrate1}</span> /g
                   </h1>
                 </CardBody>
               </Card>
