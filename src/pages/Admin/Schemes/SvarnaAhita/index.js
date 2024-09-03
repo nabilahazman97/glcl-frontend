@@ -144,7 +144,7 @@ function GoldCoinPawnList() {
 
       {
         Header: "Amount",
-        accessor: "comments",
+        accessor: "amount",
         Cell: ({ value }) => <span>{value} </span>,
       },
 
