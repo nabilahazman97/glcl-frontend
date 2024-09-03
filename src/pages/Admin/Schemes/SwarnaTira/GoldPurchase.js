@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import html2pdf from 'html2pdf.js';
 import {
   Modal,
   Row,
@@ -62,6 +63,15 @@ function GoldPurchase() {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+  };
+
+  const exportToPDF = () => {
+    console.log("test");
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+console.log(element);
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
   };
 
   useEffect(() => {
@@ -338,28 +348,22 @@ function GoldPurchase() {
       setVaryingModal(!varyingModal);
     }
 
-    // console.log("selectedId");
-    // console.log(selectedId.length);
-    // console.log(transaction.gold_grams);
+  
 
-    //   if (!selectedId) {
-    //     // If no value is selected, set an error message
-    //     setErrorMessage1('Please select an option');
-    //     return;
-    // }
 
-console.log(transaction.gold_grams);
-console.log(selectedId);
-
-let sum = 0;
-
-// Iterate through the array
-for (let i = 0; i < selectedId.length; i++) {
-  // Convert gram to a number and add to sum
-  sum += parseFloat(selectedId[i].gram);
+ let sum = 0;
+ // Iterate through the array
+ if(selectedId!==null){
+  for (let i = 0; i < selectedId.length; i++) {
+    // Convert gram to a number and add to sum
+    sum += parseFloat(selectedId[i].gram);
+  }
 }
+  
+  
+  console.log("Sum of grams:", sum);
 
-console.log("Sum of grams:", sum);
+
 
     if (selectedId === null) {
       setErrorMessage1("Please select at least one option");
@@ -369,6 +373,13 @@ console.log("Sum of grams:", sum);
       setErrorMessage1("Please select at least one option");
       return;
     } 
+
+    
+      if (!selectedId) {
+        // If no value is selected, set an error message
+        setErrorMessage1('Please select an option');
+        return;
+    }
 
    
     if (sum != transaction.gold_grams) {
@@ -380,8 +391,11 @@ console.log("Sum of grams:", sum);
     // Reset error message if validation passes
     setErrorMessage1('');
     // selectedOptions.length
+   
 
    
+   
+
 
     // approve
 
@@ -507,7 +521,7 @@ console.log("Sum of grams:", sum);
       <div className="container-fluid">
         <Breadcrumbs title="Tables" breadcrumbItem="SVARNA TIRA SCHEME" />
 
-        <Card className="defCard" style={{ minHeight: "250px" }}>
+        <Card className="defCard" style={{ minHeight: "250px" }} id="contentToExport">
           <CardBody>
             <CardTitle className="cardTitle">Gold Purchase</CardTitle>
             <div></div>
@@ -526,9 +540,14 @@ console.log("Sum of grams:", sum);
                 </div>
               </div>
               <div className="">
-                <button type="button" className="btn btn-primary exportBtn  ">
-                  <i className="mdi mdi-upload  "></i> EXPORT
-                </button>
+              <button
+                type="button"
+                className="btn btn-primary exportBtn  me-2"
+                onClick={exportToPDF}
+              >
+                <i className="mdi mdi-upload  "></i>{" "}
+                EXPORT
+              </button>
               </div>
             </div>
           </CardBody>

@@ -71,6 +71,8 @@ const GoldPawnRequestView = () => {
   const [loandetails, setloandetails] = useState([]);
   const [textvalue, setValue] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage1, setErrorMessage1] = useState('');
+ 
   const [modal_amount_loan, setmodal_amount_loan] = useState(false);
   const [activeloan, setactiveloan] = useState([]);
   const [overdueloan, setoverdueloan] = useState([]);
@@ -78,6 +80,22 @@ const GoldPawnRequestView = () => {
       setValue(event.target.value);
     };
 
+    post(apiname.p_userdetails, { id: userid })
+    .then((res) => {
+     
+      if (res.status === '204') {
+          setusername('');
+        setmembership_id('');
+      } else {
+        let filteredData = res.data.result[0];
+        setusername(filteredData.username);
+        setmembership_id(filteredData.membership_id);
+
+     
+      }
+
+    })
+    .catch((err) => console.log(err));
 
    // loaniddetails
 
@@ -198,11 +216,22 @@ const options = {
         
    if (!textvalue.trim()) {
     // Set error message
-    setErrorMessage('Reason for rejection is required.');
+    setErrorMessage('Approved Amount is required.');
     // You can return, throw an error, or handle it as per your requirement
     return;
 } 
+
+if (!value) {
+  // Set error message
+  setErrorMessage1('loan Duration is required.');
+  // You can return, throw an error, or handle it as per your requirement
+  return;
+} 
+
+
 setErrorMessage('');
+
+setErrorMessage1('');
 
       post(apiname.loanapproval, approveid)
       .then((updateres) => {
@@ -439,13 +468,13 @@ setErrorMessage('');
                                         <div>
                                             <div className="text-gold mb-3">Gold Coin Pawned</div>
                                             {/* <div className="text-gold mb-3">Gold Coin Serial Number</div> */}
-                                            <div className="text-gold mb-3">Loan Period</div>
+                                            {/* <div className="text-gold mb-3">Loan Period</div> */}
                                             <div className="text-gold mb-3">Subtotal</div>
                                         </div>
                                         <div className="mb-3 text-end">
                                             <div className="text-gold mb-3">{loandetails.gold_grams} g</div>
                                             {/* <div className="text-gold mb-3">GLCL0001-GLCL0002</div> */}
-                                            <div className="text-gold mb-3">{loandetails.installement_months}</div>
+                                            {/* <div className="text-gold mb-3">{loandetails.installement_months}</div> */}
                                             <div className="text-gold mb-3">{loandetails.amount} &nbsp; </div>
                                         </div>
                                     </div>
@@ -619,6 +648,7 @@ setErrorMessage('');
         />
       </div>
       {/* <p>Value: {value}</p> */}
+      {errorMessage1 && <p style={{ color: 'red' }}>{errorMessage1}</p>}
     </div>
     <br></br>
     <div style={{ textAlign:'left' }}> Approved Loan Amount</div>
@@ -678,7 +708,7 @@ setErrorMessage('');
             </p>
           </ModalBody>
           <div className="text-center mb-3">
-             <Button
+             {/* <Button
                 color="primary"
                 className="modalConfirmBtn"
                 data-bs-target="#firstmodal"
@@ -687,7 +717,7 @@ setErrorMessage('');
                 }}
               >
                 Ok
-              </Button>
+              </Button> */}
           </div>
                     </Modal>
 
@@ -763,11 +793,11 @@ setErrorMessage('');
             <ModalBody className="text-center">
               <p>
               
-              An email will be sent to yusof69@gmail.com to notify them.
+              {/* An email will be sent to yusof69@gmail.com to notify them. */}
               </p>
             </ModalBody>
             <div className="text-center mb-3">
-            <Button
+            {/* <Button
                 color="primary"
                 className="modalConfirmBtn"
                 data-bs-target="#firstmodal"
@@ -776,7 +806,7 @@ setErrorMessage('');
                 }}
               >
                 Ok
-              </Button>
+              </Button> */}
             </div>
           </Modal>
 

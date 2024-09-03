@@ -57,7 +57,7 @@ const LoanApplicationDetails = () => {
     const [modal_reason_reject, setModal_reason_reject] = useState(false);
     const [modal_rejected, setModal_rejected] = useState(false);
     const [loandetails, setloandetails] = useState([]);
-    const [profile, setprofiledetails] = useState([]);
+    const [userprofile, Setprofiledetails] = useState([]);
     const [activeloan, setactiveloan] = useState([]);
     const [overdueloan, setoverdueloan] = useState([]);
     const [textvalue, setValue] = useState("");
@@ -76,11 +76,11 @@ const LoanApplicationDetails = () => {
         if (updatereslist.status == "404") {
             setloandetails("");
         }else{
-         console.log("updatereslist");
-         console.log(updatereslist.data.result.Profile);
-        
+         
+            // console.log(updatereslist.data.profile);
          setloandetails(updatereslist.data.result);
-         setprofiledetails(updatereslist.data.result.Profile);
+         Setprofiledetails(updatereslist.data.profile);
+        
 
         }
      
@@ -88,6 +88,26 @@ const LoanApplicationDetails = () => {
 
  .catch((err) => console.log(err))
 
+
+ post(apiname.p_userdetails, { id: userid })
+      .then((res) => {
+       
+        if (res.status === '204') {
+            setusername('');
+          setmembership_id('');
+        } else {
+          let filteredData = res.data.result[0];
+          setusername(filteredData.username);
+          setmembership_id(filteredData.membership_id);
+
+       
+        }
+
+      })
+      .catch((err) => console.log(err));
+
+//  console.log(userprofile);
+ 
 
 //  get loan details
 
@@ -354,9 +374,9 @@ get(`${apiname.loandetail_userid}/${userid}`)
                                                                     <div className="mb-3">{loandetails.amount}</div>
                                                                     <div className="mb-3">{loandetails.installement_months}&nbsp;months</div>
                                                                     <div className="mb-3">{loandetails.interest_rate}&nbsp; %</div>
-                                                                    <div className="mb-3">{profile.bankName}</div>
-                                                                    <div className="mb-3">{profile.accountNumber}</div>
-                                                                    <div className="mb-3">{profile.accountHolderName}</div>
+                                                                    <div className="mb-3">{userprofile.bankName}</div>
+                                                                    <div className="mb-3">{userprofile.accountNumber}</div>
+                                                                    <div className="mb-3">{userprofile.accountHolderName}</div>
                                                                     
                                                                 </div>
                                                             </div>
@@ -514,16 +534,16 @@ get(`${apiname.loandetail_userid}/${userid}`)
              <p>The loan has been approved</p>
           </ModalBody>
           <div className="text-center mb-3">
-             <Button
+             {/* <Button
                 color="primary"
                 className="modalConfirmBtn"
                 data-bs-target="#firstmodal"
                 onClick={() => {
                     tog_approved();(false);
                 }}
-              >
-                Ok
-              </Button>
+              > */}
+                {/* Ok */}
+              {/* </Button> */}
           </div>
                     </Modal>
  

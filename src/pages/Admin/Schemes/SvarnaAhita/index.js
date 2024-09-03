@@ -31,6 +31,7 @@ import { del, get, post, put } from "../../../../helpers/api_helper";
 import classnames from "classnames";
 import goldBar from "../../../../assets/images/users/gold_bars.png";
 import Select from "react-select";
+import html2pdf from 'html2pdf.js';
 
 function GoldCoinPawnList() {
   const [data, setUserData] = useState([]);
@@ -57,6 +58,14 @@ function GoldCoinPawnList() {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+  };
+
+  const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
   };
 
   useEffect(() => {
@@ -386,7 +395,7 @@ function GoldCoinPawnList() {
       <div className="container-fluid">
         <Breadcrumbs title="Tables" breadcrumbItem="SVARNA AHITA SCHEME" />
 
-        <Card className="defCard" style={{ minHeight: "250px" }}>
+        <Card className="defCard" style={{ minHeight: "250px" }} id="contentToExport">
           <CardBody>
             <CardTitle className="cardTitle">Pawn Loan Request List</CardTitle>
             <div></div>
@@ -405,9 +414,14 @@ function GoldCoinPawnList() {
                 </div>
               </div>
               <div className="">
-                <button type="button" className="btn btn-primary exportBtn  ">
-                  <i className="mdi mdi-upload  "></i> EXPORT
-                </button>
+              <button
+                          type="button"
+                          className="btn btn-primary exportBtn  me-2"
+                          onClick={exportToPDF}
+                        >
+                          <i className="mdi mdi-upload  "></i>{" "}
+                          EXPORT
+                        </button>
               </div>
             </div>
           </CardBody>

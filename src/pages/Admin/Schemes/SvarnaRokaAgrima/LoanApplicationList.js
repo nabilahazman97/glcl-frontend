@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import html2pdf from 'html2pdf.js';
+
 import {
   Modal,
   Row,
@@ -378,6 +380,14 @@ function LoanApplicationList() {
     document.body.classList.add("no_padding");
   }
 
+  const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
+
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
+  };
+
   //meta title
   document.title = "GLCL";
 
@@ -386,7 +396,7 @@ function LoanApplicationList() {
       <div className="container-fluid">
         <Breadcrumbs title="Tables" breadcrumbItem="SVARNA ROKA AGRIMA SCHEME" />
 
-        <Card className="defCard" style={{ minHeight: "250px" }}>
+        <Card className="defCard" style={{ minHeight: "250px" }}  id="contentToExport">
           <CardBody>
             <CardTitle className="cardTitle">Loan Request List</CardTitle>
             <div></div>
@@ -405,9 +415,14 @@ function LoanApplicationList() {
                 </div>
               </div>
               <div className="">
-                <button type="button" className="btn btn-primary exportBtn  ">
-                  <i className="mdi mdi-upload  "></i> EXPORT
-                </button>
+              <button
+                          type="button"
+                          className="btn btn-primary exportBtn  me-2"
+                          onClick={exportToPDF}
+                        >
+                          <i className="mdi mdi-upload  "></i>{" "}
+                          EXPORT
+                        </button>
               </div>
             </div>
           </CardBody>

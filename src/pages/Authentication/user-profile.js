@@ -650,7 +650,7 @@ const UserProfile = () => {
                     <CardTitle className="cardTitle">Membership Information</CardTitle>
                     <div>
                       <div className="mb-3 mt-3">
-                        <label className="std_input_label">Email Address</label>
+                        <label className="std_input_label">Membership Id</label>
                         <Input
                           className="form-control normal-input"
                           type="text"
