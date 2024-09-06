@@ -443,9 +443,9 @@ const MemberApproval = () => {
                                                     MyKad - Front
                                                 </CardSubtitle>
                                                 {datas.f_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
-                                                    <div  onClick={() => downloadPDF(datas.f_mykad)}>
+                                                    <div  onClick={() => downloadPDF('/api/'+'uploads/'+datas.f_mykad)}>
                                                         <div className="text-center">
-                                                            <img className="ic-img" src={datas.f_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
+                                                            <img className="ic-img" src={'/api/'+'uploads/'+datas.f_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
                                                         </div>
 
                                                         <Card className="pdfInput">
@@ -460,7 +460,7 @@ const MemberApproval = () => {
                                                     <Card className="pdfInput">
                                                         <CardBody className="m-3">
                                                             <div className="text-center">
-                                                                <img className="ic-img mb-3" src={datas.f_mykad} alt="MyKad Front"></img>
+                                                                <img className="ic-img mb-3" src={'/api/'+'uploads/'+datas.f_mykad} alt="MyKad Front"></img>
 
                                                             </div>
                                                         </CardBody>
@@ -474,9 +474,9 @@ const MemberApproval = () => {
                                                     MyKad - Back
                                                 </CardSubtitle>
                                                 {datas.b_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
-                                                    <div onClick={() => downloadPDF(datas.b_mykad)}>
+                                                    <div onClick={() => downloadPDF('/api/'+'uploads/'+datas.b_mykad)}>
                                                         <div className="text-center">
-                                                            <img className="ic-img" src={datas.b_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
+                                                            <img className="ic-img" src={'/api/'+'uploads/'+datas.b_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
                                                         </div>                          <Card className="pdfInput">
                                                             <CardBody className="m-3">
                                                                 <div className="text-center">
@@ -489,7 +489,7 @@ const MemberApproval = () => {
                                                     <Card className="pdfInput">
                                                         <CardBody className="m-3">
                                                             <div className="text-center">
-                                                                <img className="ic-img mb-3" src={datas.b_mykad} alt="MyKad Front"></img>
+                                                                <img className="ic-img mb-3" src={'/api/'+'uploads/'+datas.b_mykad} alt="MyKad Front"></img>
 
                                                             </div>
                                                         </CardBody>
@@ -502,8 +502,8 @@ const MemberApproval = () => {
                                                     Utility Bill
                                                 </CardSubtitle>
                                                 {datas.utilitybill.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
-                                                    <div onClick={() => downloadPDF(datas.utilitybill)}>
-                                                        <img className="ic-img mb-3" src={datas.utilitybill} style={{ display: 'none' }}></img> {/* Hide the image */}
+                                                    <div onClick={() => downloadPDF('/api/'+'uploads/'+datas.utilitybill)}>
+                                                        <img className="ic-img mb-3" src={'/api/'+'uploads/'+datas.utilitybill} style={{ display: 'none' }}></img> {/* Hide the image */}
                                                         <Card className="pdfInput">
                                                             <CardBody className="m-3">
                                                                 <div className="text-center">
@@ -516,7 +516,7 @@ const MemberApproval = () => {
                                                     <Card className="pdfInput">
                                                         <CardBody className="m-3">
                                                             <div className="text-center">
-                                                                <img className="ic-img" src={datas.utilitybill} alt="MyKad Front"></img>
+                                                                <img className="ic-img" src={'/api/'+'uploads/'+datas.utilitybill} alt="MyKad Front"></img>
 
                                                             </div>
                                                         </CardBody>

@@ -153,7 +153,8 @@ function UpdateGoldRate() {
       custom_rate_999: valueGoldRate ? valueGoldRate : valueGoldRate2,
     };
 
-    // console.log(obj);
+
+    console.log(obj);
 
     post(apiname.updategoldrate, obj)
       .then((res) => {

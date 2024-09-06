@@ -86,6 +86,8 @@ const LoanApprovedDetails = () => {
     get(`${apiname.loaniddetails}/${id}`)
     .then((updatereslist) => {
 
+        // console.log("start");
+        // console.log(updatereslist.data.result.Profile);
        
        
        if (updatereslist.status == "404") {

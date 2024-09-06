@@ -98,9 +98,9 @@ const MemberProfileDetails = () => {
 
     const [data, setdata] = useState([]);
     useEffect(() => {
-        console.log(apiname.base_url);
-        console.log(apiname.p_userdetails);
-        console.log(user);
+        // console.log(apiname.base_url);
+        // console.log(apiname.p_userdetails);
+       
 
         post(apiname.p_userdetails,user)
         // .then(res => console.log(res.data.result))
@@ -183,18 +183,28 @@ const MemberProfileDetails = () => {
 
 
     const downloadPDF = (pdfUrl) => {
+        console.log("url");
+        console.log(pdfUrl);
         fetch(pdfUrl)
-          .then((response) => response.blob())
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.blob();
+          })
           .then((blob) => {
-            const url = window.URL.createObjectURL(new Blob([blob]));
+            const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'document.pdf','image.png'); // Set the filename for the downloaded file
+            link.setAttribute('download', 'document.pdf'); // Set the filename for the downloaded file
             document.body.appendChild(link);
             link.click();
+            link.remove(); // Clean up and remove the link
+            window.URL.revokeObjectURL(url); // Release the object URL
           })
           .catch((error) => console.error('Error downloading PDF:', error));
-      };
+    };
+    
 
 
 
@@ -493,9 +503,9 @@ const MemberProfileDetails = () => {
                                                     MyKad - Front
                                                 </CardSubtitle>
                                                 {datas.f_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
-                                                    <div onClick={() => downloadPDF(datas.f_mykad)}>
+                                                    <div onClick={() => downloadPDF('/api/'+'uploads/'+datas.f_mykad)}>
                                                         <div className="text-center">
-                                                            <img className="ic-img" src={datas.f_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
+                                                            <img className="ic-img" src={'/api/'+'uploads/'+datas.f_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
                                                         </div>
 
                                                         <Card className="pdfInput">
@@ -510,7 +520,7 @@ const MemberProfileDetails = () => {
                                                     <Card className="pdfInput">
                                                         <CardBody className="m-3">
                                                             <div className="text-center">
-                                                                <img className="ic-img mb-3" src={datas.f_mykad} alt="MyKad Front"></img>
+                                                                <img className="ic-img mb-3" src={'/api/'+'uploads/'+datas.f_mykad} alt="MyKad Front"></img>
 
                                                             </div>
                                                         </CardBody>
@@ -524,9 +534,9 @@ const MemberProfileDetails = () => {
                                                     MyKad - Back
                                                 </CardSubtitle>
                                                 {datas.b_mykad.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
-                                                    <div onClick={() => downloadPDF(datas.b_mykad)}>
+                                                    <div onClick={() => downloadPDF('/api/'+'uploads/'+datas.b_mykad)}>
                                                         <div className="text-center">
-                                                            <img className="ic-img" src={datas.b_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
+                                                            <img className="ic-img" src={'/api/'+'uploads/'+datas.b_mykad} style={{ display: 'none' }}></img> {/* Hide the image */}
                                                         </div>                          <Card className="pdfInput">
                                                             <CardBody className="m-3">
                                                                 <div className="text-center">
@@ -539,7 +549,7 @@ const MemberProfileDetails = () => {
                                                     <Card className="pdfInput">
                                                         <CardBody className="m-3">
                                                             <div className="text-center">
-                                                                <img className="ic-img mb-3" src={datas.b_mykad} alt="MyKad Front"></img>
+                                                                <img className="ic-img mb-3" src={'/api/'+'uploads/'+datas.b_mykad} alt="MyKad Front"></img>
 
                                                             </div>
                                                         </CardBody>
@@ -552,8 +562,8 @@ const MemberProfileDetails = () => {
                                                     Utility Bill
                                                 </CardSubtitle>
                                                 {datas.utilitybill.endsWith('.pdf') ? ( // Check if the file ends with '.pdf'
-                                                    <div onClick={() => downloadPDF(datas.utilitybill)}>
-                                                        <img className="ic-img mb-3" src={datas.utilitybill} style={{ display: 'none' }}></img> {/* Hide the image */}
+                                                    <div onClick={() => downloadPDF('/api/'+'uploads/'+datas.utilitybill)}>
+                                                        <img className="ic-img mb-3" src={'/api/'+'uploads/'+datas.utilitybill} style={{ display: 'none' }}></img> {/* Hide the image */}
                                                         <Card className="pdfInput">
                                                             <CardBody className="m-3">
                                                                 <div className="text-center">
@@ -566,7 +576,7 @@ const MemberProfileDetails = () => {
                                                     <Card className="pdfInput">
                                                         <CardBody className="m-3">
                                                             <div className="text-center">
-                                                                <img className="ic-img" src={datas.utilitybill} alt="MyKad Front"></img>
+                                                                <img className="ic-img" src={'/api/'+'uploads/'+datas.utilitybill} alt="MyKad Front"></img>
 
                                                             </div>
                                                         </CardBody>
