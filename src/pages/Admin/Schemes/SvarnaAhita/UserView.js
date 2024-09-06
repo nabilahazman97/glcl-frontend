@@ -342,7 +342,7 @@ const exportToPDF = () => {
                                                                 <div className="inter_regular mb-2 text-end">
                                                                     <div className="mb-3">{loandetails.gold_grams} g</div>
                                                                     {/* <div className="mb-3">GLCL0001-GLCL0002</div> */}
-                                                                    <div className="mb-3">{loandetails.amount} </div>
+                                                                    <div className="mb-3">{loandetails.comments} </div>
                                                                 </div>
                                                             </div>
                                                             <div className="d-flex justify-content-between mt-3 smFont">
@@ -350,7 +350,7 @@ const exportToPDF = () => {
                                                                     <div>Amount Loaned</div>
                                                                 </div>
                                                                 <div className="inter_regular mb-2 text-end">
-                                                                    <div>{loandetails.amount} </div>
+                                                                    <div>{loandetails.comments} </div>
                                                                 </div>
                                                             </div>
                                                         </div>
