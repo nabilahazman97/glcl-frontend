@@ -43,6 +43,7 @@ const GoldPawnUserView = () => {
     document.title = "GLCL";
    
     const { id } = useParams();
+    const { userid } = useParams();
     console.log("lid");
     console.log(id);
 
@@ -62,6 +63,22 @@ const GoldPawnUserView = () => {
     const [paymentstatus,setdaysLeftToPay]= useState([]);
     const [duedate,setdueDate]= useState([]);
     
+    post(apiname.p_userdetails, { id: userid })
+    .then((res) => {
+     
+      if (res.status === '204') {
+          setusername('');
+        setmembership_id('');
+      } else {
+        let filteredData = res.data.result[0];
+        setusername(filteredData.username);
+        setmembership_id(filteredData.membership_id);
+
+     
+      }
+
+    })
+    .catch((err) => console.log(err));
 
 
     get(`${apiname.loaniddetails}/${id}`)
@@ -76,6 +93,8 @@ const GoldPawnUserView = () => {
         setloandetails(updatereslist.data.result);
 
       let  loanTransactions=updatereslist.data.result.LoanTransactions;
+
+      console.log(loanTransactions);
 let totalPaid = 0;
 let totalOutstanding = 0;
 let overallamount=0;
@@ -93,36 +112,36 @@ for (const transaction of loanTransactions) {
     }
 }
 
-const currentMonth1 = new Date().getMonth() + 1; // Get the current month (1-based index)
-const currentYear1 = new Date().getFullYear(); // Get the current year
+// const currentMonth1 = new Date().getMonth() + 1; // Get the current month (1-based index)
+// const currentYear1 = new Date().getFullYear(); // Get the current year
 
-const currentMonthTransactions = loanTransactions.filter(transaction => {
-    const dueDate = new Date(transaction.payment_due_date);
-    return dueDate.getMonth() + 1 === currentMonth1 && dueDate.getFullYear() === currentYear1;
-});
+// const currentMonthTransactions = loanTransactions.filter(transaction => {
+//     const dueDate = new Date(transaction.payment_due_date);
+//     return dueDate.getMonth() + 1 === currentMonth1 && dueDate.getFullYear() === currentYear1;
+// });
 
-let currentMonthPayAmount = 0;
-for (const transaction of currentMonthTransactions) {
-    currentMonthPayAmount += parseFloat(transaction.total_amount);
-    setcurrentMonthPayAmount(currentMonthPayAmount);
-}
+// let currentMonthPayAmount = 0;
+// for (const transaction of currentMonthTransactions) {
+//     currentMonthPayAmount += parseFloat(transaction.total_amount);
+//     setcurrentMonthPayAmount(currentMonthPayAmount);
+// }
 
-let daysLeftToPay = null;
-let status = '';
+// let daysLeftToPay = null;
+// let status = '';
 
-if (currentMonthTransactions.some(transaction => !transaction.transaction_id)) {
-    // Calculate days left until payment due date
-    const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
-    const currentDate = new Date();
-    daysLeftToPay = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
-    setdaysLeftToPay(daysLeftToPay);
-    setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
-} else {
-    daysLeftToPay = 'Paid';
-    const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
-    setdaysLeftToPay(daysLeftToPay);
-    setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
-}
+// if (currentMonthTransactions.some(transaction => !transaction.transaction_id)) {
+//     // Calculate days left until payment due date
+//     const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
+//     const currentDate = new Date();
+//     daysLeftToPay = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
+//     setdaysLeftToPay(daysLeftToPay);
+//     setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+// } else {
+//     daysLeftToPay = 'Paid';
+//     // const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
+//     setdaysLeftToPay(daysLeftToPay);
+//     setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+// }
 
 
         if(updatereslist.data.result.LoanTransactions.length>0){
@@ -233,9 +252,9 @@ const exportToPDF = () => {
 
             {
                 Header: "Status",
-                accessor: "transaction_id",
+                accessor: "status_id",
                 Cell: ({ value }) => {
-                    return value === null || value === "" ? "Not Paid" : "Paid";
+                    return value === 7 ? "Paid" : "Not Paid";
                   }
             },
         ],
@@ -317,13 +336,13 @@ const exportToPDF = () => {
                                                             <div className="d-flex justify-content-between mt-5 smFont" style={{ borderBottom: "1px solid" }}>
                                                                 <div className="inter_regular">
                                                                     <div className="mb-3">Gold Coin Pawned</div>
-                                                                    <div className="mb-3">Gold Coin Serial Number</div>
+                                                                    {/* <div className="mb-3">Gold Coin Serial Number</div> */}
                                                                     <div className="mb-3">Subtotal</div>
                                                                 </div>
                                                                 <div className="inter_regular mb-2 text-end">
                                                                     <div className="mb-3">{loandetails.gold_grams} g</div>
                                                                     {/* <div className="mb-3">GLCL0001-GLCL0002</div> */}
-                                                                    <div className="mb-3">{loandetails.amount} </div>
+                                                                    <div className="mb-3">{loandetails.comments} </div>
                                                                 </div>
                                                             </div>
                                                             <div className="d-flex justify-content-between mt-3 smFont">
@@ -331,7 +350,7 @@ const exportToPDF = () => {
                                                                     <div>Amount Loaned</div>
                                                                 </div>
                                                                 <div className="inter_regular mb-2 text-end">
-                                                                    <div>{loandetails.amount} </div>
+                                                                    <div>{loandetails.comments} </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -448,7 +467,7 @@ const exportToPDF = () => {
                     </div>
                     <div className="d-flex justify-content-center gap-3 mb-3">
                         <Link
-                            to="/admin-svarna-ahita/index-list"
+                            to="/admin-svarna-ahita/PawnApprovedList"
                             style={{ textDecoration: "none" }}
                         >
                             <button className="btn btn-primary backBtn">Back</button>

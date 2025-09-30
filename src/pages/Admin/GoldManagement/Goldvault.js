@@ -117,6 +117,7 @@ const Goldvault = (props) => {
         dispatch(onUpdateUser(updateUser));
         setIsEdit(false);
         validation.resetForm();
+        window.location.reload();
         // setAdditionalField0Value('');
 
       } else {

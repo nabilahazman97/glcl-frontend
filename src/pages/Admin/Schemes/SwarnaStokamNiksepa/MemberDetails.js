@@ -55,6 +55,9 @@ const MemberDetails = () => {
      
       if (res.status == '404') {
       } else {
+
+        console.log("res");
+        console.log(res);
         let filteredData = res.data.result.filter(item=>item.type_id===3 || item.type_id===4 );
         if (startDate && endDate) {
           const startOfDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
@@ -65,7 +68,7 @@ const MemberDetails = () => {
           });
         }
         setUserData(filteredData);
-
+        
 
 
         setusername(filteredData[0].User.username)
@@ -85,8 +88,6 @@ const MemberDetails = () => {
   
       })
       .catch((err) => console.log(err));
-
-     
       })
       .catch((err) => console.log(err));
   }, [startDate, endDate]);

@@ -40,12 +40,24 @@ import ReactApexChart from "react-apexcharts";
 import { text } from "@fortawesome/fontawesome-svg-core";
 import goldBar from "../../../../assets/images/users/gold_bars.png";
 
+import "../../../../assets/scss/LoanDurationSlider.css";
 const GoldPawnRequestView = () => {
+
+  const [value, setValue1] = useState(0); // Initial value for the slider
+  const [tooltipPosition, setTooltipPosition] = useState(0);
+
+  const handleChange1 = (e) => {
+    const newValue = e.target.value;
+    setValue1(newValue);
+    // Calculate tooltip position
+    setTooltipPosition(e.target.offsetWidth * (newValue - e.target.min) / (e.target.max - e.target.min));
+  };
+
   document.title = "GLCL";
   const { id } = useParams();
   const { userid } = useParams();
-  console.log("lid");
-  console.log(userid);
+  // console.log("lid");
+  // console.log(userid);
 
   const navigate = useNavigate();
 
@@ -59,6 +71,8 @@ const GoldPawnRequestView = () => {
   const [loandetails, setloandetails] = useState([]);
   const [textvalue, setValue] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage1, setErrorMessage1] = useState('');
+ 
   const [modal_amount_loan, setmodal_amount_loan] = useState(false);
   const [activeloan, setactiveloan] = useState([]);
   const [overdueloan, setoverdueloan] = useState([]);
@@ -66,6 +80,22 @@ const GoldPawnRequestView = () => {
       setValue(event.target.value);
     };
 
+    post(apiname.p_userdetails, { id: userid })
+    .then((res) => {
+     
+      if (res.status === '204') {
+          setusername('');
+        setmembership_id('');
+      } else {
+        let filteredData = res.data.result[0];
+        setusername(filteredData.username);
+        setmembership_id(filteredData.membership_id);
+
+     
+      }
+
+    })
+    .catch((err) => console.log(err));
 
    // loaniddetails
 
@@ -74,8 +104,8 @@ const GoldPawnRequestView = () => {
       if (updatereslist.status == "404") {
           setloandetails("");
       }else{
-       console.log("updatereslist");
-       console.log(updatereslist.data.result);
+      //  console.log("updatereslist");
+      //  console.log(updatereslist.data.result);
        setloandetails(updatereslist.data.result);
       }
    
@@ -177,23 +207,37 @@ const options = {
       const approveid = {
                loanId:id,
               action : "approve",
-              comments : textvalue
+              comments : textvalue,
+              approvedmonth:value
         };
-        console.log("approveid");
-        console.log(approveid);
+        // console.log("approveid");
+        // console.log(approveid);
 
         
    if (!textvalue.trim()) {
     // Set error message
-    setErrorMessage('Reason for rejection is required.');
+    setErrorMessage('Approved Amount is required.');
     // You can return, throw an error, or handle it as per your requirement
     return;
 } 
+
+if (!value) {
+  // Set error message
+  setErrorMessage1('loan Duration is required.');
+  // You can return, throw an error, or handle it as per your requirement
+  return;
+} 
+
+
 setErrorMessage('');
+
+setErrorMessage1('');
 
       post(apiname.loanapproval, approveid)
       .then((updateres) => {
-      
+
+        // console.log("updateresfdff");
+        // console.log(updateres);
         if (updateres.status == "200") {
 
          
@@ -263,7 +307,7 @@ setErrorMessage('');
    };
    
 
-   console.log(approveid);
+  //  console.log(approveid);
 
    if (!textvalue.trim()) {
       // Set error message
@@ -424,14 +468,14 @@ setErrorMessage('');
                                         <div>
                                             <div className="text-gold mb-3">Gold Coin Pawned</div>
                                             {/* <div className="text-gold mb-3">Gold Coin Serial Number</div> */}
-                                            <div className="text-gold mb-3">Loan Period</div>
+                                            {/* <div className="text-gold mb-3">Loan Period</div> */}
                                             <div className="text-gold mb-3">Subtotal</div>
                                         </div>
                                         <div className="mb-3 text-end">
                                             <div className="text-gold mb-3">{loandetails.gold_grams} g</div>
                                             {/* <div className="text-gold mb-3">GLCL0001-GLCL0002</div> */}
-                                            <div className="text-gold mb-3">{loandetails.amount}</div>
-                                            <div className="text-gold mb-3">{loandetails.installement_months} &nbsp; Months</div>
+                                            {/* <div className="text-gold mb-3">{loandetails.installement_months}</div> */}
+                                            <div className="text-gold mb-3">{loandetails.amount} &nbsp; </div>
                                         </div>
                                     </div>
                                 </div>
@@ -447,7 +491,7 @@ setErrorMessage('');
 
                                 >
                                     {/* <i className="bx bxs-check-circle font-size-16 align-middle me-1"></i>{" "} */}
-                                    Approve 22
+                                    Approve
                                 </button>
                                 <button
                                     type="button"
@@ -457,7 +501,7 @@ setErrorMessage('');
                                       }}
                                 >
                                     {/* <i className="mdi mdi-close-circle font-size-16 align-middle me-1"></i>{" "} */}
-                                    Reject 34
+                                    Reject
                                 </button>
                               
 
@@ -550,6 +594,64 @@ setErrorMessage('');
                 </h5>
               </div>
               <div>
+              <br></br>              
+              <div style={{ textAlign:'left' }}>loan durations</div>
+
+              <div style={{ padding: '20px', position: 'relative', width: '100%' }}>
+   <div class="slider-container">
+   
+      <input
+        type="range"
+        min="0"
+        max="36"
+        value={value}
+        onChange={handleChange1}
+        style={{ width: '100%' }}
+      />
+      </div>
+      <div
+        style={{
+          position: 'relative',
+          top: '-50px',
+          left: `${tooltipPosition}px`,
+          // left: '400.92px',
+          transform: 'translateX(-50%)',
+          backgroundColor: '#333',
+          color: '#fff',
+          marginTop: '-12px',
+          marginLeft:' 28px',
+          // padding: '5px',
+          borderRadius: '3px',
+          fontSize: '12px',
+          whiteSpace: 'nowrap',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 10,
+          width: '65px',
+         
+        }}
+      >
+        {value} months
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '-10px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 0,
+            height: 0,
+            borderLeft: '5px solid transparent',
+            borderRight: '5px solid transparent',
+            borderTop: '10px solid #333',
+          }}
+        />
+      </div>
+      {/* <p>Value: {value}</p> */}
+      {errorMessage1 && <p style={{ color: 'red' }}>{errorMessage1}</p>}
+    </div>
+    <br></br>
+    <div style={{ textAlign:'left' }}> Approved Loan Amount</div>
               <Input
                           id="name"
                           name="name"
@@ -573,7 +675,7 @@ setErrorMessage('');
                 }}
                 
               >
-                Cancel 12
+                Cancel
               </Button>{" "}
               <Button
                 color="primary"
@@ -583,7 +685,7 @@ setErrorMessage('');
                     // tog_amount_loan(false);
                 }}
               >
-                Submit 12
+                Submit
               </Button>
             </div>
           </Modal>
@@ -602,11 +704,11 @@ setErrorMessage('');
             </h5>
           </div>
           <ModalBody className="text-center">
-             <p>The loan quotation has been approved. <br></br> 
-             An email will be sent to yusof89@gmail.com to notify them.</p>
+             <p>The loan has been approved. <br></br> 
+            </p>
           </ModalBody>
           <div className="text-center mb-3">
-             <Button
+             {/* <Button
                 color="primary"
                 className="modalConfirmBtn"
                 data-bs-target="#firstmodal"
@@ -615,7 +717,7 @@ setErrorMessage('');
                 }}
               >
                 Ok
-              </Button>
+              </Button> */}
           </div>
                     </Modal>
 
@@ -691,11 +793,11 @@ setErrorMessage('');
             <ModalBody className="text-center">
               <p>
               
-              An email will be sent to yusof69@gmail.com to notify them.
+              {/* An email will be sent to yusof69@gmail.com to notify them. */}
               </p>
             </ModalBody>
             <div className="text-center mb-3">
-            <Button
+            {/* <Button
                 color="primary"
                 className="modalConfirmBtn"
                 data-bs-target="#firstmodal"
@@ -704,7 +806,7 @@ setErrorMessage('');
                 }}
               >
                 Ok
-              </Button>
+              </Button> */}
             </div>
           </Modal>
 

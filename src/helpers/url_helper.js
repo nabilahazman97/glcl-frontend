@@ -121,7 +121,7 @@ export const ON_ADD_COMMENT = "/comments-product-add-comment"
 
 export const LOG_IN = "/api/auth/logincheck"
 
-export const BACKEND_API = "http://localhost:4200"
+export const BACKEND_API = "https://goldenlotus.coop.my/Node_Backend_API/"
 
 export const base_url = BACKEND_API
 

@@ -49,7 +49,9 @@ const MemberDetails = () => {
   const [remaininggold, setremainggold] = useState([]);
   const [username, setusername] = useState([]);
   const [membership_id, setmembership_id] = useState([]);
-  const [assignedgold,setassignedgold]=useState([]);
+  const [lockedSerials,setlockedSerialsgold]=useState([]);
+  const [unlockedSerials,setunlockedSerialsgold]=useState([]);
+  
 
 
   useEffect(() => {
@@ -82,11 +84,12 @@ const MemberDetails = () => {
 
     get(`${apiname.goldholdingbyid}/${Uid}`)
     .then((getremaininggold) => {
+      // console.log(getremaininggold);
       
           if (getremaininggold.status == '404') {
 
         } else {
-          setremainggold(getremaininggold.data.result.grams)
+          setremainggold(getremaininggold.data.result.totalGram)
         }
 
     })
@@ -94,6 +97,9 @@ const MemberDetails = () => {
 
     get(`${apiname.goldassignedtouser}/${Uid}`)
     .then((getgoldassigned) => {
+
+      console.log("getgoldassigned");
+      console.log(getgoldassigned);
        
       
           if (getgoldassigned.status == '404') {
@@ -102,7 +108,8 @@ const MemberDetails = () => {
 
          
 
-          setassignedgold(getgoldassigned.data.result)
+          setlockedSerialsgold(getgoldassigned.data.result.lockedSerials)
+          setunlockedSerialsgold(getgoldassigned.data.result.unlockedSerials)
         }
 
     })
@@ -305,18 +312,60 @@ const MemberDetails = () => {
                          <div className="d-flex justify-content-between p-2">
                             <div className="text-gold">Date Bought</div>
                             <div className="text-gold">Serial Number</div>
+                            <div className="text-gold">Total Grams</div>
                          </div>
                       </div>
-                       {assignedgold.map((gold, index) => (
+                       {/* {assignedgold.map((gold, index) => (
                       <div className="mt-3" style={{ backgroundColor: "#d6b13f", borderRadius: '5px' }}>
-                     
                           <div key={index} className="d-flex justify-content-between p-2">
                               <div className="text-black">{moment(gold.updatedAt).format("DD/MM/YYYY")}</div>
-                              <div className="text-black">{gold.barcode}</div>
+                              <div className="text-black">{gold.serialNumber}</div>
                           </div>
                      
                   </div>
-                   ))}
+                   ))} */}
+
+<div>
+      {/* Display Locked Serial Numbers */}
+      <h3>Locked Serial Numbers</h3>
+      {lockedSerials.length > 0 ? (
+        lockedSerials.map((gold, index) => (
+          <div
+            key={`locked-${index}`}
+            className="mt-3"
+            style={{ backgroundColor: "#d6b13f", borderRadius: '5px' }}
+          >
+            <div className="d-flex justify-content-between p-2">
+              <div className="text-black">{moment(gold.updatedAt).format("DD/MM/YYYY")}</div>
+              <div className="text-black">{gold.serialNumber}</div>
+              <div className="text-black">{gold.goldGram} grams</div>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="mt-3 text-white">No locked serial numbers.</div>
+      )}
+
+      {/* Display Unlocked Serial Numbers */}
+      <h3 className="mt-4">Unlocked Serial Numbers</h3>
+      {unlockedSerials.length > 0 ? (
+        unlockedSerials.map((gold, index) => (
+          <div
+            key={`unlocked-${index}`}
+            className="mt-3"
+            style={{ backgroundColor: "#f0f0f0", borderRadius: '5px' }}
+          >
+            <div className="d-flex justify-content-between p-2">
+              <div className="text-black">{moment(gold.updatedAt).format("DD/MM/YYYY")}</div>
+              <div className="text-black">{gold.serialNumber}</div>
+              <div className="text-black">{gold.goldGram} grams</div>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="mt-3 text-white">No unlocked serial numbers.</div>
+      )}
+    </div>
                       
                       
                     </div>

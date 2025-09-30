@@ -292,12 +292,13 @@ const columns = useMemo(
           {/* Render Breadcrumb */}
           <Breadcrumbs
             title={props.t("")}
-            breadcrumbItem={props.t("Dashboard")}
+            breadcrumbItem={props.t("NOTE:22K-GOLD TYPE:1 | 24K-GOLD TYPE:2")}
           />
 
           <Row>
             <Col xl="12">
               <Row>
+                
                 {/* Reports Render */}
                 {reports.map((report, key) => (
                   <Col md="4" key={"_col_" + key}>
@@ -309,7 +310,7 @@ const columns = useMemo(
                             <p className="text-muted fw-medium scheme_title">
                               {report.title}
                             </p>
-                            <p className="mb-0 std_font">{report.total}<span className=""> members</span></p>
+                            {/* <p className="mb-0 std_font">{report.total}<span className=""> members</span></p> */}
                           </div>
                           <div className="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
                             <span className="avatar-title rounded-circle bg-primary">

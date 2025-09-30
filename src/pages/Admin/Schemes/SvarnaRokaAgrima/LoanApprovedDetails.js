@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
+// import html2pdf from 'html2pdf.js';
 import {
     Row,
     Col,
@@ -43,6 +44,7 @@ const LoanApprovedDetails = () => {
     // const { Uid } = useParams();
 
     const { id } = useParams();
+    const { userid } = useParams();
     console.log("lid");
     console.log(id);
 
@@ -55,7 +57,7 @@ const LoanApprovedDetails = () => {
     const [membership_id, setmembership_id] = useState([]);
     const [loandetails, setloandetails] = useState([]);
     const [profile, setprofiledetails] = useState([]);
-    const [totalpaid, settotalpaid] = useState([]);
+    const [totalpaid, SetTotalpaid] = useState([]);
     const [totalOutstanding, settotalpending] = useState([]);
     const [overallamount, setoverallamount] = useState([]);
     const [curmpayamount, setcurrentMonthPayAmount] = useState([]);
@@ -63,13 +65,31 @@ const LoanApprovedDetails = () => {
     const [duedate,setdueDate]= useState([]);
     
 
+    post(apiname.p_userdetails, { id: userid })
+    .then((res) => {
+     
+      if (res.status === '204') {
+          setusername('');
+        setmembership_id('');
+      } else {
+        let filteredData = res.data.result[0];
+        setusername(filteredData.username);
+        setmembership_id(filteredData.membership_id);
+
+     
+      }
+
+    })
+    .catch((err) => console.log(err));
+
 
     get(`${apiname.loaniddetails}/${id}`)
     .then((updatereslist) => {
 
+        // console.log("start");
+        // console.log(updatereslist.data.result.Profile);
        
-        console.log("df");
-        console.log(updatereslist);
+       
        if (updatereslist.status == "404") {
            setloandetails("");
            setUserData('')
@@ -79,61 +99,73 @@ const LoanApprovedDetails = () => {
         
 
       let  loanTransactions=updatereslist.data.result.LoanTransactions;
+
+   
 let totalPaid = 0;
 let totalOutstanding = 0;
 let overallamount=0;
 
 for (const transaction of loanTransactions) {
     overallamount += parseFloat(transaction.total_amount);
-
     setoverallamount(overallamount);
-    if (transaction.transaction_id) {
+    // if (transaction.transaction_id) {
+        if (transaction.status_id === 7) {
         totalPaid += parseFloat(transaction.total_amount);
-        settotalpaid(totalPaid.toFixed(2));
-    } else {
+        SetTotalpaid(totalPaid.toFixed(2));
+        }
+    // } else {
+        if (transaction.status_id === 6) {
         totalOutstanding += parseFloat(transaction.total_amount);
         settotalpending(totalOutstanding.toFixed(2));
-    }
+        }
+    // }
 }
 
-const currentMonth1 = new Date().getMonth() + 1; // Get the current month (1-based index)
-const currentYear1 = new Date().getFullYear(); // Get the current year
+// const currentMonth1 = new Date().getMonth() + 1; // Get the current month (1-based index)
+// const currentYear1 = new Date().getFullYear(); // Get the current year
 
-const currentMonthTransactions = loanTransactions.filter(transaction => {
-    const dueDate = new Date(transaction.payment_due_date);
-    return dueDate.getMonth() + 1 === currentMonth1 && dueDate.getFullYear() === currentYear1;
-});
-// console.log("currentMonthTransactions");
-// console.log(currentMonthTransactions);
-if(!(currentMonthTransactions)){
-let currentMonthPayAmount = 0;
-for (const transaction of currentMonthTransactions) {
-    currentMonthPayAmount += parseFloat(transaction.total_amount);
-    setcurrentMonthPayAmount(currentMonthPayAmount);
-}
+// const currentMonthTransactions = loanTransactions.filter(transaction => {
+//     const dueDate = new Date(transaction.payment_due_date);
 
-let daysLeftToPay = null;
-let status = '';
+//     console.log("dueDate");
+// console.log(currentMonth1 );
 
-if (currentMonthTransactions.some(transaction => !transaction.transaction_id)) {
-    // Calculate days left until payment due date
-    const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
-    const currentDate = new Date();
-    daysLeftToPay = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
-    setdaysLeftToPay(daysLeftToPay);
-    setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
-} else {
-    daysLeftToPay = 'Paid';
-    const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
-    setdaysLeftToPay(daysLeftToPay);
-    setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
-}
-}
+
+//     return dueDate.getMonth() + 1 === currentMonth1 && dueDate.getFullYear() === currentYear1;
+// });
+
+// if(!(currentMonthTransactions)){
+// let currentMonthPayAmount = 0;
+// for (const transaction of currentMonthTransactions) {
+//     currentMonthPayAmount += parseFloat(transaction.total_amount);
+//     setcurrentMonthPayAmount(currentMonthPayAmount);
+// }
+
+// let daysLeftToPay = null;
+// let status = '';
+
+// if (currentMonthTransactions.some(transaction => !transaction.transaction_id)) {
+//     // Calculate days left until payment due date
+//     const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
+//     const currentDate = new Date();
+//     daysLeftToPay = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
+//     setdaysLeftToPay(daysLeftToPay);
+//     setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+// } else {
+//     daysLeftToPay = 'Paid';
+//     const dueDate = new Date(currentMonthTransactions[0].payment_due_date);
+//     setdaysLeftToPay(daysLeftToPay);
+//     setdueDate(moment(currentMonthTransactions[0].payment_due_date).format('YYYY-MM-DD'));
+// }
+// }
 
 
         if(updatereslist.data.result.LoanTransactions.length>0){
+            console.log("updatereslist");
+            console.log(updatereslist.data.profile);
+
             setUserData(updatereslist.data.result.LoanTransactions)
-            setprofiledetails(updatereslist.data.result.Profile);
+            setprofiledetails(updatereslist.data.profile);
         }else{
             setUserData("");
             setprofiledetails("");
@@ -145,7 +177,13 @@ if (currentMonthTransactions.some(transaction => !transaction.transaction_id)) {
 .catch((err) => console.log(err))
 
 
+const exportToPDF = () => {
+    const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
 
+    html2pdf()
+      .from(element)
+      .save('document.pdf');
+  };
 
 
 
@@ -228,7 +266,7 @@ const options = {
                 Header: "Status",
                 accessor: "status_id",
                 Cell: ({ value }) => {
-                    return value === null || value === "" ? "Not Paid" : "Paid";
+                    return value === 7 ? "Paid" : "Not Paid";
                   }
             },
         ],
@@ -241,13 +279,7 @@ const options = {
         setEndDate(end);
     };
 
-    const exportToPDF = () => {
-        const element = document.getElementById('contentToExport'); // Replace 'contentToExport' with the ID of the element you want to export
-
-        html2pdf()
-            .from(element)
-            .save('document.pdf');
-    };
+  
 
     return (
         <React.Fragment>
@@ -311,7 +343,7 @@ const options = {
                                                                     <div className="mb-3">Preferred Bank</div>
                                                                     <div className="mb-3">Bank Number</div>
                                                                     <div className="mb-3">Name According to Bank</div>
-                                                                    <div className="mb-3">Installment Amount</div>
+                                                                    {/* <div className="mb-3">Installment Amount</div> */}
                                                                 </div>
                                                                 <div className="inter_regular col-md-6 text-end">
                                                                 <div className="mb-3">{loandetails.amount}</div>
@@ -347,34 +379,41 @@ const options = {
                                                             </div>
                                                             {/* <div className="d-flex justify-content-between align-content-start p-3 gap-3"> */}
                                                             <div className="row text-gold p-2 smFont" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
-                                                                <div className="text-center col-6 ">
+                                                                <div className="text-center col-4 ">
                                                                     Total Loan Paid
                                                                     <div className="text-white">{totalpaid}</div>
                                                                 </div>
-                                                                <div className="text-center col-6">
+                                                                <div className="text-center col-4">
                                                                     Loan Unpaid
                                                                     <div className="text-white">{totalOutstanding}</div>
                                                                 </div>
-                                                            </div>
-                                                            <div className="row text-gold mt-3 p-2 smFont" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
+
                                                                 <div className="text-center col-4">
-                                                                    <div className="text-white">Current Monthly Payment</div>
-                                                                    <div className=""> {curmpayamount}</div>
-                                                                   
+                                                                Loan Period
+                                                                    <div className="text-white">{loandetails.installement_months} months</div>
                                                                 </div>
-                                                                <div className="text-center col-4">
-                                                                <div className="text-white">Current Monthly Payment</div>
+
+
+                                                            </div>
+                                                            {/* <div className="row text-gold mt-3 p-2 smFont" style={{ border: "2px solid #9b7700", borderRadius: "15px" }}>
+                                                                <div className="text-center col-4"> */}
+                                                                    {/* <div className="text-white">Current Monthly Payment</div>
+                                                                    <div className=""> {curmpayamount}</div> */}
+                                                                   
+                                                                {/* </div>
+                                                                <div className="text-center col-4"> */}
+                                                                {/* <div className="text-white">Current Monthly Payment</div>
                                                                 {duedate}
                                                                     <br></br>
-                                                                    In {paymentstatus} days
-                                                                </div>
+                                                                    In {paymentstatus} days */}
+                                                                {/* </div>
                                                                 <div className="text-center col-4">
                                                                 <div className="text-white">Loan Period</div>
                                                                   
                                                                    <br></br>
                                                                    {loandetails.installement_months} months
                                                                 </div>
-                                                            </div>
+                                                            </div> */}
                                                             {/* <Card className="text-center" style={{ background: "none", backgroundColor: "none", width:'150px',border:'1px solid black' }}>                                                           
                                                              <CardBody className="">
                                                                 <div className="lgFont text-dark-gold mb-2">0</div>
@@ -432,7 +471,7 @@ const options = {
                                                 onClick={exportToPDF}
                                             >
                                                 <i className="mdi mdi-upload  "></i>{" "}
-                                                EXPORT
+                                                EXPORT 
                                             </button>
 
                                             <Link to="#" className="btn btn-success downloadBtn">
